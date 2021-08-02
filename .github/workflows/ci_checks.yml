@@ -1,0 +1,105 @@
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  run_unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+          channel: "#deployments"
+        if: always()
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - name: Install npm dependencies
+        id: npm-i
+        run: npm i
+
+      - name: Run unit tests with debug info
+        id: npm-test-debug
+        run: npm test -- --passWithNoTests
+
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: "#deployments"
+        if: always()
+
+  run_linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+          channel: "#deployments"
+        if: always()
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - name: Install npm dependencies
+        id: npm-i
+        run: npm i
+
+      - name: Run linting
+        id: npm-lint
+        run: npm run lint
+
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: "#deployments"
+        if: always()
+
+  run_compiler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+          channel: "#deployments"
+        if: always()
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - name: Install npm dependencies
+        id: npm-i
+        run: npm i
+
+      - name: Run compiler
+        id: npm-compile
+        run: npm run compile
+
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: "#deployments"
+        if: always()
