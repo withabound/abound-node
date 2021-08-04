@@ -6,7 +6,7 @@ describe("Abound Client constructor", () => {
   describe("when config is invalid", () => {
     it("throws an error when required properties are missing", () => {
       const partialConfig = {
-        apiVersion: "v1",
+        apiVersion: "v2",
         environment: environments.sandbox,
         appId: randomString(),
       } as unknown as AboundConfig;
@@ -18,7 +18,7 @@ describe("Abound Client constructor", () => {
 
     it("throws an error when environment is invalid", () => {
       const invalidEnvConfig = {
-        apiVersion: "v1",
+        apiVersion: "v2",
         environment: "https://incorrect.abound.com",
         appId: randomString(),
         appSecret: randomString(),
@@ -36,7 +36,7 @@ describe("Abound Client constructor", () => {
       const appSecret = randomString();
 
       const validConfig: AboundConfig = {
-        apiVersion: "v1",
+        apiVersion: "v2",
         environment: environments.sandbox,
         appId,
         appSecret,
