@@ -1,4 +1,4 @@
-import Abound = require("../lib/abound");
+import Abound, { environments } from "../lib/abound";
 import { randomString } from "./utils";
 
 describe("Abound Client constructor", () => {
@@ -6,11 +6,11 @@ describe("Abound Client constructor", () => {
     it("throws an error when required properties are missing", () => {
       const partialConfig = {
         apiVersion: "v1",
-        environment: Abound.environments.sandbox,
+        environment: environments.sandbox,
         appId: randomString(),
       } as unknown as AboundConfig;
 
-      expect(() => new Abound.Client(partialConfig)).toThrow(
+      expect(() => new Abound(partialConfig)).toThrow(
         "Missing appSecret in Abound config"
       );
     });
@@ -23,7 +23,7 @@ describe("Abound Client constructor", () => {
         appSecret: randomString(),
       } as unknown as AboundConfig;
 
-      expect(() => new Abound.Client(invalidEnvConfig)).toThrow(
+      expect(() => new Abound(invalidEnvConfig)).toThrow(
         "Invalid Abound environment"
       );
     });
@@ -36,12 +36,12 @@ describe("Abound Client constructor", () => {
 
       const validConfig: AboundConfig = {
         apiVersion: "v1",
-        environment: Abound.environments.sandbox,
+        environment: environments.sandbox,
         appId,
         appSecret,
       };
 
-      const client = new Abound.Client(validConfig);
+      const client = new Abound(validConfig);
 
       expect(client).toBeTruthy();
       expect(client.baseUrl).toEqual("https://sandbox-api.withabound.com/v1");
