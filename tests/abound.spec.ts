@@ -45,7 +45,7 @@ describe("Abound Client constructor", () => {
       const abound = new Abound(validConfig);
 
       expect(abound).toBeTruthy();
-      expect(abound.baseUrl).toEqual("https://sandbox-api.withabound.com/v1");
+      expect(abound.baseUrl).toEqual("https://sandbox-api.withabound.com/v2");
       expect(abound.appId).toEqual(appId);
       expect(abound.appSecret).toEqual(appSecret);
     });
