@@ -42,12 +42,12 @@ describe("Abound Client constructor", () => {
         appSecret,
       };
 
-      const client = new Abound(validConfig);
+      const abound = new Abound(validConfig);
 
-      expect(client).toBeTruthy();
-      expect(client.baseUrl).toEqual("https://sandbox-api.withabound.com/v1");
-      expect(client.appId).toEqual(appId);
-      expect(client.appSecret).toEqual(appSecret);
+      expect(abound).toBeTruthy();
+      expect(abound.baseUrl).toEqual("https://sandbox-api.withabound.com/v1");
+      expect(abound.appId).toEqual(appId);
+      expect(abound.appSecret).toEqual(appSecret);
     });
   });
 });

@@ -7,7 +7,7 @@ export interface AboundConfig {
   apiVersion: ApiVersion;
 }
 
-type ApiVersion = "v1" | "v2";
+type ApiVersion = "v2";
 export class AboundClient {
   appId: string;
   appSecret: string;
