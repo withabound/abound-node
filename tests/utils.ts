@@ -1,4 +1,4 @@
-function randomString(length = 13) {
+function randomString(length = 13): string {
   let result = "";
 
   for (let i = 0; i < length; i++) {
@@ -11,6 +11,4 @@ function randomString(length = 13) {
 
 const ALPHANUMERIC_LOWER = "0123456789abcdefghijklmnopqrstuvwxyz";
 
-module.exports = {
-  randomString,
-};
+export { randomString };

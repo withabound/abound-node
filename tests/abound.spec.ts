@@ -1,5 +1,5 @@
-const Abound = require("../lib/abound.js");
-const { randomString } = require("./utils.js");
+import Abound = require("../lib/abound");
+import { randomString } from "./utils";
 
 describe("Abound Client constructor", () => {
   describe("when config is invalid", () => {
@@ -8,7 +8,7 @@ describe("Abound Client constructor", () => {
         apiVersion: "v1",
         environment: Abound.environments.sandbox,
         appId: randomString(),
-      };
+      } as unknown as AboundConfig;
 
       expect(() => new Abound.Client(partialConfig)).toThrow(
         "Missing appSecret in Abound config"
@@ -21,7 +21,7 @@ describe("Abound Client constructor", () => {
         environment: "https://incorrect.abound.com",
         appId: randomString(),
         appSecret: randomString(),
-      };
+      } as unknown as AboundConfig;
 
       expect(() => new Abound.Client(invalidEnvConfig)).toThrow(
         "Invalid Abound environment"
@@ -34,7 +34,7 @@ describe("Abound Client constructor", () => {
       const appId = randomString();
       const appSecret = randomString();
 
-      const validConfig = {
+      const validConfig: AboundConfig = {
         apiVersion: "v1",
         environment: Abound.environments.sandbox,
         appId,
