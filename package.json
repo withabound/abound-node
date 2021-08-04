@@ -5,7 +5,6 @@
   "author": "Abound <api@withabound.com>",
   "license": "UNLICENSED",
   "main": "index.js",
-  "types": "lib/types/main.d.ts",
   "scripts": {
     "compile": "npx tsc",
     "lint": "npx xo",

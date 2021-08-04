@@ -1,6 +1,14 @@
-import { environments } from "./environments";
+import { Environment, environments } from "./environments";
 
-class AboundClient {
+export interface AboundConfig {
+  appId: string;
+  appSecret: string;
+  environment: Environment;
+  apiVersion: ApiVersion;
+}
+
+type ApiVersion = "v1" | "v2";
+export class AboundClient {
   appId: string;
   appSecret: string;
   baseUrl: string;
@@ -32,5 +40,3 @@ function validateConfig(config: AboundConfig): void {
     throw new Error(`Invalid Abound environment`);
   }
 }
-
-export { AboundClient };

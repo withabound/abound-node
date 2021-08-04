@@ -1,4 +1,5 @@
-import Abound, { environments } from "../lib/abound";
+import Abound, { environments } from "../src/abound";
+import { AboundConfig } from "../src/AboundClient";
 import { randomString } from "./utils";
 
 describe("Abound Client constructor", () => {

@@ -4,10 +4,6 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noEmit": true,
-    "checkJs": true,
-    "baseUrl": ".",
-    "paths": {
-      "*": ["lib/types/main.d.ts"]
-    }
+    "checkJs": true
   }
 }
