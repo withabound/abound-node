@@ -4,7 +4,10 @@
   "description": "The Abound Node library provides convenient access to the Abound API from applications written in server-side JavaScript.",
   "author": "Abound <api@withabound.com>",
   "license": "UNLICENSED",
-  "main": "index.js",
+  "main": "dist/abound.js",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "compile": "npx tsc",
     "lint": "npx xo",
