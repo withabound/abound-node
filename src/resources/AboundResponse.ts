@@ -8,6 +8,7 @@ export interface AboundResponse<T> {
 export interface AboundBulkResponse<T> {
   data: T[];
   count: number;
+  nextPage?: string;
   request: RequestMetadata;
 }
 

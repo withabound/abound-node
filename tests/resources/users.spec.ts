@@ -4,7 +4,7 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/AboundResponse";
-import { User, UserProfile } from "../../src/resources/Users";
+import { User } from "../../src/resources/Users";
 import {
   createAboundClient,
   randomDate,
@@ -46,17 +46,18 @@ describe("Abound Users", () => {
         },
       });
 
-      expect(createdUser).toBeTruthy();
-      expect(createdUser.data).toBeTruthy();
-      expect(createdUser.data.userId).toEqual(
-        "userId_509948c18e95c0462cad5db54a18888cd2779b72"
-      );
-      expect(createdUser.data.email).toEqual("7elmombtzsw24@example.com");
-      expect(createdUser.request).toBeTruthy();
-      expect(createdUser.request.timestamp).toEqual(1628216420494);
-      expect(createdUser.request.requestId).toEqual(
-        "requestId_0a0fa02134463484f3a6ec22"
-      );
+      expect(createdUser).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "email": "7elmombtzsw24@example.com",
+            "userId": "userId_509948c18e95c0462cad5db54a18888cd2779b72",
+          },
+          "request": Object {
+            "requestId": "requestId_0a0fa02134463484f3a6ec22",
+            "timestamp": 1628216420494,
+          },
+        }
+      `);
     });
   });
 
@@ -66,16 +67,32 @@ describe("Abound Users", () => {
         "userId_509948c18e95c0462cad5db54a18888cd2779b72"
       );
 
-      expect(retrievedUser).toBeTruthy();
-      expect(retrievedUser.data).toBeTruthy();
-      expect(retrievedUser.data.email).toEqual("7elmombtzsw24@example.com");
-      expect(retrievedUser.data.canWithhold).toBe(false);
-
-      expect(retrievedUser.data.profile).toBeDefined();
-
-      const profile = retrievedUser.data.profile as unknown as UserProfile;
-      expect(profile.ipAddress).toBeNull();
-      expect(profile.lastName).toEqual("5oefwmin27xuy");
+      expect(retrievedUser).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "canWithhold": false,
+            "email": "7elmombtzsw24@example.com",
+            "foreignId": "kl6mo5okpo7t3",
+            "profile": Object {
+              "address": "1gwil3euuymny",
+              "address2": null,
+              "city": "1g0gq5kbnds9k",
+              "dateOfBirth": "1950-10-02",
+              "firstName": "cxlzkro854hnk",
+              "ipAddress": null,
+              "lastName": "5oefwmin27xuy",
+              "phoneNumber": "2reblv72x769e",
+              "state": "6t31ruf292x00",
+              "zipcode": "71549",
+            },
+            "userId": "userId_509948c18e95c0462cad5db54a18888cd2779b72",
+          },
+          "request": Object {
+            "requestId": "requestId_517c1281d907a2ebe0a46950",
+            "timestamp": 1628218203035,
+          },
+        }
+      `);
     });
   });
 
@@ -83,12 +100,53 @@ describe("Abound Users", () => {
     it("returns a promise that resolves to the developer's users on success", async () => {
       const userList: AboundBulkResponse<User> = await abound.users.list();
 
-      expect(userList).toBeTruthy();
-      expect(userList.count).toEqual(2);
-      expect(userList.data.length).toEqual(2);
-      expect(userList.data[0].userId).toEqual(
-        "userId_924d93f64b66f255fb3e6f1662192781c2915f29"
-      );
+      expect(userList).toMatchInlineSnapshot(`
+        Object {
+          "count": 2,
+          "data": Array [
+            Object {
+              "canWithhold": false,
+              "email": "wymig76srzdz8@example.com",
+              "foreignId": "is5navld6id8p",
+              "profile": Object {
+                "address": "s3e42wp0ef65t",
+                "address2": null,
+                "city": "qrd0k7cohd9tk",
+                "dateOfBirth": "1998-09-07",
+                "firstName": "ua15juawbtfps",
+                "ipAddress": null,
+                "lastName": "ljeg7k3th7alh",
+                "phoneNumber": "hbgwkv74etscz",
+                "state": "4xatwpex4mbmi",
+                "zipcode": "12547",
+              },
+              "userId": "userId_924d93f64b66f255fb3e6f1662192781c2915f29",
+            },
+            Object {
+              "canWithhold": false,
+              "email": "7elmombtzsw24@example.com",
+              "foreignId": "kl6mo5okpo7t3",
+              "profile": Object {
+                "address": "1gwil3euuymny",
+                "address2": null,
+                "city": "1g0gq5kbnds9k",
+                "dateOfBirth": "1950-10-02",
+                "firstName": "cxlzkro854hnk",
+                "ipAddress": null,
+                "lastName": "5oefwmin27xuy",
+                "phoneNumber": "2reblv72x769e",
+                "state": "6t31ruf292x00",
+                "zipcode": "71549",
+              },
+              "userId": "userId_509948c18e95c0462cad5db54a18888cd2779b72",
+            },
+          ],
+          "request": Object {
+            "requestId": "requestId_d85916f29b1e761dadc5c323",
+            "timestamp": 1628219799447,
+          },
+        }
+        `);
     });
   });
 });
