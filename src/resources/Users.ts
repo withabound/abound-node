@@ -29,7 +29,6 @@ export interface UserProfile {
 // response body
 export interface User extends UserRequest {
   userId: string;
-  canWithhold?: boolean;
 }
 
 /*
