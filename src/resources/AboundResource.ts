@@ -25,9 +25,11 @@ export abstract class AboundResource<I, O> {
     return get(uri);
   }
 
-  protected async delete(id: string): Promise<AboundResponse<{}>> {
+  protected async delete(
+    id: string
+  ): Promise<AboundResponse<Record<string, unknown>>> {
     const uri = `${this.path}/${id}`;
 
-    return destroy(uri)
+    return destroy(uri);
   }
 }

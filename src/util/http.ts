@@ -30,7 +30,7 @@ export const destroy = async <O>(uri: string): Promise<O> => {
   validateAxiosIsConfigured();
 
   return configuredAxios.delete(uri).then((response) => response.data);
-}
+};
 
 function validateAxiosIsConfigured(): void {
   if (!configuredAxios) {
