@@ -1,4 +1,4 @@
-import { destroy, get, post } from "../util/http";
+import { destroy, get, post, put } from "../util/http";
 import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
 
 // see https://github.com/typescript-eslint/typescript-eslint/issues/2063#issuecomment-675156492
@@ -26,6 +26,12 @@ export abstract class AboundResource<I, O> {
     const uri = `${this.path}/${id}`;
 
     return get(uri);
+  }
+
+  protected async update(id: string, payload: I): Promise<AboundResponse<O>> {
+    const uri = `${this.path}/${id}`;
+
+    return put(uri, payload);
   }
 
   protected async delete(id: string): Promise<EmptyObject> {

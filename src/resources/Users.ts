@@ -10,6 +10,7 @@ interface UserRequest {
   email?: string;
   foreignId?: string;
   profile?: UserProfile;
+  canWithhold?: boolean;
 }
 
 export interface UserProfile {
@@ -29,7 +30,6 @@ export interface UserProfile {
 // response body
 export interface User extends UserRequest {
   userId: string;
-  canWithhold?: boolean;
 }
 
 /*
@@ -48,5 +48,12 @@ export class Users extends AboundResource<UserRequestBody, User> {
 
   public async retrieve(id: string): Promise<AboundResponse<User>> {
     return super.retrieve(id);
+  }
+
+  public async update(
+    id: string,
+    user: UserRequestBody
+  ): Promise<AboundResponse<User>> {
+    return super.update(id, user);
   }
 }
