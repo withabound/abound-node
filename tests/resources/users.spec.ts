@@ -70,7 +70,6 @@ describe("Abound Users", () => {
       expect(retrievedUser).toMatchInlineSnapshot(`
         Object {
           "data": Object {
-            "canWithhold": false,
             "email": "7elmombtzsw24@example.com",
             "foreignId": "kl6mo5okpo7t3",
             "profile": Object {
@@ -105,7 +104,6 @@ describe("Abound Users", () => {
           "count": 2,
           "data": Array [
             Object {
-              "canWithhold": false,
               "email": "wymig76srzdz8@example.com",
               "foreignId": "is5navld6id8p",
               "profile": Object {
@@ -123,7 +121,6 @@ describe("Abound Users", () => {
               "userId": "userId_924d93f64b66f255fb3e6f1662192781c2915f29",
             },
             Object {
-              "canWithhold": false,
               "email": "7elmombtzsw24@example.com",
               "foreignId": "kl6mo5okpo7t3",
               "profile": Object {
@@ -172,7 +169,6 @@ function initMocks() {
         userId: "userId_509948c18e95c0462cad5db54a18888cd2779b72",
         email: "7elmombtzsw24@example.com",
         foreignId: "kl6mo5okpo7t3",
-        canWithhold: false,
         profile: {
           firstName: "cxlzkro854hnk",
           lastName: "5oefwmin27xuy",
@@ -200,7 +196,6 @@ function initMocks() {
           userId: "userId_924d93f64b66f255fb3e6f1662192781c2915f29",
           email: "wymig76srzdz8@example.com",
           foreignId: "is5navld6id8p",
-          canWithhold: false,
           profile: {
             firstName: "ua15juawbtfps",
             lastName: "ljeg7k3th7alh",
@@ -218,7 +213,6 @@ function initMocks() {
           userId: "userId_509948c18e95c0462cad5db54a18888cd2779b72",
           email: "7elmombtzsw24@example.com",
           foreignId: "kl6mo5okpo7t3",
-          canWithhold: false,
           profile: {
             firstName: "cxlzkro854hnk",
             lastName: "5oefwmin27xuy",
