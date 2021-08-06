@@ -10,7 +10,6 @@ interface UserRequest {
   email?: string;
   foreignId?: string;
   profile?: UserProfile;
-  canWithhold?: boolean;
 }
 
 export interface UserProfile {
@@ -30,6 +29,7 @@ export interface UserProfile {
 // response body
 export interface User extends UserRequest {
   userId: string;
+  canWithhold?: boolean;
 }
 
 /*
