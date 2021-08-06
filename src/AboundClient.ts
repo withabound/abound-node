@@ -1,4 +1,7 @@
 import { Environment, environments } from "./environments";
+import { resources } from "./resources";
+import { Users } from "./resources/Users";
+import { initAxios } from "./util/http";
 
 export interface AboundConfig {
   appId: string;
@@ -9,16 +12,15 @@ export interface AboundConfig {
 
 type ApiVersion = "v2";
 export class AboundClient {
-  appId: string;
-  appSecret: string;
-  baseUrl: string;
+  // resources
+  users: Users;
 
   constructor(config: AboundConfig) {
     validateConfig(config);
 
-    this.appId = config.appId;
-    this.appSecret = config.appSecret;
-    this.baseUrl = `${config.environment.baseUrl}${config.apiVersion}`;
+    initAxios(config);
+
+    this.users = new resources.Users();
   }
 }
 
