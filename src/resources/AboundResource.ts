@@ -1,6 +1,9 @@
 import { destroy, get, post } from "../util/http";
 import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
 
+// see https://github.com/typescript-eslint/typescript-eslint/issues/2063#issuecomment-675156492
+type EmptyObject = Record<string, never>;
+
 /**
  * Base class for all non user-scoped resources, wherein a user-scoped resource
  * is one having the relative path `.../users/{userId}/resource`.
@@ -25,9 +28,7 @@ export abstract class AboundResource<I, O> {
     return get(uri);
   }
 
-  protected async delete(
-    id: string
-  ): Promise<AboundResponse<Record<string, unknown>>> {
+  protected async delete(id: string): Promise<EmptyObject> {
     const uri = `${this.path}/${id}`;
 
     return destroy(uri);

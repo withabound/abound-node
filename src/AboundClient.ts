@@ -1,6 +1,5 @@
 import { Environment, environments } from "./environments";
-import { resources } from "./resources";
-import { Users } from "./resources/Users";
+import { Users } from "./resources";
 import { initAxios } from "./util/http";
 
 export interface AboundConfig {
@@ -20,7 +19,7 @@ export class AboundClient {
 
     initAxios(config);
 
-    this.users = new resources.Users();
+    this.users = new Users();
   }
 }
 
