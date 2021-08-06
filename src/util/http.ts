@@ -3,6 +3,8 @@ import { AboundConfig } from "../AboundClient";
 
 let configuredAxios: AxiosInstance;
 
+// TODO remove singleton pattern, allow for multiple configuredAxios instances to co-exist
+// (e.g. v2 and v3 at the same time, or two different axios instances with two different appId/appSecret tuples)
 export function initAxios(config: AboundConfig): void {
   configuredAxios = axios.create({
     baseURL: `${config.environment.baseUrl}${config.apiVersion}`,
