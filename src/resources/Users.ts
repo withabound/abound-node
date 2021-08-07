@@ -34,10 +34,6 @@ export interface User extends UserRequest {
 export class Users extends AboundResource<UserRequest, User> {
   path = "/users";
 
-  getDeprecatedFields(): string[] {
-    return ["canWithhold"];
-  }
-
   public async list(): Promise<AboundBulkResponse<User>> {
     return super.list();
   }
