@@ -29,20 +29,18 @@ describe("Abound Users", () => {
   describe("create", () => {
     it("returns a promise that resolves to the created user on success", async () => {
       const createdUser: AboundResponse<User> = await abound.users.create({
-        user: {
-          email: randomEmail(),
-          foreignId: randomString(),
-          profile: {
-            firstName: randomString(),
-            lastName: randomString(),
-            address: randomString(),
-            city: randomString(),
-            state: randomString(),
-            zipcode: randomZip(),
-            phoneNumber: randomString(),
-            dateOfBirth: randomDate(),
-            socialSecurityNumber: randomString(),
-          },
+        email: randomEmail(),
+        foreignId: randomString(),
+        profile: {
+          firstName: randomString(),
+          lastName: randomString(),
+          address: randomString(),
+          city: randomString(),
+          state: randomString(),
+          zipcode: randomZip(),
+          phoneNumber: randomString(),
+          dateOfBirth: randomDate(),
+          socialSecurityNumber: randomString(),
         },
       });
 
@@ -155,9 +153,7 @@ describe("Abound Users", () => {
       const updatedUser: AboundResponse<User> = await abound.users.update(
         "userId_509948c18e95c0462cad5db54a18888cd2779b72",
         {
-          user: {
-            email: "test123test@example.com",
-          },
+          email: "test123test@example.com",
         }
       );
 

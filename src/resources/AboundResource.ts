@@ -18,7 +18,9 @@ export abstract class AboundResource<I, O> {
     return get(this.path);
   }
 
-  protected async create(payload: I): Promise<AboundResponse<O>> {
+  protected async create(
+    payload: Record<string, I>
+  ): Promise<AboundResponse<O>> {
     return post(this.path, payload);
   }
 
@@ -28,7 +30,10 @@ export abstract class AboundResource<I, O> {
     return get(uri);
   }
 
-  protected async update(id: string, payload: I): Promise<AboundResponse<O>> {
+  protected async update(
+    id: string,
+    payload: Record<string, I>
+  ): Promise<AboundResponse<O>> {
     const uri = `${this.path}/${id}`;
 
     return put(uri, payload);
