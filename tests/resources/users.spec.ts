@@ -29,20 +29,18 @@ describe("Abound Users", () => {
   describe("create", () => {
     it("returns a promise that resolves to the created user on success", async () => {
       const createdUser: AboundResponse<User> = await abound.users.create({
-        user: {
-          email: randomEmail(),
-          foreignId: randomString(),
-          profile: {
-            firstName: randomString(),
-            lastName: randomString(),
-            address: randomString(),
-            city: randomString(),
-            state: randomString(),
-            zipcode: randomZip(),
-            phoneNumber: randomString(),
-            dateOfBirth: randomDate(),
-            socialSecurityNumber: randomString(),
-          },
+        email: randomEmail(),
+        foreignId: randomString(),
+        profile: {
+          firstName: randomString(),
+          lastName: randomString(),
+          address: randomString(),
+          city: randomString(),
+          state: randomString(),
+          zipcode: randomZip(),
+          phoneNumber: randomString(),
+          dateOfBirth: randomDate(),
+          socialSecurityNumber: randomString(),
         },
       });
 
@@ -146,6 +144,44 @@ describe("Abound Users", () => {
         `);
     });
   });
+
+  describe("update", () => {
+    it("returns a promise that resolves to the updated user on success", async () => {
+      const updatedUser: AboundResponse<User> = await abound.users.update(
+        "userId_509948c18e95c0462cad5db54a18888cd2779b72",
+        {
+          email: "test123test@example.com",
+        }
+      );
+
+      expect(updatedUser).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "canWithhold": false,
+            "email": "test123test@example.com",
+            "foreignId": "kl6mo5okpo7t3",
+            "profile": Object {
+              "address": "1gwil3euuymny",
+              "address2": null,
+              "city": "1g0gq5kbnds9k",
+              "dateOfBirth": "1950-10-02",
+              "firstName": "cxlzkro854hnk",
+              "ipAddress": null,
+              "lastName": "5oefwmin27xuy",
+              "phoneNumber": "2reblv72x769e",
+              "state": "6t31ruf292x00",
+              "zipcode": "71549",
+            },
+            "userId": "userId_509948c18e95c0462cad5db54a18888cd2779b72",
+          },
+          "request": Object {
+            "requestId": "requestId_904b386e27b76e45a74cba5f",
+            "timestamp": 1628263492126,
+          },
+        }
+      `);
+    });
+  });
 });
 
 function initMocks() {
@@ -231,6 +267,37 @@ function initMocks() {
       request: {
         timestamp: 1628219799447,
         requestId: "requestId_d85916f29b1e761dadc5c323",
+      },
+    });
+
+  nock(V2_SANDBOX_URL)
+    .put("/users/userId_509948c18e95c0462cad5db54a18888cd2779b72", {
+      user: {
+        email: "test123test@example.com",
+      },
+    })
+    .reply(200, {
+      data: {
+        userId: "userId_509948c18e95c0462cad5db54a18888cd2779b72",
+        email: "test123test@example.com",
+        foreignId: "kl6mo5okpo7t3",
+        canWithhold: false,
+        profile: {
+          firstName: "cxlzkro854hnk",
+          lastName: "5oefwmin27xuy",
+          address: "1gwil3euuymny",
+          address2: null,
+          city: "1g0gq5kbnds9k",
+          state: "6t31ruf292x00",
+          zipcode: "71549",
+          phoneNumber: "2reblv72x769e",
+          dateOfBirth: "1950-10-02",
+          ipAddress: null,
+        },
+      },
+      request: {
+        timestamp: 1628263492126,
+        requestId: "requestId_904b386e27b76e45a74cba5f",
       },
     });
 }
