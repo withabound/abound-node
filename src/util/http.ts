@@ -27,6 +27,12 @@ export const post = async <I, O>(uri: string, payload?: I): Promise<O> => {
   return configuredAxios.post(uri, payload).then((response) => response.data);
 };
 
+export const put = async <I, O>(uri: string, payload?: I): Promise<O> => {
+  validateAxiosIsConfigured();
+
+  return configuredAxios.put(uri, payload).then((response) => response.data);
+};
+
 // `delete` is a reserved keyword
 export const destroy = async <O>(uri: string): Promise<O> => {
   validateAxiosIsConfigured();
