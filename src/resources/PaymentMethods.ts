@@ -32,6 +32,9 @@ export enum AccountClass {
 // The two (2) micro-deposit amounts to verify. Floating point values.
 type MicrodepositAmounts = [number, number];
 
+/**
+ * See https://docs.withabound.com/reference#payment-methods
+ */
 export class PaymentMethods extends AboundUserScopedResource<
   PaymentMethodRequest,
   PaymentMethod
