@@ -1,5 +1,5 @@
-import { AboundResource } from "./AboundResource";
-import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
+import { AboundBaseResource } from "./base/AboundBaseResource";
+import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 
 // request body
 interface UserRequest {
@@ -30,7 +30,7 @@ export interface User extends UserRequest {
 /*
  * See https://docs.withabound.com/reference#users
  */
-export class Users extends AboundResource<UserRequest, User> {
+export class Users extends AboundBaseResource<UserRequest, User> {
   path = "/users";
 
   public async list(): Promise<AboundBulkResponse<User>> {

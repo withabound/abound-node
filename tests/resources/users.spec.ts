@@ -1,9 +1,10 @@
 import nock from "nock";
+
 import Abound from "../../src/abound";
 import {
   AboundBulkResponse,
   AboundResponse,
-} from "../../src/resources/AboundResponse";
+} from "../../src/resources/base/AboundResponse";
 import { User } from "../../src/resources/Users";
 import {
   createAboundClient,
