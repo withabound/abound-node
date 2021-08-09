@@ -10,7 +10,11 @@ import {
   AccountType,
   PaymentMethod,
 } from "../../src/resources/PaymentMethods";
-import { createAboundClient, randomNumberString, V2_SANDBOX_URL } from "../utils";
+import {
+  createAboundClient,
+  randomNumberString,
+  V2_SANDBOX_URL,
+} from "../utils";
 
 describe("Abound Payment Methods", () => {
   let abound: Abound;
