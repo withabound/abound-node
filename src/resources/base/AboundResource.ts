@@ -4,6 +4,11 @@ import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
 // see https://github.com/typescript-eslint/typescript-eslint/issues/2063#issuecomment-675156492
 export type EmptyObject = Record<string, never>;
 
+/**
+ * Base resource from which all other Abound Resources shall extend that maps an API action
+ * (e.g. update) to an HTTP verb (e.g. PUT). Direct subclasses include
+ * AboundBaseResource and AboundUserScopedResource.
+ */
 export abstract class AboundResource<I, O> {
   abstract path: string;
 
