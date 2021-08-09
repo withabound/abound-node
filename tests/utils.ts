@@ -61,7 +61,7 @@ export {
   createAboundClient,
   randomDate,
   randomEmail,
-  randomNumberString as randomNumberStr,
+  randomNumberString,
   randomString,
   randomZip,
 };

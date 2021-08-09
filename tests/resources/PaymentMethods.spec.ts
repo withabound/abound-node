@@ -10,7 +10,7 @@ import {
   AccountType,
   PaymentMethod,
 } from "../../src/resources/PaymentMethods";
-import { createAboundClient, randomNumberStr, V2_SANDBOX_URL } from "../utils";
+import { createAboundClient, randomNumberString, V2_SANDBOX_URL } from "../utils";
 
 describe("Abound Payment Methods", () => {
   let abound: Abound;
@@ -30,7 +30,7 @@ describe("Abound Payment Methods", () => {
         await abound.paymentMethods.create(
           "userId_509948c18e95c0462cad5db54a18888cd2779b72",
           {
-            accountNumber: randomNumberStr(10),
+            accountNumber: randomNumberString(10),
             routingNumber: "102001017",
             accountType: AccountType.PERSONAL,
             accountClass: AccountClass.CHECKING,
