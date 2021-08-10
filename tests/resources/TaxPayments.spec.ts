@@ -5,7 +5,11 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
-import { TaxPayment, TaxPeriod } from "../../src/resources/TaxPayments";
+import {
+  TaxPayment,
+  TaxPaymentEntity,
+  TaxPeriod,
+} from "../../src/resources/TaxPayments";
 import { createAboundClient, V2_SANDBOX_URL } from "../utils";
 
 describe("Abound Tax Payments", () => {
@@ -29,7 +33,7 @@ describe("Abound Tax Payments", () => {
             year: "2020",
             period: TaxPeriod.Q1,
             amount: 450.22,
-            entity: "IRS",
+            entity: TaxPaymentEntity.IRS,
             paymentMethodId:
               "paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4",
           }

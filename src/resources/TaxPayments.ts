@@ -6,7 +6,7 @@ export interface TaxPaymentRequest {
   year: string;
   period: TaxPeriod;
   amount: number; // float
-  entity: string;
+  entity: TaxPaymentEntity;
   paymentMethodId: string;
   notes?: Record<string, unknown>;
 }
@@ -16,6 +16,20 @@ export enum TaxPeriod {
   Q2 = "Q2",
   Q3 = "Q3",
   Q4 = "Q4",
+}
+
+export enum TaxPaymentEntity {
+  IRS = "IRS",
+  CA = "CA",
+  GA = "GA",
+  IL = "IL",
+  MI = "MI",
+  NJ = "NJ",
+  NY = "NY",
+  NC = "NC",
+  OH = "OH",
+  PA = "PA",
+  VA = "VA",
 }
 
 // response body
