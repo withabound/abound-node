@@ -4,6 +4,8 @@ import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
 // see https://github.com/typescript-eslint/typescript-eslint/issues/2063#issuecomment-675156492
 export type EmptyObject = Record<string, never>;
 
+export type Notes = Record<string, unknown>;
+
 /**
  * Base resource from which all other Abound Resources shall extend that maps an API action
  * (e.g. update) to an HTTP verb (e.g. PUT). Direct subclasses include
@@ -23,6 +25,13 @@ export abstract class AboundResource<I, O> {
     return post(uri, payload);
   }
 
+  protected async _bulkCreate(
+    uri: string,
+    payload: Record<string, I[]>
+  ): Promise<AboundBulkResponse<O>> {
+    return post(uri, payload);
+  }
+
   protected async _retrieve(uri: string): Promise<AboundResponse<O>> {
     return get(uri);
   }
@@ -34,7 +43,7 @@ export abstract class AboundResource<I, O> {
     return put(uri, payload);
   }
 
-  protected async _delete(uri: string): Promise<EmptyObject> {
+  protected async _delete(uri: string): Promise<AboundResponse<EmptyObject>> {
     return destroy(uri);
   }
 }

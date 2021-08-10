@@ -1,5 +1,5 @@
 import { Environment, environments } from "./environments";
-import { PaymentMethods, Users } from "./resources";
+import { Incomes, PaymentMethods, Users } from "./resources";
 import { TaxPayments } from "./resources/TaxPayments";
 import { initAxios } from "./util/http";
 
@@ -16,6 +16,7 @@ export class AboundClient {
   users: Users;
   paymentMethods: PaymentMethods;
   taxPayments: TaxPayments;
+  incomes: Incomes;
 
   constructor(config: AboundConfig) {
     validateConfig(config);
@@ -25,6 +26,7 @@ export class AboundClient {
     this.users = new Users();
     this.paymentMethods = new PaymentMethods();
     this.taxPayments = new TaxPayments();
+    this.incomes = new Incomes();
   }
 }
 

@@ -27,6 +27,15 @@ export abstract class AboundUserScopedResource<I, O> extends AboundResource<
     return super._create(uri, payload);
   }
 
+  protected async bulkCreateForUser(
+    userId: string,
+    payload: Record<string, I[]>
+  ): Promise<AboundBulkResponse<O>> {
+    const uri = this.userScopedResourcesUri(userId);
+
+    return super._bulkCreate(uri, payload);
+  }
+
   protected async retrieveForUser(
     userId: string,
     resourceId: string
@@ -49,7 +58,7 @@ export abstract class AboundUserScopedResource<I, O> extends AboundResource<
   protected async deleteForUser(
     userId: string,
     resourceId: string
-  ): Promise<EmptyObject> {
+  ): Promise<AboundResponse<EmptyObject>> {
     const uri = this.userScopedResourceUri(userId, resourceId);
 
     return super._delete(uri);
