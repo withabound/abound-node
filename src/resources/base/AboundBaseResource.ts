@@ -30,7 +30,7 @@ export abstract class AboundBaseResource<I, O> extends AboundResource<I, O> {
 
   protected async update(
     id: string,
-    payload: Record<string, I>
+    payload: Record<string, Partial<I>>
   ): Promise<AboundResponse<O>> {
     const uri = `${this.path}/${id}`;
 

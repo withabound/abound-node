@@ -29,7 +29,7 @@ export abstract class AboundResource<I, O> {
 
   protected async _update(
     uri: string,
-    payload: Record<string, I>
+    payload: Record<string, Partial<I>>
   ): Promise<AboundResponse<O>> {
     return put(uri, payload);
   }
