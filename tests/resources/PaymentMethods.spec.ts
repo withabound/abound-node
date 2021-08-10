@@ -136,37 +136,6 @@ describe("Abound Payment Methods", () => {
     });
   });
 
-  describe("verify", () => {
-    it("returns a promise that resolves to the verified (updated) payment method on success", async () => {
-      const verifiedPaymentMethod: AboundResponse<PaymentMethod> =
-        await abound.paymentMethods.verify(
-          "userId_509948c18e95c0462cad5db54a18888cd2779b72",
-          "paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4",
-          [0.12, 0.54]
-        );
-
-      expect(verifiedPaymentMethod).toMatchInlineSnapshot(`
-        Object {
-          "data": Object {
-            "accountClass": "checking",
-            "accountNumberLast4": "4429",
-            "accountType": "personal",
-            "displayName": "(4429) personal checking",
-            "notes": Object {
-              "preferredPaymentMethod": true,
-            },
-            "paymentMethodId": "paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4",
-            "status": "unverified",
-          },
-          "request": Object {
-            "requestId": "requestId_1cbaf47fe5ce06e21aa48734",
-            "timestamp": 1628520548767,
-          },
-        }
-      `);
-    });
-  });
-
   function initMocks() {
     nock(V2_SANDBOX_URL)
       .post(

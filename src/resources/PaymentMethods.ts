@@ -3,13 +3,11 @@ import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 
 // request body
 interface PaymentMethodRequest {
-  status?: string;
-  accountNumber?: string;
-  routingNumber?: string;
-  accountType?: AccountType;
-  accountClass?: AccountClass;
+  accountNumber: string;
+  routingNumber: string;
+  accountType: AccountType;
+  accountClass: AccountClass;
   notes?: Record<string, unknown>;
-  microdepositAmounts?: MicrodepositAmounts;
 }
 
 // response body
@@ -17,6 +15,7 @@ export interface PaymentMethod extends PaymentMethodRequest {
   paymentMethodId: Readonly<string>;
   displayName?: Readonly<string>;
   accountNumberLast4?: Readonly<string>;
+  status: Readonly<string>;
 }
 
 export enum AccountType {
@@ -28,9 +27,6 @@ export enum AccountClass {
   CHECKING = "checking",
   SAVINGS = "savings",
 }
-
-// The two (2) micro-deposit amounts to verify. Floating point values.
-type MicrodepositAmounts = [number, number];
 
 /**
  * See https://docs.withabound.com/reference#payment-methods
@@ -59,21 +55,5 @@ export class PaymentMethods extends AboundUserScopedResource<
     paymentMethodId: string
   ): Promise<AboundResponse<PaymentMethod>> {
     return super.retrieveForUser(userId, paymentMethodId);
-  }
-
-  public async verify(
-    userId: string,
-    paymentMethodId: string,
-    microdepositAmounts: MicrodepositAmounts
-  ) {
-    return this.update(userId, paymentMethodId, { microdepositAmounts });
-  }
-
-  public async update(
-    userId: string,
-    paymentMethodId: string,
-    paymentMethod: PaymentMethodRequest
-  ) {
-    return super.updateForUser(userId, paymentMethodId, { paymentMethod });
   }
 }
