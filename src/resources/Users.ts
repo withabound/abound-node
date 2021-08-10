@@ -24,7 +24,7 @@ export interface UserProfile {
 
 // response body
 export interface User extends UserRequest {
-  userId: string;
+  userId: Readonly<string>;
 }
 
 /*
@@ -47,7 +47,7 @@ export class Users extends AboundBaseResource<UserRequest, User> {
 
   public async update(
     id: string,
-    user: UserRequest
+    user: Partial<UserRequest>
   ): Promise<AboundResponse<User>> {
     return super.update(id, { user });
   }
