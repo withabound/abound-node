@@ -39,7 +39,7 @@ export abstract class AboundUserScopedResource<I, O> extends AboundResource<
   protected async updateForUser(
     userId: string,
     resourceId: string,
-    payload: Record<string, I>
+    payload: Record<string, Partial<I>>
   ): Promise<AboundResponse<O>> {
     const uri = this.userScopedResourceUri(userId, resourceId);
 
