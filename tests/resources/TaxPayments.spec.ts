@@ -5,7 +5,11 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
-import { TaxPayment, TaxPaymentEntity, TaxPeriod } from "../../src/resources/TaxPayments";
+import {
+  TaxPayment,
+  TaxPaymentEntity,
+  TaxPeriod,
+} from "../../src/resources/TaxPayments";
 import { createAboundClient, V2_SANDBOX_URL } from "../utils";
 
 describe("Abound Tax Payments", () => {
