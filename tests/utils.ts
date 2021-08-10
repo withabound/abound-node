@@ -11,8 +11,12 @@ function randomEmail(length = 13): string {
   return `${randomString(length)}@example.com`;
 }
 
-function randomZip(length = 5): string {
+function randomNumberString(length = 13): string {
   return random(length, CharSet.NUMERIC);
+}
+
+function randomZip(): string {
+  return randomNumberString(5);
 }
 
 function randomDate(): string {
@@ -53,4 +57,11 @@ enum CharSet {
   ALPHANUMERIC_LOWER = "0123456789abcdefghijklmnopqrstuvwxyz",
 }
 
-export { createAboundClient, randomDate, randomEmail, randomString, randomZip };
+export {
+  createAboundClient,
+  randomDate,
+  randomEmail,
+  randomNumberString,
+  randomString,
+  randomZip,
+};
