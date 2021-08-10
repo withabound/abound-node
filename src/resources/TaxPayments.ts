@@ -25,6 +25,9 @@ export interface TaxPayment extends TaxPaymentRequest {
   status: string;
 }
 
+/**
+ * See https://docs.withabound.com/reference#tax-payments
+ */
 export class TaxPayments extends AboundUserScopedResource<
   TaxPaymentRequest,
   TaxPayment
