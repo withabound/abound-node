@@ -38,25 +38,25 @@ describe("Abound Incomes", () => {
         );
 
       expect(createdMileages).toMatchInlineSnapshot(`
-Object {
-  "data": Array [
-    Object {
-      "date": "2021-08-09",
-      "distance": 21.1,
-      "transactionId": "mileageId_a4f91a486455036ff08fac6392d7c73ca4077f18",
-    },
-    Object {
-      "date": "2021-08-10",
-      "distance": 89.1,
-      "transactionId": "mileageId_899077c22a901810574c95009abc072cd3febe1e",
-    },
-  ],
-  "request": Object {
-    "requestId": "requestId_cbac0c1330db2308633bae2f",
-    "timestamp": 1628655978213,
-  },
-}
-`);
+        Object {
+          "data": Array [
+            Object {
+              "date": "2021-08-09",
+              "distance": 21.1,
+              "transactionId": "mileageId_a4f91a486455036ff08fac6392d7c73ca4077f18",
+            },
+            Object {
+              "date": "2021-08-10",
+              "distance": 89.1,
+              "transactionId": "mileageId_899077c22a901810574c95009abc072cd3febe1e",
+            },
+          ],
+          "request": Object {
+            "requestId": "requestId_cbac0c1330db2308633bae2f",
+            "timestamp": 1628655978213,
+          },
+        }
+      `);
     });
   });
 
@@ -69,18 +69,18 @@ Object {
         );
 
       expect(retrievedMileage).toMatchInlineSnapshot(`
-Object {
-  "data": Object {
-    "date": "2021-08-09",
-    "distance": 21.1,
-    "transactionId": "mileageId_a4f91a486455036ff08fac6392d7c73ca4077f18",
-  },
-  "request": Object {
-    "requestId": "requestId_038d9dcdf0a008ed80742dee",
-    "timestamp": 1628656933874,
-  },
-}
-`);
+        Object {
+          "data": Object {
+            "date": "2021-08-09",
+            "distance": 21.1,
+            "transactionId": "mileageId_a4f91a486455036ff08fac6392d7c73ca4077f18",
+          },
+          "request": Object {
+            "requestId": "requestId_038d9dcdf0a008ed80742dee",
+            "timestamp": 1628656933874,
+          },
+        }
+      `);
     });
   });
 
