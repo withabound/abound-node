@@ -37,7 +37,7 @@ export abstract class AboundBaseResource<I, O> extends AboundResource<I, O> {
     return super._update(uri, payload);
   }
 
-  protected async delete(id: string): Promise<EmptyObject> {
+  protected async delete(id: string): Promise<AboundResponse<EmptyObject>> {
     const uri = `${this.path}/${id}`;
 
     return super._delete(uri);
