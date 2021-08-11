@@ -1,3 +1,4 @@
+import { Notes } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 
@@ -8,7 +9,7 @@ export interface TaxPaymentRequest {
   amount: number; // float
   entity: TaxPaymentEntity;
   paymentMethodId: string;
-  notes?: Record<string, unknown>;
+  notes?: Notes;
 }
 
 export enum TaxPeriod {
