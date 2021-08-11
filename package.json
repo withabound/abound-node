@@ -31,11 +31,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iusetrack/abound-node.git"
+    "url": "git+https://github.com/withabound/abound-node.git"
   },
-  "homepage": "https://github.com/iusetrack/abound-node#readme",
+  "homepage": "https://github.com/withabound/abound-node#readme",
   "bugs": {
-    "url": "https://github.com/iusetrack/abound-node/issues"
+    "url": "https://github.com/withabound/abound-node/issues"
   },
   "dependencies": {
     "axios": "^0.21.1"
