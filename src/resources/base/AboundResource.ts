@@ -4,7 +4,7 @@ import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
 // see https://github.com/typescript-eslint/typescript-eslint/issues/2063#issuecomment-675156492
 export type EmptyObject = Record<string, never>;
 
-export type Notes = Record<string, unknown>;
+export type Notes = string | Record<string, unknown>;
 
 /**
  * Base resource from which all other Abound Resources shall extend that maps an API action
