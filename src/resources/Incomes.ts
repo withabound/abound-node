@@ -21,6 +21,9 @@ export interface Income extends IncomeRequest {
 
 export type IncomeType = "1099" | "1099-INT" | "w2" | "personal";
 
+/**
+ * See https://docs.withabound.com/reference#incomes
+ */
 export class Incomes extends AboundUserScopedResource<IncomeRequest, Income> {
   path = "/incomes";
 
