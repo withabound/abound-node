@@ -1,4 +1,6 @@
 import axios, { AxiosInstance } from "axios";
+import qs from "qs";
+
 import { AboundConfig } from "../AboundClient";
 
 let configuredAxios: AxiosInstance;
@@ -15,8 +17,15 @@ export function initAxios(config: AboundConfig): void {
   });
 }
 
-export const get = async <O>(uri: string): Promise<O> => {
+export const get = async <O, P extends Record<string, unknown>>(
+  uri: string,
+  parameters?: P
+): Promise<O> => {
   validateAxiosIsConfigured();
+
+  if (parameters) {
+    uri += qs.stringify(parameters, { addQueryPrefix: true });
+  }
 
   return configuredAxios.get(uri).then((response) => response.data);
 };

@@ -1,4 +1,4 @@
-import { EmptyObject, Notes } from "./base/AboundResource";
+import { EmptyObject, Notes, Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 
@@ -18,6 +18,12 @@ export enum ExpenseType {
   PERSONAL = "personal",
 }
 
+// query params
+export interface ExpenseParameters extends Pagination {
+  foreignId?: string;
+  year?: string;
+}
+
 // response body
 export interface Expense extends ExpenseRequest {
   expenseId: Readonly<string>;
@@ -30,26 +36,45 @@ interface ExpensePredictions {
   taxCategoryPredictionScores: Record<string, number>; // 0 < values < 1
 }
 
-export class Expenses extends AboundUserScopedResource<ExpenseRequest, Expense> {
-  path: string = "/expenses";
+export class Expenses extends AboundUserScopedResource<
+  ExpenseRequest,
+  Expense
+> {
+  path = "/expenses";
 
-  public async create(userId: string, expenses: ExpenseRequest[]): Promise<AboundBulkResponse<Expense>> {
+  public async create(
+    userId: string,
+    expenses: ExpenseRequest[]
+  ): Promise<AboundBulkResponse<Expense>> {
     return super.bulkCreateForUser(userId, { expenses });
   }
 
-  public async list(userId: string): Promise<AboundBulkResponse<Expense>> {
-    return super.listForUser(userId);
+  public async list(
+    userId: string,
+    parameters?: ExpenseParameters
+  ): Promise<AboundBulkResponse<Expense>> {
+    return super.listForUser(userId, parameters);
   }
 
-  public async retrieve(userId: string, expenseId: string): Promise<AboundResponse<Expense>> {
+  public async retrieve(
+    userId: string,
+    expenseId: string
+  ): Promise<AboundResponse<Expense>> {
     return super.retrieveForUser(userId, expenseId);
   }
 
-  public async update(userId: string, expenseId: string, expense: Partial<ExpenseRequest>): Promise<AboundResponse<Expense>> {
+  public async update(
+    userId: string,
+    expenseId: string,
+    expense: Partial<ExpenseRequest>
+  ): Promise<AboundResponse<Expense>> {
     return super.updateForUser(userId, expenseId, { expense });
   }
 
-  public async delete(userId: string, expenseId: string): Promise<AboundResponse<EmptyObject>> {
+  public async delete(
+    userId: string,
+    expenseId: string
+  ): Promise<AboundResponse<EmptyObject>> {
     return super.deleteForUser(userId, expenseId);
   }
 }
