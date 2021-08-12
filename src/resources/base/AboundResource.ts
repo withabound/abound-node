@@ -18,7 +18,7 @@ export interface Pagination {
 export abstract class AboundResource<I, O> {
   abstract path: string;
 
-  protected async _list<P>(
+  protected async _list<P extends Record<string, unknown>>(
     uri: string,
     parameters?: P
   ): Promise<AboundBulkResponse<O>> {
