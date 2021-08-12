@@ -6,7 +6,7 @@ export type EmptyObject = Record<string, never>;
 
 export type Notes = string | Record<string, unknown>;
 
-export interface Pagination {
+export interface Pagination extends Record<string, unknown> {
   page?: string;
 }
 
