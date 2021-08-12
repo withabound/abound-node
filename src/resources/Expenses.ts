@@ -36,6 +36,9 @@ interface ExpensePredictions {
   taxCategoryPredictionScores: Record<string, number>; // 0 < values < 1
 }
 
+/**
+ * See https://docs.withabound.com/reference#expenses
+ */
 export class Expenses extends AboundUserScopedResource<
   ExpenseRequest,
   Expense
