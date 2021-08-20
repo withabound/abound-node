@@ -5,7 +5,8 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
-import { Document, DocumentType } from "../../src/resources/Documents";
+import { DocumentType } from "../../src/resources/Documents";
+import { AccountStatementDocument } from "../../src/resources/documents/AccountStatements";
 import {
   createAboundClient,
   randomBase64EncodedString,
@@ -32,7 +33,7 @@ describe("Abound Incomes", () => {
 
   describe("create", () => {
     it("returns a promise that resolves to an object that includes a list of the created Documents on success", async () => {
-      const createdDocuments: AboundBulkResponse<Document> =
+      const createdDocuments: AboundBulkResponse<AccountStatementDocument> =
         await abound.documents.create(TEST_USER_ID, [
           {
             type: DocumentType.ACCOUNT_STATEMENT,
@@ -87,7 +88,7 @@ describe("Abound Incomes", () => {
 
   describe("list", () => {
     it("returns a promise that resolves to an object that includes a list of the user's Documents on success", async () => {
-      const documents: AboundBulkResponse<Document> =
+      const documents: AboundBulkResponse<AccountStatementDocument> =
         await abound.documents.list(TEST_USER_ID);
 
       expect(documents).toMatchInlineSnapshot(`
@@ -158,7 +159,7 @@ describe("Abound Incomes", () => {
     });
 
     it("returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year", async () => {
-      const filteredDocuments: AboundBulkResponse<Document> =
+      const filteredDocuments: AboundBulkResponse<AccountStatementDocument> =
         await abound.documents.list(TEST_USER_ID, {
           year: "2021",
         });
@@ -198,7 +199,7 @@ describe("Abound Incomes", () => {
 
   describe("retrieve", () => {
     it("returns a promise that resolves to an object that includes a single Document on success", async () => {
-      const document: AboundResponse<Document> =
+      const document: AboundResponse<AccountStatementDocument> =
         await abound.documents.retrieve(
           TEST_USER_ID,
           "documentId_6227faf9721cb65f24806a0f85492821a4bf133a"

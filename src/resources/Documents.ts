@@ -1,43 +1,15 @@
 import { Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
+import {
+  AccountStatementDocument,
+  AccountStatementDocumentRequest,
+} from "./documents/AccountStatements";
 
-// request body
-export interface DocumentRequest {
+export type DocumentRequest = AccountStatementDocumentRequest; // | ScheduleCDocumentRequest, etc.
+
+export interface BaseDocumentRequest {
   type: DocumentType;
-  year: number; // The year associated with the document.
-  beginDate: string; // YYYY-MM-DD. The date representing the start of this period.
-  endDate: string; // YYYY-MM-DD. The date representing the end of this period.
-  accountNumber: string;
-  summary: DocumentSummary;
-  bank: DocumentBank;
-  disclosure?: string; // disclosure text to place at the bottom of all account statement pages. Max length 1,000
-}
-
-export interface DocumentSummary {
-  beginningBalance: number; // float
-  endingBalance: number; // float
-  interestPercentage: number; // float
-  interestAmount: number; // float
-  totalFees: number; // float
-}
-
-export interface DocumentBank {
-  name: string;
-  logo: string; // base64 encoded logo
-  address: string;
-  address2?: string;
-  city: string;
-  state: string; // two-letter code
-  zipcode: string;
-  customerService?: BankCustomerService;
-}
-
-export interface BankCustomerService {
-  phoneNumber: string;
-  email: string;
-  website: string;
-  instructions?: string;
 }
 
 // query params
@@ -45,16 +17,11 @@ export interface DocumentParameters extends Pagination {
   year?: string | number; // applies a filter based on year
 }
 
-// response body
-export interface Document {
-  documentId: Readonly<string>;
-  documentURL: Readonly<string>;
-  documentName: Readonly<string>;
-  type: Readonly<DocumentType>;
-  year: string;
-  creationDate: Readonly<string>; // YYYY-MM-DD
-  createdTimestamp: Readonly<number>;
+export interface BaseDocumentResponse {
+  documentId: Readonly<string | null>;
 }
+
+export type Document = AccountStatementDocument; // | ScheduleCDocument, etc.
 
 export enum DocumentType {
   ACCOUNT_STATEMENT = "accountStatement",
