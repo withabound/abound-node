@@ -17,7 +17,7 @@ import {
   V2_SANDBOX_URL,
 } from "../utils";
 
-describe("Abound Incomes", () => {
+describe("Abound Account Statement Documents", () => {
   const TEST_USER_ID = "userId_1dafc40ae9838c2c3e721b2c3c362252ab55eb9f";
 
   let abound: Abound;
