@@ -7,7 +7,7 @@ import {
 // account statement request body
 export interface AccountStatementDocumentRequest extends BaseDocumentRequest {
   type: DocumentType.ACCOUNT_STATEMENT;
-  year: number; // The year associated with the document.
+  year: number; // The year associated with the account statement.
   beginDate: string; // YYYY-MM-DD. The date representing the start of this period.
   endDate: string; // YYYY-MM-DD. The date representing the end of this period.
   accountNumber: string;
