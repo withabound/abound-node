@@ -1,5 +1,5 @@
+import { URLSearchParams } from "url";
 import axios, { AxiosInstance } from "axios";
-import qs from "qs";
 
 import { AboundConfig } from "../AboundClient";
 
@@ -24,7 +24,7 @@ export const get = async <O, P extends Record<string, unknown>>(
   validateAxiosIsConfigured();
 
   if (parameters) {
-    uri += qs.stringify(parameters, { addQueryPrefix: true });
+    uri += buildQueryString(parameters);
   }
 
   return configuredAxios.get(uri).then((response) => response.data);
@@ -47,6 +47,23 @@ export const destroy = async <O>(uri: string): Promise<O> => {
   validateAxiosIsConfigured();
 
   return configuredAxios.delete(uri).then((response) => response.data);
+};
+
+export const buildQueryString = <P extends Record<string, unknown>>(
+  parameters: P
+): string => {
+  const entries = Object.entries(parameters);
+  if (entries.length === 0) {
+    return "";
+  }
+
+  const urlSearchParameters = new URLSearchParams();
+
+  for (const [key, value] of entries) {
+    urlSearchParameters.append(key, String(value));
+  }
+
+  return `?${urlSearchParameters.toString()}`;
 };
 
 function validateAxiosIsConfigured(): void {
