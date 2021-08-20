@@ -12,10 +12,13 @@ export abstract class AboundUserScopedResource<I, O> extends AboundResource<
   I,
   O
 > {
-  protected async listForUser(userId: string): Promise<AboundBulkResponse<O>> {
+  protected async listForUser<P extends Record<string, unknown>>(
+    userId: string,
+    parameters?: P
+  ): Promise<AboundBulkResponse<O>> {
     const uri = this.userScopedResourcesUri(userId);
 
-    return super._list(uri);
+    return super._list(uri, parameters);
   }
 
   protected async createForUser(
