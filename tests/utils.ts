@@ -49,8 +49,6 @@ function createAboundClient(): Abound {
   const config: AboundConfig = {
     apiVersion: "v2",
     environment: environments.sandbox,
-    // appId: "appId_f2d3c91d03c4b96a7a721f02edb07cfe",
-    // appSecret: "appSecret_bf3e2255bff0395ae4c69ecb9f1a6157",
     appId: randomString(),
     appSecret: randomString(),
   };

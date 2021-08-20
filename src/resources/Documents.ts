@@ -42,7 +42,7 @@ export interface BankCustomerService {
 
 // query params
 export interface DocumentParameters extends Pagination {
-  year?: string; // applies a filter based on year
+  year?: string | number; // applies a filter based on year
 }
 
 // response body
