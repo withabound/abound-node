@@ -7,6 +7,10 @@ function randomString(length = 13): string {
   return random(length, CharSet.ALPHANUMERIC_LOWER);
 }
 
+function randomBase64EncodedString(length = 13): string {
+  return Buffer.from(randomString(length), "binary").toString("base64");
+}
+
 function randomEmail(length = 13): string {
   return `${randomString(length)}@example.com`;
 }
@@ -59,6 +63,7 @@ enum CharSet {
 
 export {
   createAboundClient,
+  randomBase64EncodedString,
   randomDate,
   randomEmail,
   randomNumberString,
