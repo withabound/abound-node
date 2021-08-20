@@ -60,6 +60,9 @@ export enum DocumentType {
   ACCOUNT_STATEMENT = "accountStatement",
 }
 
+/**
+ * See https://docs.withabound.com/reference/documents
+ */
 export class Documents extends AboundUserScopedResource<
   DocumentRequest,
   Document
