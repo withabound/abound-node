@@ -5,11 +5,12 @@ import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 // request body
 export interface DocumentRequest {
   type: DocumentType;
-  year: string; // The year associated with the document.
+  year: number; // The year associated with the document.
   beginDate: string; // YYYY-MM-DD. The date representing the start of this period.
   endDate: string; // YYYY-MM-DD. The date representing the end of this period.
   accountNumber: string;
   summary: DocumentSummary;
+  bank: DocumentBank;
   disclosure?: string; // disclosure text to place at the bottom of all account statement pages. Max length 1,000
 }
 
@@ -49,6 +50,8 @@ export interface Document {
   documentId: Readonly<string>;
   documentURL: Readonly<string>;
   documentName: Readonly<string>;
+  type: Readonly<DocumentType>;
+  year: string;
   creationDate: Readonly<string>; // YYYY-MM-DD
   createdTimestamp: Readonly<number>;
 }
