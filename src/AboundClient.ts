@@ -1,5 +1,6 @@
 import { Environment, environments } from "./environments";
 import {
+  Expenses,
   Incomes,
   Mileages,
   TaxPayments,
@@ -23,6 +24,7 @@ export class AboundClient {
   taxPayments: TaxPayments;
   incomes: Incomes;
   mileages: Mileages;
+  expenses: Expenses;
 
   constructor(config: AboundConfig) {
     validateConfig(config);
@@ -34,6 +36,7 @@ export class AboundClient {
     this.taxPayments = new TaxPayments();
     this.incomes = new Incomes();
     this.mileages = new Mileages();
+    this.expenses = new Expenses();
   }
 }
 

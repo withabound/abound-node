@@ -6,6 +6,10 @@ export type EmptyObject = Record<string, never>;
 
 export type Notes = string | Record<string, unknown>;
 
+export interface Pagination extends Record<string, unknown> {
+  page?: string;
+}
+
 /**
  * Base resource from which all other Abound Resources shall extend that maps an API action
  * (e.g. update) to an HTTP verb (e.g. PUT). Direct subclasses include
@@ -14,8 +18,11 @@ export type Notes = string | Record<string, unknown>;
 export abstract class AboundResource<I, O> {
   abstract path: string;
 
-  protected async _list(uri: string): Promise<AboundBulkResponse<O>> {
-    return get(uri);
+  protected async _list<P extends Record<string, unknown>>(
+    uri: string,
+    parameters?: P
+  ): Promise<AboundBulkResponse<O>> {
+    return get(uri, parameters);
   }
 
   protected async _create(
