@@ -1,3 +1,4 @@
+import { Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 
@@ -45,9 +46,10 @@ export class PaymentMethods extends AboundUserScopedResource<
   }
 
   public async list(
-    userId: string
+    userId: string,
+    parameters?: Pagination
   ): Promise<AboundBulkResponse<PaymentMethod>> {
-    return super.listForUser(userId);
+    return super.listForUser(userId, parameters);
   }
 
   public async retrieve(
