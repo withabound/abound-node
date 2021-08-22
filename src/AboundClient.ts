@@ -4,6 +4,7 @@ import {
   Expenses,
   Incomes,
   Mileages,
+  TaxCategories,
   TaxPayments,
   Taxes,
   PaymentMethods,
@@ -29,6 +30,7 @@ export class AboundClient {
   expenses: Expenses;
   documents: Documents;
   taxes: Taxes;
+  taxCategories: TaxCategories;
 
   constructor(config: AboundConfig) {
     validateConfig(config);
@@ -43,6 +45,7 @@ export class AboundClient {
     this.expenses = new Expenses();
     this.documents = new Documents();
     this.taxes = new Taxes();
+    this.taxCategories = new TaxCategories();
   }
 }
 
