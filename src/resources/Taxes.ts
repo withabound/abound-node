@@ -19,7 +19,7 @@ export enum FilingStatus {
 }
 
 // response body
-export interface Tax extends TaxRequest {
+export interface Tax extends Required<TaxRequest> {
   effectiveTaxRate: number; // float
   federalIncomeTax: number; // float
   federalTaxOutstanding: number; // float
