@@ -65,7 +65,7 @@ export class Taxes extends AboundUserScopedResource<TaxRequest, Tax> {
     userId: string,
     year: string | number,
     taxes: Partial<TaxRequest>
-  ) {
+  ): Promise<AboundResponse<Tax>> {
     return super.updateForUser(userId, year.toString(), { taxes });
   }
 }
