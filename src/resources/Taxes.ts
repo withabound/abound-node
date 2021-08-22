@@ -44,6 +44,9 @@ export interface Tax extends TaxRequest {
   year: string;
 }
 
+/**
+ * See https://docs.withabound.com/reference/taxes
+ */
 export class Taxes extends AboundUserScopedResource<TaxRequest, Tax> {
   path = "/taxes";
 
