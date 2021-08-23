@@ -142,7 +142,79 @@ describe("Abound Users", () => {
             "timestamp": 1628219799447,
           },
         }
-        `);
+      `);
+    });
+
+    it("returns a promise that resolves to a paginated list of users when the `page` parameter is supplied", async () => {
+      const users: AboundBulkResponse<User> = await abound.users.list({
+        page: "dXNlcklkXzhkMzhhYTFkNjY2MmRiOGI4NjdkYjE2MTYzMjMzYmUzNmMwZWE4Yzc",
+      });
+
+      expect(users).toMatchInlineSnapshot(`
+        Object {
+          "count": 3,
+          "data": Array [
+            Object {
+              "canWithhold": false,
+              "email": "drmfliuzq9zu1@example.com",
+              "foreignId": "l7ry9r2mqtgxe",
+              "profile": Object {
+                "address": "a3cmxgierh3mn",
+                "address2": null,
+                "city": "jrtudm5uk91g9",
+                "dateOfBirth": "1987-12-24",
+                "firstName": "fglo63di9i1uj",
+                "ipAddress": null,
+                "lastName": "8ezvdup23jhc1",
+                "phoneNumber": "mk66vx1a7125l",
+                "state": "mmhxmh5zeddfo",
+                "zipcode": "62882",
+              },
+              "userId": "userId_fa8afa3d16680deb331aff5599074cdda97a76e4",
+            },
+            Object {
+              "canWithhold": false,
+              "email": "x65bultd2jfsd@example.com",
+              "foreignId": "vp6z8jxn6w7lk",
+              "profile": Object {
+                "address": "yrf4nctstnath",
+                "address2": null,
+                "city": "4azwbldife5wd",
+                "dateOfBirth": "1917-01-16",
+                "firstName": "w1e26beq8z5b8",
+                "ipAddress": null,
+                "lastName": "1mq6md88qmyyp",
+                "phoneNumber": "7lv0k4ptvny2c",
+                "state": "g3qz46sbot95i",
+                "zipcode": "82572",
+              },
+              "userId": "userId_cdae7797ab1520cd8691b22171fc5fe74e0feaa3",
+            },
+            Object {
+              "canWithhold": false,
+              "email": "3ciroq0o41kow@example.com",
+              "foreignId": "yivisw5tgkjxf",
+              "profile": Object {
+                "address": "sejwmg1hkgub1",
+                "address2": null,
+                "city": "mkjddtpn4zamh",
+                "dateOfBirth": "1959-07-28",
+                "firstName": "cjjqwvjno72in",
+                "ipAddress": null,
+                "lastName": "e8szps5d8v0tu",
+                "phoneNumber": "7aguu1ml0dp0v",
+                "state": "8a1ckkkcou4xm",
+                "zipcode": "48077",
+              },
+              "userId": "userId_96e1447acfec179c452a13ae4abad5c21816275f",
+            },
+          ],
+          "request": Object {
+            "requestId": "requestId_6039a13cb01b3f8dad664959",
+            "timestamp": 1629662612482,
+          },
+        }
+      `);
     });
   });
 
@@ -186,6 +258,7 @@ describe("Abound Users", () => {
 });
 
 function initMocks() {
+  // create
   nock(V2_SANDBOX_URL)
     .post("/users")
     .reply(200, {
@@ -199,6 +272,7 @@ function initMocks() {
       },
     });
 
+  // retrieve
   nock(V2_SANDBOX_URL)
     .get("/users/userId_509948c18e95c0462cad5db54a18888cd2779b72")
     .reply(200, {
@@ -225,6 +299,7 @@ function initMocks() {
       },
     });
 
+  // list
   nock(V2_SANDBOX_URL)
     .get("/users")
     .reply(200, {
@@ -271,6 +346,76 @@ function initMocks() {
       },
     });
 
+  // list, paginated
+  nock(V2_SANDBOX_URL)
+    .get(
+      "/users?page=dXNlcklkXzhkMzhhYTFkNjY2MmRiOGI4NjdkYjE2MTYzMjMzYmUzNmMwZWE4Yzc"
+    )
+    .reply(200, {
+      data: [
+        {
+          userId: "userId_fa8afa3d16680deb331aff5599074cdda97a76e4",
+          email: "drmfliuzq9zu1@example.com",
+          foreignId: "l7ry9r2mqtgxe",
+          canWithhold: false,
+          profile: {
+            firstName: "fglo63di9i1uj",
+            lastName: "8ezvdup23jhc1",
+            address: "a3cmxgierh3mn",
+            address2: null,
+            city: "jrtudm5uk91g9",
+            state: "mmhxmh5zeddfo",
+            zipcode: "62882",
+            phoneNumber: "mk66vx1a7125l",
+            dateOfBirth: "1987-12-24",
+            ipAddress: null,
+          },
+        },
+        {
+          userId: "userId_cdae7797ab1520cd8691b22171fc5fe74e0feaa3",
+          email: "x65bultd2jfsd@example.com",
+          foreignId: "vp6z8jxn6w7lk",
+          canWithhold: false,
+          profile: {
+            firstName: "w1e26beq8z5b8",
+            lastName: "1mq6md88qmyyp",
+            address: "yrf4nctstnath",
+            address2: null,
+            city: "4azwbldife5wd",
+            state: "g3qz46sbot95i",
+            zipcode: "82572",
+            phoneNumber: "7lv0k4ptvny2c",
+            dateOfBirth: "1917-01-16",
+            ipAddress: null,
+          },
+        },
+        {
+          userId: "userId_96e1447acfec179c452a13ae4abad5c21816275f",
+          email: "3ciroq0o41kow@example.com",
+          foreignId: "yivisw5tgkjxf",
+          canWithhold: false,
+          profile: {
+            firstName: "cjjqwvjno72in",
+            lastName: "e8szps5d8v0tu",
+            address: "sejwmg1hkgub1",
+            address2: null,
+            city: "mkjddtpn4zamh",
+            state: "8a1ckkkcou4xm",
+            zipcode: "48077",
+            phoneNumber: "7aguu1ml0dp0v",
+            dateOfBirth: "1959-07-28",
+            ipAddress: null,
+          },
+        },
+      ],
+      count: 3,
+      request: {
+        timestamp: 1629662612482,
+        requestId: "requestId_6039a13cb01b3f8dad664959",
+      },
+    });
+
+  // update
   nock(V2_SANDBOX_URL)
     .put("/users/userId_509948c18e95c0462cad5db54a18888cd2779b72", {
       user: {

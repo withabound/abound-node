@@ -8,7 +8,7 @@ import {
 import { Mileage } from "../../src/resources/Mileages";
 import { createAboundClient, randomDate, V2_SANDBOX_URL } from "../utils";
 
-describe("Abound Incomes", () => {
+describe("Abound Mileages", () => {
   let abound: Abound;
 
   beforeAll(() => {

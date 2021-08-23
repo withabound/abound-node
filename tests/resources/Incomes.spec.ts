@@ -107,6 +107,59 @@ describe("Abound Incomes", () => {
         }
       `);
     });
+
+    it("returns a promise that resolves to the user's incomes with filters applied when provided", async () => {
+      const incomes: AboundBulkResponse<Income> = await abound.incomes.list(
+        "userId_1dafc40ae9838c2c3e721b2c3c362252ab55eb9f",
+        {
+          incomeType: "1099-INT",
+        }
+      );
+
+      expect(incomes).toMatchInlineSnapshot(`
+        Object {
+          "count": 4,
+          "data": Array [
+            Object {
+              "amount": 10.87,
+              "category": "u2l6b8txyy4k5",
+              "date": "2021-08-05",
+              "description": "uiyrhbwqnc67l",
+              "incomeId": "incomeId_48ea76f7924cc32b008bed20a13a32a9686c7e7a",
+              "incomeType": "1099-INT",
+            },
+            Object {
+              "amount": 10.87,
+              "category": "",
+              "date": "2021-08-05",
+              "description": "",
+              "incomeId": "incomeId_8cf0ec55ca5fa2642402ac1332d65e1c68b4d26e",
+              "incomeType": "1099-INT",
+            },
+            Object {
+              "amount": 10.87,
+              "category": "",
+              "date": "2021-08-05",
+              "description": "",
+              "incomeId": "incomeId_fa7d544f4ff97f0254897774007a490c6e06d7fd",
+              "incomeType": "1099-INT",
+            },
+            Object {
+              "amount": 10.87,
+              "category": "",
+              "date": "2021-08-05",
+              "description": "",
+              "incomeId": "incomeId_fb14e2edbe3a0588d83ee630a1b9d259d0249aba",
+              "incomeType": "1099-INT",
+            },
+          ],
+          "request": Object {
+            "requestId": "requestId_bad5b8c3955b32b14af7102c",
+            "timestamp": 1629661376872,
+          },
+        }
+      `);
+    });
   });
 
   describe("retrieve", () => {
@@ -180,6 +233,7 @@ Object {
   });
 
   function initMocks() {
+    // list
     nock(V2_SANDBOX_URL)
       .get("/users/userId_1dafc40ae9838c2c3e721b2c3c362252ab55eb9f/incomes")
       .reply(200, {
@@ -212,6 +266,54 @@ Object {
         },
       });
 
+    // list, filter by incomeType
+    nock(V2_SANDBOX_URL)
+      .get(
+        "/users/userId_1dafc40ae9838c2c3e721b2c3c362252ab55eb9f/incomes?incomeType=1099-INT"
+      )
+      .reply(200, {
+        data: [
+          {
+            incomeId: "incomeId_48ea76f7924cc32b008bed20a13a32a9686c7e7a",
+            incomeType: "1099-INT",
+            amount: 10.87,
+            description: "uiyrhbwqnc67l",
+            date: "2021-08-05",
+            category: "u2l6b8txyy4k5",
+          },
+          {
+            incomeId: "incomeId_8cf0ec55ca5fa2642402ac1332d65e1c68b4d26e",
+            incomeType: "1099-INT",
+            amount: 10.87,
+            description: "",
+            date: "2021-08-05",
+            category: "",
+          },
+          {
+            incomeId: "incomeId_fa7d544f4ff97f0254897774007a490c6e06d7fd",
+            incomeType: "1099-INT",
+            amount: 10.87,
+            description: "",
+            date: "2021-08-05",
+            category: "",
+          },
+          {
+            incomeId: "incomeId_fb14e2edbe3a0588d83ee630a1b9d259d0249aba",
+            incomeType: "1099-INT",
+            amount: 10.87,
+            description: "",
+            date: "2021-08-05",
+            category: "",
+          },
+        ],
+        count: 4,
+        request: {
+          timestamp: 1629661376872,
+          requestId: "requestId_bad5b8c3955b32b14af7102c",
+        },
+      });
+
+    // retrieve
     nock(V2_SANDBOX_URL)
       .get(
         "/users/userId_1dafc40ae9838c2c3e721b2c3c362252ab55eb9f/incomes/incomeId_57300fc1d0bdfdfe0c14333acf85d35ae50f6c33"
@@ -229,6 +331,7 @@ Object {
         },
       });
 
+    // create
     nock(V2_SANDBOX_URL)
       .post("/users/userId_1dafc40ae9838c2c3e721b2c3c362252ab55eb9f/incomes")
       .reply(200, {
@@ -254,6 +357,7 @@ Object {
         },
       });
 
+    // update
     nock(V2_SANDBOX_URL)
       .put(
         "/users/userId_1dafc40ae9838c2c3e721b2c3c362252ab55eb9f/incomes/incomeId_084f9d71bb9330de4f796f3b5a9f8cbfc360ab5b"
