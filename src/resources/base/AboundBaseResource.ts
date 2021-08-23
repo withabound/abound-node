@@ -12,8 +12,10 @@ import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
 export abstract class AboundBaseResource<I, O> extends AboundResource<I, O> {
   abstract path: string;
 
-  protected async list(): Promise<AboundBulkResponse<O>> {
-    return super._list(this.path);
+  protected async list<P extends Record<string, unknown>>(
+    parameters?: P
+  ): Promise<AboundBulkResponse<O>> {
+    return super._list(this.path, parameters);
   }
 
   protected async create(

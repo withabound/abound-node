@@ -1,4 +1,4 @@
-import { EmptyObject, Notes } from "./base/AboundResource";
+import { EmptyObject, Notes, Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 
@@ -12,6 +12,12 @@ export interface IncomeRequest {
   category?: string;
   foreignId?: string;
   notes?: Notes;
+}
+
+// query params
+export interface IncomeParameters extends Pagination {
+  foreignId?: string;
+  incomeType?: IncomeType;
 }
 
 // response body
@@ -34,8 +40,11 @@ export class Incomes extends AboundUserScopedResource<IncomeRequest, Income> {
     return super.bulkCreateForUser(userId, { incomes });
   }
 
-  public async list(userId: string): Promise<AboundBulkResponse<Income>> {
-    return super.listForUser(userId);
+  public async list(
+    userId: string,
+    parameters?: IncomeParameters
+  ): Promise<AboundBulkResponse<Income>> {
+    return super.listForUser(userId, parameters);
   }
 
   public async retrieve(

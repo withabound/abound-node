@@ -104,6 +104,61 @@ describe("Abound Payment Methods", () => {
         }
       `);
     });
+
+    it("returns a promise that resolves to a paginated list of payment methods on success when the `page` parameter is supplied", async () => {
+      const paymentMethods: AboundBulkResponse<PaymentMethod> =
+        await abound.paymentMethods.list(
+          "userId_509948c18e95c0462cad5db54a18888cd2779b72",
+          {
+            page: "cGF5bWVudE1ldGhvZElkX2NkOTk4NGVkZmNkNGYxZTdmYmEwYTNjNDY1NTM3Yjg4ZmQ1YzM1YzU",
+          }
+        );
+
+      expect(paymentMethods).toMatchInlineSnapshot(`
+        Object {
+          "count": 3,
+          "data": Array [
+            Object {
+              "accountClass": "checking",
+              "accountNumberLast4": "3794",
+              "accountType": "personal",
+              "displayName": "(3794) personal checking",
+              "notes": Object {
+                "preferredPaymentMethod": true,
+              },
+              "paymentMethodId": "paymentMethodId_ce9aa932ab75882516c69db8b8d8a3b5705e8f4d",
+              "status": "unverified",
+            },
+            Object {
+              "accountClass": "checking",
+              "accountNumberLast4": "6719",
+              "accountType": "personal",
+              "displayName": "(6719) personal checking",
+              "notes": Object {
+                "preferredPaymentMethod": true,
+              },
+              "paymentMethodId": "paymentMethodId_d205c71684b309a8e49eb1dee5324909c6406f65",
+              "status": "unverified",
+            },
+            Object {
+              "accountClass": "checking",
+              "accountNumberLast4": "5079",
+              "accountType": "personal",
+              "displayName": "(5079) personal checking",
+              "notes": Object {
+                "preferredPaymentMethod": true,
+              },
+              "paymentMethodId": "paymentMethodId_d5c760cb2d652893484e155ec77631171942281e",
+              "status": "unverified",
+            },
+          ],
+          "request": Object {
+            "requestId": "requestId_db38f75f5a7eb16d4e34e133",
+            "timestamp": 1629662019807,
+          },
+        }
+      `);
+    });
   });
 
   describe("retrieve", () => {
@@ -137,6 +192,7 @@ describe("Abound Payment Methods", () => {
   });
 
   function initMocks() {
+    // create
     nock(V2_SANDBOX_URL)
       .post(
         "/users/userId_509948c18e95c0462cad5db54a18888cd2779b72/paymentMethods"
@@ -160,6 +216,7 @@ describe("Abound Payment Methods", () => {
         },
       });
 
+    // list
     nock(V2_SANDBOX_URL)
       .get(
         "/users/userId_509948c18e95c0462cad5db54a18888cd2779b72/paymentMethods"
@@ -195,6 +252,58 @@ describe("Abound Payment Methods", () => {
         },
       });
 
+    // list, paginated
+    nock(V2_SANDBOX_URL)
+      .get(
+        "/users/userId_509948c18e95c0462cad5db54a18888cd2779b72/paymentMethods?page=cGF5bWVudE1ldGhvZElkX2NkOTk4NGVkZmNkNGYxZTdmYmEwYTNjNDY1NTM3Yjg4ZmQ1YzM1YzU"
+      )
+      .reply(200, {
+        data: [
+          {
+            paymentMethodId:
+              "paymentMethodId_ce9aa932ab75882516c69db8b8d8a3b5705e8f4d",
+            status: "unverified",
+            displayName: "(3794) personal checking",
+            accountNumberLast4: "3794",
+            accountType: "personal",
+            accountClass: "checking",
+            notes: {
+              preferredPaymentMethod: true,
+            },
+          },
+          {
+            paymentMethodId:
+              "paymentMethodId_d205c71684b309a8e49eb1dee5324909c6406f65",
+            status: "unverified",
+            displayName: "(6719) personal checking",
+            accountNumberLast4: "6719",
+            accountType: "personal",
+            accountClass: "checking",
+            notes: {
+              preferredPaymentMethod: true,
+            },
+          },
+          {
+            paymentMethodId:
+              "paymentMethodId_d5c760cb2d652893484e155ec77631171942281e",
+            status: "unverified",
+            displayName: "(5079) personal checking",
+            accountNumberLast4: "5079",
+            accountType: "personal",
+            accountClass: "checking",
+            notes: {
+              preferredPaymentMethod: true,
+            },
+          },
+        ],
+        count: 3,
+        request: {
+          timestamp: 1629662019807,
+          requestId: "requestId_db38f75f5a7eb16d4e34e133",
+        },
+      });
+
+    // retrieve
     nock(V2_SANDBOX_URL)
       .get(
         "/users/userId_509948c18e95c0462cad5db54a18888cd2779b72/paymentMethods/paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4"
@@ -218,6 +327,7 @@ describe("Abound Payment Methods", () => {
         },
       });
 
+    // update
     nock(V2_SANDBOX_URL)
       .put(
         "/users/userId_509948c18e95c0462cad5db54a18888cd2779b72/paymentMethods/paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4"
