@@ -6,3 +6,4 @@ export { Mileages } from "./resources/Mileages";
 export { Expenses } from "./resources/Expenses";
 export { Documents } from "./resources/Documents";
 export { Taxes } from "./resources/Taxes";
+export { TaxCategories } from "./resources/TaxCategories";
