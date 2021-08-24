@@ -9,7 +9,11 @@ import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
  * @param {I} input — the data type of the request body
  * @param {O} output — the data type of the response body
  */
-export abstract class AboundBaseResource<I, O> extends AboundResource<I, O> {
+export abstract class AboundBaseResource<
+  I,
+  O,
+  DEP extends O = O
+> extends AboundResource<I, O, DEP> {
   abstract path: string;
 
   protected async list<P extends Record<string, unknown>>(

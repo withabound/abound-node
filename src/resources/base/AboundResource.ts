@@ -14,43 +14,83 @@ export interface Pagination extends Record<string, unknown> {
  * Base resource from which all other Abound Resources shall extend that maps an API action
  * (e.g. update) to an HTTP verb (e.g. PUT). Direct subclasses include
  * AboundBaseResource and AboundUserScopedResource.
+ *
+ * @param {I} input — the data type of the request body
+ * @param {O} output — the data type of the what the SDK returns
+ * @param {DEP} deprecatedFields — the raw data type of the what the API returns
  */
-export abstract class AboundResource<I, O> {
+export abstract class AboundResource<I, O, DEP extends O = O> {
   abstract path: string;
+
+  protected getDeprecatedFields(): Array<keyof DEP> {
+    return [];
+  }
 
   protected async _list<P extends Record<string, unknown>>(
     uri: string,
     parameters?: P
   ): Promise<AboundBulkResponse<O>> {
-    return get(uri, parameters);
+    const response: AboundBulkResponse<DEP> = await get(uri, parameters);
+
+    return Promise.resolve(this.bulkRemoveDeprecatedFields(response));
   }
 
   protected async _create(
     uri: string,
     payload: Record<string, I>
   ): Promise<AboundResponse<O>> {
-    return post(uri, payload);
+    const response: AboundResponse<DEP> = await post(uri, payload);
+
+    return Promise.resolve(this.removeDeprecatedFields(response));
   }
 
   protected async _bulkCreate(
     uri: string,
     payload: Record<string, I[]>
   ): Promise<AboundBulkResponse<O>> {
-    return post(uri, payload);
+    const response: AboundBulkResponse<DEP> = await post(uri, payload);
+
+    return Promise.resolve(this.bulkRemoveDeprecatedFields(response));
   }
 
   protected async _retrieve(uri: string): Promise<AboundResponse<O>> {
-    return get(uri);
+    const response: AboundResponse<DEP> = await get(uri);
+
+    return Promise.resolve(this.removeDeprecatedFields(response));
   }
 
   protected async _update(
     uri: string,
     payload: Record<string, Partial<I>>
   ): Promise<AboundResponse<O>> {
-    return put(uri, payload);
+    const response: AboundResponse<DEP> = await put(uri, payload);
+
+    return Promise.resolve(this.removeDeprecatedFields(response));
   }
 
   protected async _delete(uri: string): Promise<AboundResponse<EmptyObject>> {
     return destroy(uri);
+  }
+
+  private removeDeprecatedFields(
+    response: AboundResponse<DEP>
+  ): AboundResponse<O> {
+    for (const deprecatedField of this.getDeprecatedFields()) {
+      delete response.data[deprecatedField]; // eslint-disable-line @typescript-eslint/no-dynamic-delete
+    }
+
+    return response;
+  }
+
+  private bulkRemoveDeprecatedFields(
+    response: AboundBulkResponse<DEP>
+  ): AboundBulkResponse<O> {
+    for (const deprecatedField of this.getDeprecatedFields()) {
+      for (const datum of response.data) {
+        delete datum[deprecatedField]; // eslint-disable-line @typescript-eslint/no-dynamic-delete
+      }
+    }
+
+    return response;
   }
 }

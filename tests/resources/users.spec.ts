@@ -155,7 +155,6 @@ describe("Abound Users", () => {
           "count": 3,
           "data": Array [
             Object {
-              "canWithhold": false,
               "email": "drmfliuzq9zu1@example.com",
               "foreignId": "l7ry9r2mqtgxe",
               "profile": Object {
@@ -173,7 +172,6 @@ describe("Abound Users", () => {
               "userId": "userId_fa8afa3d16680deb331aff5599074cdda97a76e4",
             },
             Object {
-              "canWithhold": false,
               "email": "x65bultd2jfsd@example.com",
               "foreignId": "vp6z8jxn6w7lk",
               "profile": Object {
@@ -191,7 +189,6 @@ describe("Abound Users", () => {
               "userId": "userId_cdae7797ab1520cd8691b22171fc5fe74e0feaa3",
             },
             Object {
-              "canWithhold": false,
               "email": "3ciroq0o41kow@example.com",
               "foreignId": "yivisw5tgkjxf",
               "profile": Object {
@@ -230,7 +227,6 @@ describe("Abound Users", () => {
       expect(updatedUser).toMatchInlineSnapshot(`
         Object {
           "data": Object {
-            "canWithhold": false,
             "email": "test123test@example.com",
             "foreignId": "kl6mo5okpo7t3",
             "profile": Object {
@@ -280,6 +276,7 @@ function initMocks() {
         userId: "userId_509948c18e95c0462cad5db54a18888cd2779b72",
         email: "7elmombtzsw24@example.com",
         foreignId: "kl6mo5okpo7t3",
+        canWithhold: false,
         profile: {
           firstName: "cxlzkro854hnk",
           lastName: "5oefwmin27xuy",
@@ -308,6 +305,7 @@ function initMocks() {
           userId: "userId_924d93f64b66f255fb3e6f1662192781c2915f29",
           email: "wymig76srzdz8@example.com",
           foreignId: "is5navld6id8p",
+          canWithhold: false,
           profile: {
             firstName: "ua15juawbtfps",
             lastName: "ljeg7k3th7alh",
@@ -325,6 +323,7 @@ function initMocks() {
           userId: "userId_509948c18e95c0462cad5db54a18888cd2779b72",
           email: "7elmombtzsw24@example.com",
           foreignId: "kl6mo5okpo7t3",
+          canWithhold: false,
           profile: {
             firstName: "cxlzkro854hnk",
             lastName: "5oefwmin27xuy",
