@@ -5,3 +5,4 @@ export { Incomes } from "./resources/Incomes";
 export { Mileages } from "./resources/Mileages";
 export { Expenses } from "./resources/Expenses";
 export { Documents } from "./resources/Documents";
+export { Taxes } from "./resources/Taxes";
