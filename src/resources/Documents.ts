@@ -28,7 +28,7 @@ export enum DocumentType {
 }
 
 // The raw `Document` object returned from the APIs returns one deprecated field, which the SDK will remove.
-interface RawDocumentApiResponse extends Document {
+interface DocumentApiResponse extends Document {
   creationDate: Readonly<string>; // YYYY-MM-DD
 }
 
@@ -38,11 +38,11 @@ interface RawDocumentApiResponse extends Document {
 export class Documents extends AboundUserScopedResource<
   DocumentRequest,
   Document,
-  RawDocumentApiResponse
+  DocumentApiResponse
 > {
   path = "/documents";
 
-  getDeprecatedFields(): Array<keyof RawDocumentApiResponse> {
+  getDeprecatedFields(): Array<keyof DocumentApiResponse> {
     return ["creationDate"];
   }
 
