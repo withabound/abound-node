@@ -88,8 +88,8 @@ export abstract class AboundResource<I, O, RESP extends O = O> {
     response: AboundBulkResponse<RESP>
   ): AboundBulkResponse<O> {
     for (const deprecatedField of this.getDeprecatedFields()) {
-      for (const datum of response.data) {
-        delete datum[deprecatedField]; // eslint-disable-line @typescript-eslint/no-dynamic-delete
+      for (const resource of response.data) {
+        delete resource[deprecatedField]; // eslint-disable-line @typescript-eslint/no-dynamic-delete
       }
     }
 
