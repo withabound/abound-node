@@ -48,6 +48,5 @@ export interface AccountStatementDocument extends BaseDocumentResponse {
   documentName: Readonly<string>;
   type: Readonly<DocumentType>;
   year: string;
-  creationDate: Readonly<string>; // YYYY-MM-DD
   createdTimestamp: Readonly<number>;
 }

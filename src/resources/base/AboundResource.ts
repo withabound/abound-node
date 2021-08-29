@@ -16,13 +16,15 @@ export interface Pagination extends Record<string, unknown> {
  * AboundBaseResource and AboundUserScopedResource.
  *
  * @param {I} input — the data type of the request body
- * @param {O} output — the data type of the what the SDK returns
- * @param {DEP} deprecatedFields — the raw data type of the what the API returns
+ * @param {O} output — the data type of the payloads returned by SDK methods.
+ * @param {RESP} API response — the data type of the raw response returned by Abound's APIs. In most cases,
+ * the payload returned by the APIs is the same as the payload returned by the SDK. Infrequently, the SDK
+ * will process raw API responses, transforming them into type O.
  */
-export abstract class AboundResource<I, O, DEP extends O = O> {
+export abstract class AboundResource<I, O, RESP extends O = O> {
   abstract path: string;
 
-  protected getDeprecatedFields(): Array<keyof DEP> {
+  protected getDeprecatedFields(): Array<keyof RESP> {
     return [];
   }
 
@@ -30,7 +32,7 @@ export abstract class AboundResource<I, O, DEP extends O = O> {
     uri: string,
     parameters?: P
   ): Promise<AboundBulkResponse<O>> {
-    const response: AboundBulkResponse<DEP> = await get(uri, parameters);
+    const response: AboundBulkResponse<RESP> = await get(uri, parameters);
 
     return Promise.resolve(this.bulkRemoveDeprecatedFields(response));
   }
@@ -39,7 +41,7 @@ export abstract class AboundResource<I, O, DEP extends O = O> {
     uri: string,
     payload: Record<string, I>
   ): Promise<AboundResponse<O>> {
-    const response: AboundResponse<DEP> = await post(uri, payload);
+    const response: AboundResponse<RESP> = await post(uri, payload);
 
     return Promise.resolve(this.removeDeprecatedFields(response));
   }
@@ -48,13 +50,13 @@ export abstract class AboundResource<I, O, DEP extends O = O> {
     uri: string,
     payload: Record<string, I[]>
   ): Promise<AboundBulkResponse<O>> {
-    const response: AboundBulkResponse<DEP> = await post(uri, payload);
+    const response: AboundBulkResponse<RESP> = await post(uri, payload);
 
     return Promise.resolve(this.bulkRemoveDeprecatedFields(response));
   }
 
   protected async _retrieve(uri: string): Promise<AboundResponse<O>> {
-    const response: AboundResponse<DEP> = await get(uri);
+    const response: AboundResponse<RESP> = await get(uri);
 
     return Promise.resolve(this.removeDeprecatedFields(response));
   }
@@ -63,7 +65,7 @@ export abstract class AboundResource<I, O, DEP extends O = O> {
     uri: string,
     payload: Record<string, Partial<I>>
   ): Promise<AboundResponse<O>> {
-    const response: AboundResponse<DEP> = await put(uri, payload);
+    const response: AboundResponse<RESP> = await put(uri, payload);
 
     return Promise.resolve(this.removeDeprecatedFields(response));
   }
@@ -73,7 +75,7 @@ export abstract class AboundResource<I, O, DEP extends O = O> {
   }
 
   private removeDeprecatedFields(
-    response: AboundResponse<DEP>
+    response: AboundResponse<RESP>
   ): AboundResponse<O> {
     for (const deprecatedField of this.getDeprecatedFields()) {
       delete response.data[deprecatedField]; // eslint-disable-line @typescript-eslint/no-dynamic-delete
@@ -83,7 +85,7 @@ export abstract class AboundResource<I, O, DEP extends O = O> {
   }
 
   private bulkRemoveDeprecatedFields(
-    response: AboundBulkResponse<DEP>
+    response: AboundBulkResponse<RESP>
   ): AboundBulkResponse<O> {
     for (const deprecatedField of this.getDeprecatedFields()) {
       for (const datum of response.data) {

@@ -7,13 +7,16 @@ import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
  * scoped to a user).
  *
  * @param {I} input — the data type of the request body
- * @param {O} output — the data type of the response body
+ * @param {O} output — the data type of the payloads returned by SDK methods.
+ * @param {RESP} API response — the data type of the raw response returned by Abound's APIs. In most cases,
+ * the payload returned by the APIs is the same as the payload returned by the SDK. Infrequently, the SDK
+ * will process raw API responses, transforming them into type O.
  */
 export abstract class AboundBaseResource<
   I,
   O,
-  DEP extends O = O
-> extends AboundResource<I, O, DEP> {
+  RESP extends O = O
+> extends AboundResource<I, O, RESP> {
   abstract path: string;
 
   protected async list<P extends Record<string, unknown>>(

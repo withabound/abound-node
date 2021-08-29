@@ -27,14 +27,24 @@ export enum DocumentType {
   ACCOUNT_STATEMENT = "accountStatement",
 }
 
+// The raw `Document` object returned from the APIs returns one deprecated field, which the SDK will remove.
+interface RawDocumentApiResponse extends Document {
+  creationDate: Readonly<string>; // YYYY-MM-DD
+}
+
 /**
  * See https://docs.withabound.com/reference/documents
  */
 export class Documents extends AboundUserScopedResource<
   DocumentRequest,
-  Document
+  Document,
+  RawDocumentApiResponse
 > {
   path = "/documents";
+
+  getDeprecatedFields(): Array<keyof RawDocumentApiResponse> {
+    return ["creationDate"];
+  }
 
   public async create(
     userId: string,
