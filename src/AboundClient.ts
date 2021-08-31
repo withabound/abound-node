@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosRequestConfig } from "axios";
+import { AxiosInstance } from "axios";
 import { Environment, environments } from "./environments";
 import {
   Documents,
@@ -33,16 +33,10 @@ export class AboundClient {
   taxes: Taxes;
   taxCategories: TaxCategories;
 
-  constructor(
-    config: AboundConfig,
-    baseAxiosConfigOverrides?: AxiosRequestConfig
-  ) {
+  constructor(config: AboundConfig) {
     validateAboundConfig(config);
 
-    const axiosInstance: AxiosInstance = initAxios(
-      config,
-      baseAxiosConfigOverrides
-    );
+    const axiosInstance: AxiosInstance = initAxios(config);
 
     this.users = new Users(axiosInstance);
     this.paymentMethods = new PaymentMethods(axiosInstance);

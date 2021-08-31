@@ -1,19 +1,15 @@
 import { URLSearchParams } from "url";
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance } from "axios";
 
 import { AboundConfig } from "../AboundClient";
 
-export function initAxios(
-  config: AboundConfig,
-  baseAxiosConfigOverrides: AxiosRequestConfig = {}
-): AxiosInstance {
+export function initAxios(config: AboundConfig): AxiosInstance {
   return axios.create({
     baseURL: `${config.environment.baseUrl}${config.apiVersion}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${config.appId}.${config.appSecret}`,
-    },
-    ...baseAxiosConfigOverrides,
+    }
   });
 }
 

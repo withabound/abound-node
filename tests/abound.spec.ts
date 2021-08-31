@@ -32,33 +32,19 @@ describe("Abound Client constructor", () => {
 
   describe("when config is valid", () => {
     it("sets instance variables on client", () => {
-      const validConfig: AboundConfig = generateValidConfig();
+      const appId = randomString();
+      const appSecret = randomString();
+
+      const validConfig: AboundConfig = {
+        apiVersion: "v2",
+        environment: environments.sandbox,
+        appId,
+        appSecret,
+      };
 
       const abound = new Abound(validConfig);
 
       expect(abound).toBeTruthy();
     });
   });
-
-  describe("Axios config overrides", () => {
-    it("allows SDK users to specify Axios config overrides", () => {
-      const validConfig: AboundConfig = generateValidConfig();
-
-      const abound = new Abound(validConfig, { timeout: 5000 });
-
-      expect(abound).toBeTruthy();
-    });
-  });
 });
-
-function generateValidConfig(): AboundConfig {
-  const appId = randomString();
-  const appSecret = randomString();
-
-  return {
-    apiVersion: "v2",
-    environment: environments.sandbox,
-    appId,
-    appSecret,
-  };
-}
