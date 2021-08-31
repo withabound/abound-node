@@ -33,11 +33,24 @@ export interface User extends UserRequest {
   userId: Readonly<string>;
 }
 
+// The raw `User` object returned from the APIs returns one deprecated field, which the SDK will remove.
+interface UserApiResponse extends User {
+  canWithhold: Readonly<boolean>;
+}
+
 /*
  * See https://docs.withabound.com/reference#users
  */
-export class Users extends AboundBaseResource<UserRequest, User> {
+export class Users extends AboundBaseResource<
+  UserRequest,
+  User,
+  UserApiResponse
+> {
   path = "/users";
+
+  getDeprecatedFields(): Array<keyof UserApiResponse> {
+    return ["canWithhold"];
+  }
 
   public async list(
     parameters?: UserParameters
