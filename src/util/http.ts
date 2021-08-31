@@ -9,7 +9,7 @@ export function initAxios(config: AboundConfig): AxiosInstance {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${config.appId}.${config.appSecret}`,
-    }
+    },
   });
 }
 
