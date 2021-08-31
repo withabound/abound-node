@@ -69,7 +69,6 @@ describe("Abound Account Statement Documents", () => {
           "data": Array [
             Object {
               "createdTimestamp": 1629428106674,
-              "creationDate": "2021-08-20",
               "documentId": "documentId_cdf4d03f0f4ee54cbd179936f370e50ad6917361",
               "documentName": "2020-03-01 - 2020-05-31 Account Statement (11)",
               "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/886e591756b7ba0a12ebe677f7f42a5b26594c7f/2020-03-01_2020-05-31_Account_Statement_11_1629428106674.pdf?AWSAccessKeyId=<redacted>&Expires=1630032906&Signature=<redacted>",
@@ -97,7 +96,6 @@ describe("Abound Account Statement Documents", () => {
           "data": Array [
             Object {
               "createdTimestamp": 1629428101007,
-              "creationDate": "2021-08-20",
               "documentId": "documentId_0934040495b3ff23189455ea40366fd80ab2bbaa",
               "documentName": "2020-03-01 - 2020-05-31 Account Statement (3111)",
               "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/886e591756b7ba0a12ebe677f7f42a5b26594c7f/2020-03-01_2020-05-31_Account_Statement_3111_1629428101007.pdf?AWSAccessKeyId=<redacted>&Expires=1630033984&Signature=<redacted>",
@@ -106,7 +104,6 @@ describe("Abound Account Statement Documents", () => {
             },
             Object {
               "createdTimestamp": 1629428515887,
-              "creationDate": "2021-08-20",
               "documentId": "documentId_6227faf9721cb65f24806a0f85492821a4bf133a",
               "documentName": "2021-03-01 - 2021-05-31 Account Statement (11)",
               "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/886e591756b7ba0a12ebe677f7f42a5b26594c7f/2021-03-01_2021-05-31_Account_Statement_11_1629428515887.pdf?AWSAccessKeyId=<redacted>&Expires=1630033984&Signature=<redacted>",
@@ -115,7 +112,6 @@ describe("Abound Account Statement Documents", () => {
             },
             Object {
               "createdTimestamp": 1629428959303,
-              "creationDate": "2021-08-20",
               "documentId": "documentId_674a44c6db0ae80ff7c83eea4ad16221bef15a06",
               "documentName": "2020-03-01 - 2020-05-31 Account Statement (4507)",
               "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/886e591756b7ba0a12ebe677f7f42a5b26594c7f/2020-03-01_2020-05-31_Account_Statement_4507_1629428959303.pdf?AWSAccessKeyId=<redacted>&Expires=1630033984&Signature=<redacted>",
@@ -124,7 +120,6 @@ describe("Abound Account Statement Documents", () => {
             },
             Object {
               "createdTimestamp": 1629428008209,
-              "creationDate": "2021-08-20",
               "documentId": "documentId_bc6df3a46c75c480219398eaa351d1ce79a589a0",
               "documentName": "2020-03-01 - 2020-05-31 Account Statement (3123)",
               "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/886e591756b7ba0a12ebe677f7f42a5b26594c7f/2020-03-01_2020-05-31_Account_Statement_3123_1629428008209.pdf?AWSAccessKeyId=<redacted>&Expires=1630033984&Signature=<redacted>",
@@ -133,7 +128,6 @@ describe("Abound Account Statement Documents", () => {
             },
             Object {
               "createdTimestamp": 1629428106674,
-              "creationDate": "2021-08-20",
               "documentId": "documentId_cdf4d03f0f4ee54cbd179936f370e50ad6917361",
               "documentName": "2020-03-01 - 2020-05-31 Account Statement (11)",
               "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/886e591756b7ba0a12ebe677f7f42a5b26594c7f/2020-03-01_2020-05-31_Account_Statement_11_1629428106674.pdf?AWSAccessKeyId=<redacted>&Expires=1630033984&Signature=<redacted>",
@@ -142,7 +136,6 @@ describe("Abound Account Statement Documents", () => {
             },
             Object {
               "createdTimestamp": 1629428903973,
-              "creationDate": "2021-08-20",
               "documentId": "documentId_ef2a325bd77b162ee40c014eccaa4239801828e9",
               "documentName": "2020-03-01 - 2020-05-31 Account Statement (8261)",
               "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/886e591756b7ba0a12ebe677f7f42a5b26594c7f/2020-03-01_2020-05-31_Account_Statement_8261_1629428903973.pdf?AWSAccessKeyId=<redacted>&Expires=1630033984&Signature=<redacted>",
@@ -170,7 +163,6 @@ describe("Abound Account Statement Documents", () => {
           "data": Array [
             Object {
               "createdTimestamp": 1629428515887,
-              "creationDate": "2021-08-20",
               "documentId": "documentId_6227faf9721cb65f24806a0f85492821a4bf133a",
               "documentName": "2021-03-01 - 2021-05-31 Account Statement (11)",
               "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/886e591756b7ba0a12ebe677f7f42a5b26594c7f/2021-03-01_2021-05-31_Account_Statement_11_1629428515887.pdf?AWSAccessKeyId=<redacted>&Expires=1630033916&Signature=<redacted>",
@@ -179,7 +171,6 @@ describe("Abound Account Statement Documents", () => {
             },
             Object {
               "createdTimestamp": 1629429116202,
-              "creationDate": "2021-08-20",
               "documentId": null,
               "documentName": "2021 Schedule C",
               "documentURL": null,
@@ -209,7 +200,6 @@ describe("Abound Account Statement Documents", () => {
         Object {
           "data": Object {
             "createdTimestamp": 1629428515887,
-            "creationDate": "2021-08-20",
             "documentId": "documentId_6227faf9721cb65f24806a0f85492821a4bf133a",
             "documentName": "2021-03-01 - 2021-05-31 Account Statement (11)",
             "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/886e591756b7ba0a12ebe677f7f42a5b26594c7f/2021-03-01_2021-05-31_Account_Statement_11_1629428515887.pdf?AWSAccessKeyId=<redacted>&Expires=1630033734&Signature=<redacted>",
