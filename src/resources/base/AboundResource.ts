@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import { destroy, get, post, put } from "../../util/http";
 import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
 
@@ -22,7 +23,13 @@ export interface Pagination extends Record<string, unknown> {
  * will process raw API responses, transforming them into type O.
  */
 export abstract class AboundResource<I, O, RESP extends O = O> {
+  private readonly axiosInstance: AxiosInstance;
+
   abstract path: string;
+
+  constructor(axiosInstance: AxiosInstance) {
+    this.axiosInstance = axiosInstance;
+  }
 
   protected getDeprecatedFields(): Array<keyof RESP> {
     return [];
@@ -32,7 +39,11 @@ export abstract class AboundResource<I, O, RESP extends O = O> {
     uri: string,
     parameters?: P
   ): Promise<AboundBulkResponse<O>> {
-    const response: AboundBulkResponse<RESP> = await get(uri, parameters);
+    const response: AboundBulkResponse<RESP> = await get(
+      this.axiosInstance,
+      uri,
+      parameters
+    );
 
     return Promise.resolve(this.bulkRemoveDeprecatedFields(response));
   }
@@ -41,7 +52,11 @@ export abstract class AboundResource<I, O, RESP extends O = O> {
     uri: string,
     payload: Record<string, I>
   ): Promise<AboundResponse<O>> {
-    const response: AboundResponse<RESP> = await post(uri, payload);
+    const response: AboundResponse<RESP> = await post(
+      this.axiosInstance,
+      uri,
+      payload
+    );
 
     return Promise.resolve(this.removeDeprecatedFields(response));
   }
@@ -50,13 +65,17 @@ export abstract class AboundResource<I, O, RESP extends O = O> {
     uri: string,
     payload: Record<string, I[]>
   ): Promise<AboundBulkResponse<O>> {
-    const response: AboundBulkResponse<RESP> = await post(uri, payload);
+    const response: AboundBulkResponse<RESP> = await post(
+      this.axiosInstance,
+      uri,
+      payload
+    );
 
     return Promise.resolve(this.bulkRemoveDeprecatedFields(response));
   }
 
   protected async _retrieve(uri: string): Promise<AboundResponse<O>> {
-    const response: AboundResponse<RESP> = await get(uri);
+    const response: AboundResponse<RESP> = await get(this.axiosInstance, uri);
 
     return Promise.resolve(this.removeDeprecatedFields(response));
   }
@@ -65,13 +84,17 @@ export abstract class AboundResource<I, O, RESP extends O = O> {
     uri: string,
     payload: Record<string, Partial<I>>
   ): Promise<AboundResponse<O>> {
-    const response: AboundResponse<RESP> = await put(uri, payload);
+    const response: AboundResponse<RESP> = await put(
+      this.axiosInstance,
+      uri,
+      payload
+    );
 
     return Promise.resolve(this.removeDeprecatedFields(response));
   }
 
   protected async _delete(uri: string): Promise<AboundResponse<EmptyObject>> {
-    return destroy(uri);
+    return destroy(this.axiosInstance, uri);
   }
 
   private removeDeprecatedFields(
