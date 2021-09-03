@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import { Environment, environments } from "./environments";
 import {
   Documents,
@@ -33,19 +34,19 @@ export class AboundClient {
   taxCategories: TaxCategories;
 
   constructor(config: AboundConfig) {
-    validateConfig(config);
+    validateAboundConfig(config);
 
-    initAxios(config);
+    const axiosInstance: AxiosInstance = initAxios(config);
 
-    this.users = new Users();
-    this.paymentMethods = new PaymentMethods();
-    this.taxPayments = new TaxPayments();
-    this.incomes = new Incomes();
-    this.mileages = new Mileages();
-    this.expenses = new Expenses();
-    this.documents = new Documents();
-    this.taxes = new Taxes();
-    this.taxCategories = new TaxCategories();
+    this.users = new Users(axiosInstance);
+    this.paymentMethods = new PaymentMethods(axiosInstance);
+    this.taxPayments = new TaxPayments(axiosInstance);
+    this.incomes = new Incomes(axiosInstance);
+    this.mileages = new Mileages(axiosInstance);
+    this.expenses = new Expenses(axiosInstance);
+    this.documents = new Documents(axiosInstance);
+    this.taxes = new Taxes(axiosInstance);
+    this.taxCategories = new TaxCategories(axiosInstance);
   }
 }
 
@@ -56,7 +57,7 @@ const REQUIRED_CONFIG_FIELDS: Array<keyof AboundConfig> = [
   "environment",
 ];
 
-function validateConfig(config: AboundConfig): void {
+function validateAboundConfig(config: AboundConfig): void {
   for (const field of REQUIRED_CONFIG_FIELDS) {
     if (!config[field]) {
       throw new Error(`Missing ${field} in Abound config`);
