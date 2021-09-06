@@ -37,7 +37,15 @@ export enum TaxPaymentEntity {
 export interface TaxPayment extends TaxPaymentRequest {
   taxPaymentId: Readonly<string>;
   createdDate: Readonly<string>;
+  document?: TaxPaymentDocument;
   status: string;
+}
+
+export interface TaxPaymentDocument {
+  documentURL: string;
+  documentName: string;
+  type: string;
+  year: string;
 }
 
 /**

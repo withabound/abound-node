@@ -1,7 +1,7 @@
+import { URL } from "url";
+
 import Abound, { environments } from "../src/abound";
 import { AboundConfig } from "../src/AboundClient";
-
-export const V2_SANDBOX_URL = "https://sandbox-api.withabound.com/v2";
 
 function randomString(length = 13): string {
   return random(length, CharSet.ALPHANUMERIC_LOWER);
@@ -45,16 +45,31 @@ function random(length: number, charset: CharSet): string {
   return result;
 }
 
+function removeQueryParameters(rawUrl: string) {
+  const url: URL = new URL(rawUrl);
+
+  return url.origin + url.pathname;
+}
+
+/**
+ * These test credentials ensure consistent data is returned from Abound's APIs, and they do not persist
+ * additional data.
+ */
 function createAboundClient(): Abound {
   const config: AboundConfig = {
     apiVersion: "v2",
     environment: environments.sandbox,
-    appId: randomString(),
-    appSecret: randomString(),
+    appId: "appId_test48e7eaa3175a66354e00626542d2",
+    appSecret: "appSecret_testf54672359db6693429e1d3e14e2c",
   };
 
   return new Abound(config);
 }
+
+/**
+ * The test credentials referenced above have one User
+ */
+const TEST_USER_ID = "userId_test24b05d761ff58b5931bd07778c67b4e818e4";
 
 enum CharSet {
   NUMERIC = "0123456789",
@@ -69,4 +84,6 @@ export {
   randomNumberString,
   randomString,
   randomZip,
+  removeQueryParameters,
+  TEST_USER_ID,
 };
