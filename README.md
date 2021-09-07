@@ -84,6 +84,7 @@ $ npx jest
 ```
 
 Run xo:
+
 ```sh
 $ npx xo
 # or, run with autofix
