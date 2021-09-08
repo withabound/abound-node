@@ -22,7 +22,7 @@ export const get = async <O, P extends Record<string, unknown>>(
     uri += buildQueryString(parameters);
   }
 
-  return axiosInstance.get(uri).then((response) => response.data);
+  return axiosInstance.get<O>(uri).then((response) => response.data);
 };
 
 export const post = async <I, O>(
@@ -30,7 +30,7 @@ export const post = async <I, O>(
   uri: string,
   payload?: I
 ): Promise<O> => {
-  return axiosInstance.post(uri, payload).then((response) => response.data);
+  return axiosInstance.post<O>(uri, payload).then((response) => response.data);
 };
 
 export const put = async <I, O>(
@@ -38,7 +38,7 @@ export const put = async <I, O>(
   uri: string,
   payload?: I
 ): Promise<O> => {
-  return axiosInstance.put(uri, payload).then((response) => response.data);
+  return axiosInstance.put<O>(uri, payload).then((response) => response.data);
 };
 
 // `delete` is a reserved keyword
@@ -46,7 +46,7 @@ export const destroy = async <O>(
   axiosInstance: AxiosInstance,
   uri: string
 ): Promise<O> => {
-  return axiosInstance.delete(uri).then((response) => response.data);
+  return axiosInstance.delete<O>(uri).then((response) => response.data);
 };
 
 export const buildQueryString = <P extends Record<string, unknown>>(
