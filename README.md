@@ -20,7 +20,7 @@ yarn add @abound/node-sdk
 
 ### Usage
 
-The Abound client must be configured with your account's App ID and App Secret, which are available in the [Abound Dashboard][developer-dashboard].
+The Abound client must be configured with your account's `appId` and `appSecret`, which are available on the [Keys page][developer-dashboard-keys] of the [Abound Dashboard][developer-dashboard].
 
 Every method returns a promise which can either be chained or handled via `async/await`.
 
@@ -91,6 +91,7 @@ $ npx xo
 $ npx xo --fix
 ```
 
-[docs]: https://docs.withabound.com/docs
-[api-reference]: https://docs.withabound.com/reference/introduction
-[developer-dashboard]: https://dev-dashboard.withabound.com/
+[docs]: https://docs.withabound.com
+[api-reference]: https://docs.withabound.com/reference
+[developer-dashboard]: https://dashboard.withabound.com
+[developer-dashboard-keys]: https://dashboard.withabound.com/keys
