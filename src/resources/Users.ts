@@ -17,9 +17,9 @@ export interface UserProfile {
   city?: string;
   state?: string;
   zipcode?: string;
-  phoneNumber?: string;
-  dateOfBirth?: string;
-  socialSecurityNumber?: string;
+  phoneNumber?: string; // no country code, numerical digits only
+  dateOfBirth?: string; // YYYY-MM-DD
+  socialSecurityNumber?: string; // no hyphens, numerical digits only
   ipAddress?: string;
 }
 
