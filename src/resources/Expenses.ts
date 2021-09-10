@@ -21,7 +21,7 @@ export enum ExpenseType {
 // query params
 export interface ExpenseParameters extends Pagination {
   foreignId?: string;
-  year?: string;
+  year?: string | number;
 }
 
 // response body
