@@ -44,9 +44,11 @@ export interface TaxPayment extends TaxPaymentRequest {
 export interface TaxPaymentDocument {
   documentURL: string;
   documentName: string;
-  type: string;
+  type: TaxPaymentDocumentType;
   year: string;
 }
+
+type TaxPaymentDocumentType = "1040ES";
 
 /**
  * See https://docs.withabound.com/reference#tax-payments
