@@ -71,6 +71,9 @@ function createAboundClient(): Abound {
  */
 const TEST_USER_ID = "userId_test24b05d761ff58b5931bd07778c67b4e818e4";
 
+const PUBLIC_BANK_LOGO_URL =
+  "https://www.chase.com/etc/designs/chase-ux/css/img/newheaderlogo.svg";
+
 enum CharSet {
   NUMERIC = "0123456789",
   ALPHANUMERIC_LOWER = "0123456789abcdefghijklmnopqrstuvwxyz",
@@ -78,6 +81,7 @@ enum CharSet {
 
 export {
   createAboundClient,
+  PUBLIC_BANK_LOGO_URL,
   randomBase64EncodedString,
   randomDate,
   randomEmail,

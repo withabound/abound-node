@@ -7,7 +7,7 @@ import { DocumentType } from "../../src/resources/Documents";
 import { AccountStatementDocument } from "../../src/resources/documents/AccountStatements";
 import {
   createAboundClient,
-  randomBase64EncodedString,
+  PUBLIC_BANK_LOGO_URL,
   randomEmail,
   randomNumberString,
   randomString,
@@ -47,7 +47,7 @@ describe("Abound Account Statement Documents", () => {
             },
             bank: {
               name: randomString(),
-              logo: randomBase64EncodedString(),
+              logo: PUBLIC_BANK_LOGO_URL,
               address: randomString(),
               city: randomString(),
               state: "CA",
