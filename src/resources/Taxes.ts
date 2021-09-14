@@ -56,16 +56,16 @@ export class Taxes extends AboundUserScopedResource<TaxRequest, Tax> {
 
   public async retrieve(
     userId: string,
-    year: string | number
+    year: string
   ): Promise<AboundResponse<Tax>> {
-    return super.retrieveForUser(userId, year.toString());
+    return super.retrieveForUser(userId, year);
   }
 
   public async calculate(
     userId: string,
-    year: string | number,
+    year: string,
     taxes: Partial<TaxRequest>
   ): Promise<AboundResponse<Tax>> {
-    return super.updateForUser(userId, year.toString(), { taxes });
+    return super.updateForUser(userId, year, { taxes });
   }
 }

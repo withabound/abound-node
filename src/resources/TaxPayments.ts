@@ -48,7 +48,9 @@ export interface TaxPaymentDocument {
   year: string;
 }
 
-type TaxPaymentDocumentType = "1040ES";
+export enum TaxPaymentDocumentType {
+  TEN40ES = "1040ES",
+}
 
 /**
  * See https://docs.withabound.com/reference#tax-payments

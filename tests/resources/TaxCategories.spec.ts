@@ -12,7 +12,7 @@ describe("Abound Tax Categories", () => {
   describe("retrieve", () => {
     it("returns a promise that resolves to a list of tax categories for the given year", async () => {
       const taxCategories: AboundResponse<string[]> =
-        await abound.taxCategories.retrieve(2021);
+        await abound.taxCategories.retrieve("2021");
 
       expect(taxCategories.data).toMatchInlineSnapshot(`
         Array [

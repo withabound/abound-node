@@ -25,7 +25,12 @@ export interface Income extends IncomeRequest {
   incomeId: Readonly<string>;
 }
 
-export type IncomeType = "1099" | "1099-INT" | "w2" | "personal";
+export enum IncomeType {
+  TEN99 = "1099",
+  TEN99INT = "1099-INT",
+  W2 = "w2",
+  PERSONAL = "personal",
+}
 
 /**
  * See https://docs.withabound.com/reference#incomes

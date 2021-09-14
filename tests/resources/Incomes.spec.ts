@@ -4,7 +4,7 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
-import { Income } from "../../src/resources/Incomes";
+import { Income, IncomeType } from "../../src/resources/Incomes";
 import { createAboundClient, randomString, TEST_USER_ID } from "../utils";
 
 const TEST_INCOME_ID = "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f";
@@ -24,12 +24,12 @@ describe("Abound Incomes", () => {
       const createdIncomes: AboundBulkResponse<Income> =
         await abound.incomes.create(TEST_USER_ID, [
           {
-            incomeType: "1099",
+            incomeType: IncomeType.TEN99,
             date: "2021-08-01",
             amount: 410.11,
           },
           {
-            incomeType: "1099-INT",
+            incomeType: IncomeType.TEN99INT,
             date: "2021-08-05",
             amount: 10.87,
             description,
@@ -90,7 +90,7 @@ describe("Abound Incomes", () => {
       const incomes: AboundBulkResponse<Income> = await abound.incomes.list(
         TEST_USER_ID,
         {
-          incomeType: "1099-INT",
+          incomeType: IncomeType.TEN99INT,
         }
       );
 

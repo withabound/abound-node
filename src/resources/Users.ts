@@ -3,7 +3,7 @@ import { Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 
 // request body
-interface UserRequest {
+export interface UserRequest {
   email?: string;
   foreignId?: string;
   profile?: UserProfile;
