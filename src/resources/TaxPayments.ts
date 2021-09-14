@@ -37,8 +37,18 @@ export enum TaxPaymentEntity {
 export interface TaxPayment extends TaxPaymentRequest {
   taxPaymentId: Readonly<string>;
   createdDate: Readonly<string>;
+  document?: TaxPaymentDocument;
   status: string;
 }
+
+export interface TaxPaymentDocument {
+  documentURL: string;
+  documentName: string;
+  type: TaxPaymentDocumentType;
+  year: string;
+}
+
+type TaxPaymentDocumentType = "1040ES";
 
 /**
  * See https://docs.withabound.com/reference#tax-payments

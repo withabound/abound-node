@@ -1,5 +1,3 @@
-import nock from "nock";
-
 import Abound from "../../src/abound";
 import {
   AboundBulkResponse,
@@ -10,51 +8,43 @@ import {
   TaxPaymentEntity,
   TaxPeriod,
 } from "../../src/resources/TaxPayments";
-import { createAboundClient, V2_SANDBOX_URL } from "../utils";
+import {
+  createAboundClient,
+  removeQueryParameters,
+  TEST_USER_ID,
+} from "../utils";
 
 describe("Abound Tax Payments", () => {
   let abound: Abound;
 
   beforeAll(() => {
     abound = createAboundClient();
-    initMocks();
-  });
-
-  afterAll(() => {
-    nock.restore();
   });
 
   describe("create", () => {
     it("returns a promise that resolves to a created tax payment on success", async () => {
       const createdTaxPayment: AboundResponse<TaxPayment> =
-        await abound.taxPayments.create(
-          "userId_509948c18e95c0462cad5db54a18888cd2779b72",
-          {
-            year: "2020",
-            period: TaxPeriod.Q1,
-            amount: 450.22,
-            entity: TaxPaymentEntity.IRS,
-            paymentMethodId:
-              "paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4",
-          }
-        );
+        await abound.taxPayments.create(TEST_USER_ID, {
+          year: "2020",
+          period: TaxPeriod.Q1,
+          amount: 450.22,
+          entity: TaxPaymentEntity.IRS,
+          paymentMethodId:
+            "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
+        });
 
-      expect(createdTaxPayment).toMatchInlineSnapshot(`
+      expect(normalizeNonIdempotentFields(createdTaxPayment.data))
+        .toMatchInlineSnapshot(`
         Object {
-          "data": Object {
-            "amount": 450.22,
-            "createdDate": "2021-08-09",
-            "entity": "IRS",
-            "paymentMethodId": "paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4",
-            "period": "Q1",
-            "status": "created",
-            "taxPaymentId": "taxPaymentId_db80fa2ca8ccd4463ba5f1e926aea8e1d01ee8aa",
-            "year": "2020",
-          },
-          "request": Object {
-            "requestId": "requestId_0c882658fbd4f711e588a8b2",
-            "timestamp": 1628561398061,
-          },
+          "amount": 450.22,
+          "createdDate": "2021-09-05",
+          "entity": "IRS",
+          "notes": Object {},
+          "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
+          "period": "Q1",
+          "status": "created",
+          "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
+          "year": "2020",
         }
       `);
     });
@@ -63,29 +53,23 @@ describe("Abound Tax Payments", () => {
   describe("list", () => {
     it("returns a promise that resolves to a list of the user's tax payments on success", async () => {
       const taxPayments: AboundBulkResponse<TaxPayment> =
-        await abound.taxPayments.list(
-          "userId_509948c18e95c0462cad5db54a18888cd2779b72"
-        );
+        await abound.taxPayments.list(TEST_USER_ID);
 
-      expect(taxPayments).toMatchInlineSnapshot(`
-        Object {
-          "data": Array [
-            Object {
-              "amount": 450.22,
-              "createdDate": "2021-08-09",
-              "entity": "IRS",
-              "paymentMethodId": "paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4",
-              "period": "Q1",
-              "status": "created",
-              "taxPaymentId": "taxPaymentId_db80fa2ca8ccd4463ba5f1e926aea8e1d01ee8aa",
-              "year": "2020",
-            },
-          ],
-          "request": Object {
-            "requestId": "requestId_d1f6a31771713026d15c043e",
-            "timestamp": 1628561782066,
+      expect(bulkNormalizeNonIdempotentFields(taxPayments.data))
+        .toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "amount": 154.66,
+            "createdDate": "2021-09-05",
+            "entity": "IRS",
+            "notes": Object {},
+            "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
+            "period": "Q2",
+            "status": "created",
+            "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
+            "year": "2020",
           },
-        }
+        ]
       `);
     });
   });
@@ -94,97 +78,50 @@ describe("Abound Tax Payments", () => {
     it("returns a promise that resolves to a single tax payment on success", async () => {
       const taxPayment: AboundResponse<TaxPayment> =
         await abound.taxPayments.retrieve(
-          "userId_509948c18e95c0462cad5db54a18888cd2779b72",
-          "taxPaymentId_db80fa2ca8ccd4463ba5f1e926aea8e1d01ee8aa"
+          TEST_USER_ID,
+          "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3"
         );
 
-      expect(taxPayment).toMatchInlineSnapshot(`
+      expect(normalizeNonIdempotentFields(taxPayment.data))
+        .toMatchInlineSnapshot(`
         Object {
-          "data": Object {
-            "amount": 450.22,
-            "createdDate": "2021-08-09",
-            "entity": "IRS",
-            "paymentMethodId": "paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4",
-            "period": "Q1",
-            "status": "created",
-            "taxPaymentId": "taxPaymentId_db80fa2ca8ccd4463ba5f1e926aea8e1d01ee8aa",
+          "amount": 154.66,
+          "createdDate": "2021-09-05",
+          "document": Object {
+            "documentName": "2020 Q2 Federal Estimated Tax Payment",
+            "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/Form_1040ES_Y2020-Q2.pdf",
+            "type": "1040ES",
             "year": "2020",
           },
-          "request": Object {
-            "requestId": "requestId_b9b11d251b802fc9ab043c7b",
-            "timestamp": 1628561846156,
-          },
+          "entity": "IRS",
+          "notes": Object {},
+          "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
+          "period": "Q2",
+          "status": "done",
+          "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
+          "year": "2020",
         }
       `);
     });
   });
-
-  function initMocks() {
-    nock(V2_SANDBOX_URL)
-      .post(
-        "/users/userId_509948c18e95c0462cad5db54a18888cd2779b72/taxPayments"
-      )
-      .reply(200, {
-        data: {
-          taxPaymentId: "taxPaymentId_db80fa2ca8ccd4463ba5f1e926aea8e1d01ee8aa",
-          year: "2020",
-          period: "Q1",
-          status: "created",
-          amount: 450.22,
-          entity: "IRS",
-          paymentMethodId:
-            "paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4",
-          createdDate: "2021-08-09",
-        },
-        request: {
-          timestamp: 1628561398061,
-          requestId: "requestId_0c882658fbd4f711e588a8b2",
-        },
-      });
-
-    nock(V2_SANDBOX_URL)
-      .get("/users/userId_509948c18e95c0462cad5db54a18888cd2779b72/taxPayments")
-      .reply(200, {
-        data: [
-          {
-            taxPaymentId:
-              "taxPaymentId_db80fa2ca8ccd4463ba5f1e926aea8e1d01ee8aa",
-            year: "2020",
-            period: "Q1",
-            status: "created",
-            amount: 450.22,
-            entity: "IRS",
-            paymentMethodId:
-              "paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4",
-            createdDate: "2021-08-09",
-          },
-        ],
-        request: {
-          timestamp: 1628561782066,
-          requestId: "requestId_d1f6a31771713026d15c043e",
-        },
-      });
-
-    nock(V2_SANDBOX_URL)
-      .get(
-        "/users/userId_509948c18e95c0462cad5db54a18888cd2779b72/taxPayments/taxPaymentId_db80fa2ca8ccd4463ba5f1e926aea8e1d01ee8aa"
-      )
-      .reply(200, {
-        data: {
-          taxPaymentId: "taxPaymentId_db80fa2ca8ccd4463ba5f1e926aea8e1d01ee8aa",
-          year: "2020",
-          period: "Q1",
-          status: "created",
-          amount: 450.22,
-          entity: "IRS",
-          paymentMethodId:
-            "paymentMethodId_27849a2a5b3135486c4860dc437ba026d6294ad4",
-          createdDate: "2021-08-09",
-        },
-        request: {
-          timestamp: 1628561846156,
-          requestId: "requestId_b9b11d251b802fc9ab043c7b",
-        },
-      });
-  }
 });
+
+function bulkNormalizeNonIdempotentFields(
+  taxPayments: TaxPayment[]
+): TaxPayment[] {
+  return taxPayments.map((tp) => normalizeNonIdempotentFields(tp));
+}
+
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+function normalizeNonIdempotentFields(taxPayment: TaxPayment): TaxPayment {
+  if (taxPayment.document && taxPayment.document.documentURL) {
+    taxPayment.document.documentURL = removeQueryParameters(
+      taxPayment.document.documentURL
+    );
+  }
+
+  taxPayment.createdDate = "2021-09-05";
+
+  return taxPayment;
+}
+/* eslint-enable @typescript-eslint/prefer-optional-chain */
