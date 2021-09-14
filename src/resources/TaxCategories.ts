@@ -7,9 +7,7 @@ import { AboundResponse } from "./base/AboundResponse";
 export class TaxCategories extends AboundBaseResource<never, string[]> {
   path = "/taxCategories";
 
-  public async retrieve(
-    year: string | number
-  ): Promise<AboundResponse<string[]>> {
-    return super.retrieve(year.toString());
+  public async retrieve(year: string): Promise<AboundResponse<string[]>> {
+    return super.retrieve(year);
   }
 }

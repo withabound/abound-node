@@ -99,14 +99,14 @@ Update a `User`:
 
 ```ts
 const userId = "userId_506...";
-const newUser = {
+const userUpdates = {
   email: "janedoe123@example.com",
   profile: {
     phoneNumber: "4444444444"
   }
 };
 
-const response = await abound.users.update(userId, newUser);
+const response = await abound.users.update(userId, userUpdates);
 
 console.log(response.data.email);
 ```
@@ -164,12 +164,12 @@ Update an `Expense`:
 ```ts
 const userId = "userId_506...";
 const expenseId = "expenseId_65c...";
-const newExpense = {
+const expenseUpdates = {
   amount: 249.99,
   description: "Premium Tax Filing Service Fee",
 };
 
-const response = await abound.expenses.update(userId, expenseId, newExpense);
+const response = await abound.expenses.update(userId, expenseId, expenseUpdates);
 
 console.log(response.data.deductionAmount);
 ```
