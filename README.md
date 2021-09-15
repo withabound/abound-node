@@ -13,9 +13,9 @@ The Abound Node SDK supports all Abound API endpoints. See the [API Documentatio
 Install the SDK with:
 
 ```sh
-npm install @abound/node-sdk --save
+$ npm install @abound/node-sdk --save
 # or
-yarn add @abound/node-sdk
+$ yarn add @abound/node-sdk
 ```
 
 ### Usage
@@ -113,7 +113,7 @@ console.log(response.data.email);
 
 #### Expenses
 
-Create an `Expense`:
+Create `Expense`s:
 
 ```ts
 import { ExpenseType } from "@abound/node-sdk/dist/resources/Expenses";
@@ -141,8 +141,8 @@ const response = await abound.expenses.list(userId);
 
 // filter Expenses by year:
 
-const response = await abound.expenses.list(userId, { 
-  year: 2020 
+const response = await abound.expenses.list(userId, {
+  year: "2020"
 });
 
 console.log(response.data); // list of Expenses
@@ -185,6 +185,208 @@ const response = await abound.expenses.delete(userId, expenseId);
 console.log(response.data); // {}
 ```
 
+#### Mileage
+
+Create `Mileage`s:
+
+```ts
+const userId = "userId_506...";
+const mileage = {
+  distance: 21.1,
+  date: "2021-03-14",
+  description: "Client visit"
+};
+
+const response = await abound.mileages.create(userId, [
+  mileage,
+  // ...additional mileages
+]);
+
+console.log(response.data); // list of Mileages
+```
+
+Retrieve a `Mileage`:
+
+```ts
+const userId = "userId_506...";
+const mileageId = "mileageId_4af...";
+
+const response = await abound.mileages.retrieve(userId, mileageId);
+
+console.log(response.data.distance);
+```
+
+#### Payment Methods
+
+Create a `PaymentMethod`:
+
+```ts
+import { AccountClass, AccountType } from "@abound/node-sdk/dist/resources/PaymentMethods";
+
+const userId = "userId_506...";
+
+const response = await abound.paymentMethods.create(userId, {
+  accountNumber: "123456789",
+  routingNumber: "44449944",
+  accountType: AccountType.BUSINESS,
+  accountClass: AccountClass.CHECKING
+});
+
+console.log(response.data.paymentMethodId);
+```
+
+List `PaymentMethod`s for a `User`:
+
+```ts
+const userId = "userId_506...";
+
+const response = await abound.paymentMethods.list(userId);
+
+console.log(response.data); // list of PaymentMethods
+```
+
+Retrieve a `PaymentMethod`:
+
+```ts
+const userId = "userId_506...";
+const paymentMethodId = "paymentMethodId_329...";
+
+const response = await abound.paymentMethods.retrieve(userId, paymentMethodId);
+
+console.log(response.data.displayName);
+```
+
+#### Tax Payments
+
+Create a `TaxPayment`:
+
+```ts
+import { TaxPaymentEntity, TaxPeriod } from "@abound/node-sdk/dist/resources/TaxPayments";
+
+const userId = "userId_506...";
+const paymentMethodId = "paymentMethodId_329...";
+
+const response = await abound.taxPayments.create(userId, {
+  paymentMethodId: paymentMethodId,
+  year: "2021",
+  period: TaxPeriod.Q1,
+  amount: 560.87,
+  entity: TaxPaymentEntity.IRS
+});
+
+console.log(response.data.taxPaymentId);
+```
+
+List `TaxPayment`s for a `User`:
+
+```ts
+const userId = "userId_506...";
+
+const response = await abound.taxPayments.list(userId);
+
+console.log(response.data); // list of TaxPayments
+```
+
+Retrieve a `TaxPayment`:
+
+```ts
+const userId = "userId_506...";
+const taxPaymentId = "taxPaymentId_614...";
+
+const response = await abound.taxPayments.retrieve(userId, taxPaymentId);
+
+console.log(response.data.status);
+```
+
+#### Incomes
+
+Create `Income`s:
+
+```ts
+import { IncomeType } from "@abound/node-sdk/dist/resources/Incomes";
+
+const userId = "userId_506...";
+
+const response = await abound.incomes.create(userId, [
+  {
+    incomeType: IncomeType.W2,
+    amount: 55000,
+    date: "2020-12-30"
+  },
+  {
+    incomeType: IncomeType.TEN99INT,
+    amount: 10.85,
+    date: "2020-12-15",
+    description: "Savings Account interest accrued"
+  }
+]);
+
+console.log(response.data); // list of created Incomes
+```
+
+List `Income`s for a `User`:
+
+```ts
+import { IncomeType } from "@abound/node-sdk/dist/resources/Incomes";
+
+const userId = "userId_506...";
+
+const response = await abound.incomes.list(userId);
+// or, filter by incomeType
+const response = await abound.incomes.list(userId, {
+  incomeType: IncomeType.TEN99
+});
+
+console.log(response.data); // list of Incomes
+```
+
+Retrieve an `Income`:
+
+```ts
+const userId = "userId_506...";
+const incomeId = "incomeId_8cb...";
+
+const response = await abound.incomes.retrieve(userId, incomeId);
+
+console.log(response.data.amount);
+```
+
+Update an `Income`:
+
+```ts
+const userId = "userId_506...";
+const incomeId = "incomeId_8cb...";
+const incomeUpdates = {
+  amount: 57500
+};
+
+const response = await abound.incomes.update(userId, incomeId, incomeUpdates);
+
+console.log(response.data.amount);
+```
+
+Delete an `Income`:
+
+```ts
+const userId = "userId_506...";
+const incomeId = "incomeId_8cb...";
+
+const response = await abound.incomes.delete(userId, incomeId);
+
+console.log(response.data); // {}
+```
+
+
+#### Tax Categories
+
+Retrieve `TaxCategories` by tax year:
+
+```ts
+const response = await abound.taxCategories.retrieve("2021");
+
+console.log(response.data); // ["Advertising and Marketing", "Car and Truck", etc.]
+```
+
 ### Development
 
 Run all tests:
@@ -199,6 +401,34 @@ Run xo:
 $ npx xo
 # or, run with autofix
 $ npx xo --fix
+```
+
+Publish artifacts locally:
+
+Install `yalc`:
+
+```sh
+$ npm i yalc -g
+# or
+$ yarn global add yalc
+```
+
+Compile TypeScript into JavaScript:
+
+```sh
+$ npx tsc
+```
+
+Publish artifacts to local `yalc` registry:
+
+```sh
+$ yalc publish --files --push
+```
+
+Install the local artifacts:
+
+```sh
+~/my-project $ yalc add @abound/node-sdk@<version>
 ```
 
 [docs]: https://docs.withabound.com
