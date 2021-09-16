@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "declaration": false,
+    "declarationDir": null,
+    "outDir": "dist/cjs",
+    "allowSyntheticDefaultImports": true
+  }
+}

@@ -1,4 +1,3 @@
-
 # Abound Node.js Library
 
 The Abound Node library provides convenient access to the Abound API from applications written in server-side JavaScript.
@@ -8,6 +7,7 @@ The Abound Node library provides convenient access to the Abound API from applic
 The Abound Node SDK supports all Abound API endpoints. See the [API Documentation][docs] and the [API Reference][api-reference] for complete information about the APIs.
 
 ### Requirements
+
 ### Installation
 
 Install the SDK with:
@@ -31,7 +31,7 @@ const abound = new Abound({
   appId: "appId_f2d...",
   appSecret: "appSecret_bf3...",
   environment: environments.sandbox, // or environments.production
-  apiVersion: "v2"
+  apiVersion: "v2",
 });
 
 (async () => {
@@ -44,11 +44,12 @@ const abound = new Abound({
 
 // or
 
-abound.users.create({
-    email: "user1@example.com"
-})
-.then(user => console.log(user.data.userId))
-.catch(error => console.error(error));
+abound.users
+  .create({
+    email: "user1@example.com",
+  })
+  .then((user) => console.log(user.data.userId))
+  .catch((error) => console.error(error));
 ```
 
 ### Examples
@@ -70,8 +71,8 @@ const response = await abound.users.create({
     zipcode: "17101",
     phoneNumber: "5555555555",
     dateOfBirth: "1989-05-01",
-    socialSecurityNumber: "123456789"
-  }
+    socialSecurityNumber: "123456789",
+  },
 });
 
 console.log(response.data.userId);
@@ -102,8 +103,8 @@ const userId = "userId_506...";
 const userUpdates = {
   email: "janedoe123@example.com",
   profile: {
-    phoneNumber: "4444444444"
-  }
+    phoneNumber: "4444444444",
+  },
 };
 
 const response = await abound.users.update(userId, userUpdates);
@@ -116,14 +117,14 @@ console.log(response.data.email);
 Create `Expense`s:
 
 ```ts
-import { ExpenseType } from "@abound/node-sdk/dist/resources/Expenses";
+import { ExpenseType } from "@abound/node-sdk";
 
 const userId = "userId_506...";
 const expense = {
   amount: 139.99,
   description: "Tax Filing Fee",
   date: "2021-01-16",
-  expenseType: ExpenseType.BUSINESS
+  expenseType: ExpenseType.BUSINESS,
 };
 
 const response = await abound.expenses.create(userId, [
@@ -142,7 +143,7 @@ const response = await abound.expenses.list(userId);
 // filter Expenses by year:
 
 const response = await abound.expenses.list(userId, {
-  year: "2020"
+  year: "2020",
 });
 
 console.log(response.data); // list of Expenses
@@ -169,7 +170,11 @@ const expenseUpdates = {
   description: "Premium Tax Filing Service Fee",
 };
 
-const response = await abound.expenses.update(userId, expenseId, expenseUpdates);
+const response = await abound.expenses.update(
+  userId,
+  expenseId,
+  expenseUpdates
+);
 
 console.log(response.data.deductionAmount);
 ```
@@ -194,7 +199,7 @@ const userId = "userId_506...";
 const mileage = {
   distance: 21.1,
   date: "2021-03-14",
-  description: "Client visit"
+  description: "Client visit",
 };
 
 const response = await abound.mileages.create(userId, [
@@ -221,7 +226,7 @@ console.log(response.data.distance);
 Create a `PaymentMethod`:
 
 ```ts
-import { AccountClass, AccountType } from "@abound/node-sdk/dist/resources/PaymentMethods";
+import { AccountClass, AccountType } from "@abound/node-sdk";
 
 const userId = "userId_506...";
 
@@ -229,7 +234,7 @@ const response = await abound.paymentMethods.create(userId, {
   accountNumber: "123456789",
   routingNumber: "44449944",
   accountType: AccountType.BUSINESS,
-  accountClass: AccountClass.CHECKING
+  accountClass: AccountClass.CHECKING,
 });
 
 console.log(response.data.paymentMethodId);
@@ -261,7 +266,7 @@ console.log(response.data.displayName);
 Create a `TaxPayment`:
 
 ```ts
-import { TaxPaymentEntity, TaxPeriod } from "@abound/node-sdk/dist/resources/TaxPayments";
+import { TaxPaymentEntity, TaxPeriod } from "@abound/node-sdk";
 
 const userId = "userId_506...";
 const paymentMethodId = "paymentMethodId_329...";
@@ -271,7 +276,7 @@ const response = await abound.taxPayments.create(userId, {
   year: "2021",
   period: TaxPeriod.Q1,
   amount: 560.87,
-  entity: TaxPaymentEntity.IRS
+  entity: TaxPaymentEntity.IRS,
 });
 
 console.log(response.data.taxPaymentId);
@@ -303,7 +308,7 @@ console.log(response.data.status);
 Create `Income`s:
 
 ```ts
-import { IncomeType } from "@abound/node-sdk/dist/resources/Incomes";
+import { IncomeType } from "@abound/node-sdk";
 
 const userId = "userId_506...";
 
@@ -311,14 +316,14 @@ const response = await abound.incomes.create(userId, [
   {
     incomeType: IncomeType.W2,
     amount: 55000,
-    date: "2020-12-30"
+    date: "2020-12-30",
   },
   {
     incomeType: IncomeType.TEN99INT,
     amount: 10.85,
     date: "2020-12-15",
-    description: "Savings Account interest accrued"
-  }
+    description: "Savings Account interest accrued",
+  },
 ]);
 
 console.log(response.data); // list of created Incomes
@@ -327,14 +332,14 @@ console.log(response.data); // list of created Incomes
 List `Income`s for a `User`:
 
 ```ts
-import { IncomeType } from "@abound/node-sdk/dist/resources/Incomes";
+import { IncomeType } from "@abound/node-sdk";
 
 const userId = "userId_506...";
 
 const response = await abound.incomes.list(userId);
 // or, filter by incomeType
 const response = await abound.incomes.list(userId, {
-  incomeType: IncomeType.TEN99
+  incomeType: IncomeType.TEN99,
 });
 
 console.log(response.data); // list of Incomes
@@ -357,7 +362,7 @@ Update an `Income`:
 const userId = "userId_506...";
 const incomeId = "incomeId_8cb...";
 const incomeUpdates = {
-  amount: 57500
+  amount: 57500,
 };
 
 const response = await abound.incomes.update(userId, incomeId, incomeUpdates);
@@ -420,7 +425,7 @@ console.log(response.data.effectiveTaxRate);
 Create `Document`s for a `User`:
 
 ```ts
-import { DocumentType } from "@abound/node-sdk/dist/resources/Documents";
+import { DocumentType } from "@abound/node-sdk";
 
 const userId = "userId_506...";
 

@@ -4,7 +4,7 @@ import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 import {
   AccountStatementDocument,
   AccountStatementDocumentRequest,
-} from "./documents/AccountStatements";
+} from "./document-types/AccountStatement";
 
 export type DocumentRequest = AccountStatementDocumentRequest; // | ScheduleCDocumentRequest, etc.
 
@@ -35,7 +35,7 @@ interface DocumentApiResponse extends Document {
 /**
  * See https://docs.withabound.com/reference/documents
  */
-export class Documents extends AboundUserScopedResource<
+export default class Documents extends AboundUserScopedResource<
   DocumentRequest,
   Document,
   DocumentApiResponse
