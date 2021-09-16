@@ -392,8 +392,9 @@ Retrieve `Taxes` for a `User` for a specific year:
 
 ```ts
 const userId = "userId_506...";
+const year = "2020";
 
-const response = await abound.taxes.retrieve(userId, "2020");
+const response = await abound.taxes.retrieve(userId, year);
 
 console.log(response.data.totalTax);
 ```
@@ -402,13 +403,14 @@ Calculate `Taxes` based on the specified adjustments:
 
 ```ts
 const userId = "userId_506...";
+const year = "2020";
 
 const taxUpdates = {
   w2Income: 75000,
   mileage: 16500,
 };
 
-const response = await abound.taxes.calculate(userId, "2020", taxUpdates);
+const response = await abound.taxes.calculate(userId, year, taxUpdates);
 
 console.log(response.data.effectiveTaxRate);
 ```
@@ -418,6 +420,8 @@ console.log(response.data.effectiveTaxRate);
 Create `Document`s for a `User`:
 
 ```ts
+import { DocumentType } from "@abound/node-sdk/dist/resources/Documents";
+
 const userId = "userId_506...";
 
 const accountStatementDocument = {
@@ -442,8 +446,8 @@ const accountStatementDocument = {
     zipcode: "80202",
     customerService: {
       phoneNumber: "555-555-5555",
-      email: "support@bofa.com",
-      website: "https://www.bankofamerica.com",
+      email: "bofa-support@example.com",
+      website: "https://www.bankofamerica.com/",
     },
   },
 };
@@ -484,7 +488,9 @@ console.log(response.data.documentURL);
 Retrieve `TaxCategories` by tax year:
 
 ```ts
-const response = await abound.taxCategories.retrieve("2021");
+const year = "2021";
+
+const response = await abound.taxCategories.retrieve(year);
 
 console.log(response.data); // ["Advertising and Marketing", "Car and Truck", etc.]
 ```
