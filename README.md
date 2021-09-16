@@ -13,9 +13,9 @@ The Abound Node SDK supports all Abound API endpoints. See the [API Documentatio
 Install the SDK with:
 
 ```sh
-$ npm install @abound/node-sdk --save
+$ npm install @withabound/node-sdk --save
 # or
-$ yarn add @abound/node-sdk
+$ yarn add @withabound/node-sdk
 ```
 
 ### Usage
@@ -25,7 +25,7 @@ The Abound client must be configured with your account's `appId` and `appSecret`
 Every method returns a promise which can either be chained or handled via `async/await`.
 
 ```ts
-import Abound, { environments } from "@abound/node-sdk";
+import Abound, { environments } from "@withabound/node-sdk";
 
 const abound = new Abound({
   appId: "appId_f2d...",
@@ -117,7 +117,7 @@ console.log(response.data.email);
 Create `Expense`s:
 
 ```ts
-import { ExpenseType } from "@abound/node-sdk";
+import { ExpenseType } from "@withabound/node-sdk";
 
 const userId = "userId_506...";
 const expense = {
@@ -226,7 +226,7 @@ console.log(response.data.distance);
 Create a `PaymentMethod`:
 
 ```ts
-import { AccountClass, AccountType } from "@abound/node-sdk";
+import { AccountClass, AccountType } from "@withabound/node-sdk";
 
 const userId = "userId_506...";
 
@@ -266,7 +266,7 @@ console.log(response.data.displayName);
 Create a `TaxPayment`:
 
 ```ts
-import { TaxPaymentEntity, TaxPeriod } from "@abound/node-sdk";
+import { TaxPaymentEntity, TaxPeriod } from "@withabound/node-sdk";
 
 const userId = "userId_506...";
 const paymentMethodId = "paymentMethodId_329...";
@@ -308,7 +308,7 @@ console.log(response.data.status);
 Create `Income`s:
 
 ```ts
-import { IncomeType } from "@abound/node-sdk";
+import { IncomeType } from "@withabound/node-sdk";
 
 const userId = "userId_506...";
 
@@ -332,7 +332,7 @@ console.log(response.data); // list of created Incomes
 List `Income`s for a `User`:
 
 ```ts
-import { IncomeType } from "@abound/node-sdk";
+import { IncomeType } from "@withabound/node-sdk";
 
 const userId = "userId_506...";
 
@@ -425,7 +425,7 @@ console.log(response.data.effectiveTaxRate);
 Create `Document`s for a `User`:
 
 ```ts
-import { DocumentType } from "@abound/node-sdk";
+import { DocumentType } from "@withabound/node-sdk";
 
 const userId = "userId_506...";
 
@@ -541,7 +541,7 @@ $ yalc push
 Install the local artifacts:
 
 ```sh
-~/my-project $ yalc add @abound/node-sdk
+~/my-project $ yalc add @withabound/node-sdk
 ```
 
 [docs]: https://docs.withabound.com
