@@ -376,6 +376,108 @@ const response = await abound.incomes.delete(userId, incomeId);
 console.log(response.data); // {}
 ```
 
+#### Taxes
+
+List `Taxes` for a `User`:
+
+```ts
+const userId = "userId_506...";
+
+const response = await abound.taxes.list(userId);
+
+console.log(response.data); // list of tax calculations for all years
+```
+
+Retrieve `Taxes` for a `User` for a specific year:
+
+```ts
+const userId = "userId_506...";
+
+const response = await abound.taxes.retrieve(userId, "2020");
+
+console.log(response.data.totalTax);
+```
+
+Calculate `Taxes` based on the specified adjustments:
+
+```ts
+const userId = "userId_506...";
+
+const taxUpdates = {
+  w2Income: 75000,
+  mileage: 16500,
+};
+
+const response = await abound.taxes.calculate(userId, "2020", taxUpdates);
+
+console.log(response.data.effectiveTaxRate);
+```
+
+#### Documents
+
+Create `Document`s for a `User`:
+
+```ts
+const userId = "userId_506...";
+
+const accountStatementDocument = {
+  type: DocumentType.ACCOUNT_STATEMENT,
+  year: 2020,
+  beginDate: "2020-01-01",
+  endDate: "2020-05-31",
+  accountNumber: "123456789",
+  summary: {
+    beginningBalance: 1234.89,
+    endingBalance: 4321.89,
+    interestPercentage: 1.23,
+    interestAmount: 6.78,
+    totalFees: 5.25,
+  },
+  bank: {
+    name: "Bank of America",
+    logo: "https://url-to-bank-logo.png",
+    address: "1801 16th St Mall",
+    city: "Denver",
+    state: "CO",
+    zipcode: "80202",
+    customerService: {
+      phoneNumber: "555-555-5555",
+      email: "support@bofa.com",
+      website: "https://www.bankofamerica.com",
+    },
+  },
+};
+
+const response = await abound.documents.create(userId, [
+  accountStatementDocument,
+  // additional documents to create
+]);
+
+console.log(response.data[0].documentURL);
+```
+
+List all `Document`s for a `User`:
+
+```ts
+const userId = "userId_506...";
+
+const response = await abound.documents.list(userId);
+// or, filter by year
+const response = await abound.documents.list(userId, { year: "2020" });
+
+console.log(response.data); // list of Documents
+```
+
+Retrieve a `Document`:
+
+```ts
+const userId = "userId_506...";
+const documentId = "documentId_efb...";
+
+const response = await abound.documents.retrieve(userId, documentId);
+
+console.log(response.data.documentURL);
+```
 
 #### Tax Categories
 
@@ -413,22 +515,22 @@ $ npm i yalc -g
 $ yarn global add yalc
 ```
 
-Compile TypeScript into JavaScript:
+Compile + Build the SDK:
 
 ```sh
-$ npx tsc
+$ npm run build
 ```
 
 Publish artifacts to local `yalc` registry:
 
 ```sh
-$ yalc publish --files --push
+$ yalc push
 ```
 
 Install the local artifacts:
 
 ```sh
-~/my-project $ yalc add @abound/node-sdk@<version>
+~/my-project $ yalc add @abound/node-sdk
 ```
 
 [docs]: https://docs.withabound.com
