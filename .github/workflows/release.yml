@@ -21,8 +21,10 @@ jobs:
 
       - name: Validate release version and package version match
         run: |
-          if ! grep -q "\"version\": \"${github.event.release.tag_name:1}\"" package.json; then
-            echo "Release version (${github.event.release.tag_name:1}) does not match the package.json version"
+          printenv
+          echo "test: ${{ github.event.release.tag_name:1 }}"
+          if ! grep -q "\"version\": \"${{ github.event.release.tag_name:1 }}\"" package.json; then
+            echo "Release version (${{ github.event.release.tag_name:1 }}) does not match the package.json version"
             exit 1
           fi
 
