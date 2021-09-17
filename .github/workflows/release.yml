@@ -23,9 +23,12 @@ jobs:
         env:
           RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
         run: |
-          if ! grep -q "\"version\": \"${RELEASE_TAG_NAME:1}\"" package.json; then
-            echo "Release version (${RELEASE_TAG_NAME:1}) does not match the package.json version"
-            exit 1
+          if ! grep -q "\"version\": \"${RELEASE_TAG_NAME:1}\"" package.json
+            then
+              echo "Release tag (${RELEASE_TAG_NAME:1}) does not match the package.json version"
+              exit 1
+            else
+              echo "Release tag matches the package.json version"
           fi
 
       - name: Setup Node.js 14.x
@@ -38,7 +41,6 @@ jobs:
         run: npm install
 
       - name: Publish @withabound/node-sdk
-        id: npm-publish
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_ACCESS_TOKEN }}
@@ -60,5 +62,6 @@ jobs:
         uses: tokorom/action-slack-incoming-webhook@main
         env:
           INCOMING_WEBHOOK_URL: ${{ secrets.SUCCESS_DEPLOYMENT_DX_URL }}
+          RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
         with:
-          text: "@withabound/node-sdk@${{ steps.npm-publish.outputs.version }} has been published."
+          text: "@withabound/node-sdk@${RELEASE_TAG_NAME:1} has been published."
