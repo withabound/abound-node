@@ -41,6 +41,7 @@ jobs:
         run: npm install
 
       - name: Publish @withabound/node-sdk
+        id: npm-publish
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_ACCESS_TOKEN }}
@@ -54,14 +55,10 @@ jobs:
           channel: "#deployments"
         if: always()
 
-  send_success_message:
-    needs: ["release"]
-    runs-on: ubuntu-latest
-    steps:
       - name: Slack Notification
+        if: steps.npm-publish.outputs.type != 'none'
         uses: tokorom/action-slack-incoming-webhook@main
         env:
           INCOMING_WEBHOOK_URL: ${{ secrets.SUCCESS_DEPLOYMENT_DX_URL }}
-          RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
         with:
-          text: "@withabound/node-sdk@${RELEASE_TAG_NAME:1} has been published."
+          text: "@withabound/node-sdk@${{ steps.npm-publish.outputs.version }} has been published."
