@@ -1,6 +1,6 @@
 import { URL } from "url";
 
-import Abound, { environments } from "../src/abound";
+import Abound, { Environment } from "../src/abound";
 import { AboundConfig } from "../src/AboundClient";
 
 function randomString(length = 13): string {
@@ -58,7 +58,7 @@ function removeQueryParameters(rawUrl: string) {
 function createAboundClient(): Abound {
   const config: AboundConfig = {
     apiVersion: "v2",
-    environment: environments.sandbox,
+    environment: Environment.SANDBOX,
     appId: "appId_test48e7eaa3175a66354e00626542d2",
     appSecret: "appSecret_testf54672359db6693429e1d3e14e2c",
   };

@@ -25,12 +25,12 @@ The Abound client must be configured with your account's `appId` and `appSecret`
 Every method returns a promise which can either be chained or handled via `async/await`.
 
 ```ts
-import Abound, { environments } from "@withabound/node-sdk";
+import Abound, { Environment } from "@withabound/node-sdk";
 
 const abound = new Abound({
   appId: "appId_f2d...",
   appSecret: "appSecret_bf3...",
-  environment: environments.sandbox, // or environments.production
+  environment: Environment.SANDBOX, // or Environment.PRODUCTION
   apiVersion: "v2",
 });
 
