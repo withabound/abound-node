@@ -3,7 +3,7 @@ import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 
 // request body
-interface PaymentMethodRequest {
+export interface PaymentMethodRequest {
   accountNumber: string;
   routingNumber: string;
   accountType: AccountType;
@@ -32,7 +32,7 @@ export enum AccountClass {
 /**
  * See https://docs.withabound.com/reference#payment-methods
  */
-export class PaymentMethods extends AboundUserScopedResource<
+export default class PaymentMethods extends AboundUserScopedResource<
   PaymentMethodRequest,
   PaymentMethod
 > {

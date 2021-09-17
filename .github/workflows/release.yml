@@ -1,0 +1,62 @@
+on:
+  release:
+    types:
+      - published
+
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+          channel: "#deployments"
+        if: always()
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Validate release version and package version match
+        run: |
+          if ! grep -q "\"version\": \"${github.event.release.tag_name:1}\"" package.json; then
+            echo "Release version (${github.event.release.tag_name:1}) does not match the package.json version"
+            exit 1
+          fi
+
+      - name: Setup Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - name: Install npm dependencies
+        id: npm-install
+        run: npm install
+
+      - name: Publish @withabound/node-sdk
+        id: npm-publish
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_ACCESS_TOKEN }}
+          access: public
+          dry-run: true
+
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: "#deployments"
+        if: always()
+
+  send_success_message:
+    needs: ["release"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Notification
+        uses: tokorom/action-slack-incoming-webhook@main
+        env:
+          INCOMING_WEBHOOK_URL: ${{ secrets.SUCCESS_DEPLOYMENT_DX_URL }}
+        with:
+          text: "@withabound/node-sdk@${{ steps.npm-publish.outputs.version }} has been published."

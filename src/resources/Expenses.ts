@@ -39,7 +39,7 @@ interface ExpensePredictions {
 /**
  * See https://docs.withabound.com/reference#expenses
  */
-export class Expenses extends AboundUserScopedResource<
+export default class Expenses extends AboundUserScopedResource<
   ExpenseRequest,
   Expense
 > {

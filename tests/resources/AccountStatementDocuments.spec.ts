@@ -4,7 +4,7 @@ import {
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
 import { DocumentType } from "../../src/resources/Documents";
-import { AccountStatementDocument } from "../../src/resources/documents/AccountStatements";
+import { AccountStatementDocument } from "../../src/resources/document-types/AccountStatement";
 import {
   createAboundClient,
   PUBLIC_BANK_LOGO_URL,

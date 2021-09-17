@@ -35,7 +35,10 @@ export enum IncomeType {
 /**
  * See https://docs.withabound.com/reference#incomes
  */
-export class Incomes extends AboundUserScopedResource<IncomeRequest, Income> {
+export default class Incomes extends AboundUserScopedResource<
+  IncomeRequest,
+  Income
+> {
   path = "/incomes";
 
   public async create(

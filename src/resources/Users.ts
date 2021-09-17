@@ -41,7 +41,7 @@ interface UserApiResponse extends User {
 /*
  * See https://docs.withabound.com/reference#users
  */
-export class Users extends AboundBaseResource<
+export default class Users extends AboundBaseResource<
   UserRequest,
   User,
   UserApiResponse

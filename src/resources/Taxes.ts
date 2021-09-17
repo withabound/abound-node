@@ -47,7 +47,7 @@ export interface Tax extends Required<TaxRequest> {
 /**
  * See https://docs.withabound.com/reference/taxes
  */
-export class Taxes extends AboundUserScopedResource<TaxRequest, Tax> {
+export default class Taxes extends AboundUserScopedResource<TaxRequest, Tax> {
   path = "/taxes";
 
   public async list(userId: string): Promise<AboundBulkResponse<Tax>> {
