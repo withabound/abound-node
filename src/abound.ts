@@ -1,5 +1,4 @@
-export { AboundClient as default } from "./AboundClient";
-export { environments } from "./environments";
+export { AboundClient as default, Environment } from "./AboundClient";
 
 // resources
 export * from "./resources/Documents";

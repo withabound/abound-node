@@ -1,5 +1,4 @@
 import { AxiosInstance } from "axios";
-import { Environment, environments } from "./environments";
 import {
   Documents,
   Expenses,
@@ -12,6 +11,11 @@ import {
   Users,
 } from "./resources";
 import { initAxios } from "./util/http";
+
+export enum Environment {
+  SANDBOX = "https://sandbox-api.withabound.com/",
+  PRODUCTION = "https://production-api.withabound.com/",
+}
 
 export interface AboundConfig {
   appId: string;
@@ -62,9 +66,5 @@ function validateAboundConfig(config: AboundConfig): void {
     if (!config[field]) {
       throw new Error(`Missing ${field} in Abound config`);
     }
-  }
-
-  if (!environments[config.environment.name]) {
-    throw new Error(`Invalid Abound environment`);
   }
 }

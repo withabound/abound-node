@@ -5,7 +5,7 @@ import { AboundConfig } from "../AboundClient";
 
 export function initAxios(config: AboundConfig): AxiosInstance {
   return axios.create({
-    baseURL: `${config.environment.baseUrl}${config.apiVersion}`,
+    baseURL: `${config.environment}${config.apiVersion}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${config.appId}.${config.appSecret}`,
