@@ -46,7 +46,6 @@ jobs:
         with:
           token: ${{ secrets.NPM_ACCESS_TOKEN }}
           access: public
-          dry-run: true
 
       - uses: act10ns/slack@v1
         with:
