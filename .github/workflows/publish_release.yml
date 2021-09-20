@@ -7,7 +7,7 @@ env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 jobs:
-  release:
+  publish_release:
     runs-on: ubuntu-latest
     steps:
       - uses: act10ns/slack@v1

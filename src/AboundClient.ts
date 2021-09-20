@@ -24,7 +24,8 @@ export interface AboundConfig {
   apiVersion: ApiVersion;
 }
 
-type ApiVersion = "v2";
+export type ApiVersion = "v2";
+
 export class AboundClient {
   // resources
   users: Users;
