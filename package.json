@@ -27,7 +27,7 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
-    "**/*.js": "xo"
+    "**/*.(js|ts)": "xo"
   },
   "dependencies": {
     "axios": "0.21.4"
