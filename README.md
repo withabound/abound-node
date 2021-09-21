@@ -8,6 +8,8 @@ The Abound Node SDK supports all Abound API endpoints. See the [API Documentatio
 
 ### Requirements
 
+You can start to integrate the Abound Node library into your solution as soon as you [create an account with Abound][developer-dashboard-signup] and [obtain your API keys][developer-dashboard-keys].
+
 ### Installation
 
 Install the SDK with:
@@ -516,6 +518,18 @@ $ npx xo
 $ npx xo --fix
 ```
 
+Compile:
+
+```sh
+$ npm run compile
+```
+
+Install husky:
+
+```sh
+$ npx husky install
+```
+
 Publish artifacts locally:
 
 Install `yalc`:
@@ -526,7 +540,7 @@ $ npm i yalc -g
 $ yarn global add yalc
 ```
 
-Compile + Build the SDK:
+Build the SDK:
 
 ```sh
 $ npm run build
@@ -548,3 +562,4 @@ Install the local artifacts:
 [api-reference]: https://docs.withabound.com/reference
 [developer-dashboard]: https://dashboard.withabound.com
 [developer-dashboard-keys]: https://dashboard.withabound.com/keys
+[developer-dashboard-signup]: https://dashboard.withabound.com/signup
