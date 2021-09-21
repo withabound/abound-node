@@ -4,11 +4,16 @@ import axios, { AxiosInstance } from "axios";
 import { AboundConfig } from "../AboundClient";
 
 export function initAxios(config: AboundConfig): AxiosInstance {
+  let apiKey = config.apiKey ?? "";
+  if (config.appId && config.appSecret) {
+    apiKey = `${config.appId}.${config.appSecret}`;
+  }
+
   return axios.create({
     baseURL: `${config.environment}${config.apiVersion}`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${config.appId}.${config.appSecret}`,
+      Authorization: `Bearer ${apiKey}`,
     },
   });
 }

@@ -18,8 +18,9 @@ export enum Environment {
 }
 
 export interface AboundConfig {
-  appId: string;
-  appSecret: string;
+  appId?: string;
+  appSecret?: string;
+  apiKey?: string;
   environment: Environment;
   apiVersion: ApiVersion;
 }
@@ -56,8 +57,6 @@ export class AboundClient {
 }
 
 const REQUIRED_CONFIG_FIELDS: Array<keyof AboundConfig> = [
-  "appId",
-  "appSecret",
   "apiVersion",
   "environment",
 ];
@@ -66,6 +65,20 @@ function validateAboundConfig(config: AboundConfig): void {
   for (const field of REQUIRED_CONFIG_FIELDS) {
     if (!config[field]) {
       throw new Error(`Missing ${field} in Abound config`);
+    }
+  }
+
+  if (!config.apiKey) {
+    if (!config.appId && !config.appSecret) {
+      throw new Error(`Missing apiKey or appId/appSecret in Abound config`);
+    }
+
+    if (config.appId && !config.appSecret) {
+      throw new Error(`Missing appSecret in Abound config`);
+    }
+
+    if (!config.appId && config.appSecret) {
+      throw new Error(`Missing appId in Abound config`);
     }
   }
 }

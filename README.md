@@ -29,6 +29,16 @@ Every method returns a promise which can either be chained or handled via `async
 ```ts
 import Abound, { Environment } from "@withabound/node-sdk";
 
+const appId = "appId_f2d...";
+const appSecret = "appSecret_bf3...";
+const abound = new Abound({
+  apiKey: `${appId}.${appSecret}`,
+  environment: Environment.SANDBOX, // or Environment.PRODUCTION
+  apiVersion: "v2",
+});
+
+// or
+
 const abound = new Abound({
   appId: "appId_f2d...",
   appSecret: "appSecret_bf3...",
