@@ -1,10 +1,7 @@
 import { Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
-import {
-  AccountStatementDocument,
-  AccountStatementDocumentRequest,
-} from "./document-types/AccountStatement";
+import { AccountStatementDocumentRequest } from "./document-types/AccountStatement";
 
 export type DocumentRequest = AccountStatementDocumentRequest; // | ScheduleCDocumentRequest, etc.
 
@@ -17,11 +14,14 @@ export interface DocumentParameters extends Pagination {
   year?: string | number; // applies a filter based on year
 }
 
-export interface BaseDocumentResponse {
+export interface Document {
   documentId: Readonly<string | null>;
+  documentURL: Readonly<string | null>;
+  documentName: Readonly<string>;
+  type: Readonly<DocumentType>;
+  year: string;
+  createdTimestamp: Readonly<number>;
 }
-
-export type Document = AccountStatementDocument; // | ScheduleCDocument, etc.
 
 export enum DocumentType {
   ACCOUNT_STATEMENT = "accountStatement",
