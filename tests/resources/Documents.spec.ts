@@ -17,7 +17,7 @@ import {
 
 const TEST_DOCUMENT_ID = "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170";
 
-describe("Abound Account Statement Documents", () => {
+describe("Abound Documents", () => {
   let abound: Abound;
 
   beforeAll(() => {
