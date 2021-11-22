@@ -16,6 +16,7 @@ export interface UserProfile {
   address2?: string;
   city?: string;
   state?: string;
+  country?: string; // The user's country of residence. Adhering to the ISO 3166-2 format.
   zipcode?: string;
   phoneNumber?: string; // no country code, numerical digits only
   dateOfBirth?: string; // YYYY-MM-DD
