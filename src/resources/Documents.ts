@@ -20,6 +20,8 @@ export interface Document {
   documentName: Readonly<string>;
   type: Readonly<DocumentType>;
   year: string;
+  status?: Readonly<string>;
+  message?: Readonly<string>;
   createdTimestamp: Readonly<number>;
 }
 
