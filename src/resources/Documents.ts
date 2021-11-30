@@ -19,7 +19,7 @@ export interface Document {
   documentURL: Readonly<string | null>;
   documentName: Readonly<string>;
   type: Readonly<DocumentType>;
-  year: string;
+  year: Readonly<string>;
   status?: Readonly<string>;
   message?: Readonly<string>;
   createdTimestamp: Readonly<number>;
