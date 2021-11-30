@@ -1,8 +1,4 @@
-import {
-  BaseDocumentRequest,
-  BaseDocumentResponse,
-  DocumentType,
-} from "../Documents";
+import { BaseDocumentRequest, DocumentType } from "../Documents";
 
 // account statement request body
 export interface AccountStatementDocumentRequest extends BaseDocumentRequest {
@@ -40,13 +36,4 @@ export interface AccountStatementBankCustomerService {
   email: string;
   website: string;
   instructions?: string;
-}
-
-// account statement response body
-export interface AccountStatementDocument extends BaseDocumentResponse {
-  documentURL: Readonly<string | null>;
-  documentName: Readonly<string>;
-  type: Readonly<DocumentType>;
-  year: string;
-  createdTimestamp: Readonly<number>;
 }

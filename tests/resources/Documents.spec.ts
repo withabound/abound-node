@@ -3,8 +3,7 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
-import { DocumentType } from "../../src/resources/Documents";
-import { AccountStatementDocument } from "../../src/resources/document-types/AccountStatement";
+import { Document, DocumentType } from "../../src/resources/Documents";
 import {
   createAboundClient,
   PUBLIC_BANK_LOGO_URL,
@@ -18,7 +17,7 @@ import {
 
 const TEST_DOCUMENT_ID = "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170";
 
-describe("Abound Account Statement Documents", () => {
+describe("Abound Documents", () => {
   let abound: Abound;
 
   beforeAll(() => {
@@ -30,7 +29,7 @@ describe("Abound Account Statement Documents", () => {
       const accountNumber = randomNumberString(9);
       const last4 = accountNumber.slice(-4);
 
-      const createdDocuments: AboundBulkResponse<AccountStatementDocument> =
+      const createdDocuments: AboundBulkResponse<Document> =
         await abound.documents.create(TEST_USER_ID, [
           {
             type: DocumentType.ACCOUNT_STATEMENT,
@@ -79,7 +78,7 @@ describe("Abound Account Statement Documents", () => {
 
   describe("list", () => {
     it("returns a promise that resolves to an object that includes a list of the user's Documents on success", async () => {
-      const documents: AboundBulkResponse<AccountStatementDocument> =
+      const documents: AboundBulkResponse<Document> =
         await abound.documents.list(TEST_USER_ID);
 
       expect(bulkNormalizeNonIdempotentFields(documents.data))
@@ -98,7 +97,7 @@ describe("Abound Account Statement Documents", () => {
     });
 
     it("returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year", async () => {
-      const filteredDocuments: AboundBulkResponse<AccountStatementDocument> =
+      const filteredDocuments: AboundBulkResponse<Document> =
         await abound.documents.list(TEST_USER_ID, {
           year: "2021",
         });
@@ -146,7 +145,7 @@ describe("Abound Account Statement Documents", () => {
   // TODO restore this test after the API properly returns a 200 response
   describe.skip("retrieve", () => {
     it("returns a promise that resolves to an object that includes a single Document on success", async () => {
-      const document: AboundResponse<AccountStatementDocument> =
+      const document: AboundResponse<Document> =
         await abound.documents.retrieve(TEST_USER_ID, TEST_DOCUMENT_ID);
 
       expect(document.data).toMatchInlineSnapshot();
@@ -154,15 +153,11 @@ describe("Abound Account Statement Documents", () => {
   });
 });
 
-function bulkNormalizeNonIdempotentFields(
-  documents: AccountStatementDocument[]
-) {
+function bulkNormalizeNonIdempotentFields(documents: Document[]) {
   return documents.map((d) => normalizeNonIdempotentFields(d));
 }
 
-function normalizeNonIdempotentFields(
-  document: AccountStatementDocument
-): AccountStatementDocument {
+function normalizeNonIdempotentFields(document: Document): Document {
   document.documentURL = removeQueryParameters(document.documentURL!);
   document.createdTimestamp = 1630000000000;
 
