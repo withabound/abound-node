@@ -27,7 +27,6 @@ export interface Income extends IncomeRequest {
 
 export enum IncomeType {
   TEN99 = "1099",
-  TEN99INT = "1099-INT",
   W2 = "w2",
   PERSONAL = "personal",
 }

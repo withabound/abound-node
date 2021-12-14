@@ -320,12 +320,6 @@ const response = await abound.incomes.create(userId, [
     amount: 55000,
     date: "2020-12-30",
   },
-  {
-    incomeType: IncomeType.TEN99INT,
-    amount: 10.85,
-    date: "2020-12-15",
-    description: "Savings Account interest accrued",
-  },
 ]);
 
 console.log(response.data); // list of created Incomes

@@ -29,7 +29,7 @@ describe("Abound Incomes", () => {
             amount: 410.11,
           },
           {
-            incomeType: IncomeType.TEN99INT,
+            incomeType: IncomeType.PERSONAL,
             date: "2021-08-05",
             amount: 10.87,
             description,
@@ -90,7 +90,7 @@ describe("Abound Incomes", () => {
       const incomes: AboundBulkResponse<Income> = await abound.incomes.list(
         TEST_USER_ID,
         {
-          incomeType: IncomeType.TEN99INT,
+          incomeType: IncomeType.PERSONAL,
         }
       );
 
