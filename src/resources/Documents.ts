@@ -27,6 +27,11 @@ export interface Document {
 
 export enum DocumentType {
   ACCOUNT_STATEMENT = "accountStatement",
+  TEN99INT = "1099int",
+  TEN99K = "1099k",
+  TEN99MISC = "1099misc",
+  TEN99NEC = "1099nec",
+  W9 = "w9",
 }
 
 // The raw `Document` object returned from the APIs returns one deprecated field, which the SDK will remove.

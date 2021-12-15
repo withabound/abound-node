@@ -4,6 +4,7 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
+import { DocumentType } from "../../src/resources/Documents";
 import { Income, IncomeType } from "../../src/resources/Incomes";
 import { createAboundClient, randomString, TEST_USER_ID } from "../utils";
 
@@ -29,11 +30,12 @@ describe("Abound Incomes", () => {
             amount: 410.11,
           },
           {
-            incomeType: IncomeType.PERSONAL,
+            incomeType: IncomeType.TEN99,
             date: "2021-08-05",
             amount: 10.87,
             description,
             category,
+            documentType: DocumentType.TEN99INT,
           },
         ]);
 
@@ -90,7 +92,7 @@ describe("Abound Incomes", () => {
       const incomes: AboundBulkResponse<Income> = await abound.incomes.list(
         TEST_USER_ID,
         {
-          incomeType: IncomeType.PERSONAL,
+          incomeType: IncomeType.TEN99,
         }
       );
 

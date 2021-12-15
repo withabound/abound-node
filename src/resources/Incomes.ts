@@ -1,6 +1,7 @@
 import { EmptyObject, Notes, Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
+import { DocumentType } from "./Documents";
 
 // request body
 export interface IncomeRequest {
@@ -11,6 +12,8 @@ export interface IncomeRequest {
   description?: string;
   category?: string;
   foreignId?: string;
+  // The specific document code used when filling out this income.
+  documentType?: DocumentType;
   notes?: Notes;
 }
 
