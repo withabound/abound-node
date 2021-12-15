@@ -325,7 +325,7 @@ const response = await abound.incomes.create(userId, [
     amount: 10.85,
     date: "2020-12-15",
     description: "Savings Account interest accrued",
-    documentType: DocumentType.TEN99INT
+    documentType: DocumentType.TEN99INT,
   },
 ]);
 
