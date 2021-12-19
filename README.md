@@ -310,7 +310,7 @@ console.log(response.data.status);
 Create `Income`s:
 
 ```ts
-import { DocumentType, IncomeType } from "@withabound/node-sdk";
+import { IncomeDocumentType, IncomeType } from "@withabound/node-sdk";
 
 const userId = "userId_506...";
 
@@ -325,7 +325,7 @@ const response = await abound.incomes.create(userId, [
     amount: 10.85,
     date: "2020-12-15",
     description: "Savings Account interest accrued",
-    documentType: DocumentType.TEN99INT,
+    documentType: IncomeDocumentType.TEN99INT,
   },
 ]);
 

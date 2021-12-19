@@ -1,7 +1,6 @@
 import { EmptyObject, Notes, Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
-import { DocumentType } from "./Documents";
 
 // request body
 export interface IncomeRequest {
@@ -13,8 +12,16 @@ export interface IncomeRequest {
   category?: string;
   foreignId?: string;
   // The specific document code used when filling out this income.
-  documentType?: DocumentType;
+  documentType?: IncomeDocumentType;
   notes?: Notes;
+}
+
+export enum IncomeDocumentType {
+  TEN99INT = "1099int",
+  TEN99K = "1099k",
+  TEN99MISC = "1099misc",
+  TEN99NEC = "1099nec",
+  SSA1099 = "ssa1099",
 }
 
 // query params
