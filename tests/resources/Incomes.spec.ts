@@ -4,7 +4,11 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
-import { Income, IncomeDocumentType, IncomeType } from "../../src/resources/Incomes";
+import {
+  Income,
+  IncomeDocumentType,
+  IncomeType,
+} from "../../src/resources/Incomes";
 import { createAboundClient, randomString, TEST_USER_ID } from "../utils";
 
 const TEST_INCOME_ID = "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f";
