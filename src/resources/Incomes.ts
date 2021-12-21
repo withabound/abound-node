@@ -11,7 +11,17 @@ export interface IncomeRequest {
   description?: string;
   category?: string;
   foreignId?: string;
+  // The specific document code used when filling out this income.
+  documentType?: IncomeDocumentType;
   notes?: Notes;
+}
+
+export enum IncomeDocumentType {
+  TEN99INT = "1099int",
+  TEN99K = "1099k",
+  TEN99MISC = "1099misc",
+  TEN99NEC = "1099nec",
+  SSA1099 = "ssa1099",
 }
 
 // query params
@@ -27,7 +37,6 @@ export interface Income extends IncomeRequest {
 
 export enum IncomeType {
   TEN99 = "1099",
-  TEN99INT = "1099-INT",
   W2 = "w2",
   PERSONAL = "personal",
 }
