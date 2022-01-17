@@ -8,6 +8,6 @@ export default class TaxCategories extends AboundBaseResource<never, string[]> {
   path = "/taxCategories";
 
   public async retrieve(year: string): Promise<AboundResponse<string[]>> {
-    return super.retrieve(year);
+    return super.retrieveBaseResource(year);
   }
 }
