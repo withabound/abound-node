@@ -51,6 +51,9 @@ function removeQueryParameters(rawUrl: string) {
   return url.origin + url.pathname;
 }
 
+export const TEST_APP_ID = "appId_test48e7eaa3175a66354e00626542d2";
+export const TEST_APP_SECRET = "appSecret_testf54672359db6693429e1d3e14e2c";
+
 /**
  * These test credentials ensure consistent data is returned from Abound's APIs, and they do not persist
  * additional data.
@@ -59,8 +62,8 @@ function createAboundClient(): Abound {
   const config: AboundConfig = {
     apiVersion: "v2",
     environment: Environment.SANDBOX,
-    appId: "appId_test48e7eaa3175a66354e00626542d2",
-    appSecret: "appSecret_testf54672359db6693429e1d3e14e2c",
+    appId: TEST_APP_ID,
+    appSecret: TEST_APP_SECRET,
   };
 
   return new Abound(config);
