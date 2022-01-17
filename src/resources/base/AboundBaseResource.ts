@@ -19,25 +19,31 @@ export abstract class AboundBaseResource<
 > extends AboundResource<I, O, RESP> {
   abstract path: string;
 
-  protected async list<P extends Record<string, unknown>>(
+  protected async listBaseResource<P extends Record<string, unknown>>(
     parameters?: P
   ): Promise<AboundBulkResponse<O>> {
     return super._list(this.path, parameters);
   }
 
-  protected async create(
+  protected async createBaseResource(
     payload: Record<string, I>
   ): Promise<AboundResponse<O>> {
     return super._create(this.path, payload);
   }
 
-  protected async retrieve(id: string): Promise<AboundResponse<O>> {
+  protected async bulkCreateBaseResource(
+    payload: Record<string, I[]>
+  ): Promise<AboundBulkResponse<O>> {
+    return super._bulkCreate(this.path, payload);
+  }
+
+  protected async retrieveBaseResource(id: string): Promise<AboundResponse<O>> {
     const uri = `${this.path}/${id}`;
 
     return super._retrieve(uri);
   }
 
-  protected async update(
+  protected async updateBaseResource(
     id: string,
     payload: Record<string, Partial<I>>
   ): Promise<AboundResponse<O>> {
@@ -46,7 +52,9 @@ export abstract class AboundBaseResource<
     return super._update(uri, payload);
   }
 
-  protected async delete(id: string): Promise<AboundResponse<EmptyObject>> {
+  protected async deleteBaseResource(
+    id: string
+  ): Promise<AboundResponse<EmptyObject>> {
     const uri = `${this.path}/${id}`;
 
     return super._delete(uri);

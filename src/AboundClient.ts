@@ -7,6 +7,7 @@ import {
   TaxCategories,
   TaxPayments,
   Taxes,
+  Payers,
   PaymentMethods,
   Users,
 } from "./resources";
@@ -37,6 +38,7 @@ export class AboundClient {
   documents: Documents;
   taxes: Taxes;
   taxCategories: TaxCategories;
+  payers: Payers;
 
   constructor(config: AboundConfig) {
     validateAboundConfig(config);
@@ -52,6 +54,7 @@ export class AboundClient {
     this.documents = new Documents(axiosInstance);
     this.taxes = new Taxes(axiosInstance);
     this.taxCategories = new TaxCategories(axiosInstance);
+    this.payers = new Payers(axiosInstance);
   }
 }
 

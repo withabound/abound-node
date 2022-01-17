@@ -12,12 +12,14 @@ You can start to integrate the Abound Node library into your solution as soon as
 
 ### Installation
 
-Install the SDK with:
+Install the SDK with `npm` or `yarn`:
 
-```sh
-$ npm install @withabound/node-sdk --save
-# or
-$ yarn add @withabound/node-sdk
+```console
+npm install @withabound/node-sdk --save
+```
+
+```console
+yarn add @withabound/node-sdk
 ```
 
 ### Usage
@@ -423,6 +425,71 @@ const response = await abound.taxes.calculate(userId, year, taxUpdates);
 console.log(response.data.effectiveTaxRate);
 ```
 
+#### Payers
+
+Create a `Payer`:
+
+```ts
+const newPayer = {
+  name: "Hooli",
+  address: "1401 N Shoreline Blvd",
+  address2: "Suite 1",
+  city: "Mountain View",
+  country: "US",
+  phoneNumber: "6501014096",
+  state: "CA",
+  zipcode: "94043",
+};
+
+const response = await abound.payers.create([ newPayer ]);
+
+console.log(response.data); // list of created Payers
+```
+
+List `Payers`:
+
+```ts
+const response = await abound.payers.list();
+
+console.log(response.data); // list of Payers
+```
+
+Retrieve a `Payer`:
+
+```ts
+const payerId = "payerId_362...";
+
+const response = await abound.payers.retrieve(payerId);
+
+console.log(response.data.name);
+```
+
+Update a `Payer`:
+
+```ts
+const payerId = "payerId_362...";
+
+const payerUpdates = {
+  name: "Pied Piper",
+  address: "5230 Newell Road",
+  city: "Palo Alto",
+};
+
+const response = await abound.payers.update(payerId, payerUpdates);
+
+console.log(response.data.name);
+```
+
+Delete a `Payer`:
+
+```ts
+const payerId = "payerId_362...";
+
+const response = await abound.payers.delete(payerId);
+
+console.log(response.data); // {}
+```
+
 #### Documents
 
 Create `Document`s for a `User`:
@@ -507,55 +574,61 @@ console.log(response.data); // ["Advertising and Marketing", "Car and Truck", et
 
 Run all tests:
 
-```sh
-$ npx jest
+```console
+npx jest
 ```
 
 Run xo:
 
-```sh
-$ npx xo
-# or, run with autofix
-$ npx xo --fix
+```console
+npx xo
+```
+
+or, run with autofix:
+
+```console
+npx xo --fix
 ```
 
 Compile:
 
-```sh
-$ npm run compile
+```console
+npm run compile
 ```
 
 Install husky:
 
-```sh
-$ npx husky install
+```console
+npx husky install
 ```
 
 Publish artifacts locally:
 
-Install `yalc`:
+Install `yalc` with `npm` or `yarn`:
 
-```sh
-$ npm i yalc -g
-# or
-$ yarn global add yalc
+```console
+npm i yalc -g
+```
+
+```console
+yarn global add yalc
 ```
 
 Build the SDK:
 
-```sh
-$ npm run build
+```console
+npm run build
 ```
 
 Publish artifacts to local `yalc` registry:
 
-```sh
-$ yalc push
+```console
+yalc push
 ```
 
 Install the local artifacts:
 
-```sh
+```console
 ~/my-project $ yalc add @withabound/node-sdk
 ```
 

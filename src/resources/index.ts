@@ -7,3 +7,4 @@ export { default as Expenses } from "./Expenses";
 export { default as Documents } from "./Documents";
 export { default as Taxes } from "./Taxes";
 export { default as TaxCategories } from "./TaxCategories";
+export { default as Payers } from "./Payers";

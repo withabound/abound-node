@@ -56,21 +56,21 @@ export default class Users extends AboundBaseResource<
   public async list(
     parameters?: UserParameters
   ): Promise<AboundBulkResponse<User>> {
-    return super.list(parameters);
+    return super.listBaseResource(parameters);
   }
 
   public async create(user: UserRequest): Promise<AboundResponse<User>> {
-    return super.create({ user });
+    return super.createBaseResource({ user });
   }
 
   public async retrieve(id: string): Promise<AboundResponse<User>> {
-    return super.retrieve(id);
+    return super.retrieveBaseResource(id);
   }
 
   public async update(
     id: string,
     user: Partial<UserRequest>
   ): Promise<AboundResponse<User>> {
-    return super.update(id, { user });
+    return super.updateBaseResource(id, { user });
   }
 }
