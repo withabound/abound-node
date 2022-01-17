@@ -114,19 +114,19 @@ describe("Abound Payers", () => {
       );
 
       expect(updatedPayer.data).toMatchInlineSnapshot(`
-    Object {
-      "address": "${newAddress}",
-      "address2": "Suite 1",
-      "city": "${newCity}",
-      "country": "US",
-      "foreignId": "your_foreign_id",
-      "name": "${newName}",
-      "payerId": "payerId_test3629d683f7534f096ccd8d236e24887c9891",
-      "phoneNumber": "6501014096",
-      "state": "CA",
-      "zipcode": "94043",
-    }
-  `);
+        Object {
+          "address": "${newAddress}",
+          "address2": "Suite 1",
+          "city": "${newCity}",
+          "country": "US",
+          "foreignId": "your_foreign_id",
+          "name": "${newName}",
+          "payerId": "payerId_test3629d683f7534f096ccd8d236e24887c9891",
+          "phoneNumber": "6501014096",
+          "state": "CA",
+          "zipcode": "94043",
+        }
+      `);
     });
   });
 
