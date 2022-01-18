@@ -6,7 +6,7 @@ import { W9DocumentRequest } from "./document-types/W9";
 
 export type DocumentRequest =
   | AccountStatementDocumentRequest
-  | W9DocumentRequest; // | ScheduleCDocumentRequest, etc.
+  | W9DocumentRequest;
 
 export interface BaseDocumentRequest {
   type: DocumentType;
