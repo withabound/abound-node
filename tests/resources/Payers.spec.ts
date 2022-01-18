@@ -7,8 +7,9 @@ import {
 import { PayerRequest, Payer } from "../../src/resources/Payers";
 import { createAboundClient, randomString } from "../utils";
 
+export const TEST_PAYER_ID = "payerId_test3629d683f7534f096ccd8d236e24887c9891";
+
 describe("Abound Payers", () => {
-  const TEST_PAYER_ID = "payerId_test3629d683f7534f096ccd8d236e24887c9891";
   let abound: Abound;
 
   beforeAll(() => {

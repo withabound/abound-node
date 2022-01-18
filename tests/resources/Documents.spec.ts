@@ -5,6 +5,11 @@ import {
 } from "../../src/resources/base/AboundResponse";
 import { Document, DocumentType } from "../../src/resources/Documents";
 import {
+  W9DocumentRequest,
+  W9TaxClassification,
+} from "../../src/resources/document-types/W9";
+import { TEST_PAYER_ID } from "./Payers.spec";
+import {
   createAboundClient,
   PUBLIC_BANK_LOGO_URL,
   randomEmail,
@@ -24,8 +29,8 @@ describe("Abound Documents", () => {
     abound = createAboundClient();
   });
 
-  describe("create", () => {
-    it("returns a promise that resolves to an object that includes a list of the created Documents on success", async () => {
+  describe("create account statement", () => {
+    it("returns a promise that resolves to an object that includes a list of the created Account Statement Documents on success", async () => {
       const accountNumber = randomNumberString(9);
       const last4 = accountNumber.slice(-4);
 
@@ -70,6 +75,38 @@ describe("Abound Documents", () => {
             "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2020-01-01_2020-01-31_Account_Statement_7890.pdf",
             "type": "accountStatement",
             "year": "2020",
+          },
+        ]
+      `);
+    });
+  });
+
+  describe("create W9", () => {
+    it("returns a promise that resolves to an object that includes a list of the created W9 Documents on success", async () => {
+      const accountNumber: string = randomNumberString(9);
+
+      const w9ToCreate: W9DocumentRequest = {
+        type: DocumentType.W9,
+        year: 2021,
+        payerId: TEST_PAYER_ID,
+        taxClassification: W9TaxClassification.SOLE_PROPRIETOR,
+        certificationTimestamp: Date.now(),
+        accountNumbers: [accountNumber],
+      };
+
+      const response: AboundBulkResponse<Document> =
+        await abound.documents.create(TEST_USER_ID, [w9ToCreate]);
+
+      expect(bulkNormalizeNonIdempotentFields(response.data))
+        .toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "createdTimestamp": 1630000000000,
+            "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+            "documentName": "2021 Form W-9",
+            "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_W-9.pdf",
+            "type": "w9",
+            "year": "2021",
           },
         ]
       `);
