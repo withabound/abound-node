@@ -2,6 +2,7 @@ import { URLSearchParams } from "url";
 import axios, { AxiosInstance } from "axios";
 
 import { AboundConfig } from "../AboundClient";
+import { version } from "../../package.json";
 
 export function initAxios(config: AboundConfig): AxiosInstance {
   return axios.create({
@@ -9,6 +10,7 @@ export function initAxios(config: AboundConfig): AxiosInstance {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${config.appId}.${config.appSecret}`,
+      "User-Agent": `NodeSDK/${version}`,
     },
   });
 }
