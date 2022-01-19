@@ -8,10 +8,12 @@ import {
   W9DocumentRequest,
   W9TaxClassification,
 } from "../../src/resources/document-types/W9";
+import { Ten99INTDocumentRequest } from "../../src/resources/document-types/1099INT";
 import { TEST_PAYER_ID } from "./Payers.spec";
 import {
   createAboundClient,
   PUBLIC_BANK_LOGO_URL,
+  randomCurrencyAmount,
   randomEmail,
   randomNumberString,
   randomString,
@@ -19,6 +21,7 @@ import {
   removeQueryParameters,
   TEST_USER_ID,
 } from "../utils";
+import { StateTaxInfo } from "../../src/resources/document-types/StateTaxInfo";
 
 const TEST_DOCUMENT_ID = "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170";
 
@@ -78,6 +81,83 @@ describe("Abound Documents", () => {
           },
         ]
       `);
+    });
+  });
+
+  describe("create 1099-INT", () => {
+    describe("with the minimum number (1) of optional fields", () => {
+      it("returns a promise that resolves to an object that includes a list of the created 1099-INT Documents on success", async () => {
+        const ten99IntToCreate: Ten99INTDocumentRequest = {
+          type: DocumentType.TEN99INT,
+          payerId: TEST_PAYER_ID,
+          year: 2021,
+          interestIncome: 10.18,
+        };
+
+        const response: AboundBulkResponse<Document> =
+          await abound.documents.create(TEST_USER_ID, [ten99IntToCreate]);
+
+        expect(bulkNormalizeNonIdempotentFields(response.data))
+          .toMatchInlineSnapshot(`
+          Array [
+            Object {
+              "createdTimestamp": 1630000000000,
+              "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+              "documentName": "2021 Form 1099-INT",
+              "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_1099-INT.pdf",
+              "status": "created",
+              "type": "1099int",
+              "year": "2021",
+            },
+          ]
+        `);
+      });
+    });
+
+    describe("with many optional fields", () => {
+      it("returns a promise that resolves to an object that includes a list of the created 1099-INT Documents on success", async () => {
+        const accountNumber: string = randomNumberString(9);
+        const payersRoutingNumber = "102001017";
+        const investmentExpenses: number = randomCurrencyAmount(100);
+        const bondPremium: number = randomCurrencyAmount(500);
+        const taxExemptInterest: number = randomCurrencyAmount(1500);
+        const stateTaxInfo: StateTaxInfo = {
+          filingState: "ny",
+          stateTaxWithheld: 3434.56,
+        };
+
+        const ten99IntToCreate: Ten99INTDocumentRequest = {
+          type: DocumentType.TEN99INT,
+          payerId: TEST_PAYER_ID,
+          year: 2021,
+          accountNumber,
+          payersRoutingNumber,
+          investmentExpenses,
+          bondPremium,
+          taxExemptInterest,
+          interestIncome: 10.18,
+          foreignTaxPaidCountry: "fr",
+          stateTaxInfo: [stateTaxInfo],
+        };
+
+        const response: AboundBulkResponse<Document> =
+          await abound.documents.create(TEST_USER_ID, [ten99IntToCreate]);
+
+        expect(bulkNormalizeNonIdempotentFields(response.data))
+          .toMatchInlineSnapshot(`
+          Array [
+            Object {
+              "createdTimestamp": 1630000000000,
+              "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+              "documentName": "2021 Form 1099-INT",
+              "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_1099-INT.pdf",
+              "status": "created",
+              "type": "1099int",
+              "year": "2021",
+            },
+          ]
+        `);
+      });
     });
   });
 
