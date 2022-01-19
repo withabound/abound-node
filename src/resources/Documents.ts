@@ -2,8 +2,11 @@ import { Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 import { AccountStatementDocumentRequest } from "./document-types/AccountStatement";
+import { W9DocumentRequest } from "./document-types/W9";
 
-export type DocumentRequest = AccountStatementDocumentRequest; // | ScheduleCDocumentRequest, etc.
+export type DocumentRequest =
+  | AccountStatementDocumentRequest
+  | W9DocumentRequest;
 
 export interface BaseDocumentRequest {
   type: DocumentType;
@@ -27,6 +30,11 @@ export interface Document {
 
 export enum DocumentType {
   ACCOUNT_STATEMENT = "accountStatement",
+  TEN99INT = "1099int",
+  TEN99K = "1099k",
+  TEN99MISC = "1099misc",
+  TEN99NEC = "1099nec",
+  W9 = "w9",
 }
 
 // The raw `Document` object returned from the APIs returns one deprecated field, which the SDK will remove.
