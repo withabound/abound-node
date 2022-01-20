@@ -1,11 +1,18 @@
 import { Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
+import { Ten99INTDocumentRequest } from "./document-types/1099INT";
 import { AccountStatementDocumentRequest } from "./document-types/AccountStatement";
 import { W9DocumentRequest } from "./document-types/W9";
 
+export {
+  StateTaxInfo,
+  StateTaxInfoWithIncome,
+} from "./document-types/StateTaxInfo";
+
 export type DocumentRequest =
   | AccountStatementDocumentRequest
+  | Ten99INTDocumentRequest
   | W9DocumentRequest;
 
 export interface BaseDocumentRequest {
