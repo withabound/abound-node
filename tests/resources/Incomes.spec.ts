@@ -112,30 +112,30 @@ describe("Abound Incomes", () => {
       );
 
       expect(incomes.data).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "amount": 222.34,
-    "category": "Design Services",
-    "date": "2020-01-14",
-    "description": "Client Invoice",
-    "foreignId": "your_foreign_id",
-    "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
-    "incomeType": "1099",
-    "notes": Object {},
-  },
-  Object {
-    "amount": 333.34,
-    "category": "Design Services",
-    "date": "2020-01-14",
-    "description": "Client Invoice",
-    "documentType": "ssa1099",
-    "foreignId": "your_foreign_id",
-    "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
-    "incomeType": "1099",
-    "notes": Object {},
-  },
-]
-`);
+        Array [
+          Object {
+            "amount": 222.34,
+            "category": "Design Services",
+            "date": "2020-01-14",
+            "description": "Client Invoice",
+            "foreignId": "your_foreign_id",
+            "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+            "incomeType": "1099",
+            "notes": Object {},
+          },
+          Object {
+            "amount": 333.34,
+            "category": "Design Services",
+            "date": "2020-01-14",
+            "description": "Client Invoice",
+            "documentType": "ssa1099",
+            "foreignId": "your_foreign_id",
+            "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+            "incomeType": "1099",
+            "notes": Object {},
+          },
+        ]
+      `);
     });
   });
 
