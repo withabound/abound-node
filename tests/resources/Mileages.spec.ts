@@ -94,11 +94,12 @@ describe("Abound Mileages", () => {
   describe("update", () => {
     it("returns a promise that resolves to the updated Mileage on success", async () => {
       const newDate = randomDate();
+      const newDescription = randomString();
 
       const toUpdate: Partial<MileageRequest> = {
         date: newDate,
         distance: 18.4,
-        description: randomString(),
+        description: newDescription,
       };
 
       const updatedMileage: AboundResponse<Mileage> =
@@ -106,9 +107,9 @@ describe("Abound Mileages", () => {
 
       expect(updatedMileage.data).toMatchInlineSnapshot(`
         Object {
-          "date": "2020-01-09",
-          "description": "On-site Client Visit",
-          "distance": 23.1,
+          "date": "${newDate}",
+          "description": "${newDescription}",
+          "distance": 18.4,
           "transactionId": "mileageId_test4af7070cfb04a12552a1950e2f0afa660fba",
         }
       `);

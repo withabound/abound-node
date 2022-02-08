@@ -12,6 +12,7 @@ import {
   createAboundClient,
   removeQueryParameters,
   TEST_USER_ID,
+  todayYYYYMMDD,
 } from "../utils";
 
 describe("Abound Tax Payments", () => {
@@ -98,7 +99,7 @@ describe("Abound Tax Payments", () => {
           "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
           "period": "Q2",
           "status": "done",
-          "submittedDate": "2022-02-04",
+          "submittedDate": "${todayYYYYMMDD()}",
           "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
           "year": "2020",
         }
