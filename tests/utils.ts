@@ -35,7 +35,7 @@ export function randomDate(): string {
 }
 
 /**
- * Returns today's date in the format YYYY-MM-DD. Local timezone.
+ * Returns today's date in the format YYYY-MM-DD in UTC.
  * Single digit days/months are zero-padded; e.g. 2022/02/08.
  */
 export function todayYYYYMMDD(): string {
