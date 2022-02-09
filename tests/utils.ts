@@ -34,6 +34,16 @@ export function randomDate(): string {
   return `${year}-${zeroPaddedMonth}-${zeroPaddedDay}`;
 }
 
+/**
+ * Returns today's date in the format YYYY-MM-DD in UTC.
+ * Single digit days/months are zero-padded; e.g. 2022/02/08.
+ */
+export function todayYYYYMMDD(): string {
+  const now = new Date();
+
+  return now.toISOString().split("T")[0];
+}
+
 function random(length: number, charset: CharSet): string {
   let result = "";
 

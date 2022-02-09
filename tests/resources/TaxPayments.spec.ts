@@ -12,6 +12,7 @@ import {
   createAboundClient,
   removeQueryParameters,
   TEST_USER_ID,
+  todayYYYYMMDD,
 } from "../utils";
 
 describe("Abound Tax Payments", () => {
@@ -88,7 +89,7 @@ describe("Abound Tax Payments", () => {
           "amount": 154.66,
           "createdDate": "2021-09-05",
           "document": Object {
-            "documentName": "2020 Q2 Federal Estimated Tax Payment",
+            "documentName": "2020 Q2 IRS Estimated Tax Payment",
             "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/Form_1040ES_Y2020-Q2.pdf",
             "type": "1040ES",
             "year": "2020",
@@ -98,6 +99,7 @@ describe("Abound Tax Payments", () => {
           "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
           "period": "Q2",
           "status": "done",
+          "submittedDate": "${todayYYYYMMDD()}",
           "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
           "year": "2020",
         }

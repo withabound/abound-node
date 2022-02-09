@@ -196,6 +196,16 @@ console.log(response.data); // {}
 
 #### Mileage
 
+List `Mileage`s:
+
+```ts
+const userId = "userId_506...";
+
+const response = await abound.mileages.list(userId);
+
+console.log(response.data); // list of Mileages
+```
+
 Create `Mileage`s:
 
 ```ts
@@ -223,6 +233,33 @@ const mileageId = "mileageId_4af...";
 const response = await abound.mileages.retrieve(userId, mileageId);
 
 console.log(response.data.distance);
+```
+
+Update a `Mileage`:
+
+```ts
+const userId = "userId_506...";
+const mileageId = "mileageId_4af...";
+
+const mileageUpdates = {
+  distance: 23.3,
+  date: "2021-12-18",
+};
+
+const response = await abound.mileages.update(userId, mileageId, mileageUpdates);
+
+console.log(response.data.distance); // 23.3
+```
+
+Delete a `Mileage`:
+
+```ts
+const userId = "userId_506...";
+const mileageId = "mileageId_4af...";
+
+const response = await abound.mileages.delete(userId, mileageId);
+
+console.log(response.data); // {}
 ```
 
 #### Payment Methods
