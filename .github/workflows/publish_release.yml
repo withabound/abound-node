@@ -22,17 +22,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Validate release version and package version match
-        env:
-          RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
-        run: |
-          if ! grep -q "\"version\": \"${RELEASE_TAG_NAME:1}\"" package.json
-            then
-              echo "Release tag (${RELEASE_TAG_NAME:1}) does not match the package.json version"
-              exit 1
-            else
-              echo "Release tag matches the package.json version"
-          fi
+      # - name: Validate release version and package version match
+      #   env:
+      #     RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
+      #   run: |
+      #     if ! grep -q "\"version\": \"${RELEASE_TAG_NAME:1}\"" package.json
+      #       then
+      #         echo "Release tag (${RELEASE_TAG_NAME:1}) does not match the package.json version"
+      #         exit 1
+      #       else
+      #         echo "Release tag matches the package.json version"
+      #     fi
 
       - name: Setup Node.js 14.x
         uses: actions/setup-node@v1
