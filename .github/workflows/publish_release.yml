@@ -46,6 +46,8 @@ jobs:
         with:
           token: ${{ secrets.NPM_ACCESS_TOKEN }}
           access: public
+        env:
+          NPM_ACCESS_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
 
       - uses: act10ns/slack@v1
         with:
