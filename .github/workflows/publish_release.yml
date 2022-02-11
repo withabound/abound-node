@@ -35,18 +35,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "14"
-          registry-url: https://registry.npmjs.org/
+          registry-url: "https://registry.npmjs.org/"
 
       - name: Install npm dependencies
-        id: npm-install
-        run: npm install
+        run: npm ci
 
       - name: Publish @withabound/node-sdk
-        id: npm-publish
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_ACCESS_TOKEN }}
-          access: public
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
 
       - uses: act10ns/slack@v1
         with:
@@ -55,10 +52,13 @@ jobs:
           channel: "#deployments"
         if: always()
 
-      - name: Slack Notification
-        if: steps.npm-publish.outputs.type != 'none'
-        uses: tokorom/action-slack-incoming-webhook@main
+  slack_notification:
+    runs-on: ubuntu-latest
+    needs: publish_release
+    steps:
+      - uses: tokorom/action-slack-incoming-webhook@main
+        with:
+          text: "@withabound/node-sdk@${RELEASE_TAG_NAME:1} has been published."
         env:
           INCOMING_WEBHOOK_URL: ${{ secrets.SUCCESS_DEPLOYMENT_DX_URL }}
-        with:
-          text: "@withabound/node-sdk@${{ steps.npm-publish.outputs.version }} has been published."
+          RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
