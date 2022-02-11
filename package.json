@@ -22,7 +22,7 @@
     "build:cjs": "npx tsc -p tsconfig.cjs.json",
     "compile": "npx tsc --noEmit",
     "lint": "npx xo",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "test": "npx jest"
   },
   "lint-staged": {
