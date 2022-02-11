@@ -36,6 +36,7 @@ jobs:
         with:
           node-version: "14"
           registry-url: "https://registry.npmjs.org/"
+          always-auth: true
 
       - name: Install npm dependencies
         run: npm ci
