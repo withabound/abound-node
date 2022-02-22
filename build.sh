@@ -11,15 +11,7 @@ npm run build:cjs
 node ./fix-esm-imports.mjs
 
 # Add package.json file to esm subtree
-cat >dist/esm/package.json <<!EOF
-{
-    "type": "module"
-}
-!EOF
+node ./create-package-json.js dist/esm/package.json module
 
 # Add package.json file to cjs subtree
-cat >dist/cjs/package.json <<!EOF
-{
-  "type": "commonjs"
-}
-!EOF
+node ./create-package-json.js dist/cjs/package.json commonjs
