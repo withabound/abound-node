@@ -14,4 +14,9 @@ export * from "./resources/TaxPayments";
 export * from "./resources/Users";
 
 // document-types
+export * from "./resources/document-types/1099INT";
+export * from "./resources/document-types/1099K";
+export * from "./resources/document-types/1099MISC";
+export * from "./resources/document-types/1099NEC";
 export * from "./resources/document-types/AccountStatement";
+export * from "./resources/document-types/W9";
