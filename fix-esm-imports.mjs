@@ -32,6 +32,12 @@ function fixImportsAtFile(filePath) {
     }
 
     const [, importPath] = line.split(`"`);
+    if (importPath.includes(".json")) {
+      return `import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const { version } = require("${importPath}");`;
+    }
+
     const fullPath = path.join(filePath, "..", importPath);
     if (!fs.existsSync(fullPath)) {
       return line.replace(IMPORT_REGEXP, '$1.js"');

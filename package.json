@@ -4,15 +4,15 @@
   "description": "The Abound Node library provides convenient access to the Abound API from applications written in server-side JavaScript.",
   "author": "Abound <api@withabound.com>",
   "license": "MIT",
-  "main": "dist/cjs/abound.js",
-  "module": "dist/esm/abound.js",
+  "main": "dist/cjs/src/abound.js",
+  "module": "dist/esm/src/abound.js",
   "exports": {
     ".": {
-      "import": "./dist/esm/abound.js",
-      "require": "./dist/cjs/abound.js"
+      "import": "./dist/esm/src/abound.js",
+      "require": "./dist/cjs/src/abound.js"
     }
   },
-  "types": "dist/types/abound.d.ts",
+  "types": "dist/types/src/abound.d.ts",
   "files": [
     "dist/**/*"
   ],
