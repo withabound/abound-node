@@ -43,33 +43,69 @@ describe("Abound Incomes", () => {
         ]);
 
       expect(createdIncomes.data).toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "amount": 410.11,
-            "category": "Design Services",
-            "date": "2021-08-01",
-            "description": "Client Invoice",
-            "foreignId": "your_foreign_id",
-            "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
-            "incomeType": "1099",
-            "notes": Object {},
-          },
-          Object {
-            "amount": 10.87,
-            "category": "${category}",
-            "date": "2021-08-05",
-            "description": "${description}",
-            "documentType": "1099int",
-            "foreignId": "your_foreign_id",
-            "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
-            "incomeType": "1099",
-            "notes": Object {},
-          },
-        ]
-      `);
+          Array [
+            Object {
+              "amount": 410.11,
+              "category": "Design Services",
+              "date": "2021-08-01",
+              "description": "Client Invoice",
+              "foreignId": "your_foreign_id",
+              "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+              "incomeType": "1099",
+              "notes": Object {},
+            },
+            Object {
+              "amount": 10.87,
+              "category": "${category}",
+              "date": "2021-08-05",
+              "description": "${description}",
+              "documentType": "1099int",
+              "foreignId": "your_foreign_id",
+              "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
+              "incomeType": "1099",
+              "notes": Object {},
+            },
+          ]
+          `);
     });
   });
 
+  describe("create with predictions", () => {
+    it("returns a promise that resolves to the created Income on success", async () => {
+      const description = randomString();
+
+      const createdIncomes: AboundBulkResponse<Income> =
+        await abound.incomes.create(TEST_USER_ID, [
+          {
+            date: "2021-08-01",
+            amount: 410.11,
+            description,
+          },
+        ]);
+
+      expect(createdIncomes.data).toMatchInlineSnapshot(`
+          Array [
+            Object {
+              "amount": 410.11,
+              "category": "Design Services",
+              "date": "2021-08-01",
+              "description": "${description}",
+              "foreignId": "your_foreign_id",
+              "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+              "incomeType": "1099",
+              "notes": Object {},
+              "predictions": Object {
+                "incomeTypePredictionScores": Object {
+                  "1099": 0.95701,
+                  "personal": 0.04299,
+                  "w2": 0,
+                },
+              },
+            },
+          ]
+          `);
+    });
+  });
   describe("list", () => {
     it("returns a promise that resolves to the user's Incomes on success", async () => {
       const incomes: AboundBulkResponse<Income> = await abound.incomes.list(
