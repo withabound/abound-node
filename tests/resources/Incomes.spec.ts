@@ -56,9 +56,9 @@ describe("Abound Incomes", () => {
             },
             Object {
               "amount": 10.87,
-              "category": "833p9jqhcrnwx",
+              "category": "${category}",
               "date": "2021-08-05",
-              "description": "c05vx3s9w3mtc",
+              "description": "${description}",
               "documentType": "1099int",
               "foreignId": "your_foreign_id",
               "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
