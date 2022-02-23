@@ -31,25 +31,42 @@ describe("Abound Incomes", () => {
             incomeType: IncomeType.TEN99,
             date: "2021-08-01",
             amount: 410.11,
+          },
+          {
+            incomeType: IncomeType.TEN99,
+            date: "2021-08-05",
+            amount: 10.87,
             description,
             category,
+            documentType: IncomeDocumentType.TEN99INT,
           },
         ]);
 
       expect(createdIncomes.data).toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "amount": 410.11,
-            "category": "${category}",
-            "date": "2021-08-01",
-            "description": "${description}",
-            "foreignId": "your_foreign_id",
-            "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
-            "incomeType": "1099",
-            "notes": Object {},
-          },
-        ]
-      `);
+          Array [
+            Object {
+              "amount": 410.11,
+              "category": "Design Services",
+              "date": "2021-08-01",
+              "description": "Client Invoice",
+              "foreignId": "your_foreign_id",
+              "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+              "incomeType": "1099",
+              "notes": Object {},
+            },
+            Object {
+              "amount": 10.87,
+              "category": "833p9jqhcrnwx",
+              "date": "2021-08-05",
+              "description": "c05vx3s9w3mtc",
+              "documentType": "1099int",
+              "foreignId": "your_foreign_id",
+              "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
+              "incomeType": "1099",
+              "notes": Object {},
+            },
+          ]
+          `);
     });
   });
 

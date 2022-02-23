@@ -33,7 +33,7 @@ export interface IncomeParameters extends Pagination {
 // response body
 export interface Income extends IncomeRequest {
   incomeId: Readonly<string>;
-  predictions: IncomePredictions;
+  predictions: Readonly<IncomePredictions>;
 }
 
 interface IncomePredictions {
