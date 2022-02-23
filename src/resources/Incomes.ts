@@ -4,10 +4,10 @@ import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 
 // request body
 export interface IncomeRequest {
-  incomeType: IncomeType;
   amount: number; // float
   date: string; // YYYY-MM-DD
 
+  incomeType?: IncomeType;
   description?: string;
   category?: string;
   foreignId?: string;
@@ -33,6 +33,11 @@ export interface IncomeParameters extends Pagination {
 // response body
 export interface Income extends IncomeRequest {
   incomeId: Readonly<string>;
+  predictions: IncomePredictions;
+}
+
+interface IncomePredictions {
+  incomeTypePredictionScores: Record<string, number>; // 0 < values < 1
 }
 
 export enum IncomeType {

@@ -31,14 +31,8 @@ describe("Abound Incomes", () => {
             incomeType: IncomeType.TEN99,
             date: "2021-08-01",
             amount: 410.11,
-          },
-          {
-            incomeType: IncomeType.TEN99,
-            date: "2021-08-05",
-            amount: 10.87,
             description,
             category,
-            documentType: IncomeDocumentType.TEN99INT,
           },
         ]);
 
@@ -46,22 +40,11 @@ describe("Abound Incomes", () => {
         Array [
           Object {
             "amount": 410.11,
-            "category": "Design Services",
+            "category": "${category}",
             "date": "2021-08-01",
-            "description": "Client Invoice",
+            "description": "${description}",
             "foreignId": "your_foreign_id",
             "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
-            "incomeType": "1099",
-            "notes": Object {},
-          },
-          Object {
-            "amount": 10.87,
-            "category": "${category}",
-            "date": "2021-08-05",
-            "description": "${description}",
-            "documentType": "1099int",
-            "foreignId": "your_foreign_id",
-            "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
             "incomeType": "1099",
             "notes": Object {},
           },
@@ -70,6 +53,42 @@ describe("Abound Incomes", () => {
     });
   });
 
+  describe("create with predictions", () => {
+    it("returns a promise that resolves to the created Income on success", async () => {
+      const description = randomString();
+
+      const createdIncomes: AboundBulkResponse<Income> =
+        await abound.incomes.create(TEST_USER_ID, [
+          {
+            date: "2021-08-01",
+            amount: 410.11,
+            description,
+          },
+        ]);
+
+      expect(createdIncomes.data).toMatchInlineSnapshot(`
+          Array [
+            Object {
+              "amount": 410.11,
+              "category": "Design Services",
+              "date": "2021-08-01",
+              "description": "${description}",
+              "foreignId": "your_foreign_id",
+              "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+              "incomeType": "1099",
+              "notes": Object {},
+              "predictions": Object {
+                "incomeTypePredictionScores": Object {
+                  "1099": 0.95701,
+                  "personal": 0.04299,
+                  "w2": 0,
+                },
+              },
+            },
+          ]
+          `);
+    });
+  });
   describe("list", () => {
     it("returns a promise that resolves to the user's Incomes on success", async () => {
       const incomes: AboundBulkResponse<Income> = await abound.incomes.list(
