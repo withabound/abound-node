@@ -6,9 +6,9 @@ import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 export interface IncomeRequest {
   amount: number; // float
   date: string; // YYYY-MM-DD
+  description: string;
 
   incomeType?: IncomeType;
-  description?: string;
   category?: string;
   foreignId?: string;
   // The specific document code used when filling out this income.
