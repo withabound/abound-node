@@ -24,9 +24,11 @@ describe("Abound Tax Payments", () => {
 
   describe("create", () => {
     it("returns a promise that resolves to a created tax payment on success", async () => {
+      const year = String(new Date().getFullYear());
+
       const createdTaxPayment: AboundResponse<TaxPayment> =
         await abound.taxPayments.create(TEST_USER_ID, {
-          year: "2020",
+          year,
           period: TaxPeriod.Q1,
           amount: 450.22,
           entity: TaxPaymentEntity.IRS,
@@ -45,7 +47,7 @@ describe("Abound Tax Payments", () => {
           "period": "Q1",
           "status": "created",
           "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
-          "year": "2020",
+          "year": "${year}",
         }
       `);
     });
