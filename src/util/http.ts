@@ -1,6 +1,6 @@
 import { URLSearchParams } from "url";
 import axios, { AxiosInstance } from "axios";
-import { version as sdkVersion } from '../util/version';
+import { version as sdkVersion } from "./version";
 
 import { AboundConfig } from "../AboundClient";
 
