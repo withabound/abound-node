@@ -4,6 +4,7 @@ set -e
 # Clean dist directory
 rm -rf dist
 
+# Verify package.json version matches version.ts
 source ./verify_version.sh
 
 # Build for esm and cjs

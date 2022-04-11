@@ -17,7 +17,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "./build.sh",
+    "build": "sh ./build.sh",
     "build:esm": "npx tsc -p tsconfig.json",
     "build:cjs": "npx tsc -p tsconfig.cjs.json",
     "compile": "npx tsc --noEmit",
