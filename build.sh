@@ -1,7 +1,10 @@
 #!/bin/bash
+set -e
 
 # Clean dist directory
 rm -rf dist
+
+source ./verify_version.sh
 
 # Build for esm and cjs
 npm run build:esm
