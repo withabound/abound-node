@@ -23,8 +23,7 @@
     "compile": "npx tsc --noEmit",
     "lint": "npx xo",
     "prepublishOnly": "npm run build",
-    "test": "npx jest",
-    "verifyVersion": "./verify_version.sh"
+    "test": "npx jest"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
