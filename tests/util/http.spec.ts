@@ -10,6 +10,7 @@ import {
   TEST_USER_ID,
 } from "../utils";
 import { Users } from "../../src/resources";
+import { version } from "../../package.json";
 
 describe("http", () => {
   describe("buildQueryString", () => {
@@ -62,9 +63,7 @@ describe("http", () => {
           mockAxios.history.get[0].headers;
 
         const userAgent: string = requestHeaders["User-Agent"];
-        expect(userAgent.startsWith("NodeSDK/")).toBe(true);
-        // asserts the first character after the NodeSDK/ prefix is a digit
-        expect(/\d/.test(userAgent["NodeSDK/".length])).toBe(true);
+        expect(userAgent).toEqual(`NodeSDK/${version}`);
       });
     });
   });
