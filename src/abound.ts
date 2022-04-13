@@ -12,6 +12,7 @@ export * from "./resources/TaxCategories";
 export * from "./resources/Taxes";
 export * from "./resources/TaxPayments";
 export * from "./resources/Users";
+export * from "./resources/base/AboundResponse";
 
 // document-types
 export * from "./resources/document-types/1099INT";
