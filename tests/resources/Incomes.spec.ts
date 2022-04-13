@@ -55,9 +55,9 @@ Array [
   },
   Object {
     "amount": 10.87,
-    "category": "sm4ificfmbwna",
+    "category": "${category}",
     "date": "2021-08-05",
-    "description": "f4dbmntsgm85u",
+    "description": "${description}",
     "documentType": "1099int",
     "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
     "incomeType": "1099",
@@ -86,7 +86,7 @@ Array [
     "amount": 410.11,
     "category": "Design Services",
     "date": "2021-08-01",
-    "description": "5nh6hz7jaxhmn",
+    "description": "${description}",
     "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
     "incomeType": "1099",
     "predictions": Object {
