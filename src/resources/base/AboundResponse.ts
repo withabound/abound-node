@@ -12,7 +12,7 @@ export interface AboundBulkResponse<T> {
   request: RequestMetadata;
 }
 
-interface RequestMetadata {
+export interface RequestMetadata {
   timestamp: number;
   requestId: string;
 }
