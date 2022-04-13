@@ -1,6 +1,6 @@
 import { URLSearchParams } from "url";
 import axios, { AxiosInstance } from "axios";
-import { version as sdkVersion } from "./version";
+import { version } from "./version";
 
 import { AboundConfig } from "../AboundClient";
 
@@ -10,7 +10,7 @@ export function initAxios(config: AboundConfig): AxiosInstance {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${config.appId}.${config.appSecret}`,
-      "User-Agent": `NodeSDK/${sdkVersion}`,
+      "User-Agent": `NodeSDK/${version}`,
     },
   });
 }
