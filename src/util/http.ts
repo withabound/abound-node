@@ -2,7 +2,7 @@ import { URLSearchParams } from "url";
 import axios, { AxiosInstance } from "axios";
 
 import { AboundConfig } from "../AboundClient";
-import { version } from "../../package.json";
+import { version } from "./version";
 
 export function initAxios(config: AboundConfig): AxiosInstance {
   return axios.create({

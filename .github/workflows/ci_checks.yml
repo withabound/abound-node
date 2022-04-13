@@ -64,6 +64,10 @@ jobs:
         id: npm-lint
         run: npm run lint
 
+      - name: Verify package.json version matches version.ts (genversion --check-only)
+        id: verify-version
+        run: ./verify_version.sh
+
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
