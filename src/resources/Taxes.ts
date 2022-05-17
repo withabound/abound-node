@@ -16,6 +16,7 @@ export enum FilingStatus {
   MARRIED = "married",
   MARRIED_SEPARATELY = "marriedSeparately",
   HEAD_OF_HOUSEHOLD = "headOfHousehold",
+  QUALIFIED_WIDOW = "qualifiedWidow",
 }
 
 // response body
