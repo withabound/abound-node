@@ -37,6 +37,7 @@ export interface Tax extends Required<TaxRequest> {
   stateIncomeTax: number; // float
   stateTaxOutstanding: number; // float
   stateTaxPayments: number;
+  stateTaxTotal: number; // float
   taxBalance: number; // float
   taxWithholdings: number; // float
   taxWithholdingsPending: number;
