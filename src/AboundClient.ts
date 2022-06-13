@@ -11,6 +11,7 @@ import {
   PaymentMethods,
   Users,
 } from "./resources";
+import AccessTokens from "./resources/AccessTokens";
 import { initAxios } from "./util/http";
 
 export enum Environment {
@@ -29,32 +30,34 @@ export type ApiVersion = "v2";
 
 export class AboundClient {
   // resources
-  users: Users;
-  paymentMethods: PaymentMethods;
-  taxPayments: TaxPayments;
+  accessTokens: AccessTokens;
+  documents: Documents;
+  expenses: Expenses;
   incomes: Incomes;
   mileages: Mileages;
-  expenses: Expenses;
-  documents: Documents;
+  payers: Payers;
+  paymentMethods: PaymentMethods;
   taxes: Taxes;
   taxCategories: TaxCategories;
-  payers: Payers;
+  taxPayments: TaxPayments;
+  users: Users;
 
   constructor(config: AboundConfig) {
     validateAboundConfig(config);
 
     const axiosInstance: AxiosInstance = initAxios(config);
 
-    this.users = new Users(axiosInstance);
-    this.paymentMethods = new PaymentMethods(axiosInstance);
-    this.taxPayments = new TaxPayments(axiosInstance);
-    this.incomes = new Incomes(axiosInstance);
-    this.mileages = new Mileages(axiosInstance);
-    this.expenses = new Expenses(axiosInstance);
+    this.accessTokens = new AccessTokens(axiosInstance);
     this.documents = new Documents(axiosInstance);
+    this.expenses = new Expenses(axiosInstance);
+    this.mileages = new Mileages(axiosInstance);
+    this.incomes = new Incomes(axiosInstance);
+    this.payers = new Payers(axiosInstance);
+    this.paymentMethods = new PaymentMethods(axiosInstance);
     this.taxes = new Taxes(axiosInstance);
     this.taxCategories = new TaxCategories(axiosInstance);
-    this.payers = new Payers(axiosInstance);
+    this.taxPayments = new TaxPayments(axiosInstance);
+    this.users = new Users(axiosInstance);
   }
 }
 

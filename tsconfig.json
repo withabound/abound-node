@@ -6,7 +6,8 @@
     "resolveJsonModule": true,
     "declaration": true,
     "declarationDir": "dist/types",
-    "outDir": "dist/esm"
+    "outDir": "dist/esm",
+    "types": ["node", "jest"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "test/**/*"]
 }
