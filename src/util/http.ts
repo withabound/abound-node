@@ -8,9 +8,9 @@ export function initAxios(config: AboundConfig): AxiosInstance {
   return axios.create({
     baseURL: `${config.environment}${config.apiVersion}`,
     headers: {
-      "Content-Type": "application/json",
+      "Abound-SDK": `NodeSDK/${version}`,
       Authorization: `Bearer ${config.appId}.${config.appSecret}`,
-      "User-Agent": `NodeSDK/${version}`,
+      "Content-Type": "application/json",
     },
   });
 }
