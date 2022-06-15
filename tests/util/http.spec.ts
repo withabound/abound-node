@@ -45,7 +45,7 @@ describe("http", () => {
    * User-Agent headers (https://github.com/nock/nock#enable_reqheaders_recording-option)
    */
   describe("axios client", () => {
-    it("injects a User-Agent header into each request with a value that includes the SDK's version", () => {
+    it("injects a Abound-SDK header into each request with a value that includes the SDK's version", () => {
       const axios: AxiosInstance = buildAxiosInstance();
       const mockAxios = new MockAdapter(axios);
 
@@ -62,8 +62,8 @@ describe("http", () => {
         const requestHeaders: Record<string, string> =
           mockAxios.history.get[0].headers;
 
-        const userAgent: string = requestHeaders["User-Agent"];
-        expect(userAgent).toEqual(`NodeSDK/${version}`);
+        const aboundSDK: string = requestHeaders["Abound-SDK"];
+        expect(aboundSDK).toEqual(`NodeSDK/${version}`);
       });
     });
   });
