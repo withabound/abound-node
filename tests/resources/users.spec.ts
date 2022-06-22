@@ -3,15 +3,8 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
-import { User } from "../../src/resources/Users";
-import {
-  createAboundClient,
-  randomDate,
-  randomEmail,
-  randomString,
-  randomZip,
-  TEST_USER_ID,
-} from "../utils";
+import { TaxClassification, User } from "../../src/resources/Users";
+import { createAboundClient, TEST_USER_ID } from "../utils";
 
 describe("Abound Users", () => {
   let abound: Abound;
@@ -21,31 +14,33 @@ describe("Abound Users", () => {
   });
 
   describe("create", () => {
-    it("returns a promise that resolves to the created user on success", async () => {
-      const email = randomEmail();
-
+    it.only("returns a promise that resolves to the created user on success", async () => {
       const createdUser: AboundResponse<User> = await abound.users.create({
-        email,
-        foreignId: randomString(),
+        email: "test123test@example.com",
+        foreignId: "tj_miller",
+        notes: "Board member of Pied Piper",
         profile: {
-          firstName: randomString(),
-          lastName: randomString(),
-          address: randomString(),
-          city: randomString(),
-          state: randomString(),
-          zipcode: randomZip(),
-          phoneNumber: randomString(),
-          dateOfBirth: randomDate(),
-          socialSecurityNumber: randomString(),
+          firstName: "Erlich",
+          lastName: "Bachman",
+          address: "3338 Thunder Road",
+          city: "Palo Alto",
+          state: "CA",
+          zipcode: "94306",
+          phoneNumber: "8773427222",
+          dateOfBirth: "1981-04-06",
+        },
+        business: {
+          ein: "950361345",
+          name: "Aviato",
+          taxClassification: TaxClassification.C_CORPORATION,
+          address: "3338 Thunder Road",
+          city: "Palo Alto",
+          state: "CA",
+          zipcode: "94306",
         },
       });
 
-      expect(createdUser.data).toMatchInlineSnapshot(`
-        Object {
-          "email": "${email}",
-          "userId": "userId_test24b05d761ff58b5931bd07778c67b4e818e4",
-        }
-      `);
+      expect(createdUser.data).toMatchInlineSnapshot();
     });
   });
 
