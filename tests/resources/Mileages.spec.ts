@@ -37,6 +37,24 @@ describe("Abound Mileages", () => {
         ]
       `);
     });
+
+    it("returns a promise that resolves to a list of filtered Mileages when querying by foreignId", async () => {
+      const mileages: AboundBulkResponse<Mileage> = await abound.mileages.list(
+        TEST_USER_ID,
+        { foreignId: "29SMN2KD9" }
+      );
+
+      expect(mileages.data).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "date": "2020-01-09",
+            "description": "On-site Client Visit",
+            "distance": 23.1,
+            "transactionId": "mileageId_test4af7070cfb04a12552a1950e2f0afa660fba",
+          },
+        ]
+      `);
+    });
   });
 
   describe("create", () => {

@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import {
+  AccessTokens,
   Documents,
   Expenses,
   Incomes,
@@ -11,7 +12,6 @@ import {
   PaymentMethods,
   Users,
 } from "./resources";
-import AccessTokens from "./resources/AccessTokens";
 import { initAxios } from "./util/http";
 
 export enum Environment {

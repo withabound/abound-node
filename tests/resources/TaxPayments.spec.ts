@@ -75,6 +75,27 @@ describe("Abound Tax Payments", () => {
         ]
       `);
     });
+
+    it("returns a promise that resolves to a list of filtered tax payments when querying by foreignId", async () => {
+      const taxPayments: AboundBulkResponse<TaxPayment> =
+        await abound.taxPayments.list(TEST_USER_ID, { foreignId: "29SMN2KD9" });
+
+      expect(taxPayments.data).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "amount": 154.66,
+    "createdDate": "2022-06-22",
+    "entity": "IRS",
+    "notes": Object {},
+    "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
+    "period": "Q2",
+    "status": "created",
+    "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
+    "year": "2020",
+  },
+]
+`);
+    });
   });
 
   describe("retrieve", () => {

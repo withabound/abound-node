@@ -130,6 +130,16 @@ Array [
 `);
     });
 
+    // FIXME: restore this test after sample data is properly returned by foreignId
+    it.skip("returns a promise that resolves to a list of filtered Incomes when querying by foreignId", async () => {
+      const incomes: AboundBulkResponse<Income> = await abound.incomes.list(
+        TEST_USER_ID,
+        { foreignId: "29SMN2KD9" }
+      );
+
+      expect(incomes.data).toMatchInlineSnapshot();
+    });
+
     it("returns a promise that resolves to the user's incomes with filters applied when provided", async () => {
       const incomes: AboundBulkResponse<Income> = await abound.incomes.list(
         TEST_USER_ID,

@@ -1,4 +1,4 @@
-import { EmptyObject } from "./base/AboundResource";
+import { EmptyObject, Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 
@@ -7,6 +7,13 @@ export interface MileageRequest {
   distance: number; // float
   date: string; // YYYY-MM-DD
   description?: string;
+  foreignId?: string;
+}
+
+// query params
+export interface MileageParameters extends Pagination {
+  foreignId?: string;
+  year?: string;
 }
 
 // response body
@@ -23,8 +30,11 @@ export default class Mileages extends AboundUserScopedResource<
 > {
   path = "/mileage";
 
-  public async list(userId: string): Promise<AboundBulkResponse<Mileage>> {
-    return super.listForUser(userId);
+  public async list(
+    userId: string,
+    parameters?: MileageParameters
+  ): Promise<AboundBulkResponse<Mileage>> {
+    return super.listForUser(userId, parameters);
   }
 
   public async create(

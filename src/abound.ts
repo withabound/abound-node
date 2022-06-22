@@ -2,6 +2,7 @@ export * from "./AboundClient";
 export { AboundClient as default } from "./AboundClient";
 
 // resources
+export * from "./resources/AccessTokens";
 export * from "./resources/Documents";
 export * from "./resources/Expenses";
 export * from "./resources/Incomes";
