@@ -1,4 +1,4 @@
-import { Notes } from "./base/AboundResource";
+import { Notes, Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 
@@ -10,6 +10,7 @@ export interface TaxPaymentRequest {
   entity: TaxPaymentEntity;
   paymentMethodId: string;
   notes?: Notes;
+  foreignId?: string;
 }
 
 export enum TaxPeriod {
@@ -62,6 +63,11 @@ export enum TaxPaymentEntity {
   WV = "WV",
 }
 
+// query params
+export interface TaxPaymentParameters extends Pagination {
+  foreignId?: string;
+}
+
 // response body
 export interface TaxPayment extends TaxPaymentRequest {
   taxPaymentId: Readonly<string>;
@@ -97,8 +103,11 @@ export default class TaxPayments extends AboundUserScopedResource<
     return super.createForUser(userId, { taxPayment });
   }
 
-  public async list(userId: string): Promise<AboundBulkResponse<TaxPayment>> {
-    return super.listForUser(userId);
+  public async list(
+    userId: string,
+    parameters?: TaxPaymentParameters
+  ): Promise<AboundBulkResponse<TaxPayment>> {
+    return super.listForUser(userId, parameters);
   }
 
   public async retrieve(userId: string, taxPaymentId: string) {

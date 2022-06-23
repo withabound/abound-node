@@ -380,7 +380,7 @@ describe("Abound Documents", () => {
     });
   });
 
-  // TODO restore this test after the API properly returns a 200 response
+  // FIXME: restore this test after the API properly returns a 200 response
   describe.skip("retrieve", () => {
     it("returns a promise that resolves to an object that includes a single Document on success", async () => {
       const document: AboundResponse<Document> =

@@ -9,6 +9,12 @@ export interface PaymentMethodRequest {
   accountType: AccountType;
   accountClass: AccountClass;
   notes?: Record<string, unknown>;
+  foreignId?: string;
+}
+
+// query params
+export interface PaymentMethodParameters extends Pagination {
+  foreignId?: string;
 }
 
 // response body
@@ -47,7 +53,7 @@ export default class PaymentMethods extends AboundUserScopedResource<
 
   public async list(
     userId: string,
-    parameters?: Pagination
+    parameters?: PaymentMethodParameters
   ): Promise<AboundBulkResponse<PaymentMethod>> {
     return super.listForUser(userId, parameters);
   }

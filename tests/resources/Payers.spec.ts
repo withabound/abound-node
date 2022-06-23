@@ -74,6 +74,29 @@ describe("Abound Payers", () => {
         ]
       `);
     });
+
+    it("returns a promise that resolves to a list of filtered Payers when querying by foreignId", async () => {
+      const payers: AboundBulkResponse<Payer> = await abound.payers.list({
+        foreignId: "29SMN2KD9",
+      });
+
+      expect(payers.data).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "address": "1401 N Shoreline Blvd",
+    "address2": "Suite 1",
+    "city": "Mountain View",
+    "country": "US",
+    "foreignId": "your_foreign_id",
+    "name": "Hooli",
+    "payerId": "payerId_test3629d683f7534f096ccd8d236e24887c9891",
+    "phoneNumber": "6501014096",
+    "state": "CA",
+    "zipcode": "94043",
+  },
+]
+`);
+    });
   });
 
   describe("retrieve", () => {
