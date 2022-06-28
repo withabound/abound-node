@@ -12,6 +12,7 @@ import {
   createAboundClient,
   removeQueryParameters,
   TEST_USER_ID,
+  todayYYYYMMDD,
 } from "../utils";
 
 describe("Abound Tax Payments", () => {
@@ -46,7 +47,7 @@ describe("Abound Tax Payments", () => {
           "period": "Q1",
           "status": "created",
           "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
-          "year": "2022",
+          "year": "${year}",
         }
       `);
     });
@@ -123,7 +124,7 @@ describe("Abound Tax Payments", () => {
           "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
           "period": "Q2",
           "status": "done",
-          "submittedDate": "2022-06-28",
+          "submittedDate": "${todayYYYYMMDD()}",
           "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
           "year": "2020",
         }
