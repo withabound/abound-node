@@ -1,3 +1,4 @@
+import { Except } from "type-fest";
 import { AboundBaseResource } from "./base/AboundBaseResource";
 import { Notes, Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
@@ -63,6 +64,12 @@ export interface User extends UserRequest {
   ssnVerification: TinVerification;
 }
 
+// list response body
+export type BaseUser = Except<
+  User,
+  "business" | "einVerification" | "profile" | "ssnVerification"
+>;
+
 export interface TinVerification {
   status: TinVerificationStatus;
   message?: string;
@@ -100,8 +107,20 @@ export default class Users extends AboundBaseResource<
 
   public async list(
     parameters?: UserParameters
-  ): Promise<AboundBulkResponse<User>> {
-    return super.listBaseResource(parameters);
+  ): Promise<AboundBulkResponse<BaseUser>> {
+    const response = await super.listBaseResource(parameters);
+    return {
+      ...response,
+      data: response.data.map<BaseUser>(
+        ({
+          business,
+          einVerification,
+          profile,
+          ssnVerification,
+          ...baseUser
+        }) => baseUser
+      ),
+    };
   }
 
   public async create(user: UserRequest): Promise<AboundResponse<User>> {

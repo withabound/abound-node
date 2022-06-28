@@ -3,7 +3,7 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
-import { TaxClassification, User } from "../../src/resources/Users";
+import { BaseUser, TaxClassification, User } from "../../src/resources/Users";
 import { createAboundClient, TEST_USER_ID } from "../utils";
 
 describe("Abound Users", () => {
@@ -14,7 +14,7 @@ describe("Abound Users", () => {
   });
 
   describe("create", () => {
-    it.only("returns a promise that resolves to the created user on success", async () => {
+    it("returns a promise that resolves to the created user on success", async () => {
       const createdUser: AboundResponse<User> = await abound.users.create({
         email: "test123test@example.com",
         foreignId: "tj_miller",
@@ -40,7 +40,42 @@ describe("Abound Users", () => {
         },
       });
 
-      expect(createdUser.data).toMatchInlineSnapshot();
+      expect(createdUser.data).toMatchInlineSnapshot(`
+Object {
+  "business": Object {
+    "address": "3338 Thunder Road",
+    "address2": "",
+    "city": "Palo Alto",
+    "country": "US",
+    "name": "Aviato",
+    "state": "CA",
+    "taxClassification": "cCorporation",
+    "zipcode": "94306",
+  },
+  "einVerification": Object {
+    "status": "unverified",
+  },
+  "email": "test123test@example.com",
+  "foreignId": "tj_miller",
+  "notes": "Board member of Pied Piper",
+  "profile": Object {
+    "address": "3338 Thunder Road",
+    "address2": "",
+    "city": "Palo Alto",
+    "country": "US",
+    "dateOfBirth": "1981-04-06",
+    "firstName": "Erlich",
+    "lastName": "Bachman",
+    "phoneNumber": "8773427222",
+    "state": "CA",
+    "zipcode": "94306",
+  },
+  "ssnVerification": Object {
+    "status": "unverified",
+  },
+  "userId": "userId_test24b05d761ff58b5931bd07778c67b4e818e4",
+}
+`);
     });
   });
 
@@ -52,23 +87,34 @@ describe("Abound Users", () => {
 
       expect(retrievedUser.data).toMatchInlineSnapshot(`
 Object {
-  "business": Object {},
+  "business": Object {
+    "address": "100 Farallon Road",
+    "address2": "Suite 501",
+    "city": "Palo Alto",
+    "country": "US",
+    "name": "InGen Corporation",
+    "state": "CA",
+    "taxClassification": "cCorporation",
+    "zipcode": "94306",
+  },
+  "einVerification": Object {
+    "status": "unverified",
+  },
   "email": "your_users_email@domain.com",
-  "foreignId": "your_foreign_id",
   "profile": Object {
     "address": "256 Byron Street",
     "address2": "Suite 32",
     "city": "Palo Alto",
-    "country": null,
+    "country": "US",
     "dateOfBirth": "1815-12-10",
     "firstName": "Ada",
-    "ipAddress": null,
     "lastName": "Lovelace",
-    "notes": null,
     "phoneNumber": "6505551010",
-    "sourceIp": null,
     "state": "CA",
     "zipcode": "94306",
+  },
+  "ssnVerification": Object {
+    "status": "unverified",
   },
   "userId": "userId_test24b05d761ff58b5931bd07778c67b4e818e4",
 }
@@ -78,29 +124,12 @@ Object {
 
   describe("list", () => {
     it("returns a promise that resolves to the developer's users on success", async () => {
-      const userList: AboundBulkResponse<User> = await abound.users.list();
+      const userList: AboundBulkResponse<BaseUser> = await abound.users.list();
 
       expect(userList.data).toMatchInlineSnapshot(`
 Array [
   Object {
-    "business": Object {},
     "email": "your_users_email@domain.com",
-    "foreignId": "your_foreign_id",
-    "profile": Object {
-      "address": "256 Byron Street",
-      "address2": "Suite 32",
-      "city": "Palo Alto",
-      "country": null,
-      "dateOfBirth": "1815-12-10",
-      "firstName": "Ada",
-      "ipAddress": null,
-      "lastName": "Lovelace",
-      "notes": null,
-      "phoneNumber": "6505551010",
-      "sourceIp": null,
-      "state": "CA",
-      "zipcode": "94306",
-    },
     "userId": "userId_test24b05d761ff58b5931bd07778c67b4e818e4",
   },
 ]
@@ -151,23 +180,34 @@ Array [
 
       expect(updatedUser.data).toMatchInlineSnapshot(`
 Object {
-  "business": Object {},
+  "business": Object {
+    "address": "100 Farallon Road",
+    "address2": "Suite 501",
+    "city": "Palo Alto",
+    "country": "US",
+    "name": "InGen Corporation",
+    "state": "CA",
+    "taxClassification": "cCorporation",
+    "zipcode": "94306",
+  },
+  "einVerification": Object {
+    "status": "unverified",
+  },
   "email": "test123test@example.com",
-  "foreignId": "your_foreign_id",
   "profile": Object {
     "address": "256 Byron Street",
     "address2": "Suite 32",
     "city": "Palo Alto",
-    "country": null,
+    "country": "US",
     "dateOfBirth": "1815-12-10",
     "firstName": "Ada",
-    "ipAddress": null,
     "lastName": "Lovelace",
-    "notes": null,
     "phoneNumber": "6505551010",
-    "sourceIp": null,
     "state": "CA",
     "zipcode": "94306",
+  },
+  "ssnVerification": Object {
+    "status": "unverified",
   },
   "userId": "userId_test24b05d761ff58b5931bd07778c67b4e818e4",
 }
