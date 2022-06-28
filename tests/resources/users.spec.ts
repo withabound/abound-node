@@ -137,31 +137,15 @@ Array [
     });
 
     it("returns a promise that resolves to a list of filtered Users when querying by foreignId", async () => {
-      const users: AboundBulkResponse<User> = await abound.users.list({
+      const users: AboundBulkResponse<BaseUser> = await abound.users.list({
         foreignId: "29SMN2KD9",
       });
 
       expect(users.data).toMatchInlineSnapshot(`
 Array [
   Object {
-    "business": Object {},
     "email": "your_users_email@domain.com",
-    "foreignId": "your_foreign_id",
-    "profile": Object {
-      "address": "256 Byron Street",
-      "address2": "Suite 32",
-      "city": "Palo Alto",
-      "country": null,
-      "dateOfBirth": "1815-12-10",
-      "firstName": "Ada",
-      "ipAddress": null,
-      "lastName": "Lovelace",
-      "notes": null,
-      "phoneNumber": "6505551010",
-      "sourceIp": null,
-      "state": "CA",
-      "zipcode": "94306",
-    },
+    "foreignId": "29SMN2KD9",
     "userId": "userId_test24b05d761ff58b5931bd07778c67b4e818e4",
   },
 ]

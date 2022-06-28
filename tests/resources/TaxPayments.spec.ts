@@ -12,7 +12,6 @@ import {
   createAboundClient,
   removeQueryParameters,
   TEST_USER_ID,
-  todayYYYYMMDD,
 } from "../utils";
 
 describe("Abound Tax Payments", () => {
@@ -47,7 +46,7 @@ describe("Abound Tax Payments", () => {
           "period": "Q1",
           "status": "created",
           "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
-          "year": "${year}",
+          "year": "2022",
         }
       `);
     });
@@ -80,21 +79,23 @@ describe("Abound Tax Payments", () => {
       const taxPayments: AboundBulkResponse<TaxPayment> =
         await abound.taxPayments.list(TEST_USER_ID, { foreignId: "29SMN2KD9" });
 
-      expect(taxPayments.data).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "amount": 154.66,
-    "createdDate": "2022-06-22",
-    "entity": "IRS",
-    "notes": Object {},
-    "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
-    "period": "Q2",
-    "status": "created",
-    "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
-    "year": "2020",
-  },
-]
-`);
+      expect(taxPayments.data[0]).toMatchInlineSnapshot(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        { createdDate: expect.any(String) },
+        `
+        Object {
+          "amount": 154.66,
+          "createdDate": Any<String>,
+          "entity": "IRS",
+          "notes": Object {},
+          "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
+          "period": "Q2",
+          "status": "created",
+          "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
+          "year": "2020",
+        }
+      `
+      );
     });
   });
 
@@ -122,7 +123,7 @@ Array [
           "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
           "period": "Q2",
           "status": "done",
-          "submittedDate": "${todayYYYYMMDD()}",
+          "submittedDate": "2022-06-28",
           "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
           "year": "2020",
         }
