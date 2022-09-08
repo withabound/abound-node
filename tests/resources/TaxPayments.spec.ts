@@ -3,11 +3,7 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
-import {
-  TaxPayment,
-  TaxPaymentEntity,
-  TaxPeriod,
-} from "../../src/resources/TaxPayments";
+import { TaxPayment, TaxPeriod } from "../../src/resources/TaxPayments";
 import {
   createAboundClient,
   removeQueryParameters,
@@ -31,7 +27,6 @@ describe("Abound Tax Payments", () => {
           year,
           period: TaxPeriod.Q1,
           amount: 450.22,
-          entity: TaxPaymentEntity.IRS,
           paymentMethodId:
             "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
         });

@@ -246,7 +246,11 @@ const mileageUpdates = {
   date: "2021-12-18",
 };
 
-const response = await abound.mileages.update(userId, mileageId, mileageUpdates);
+const response = await abound.mileages.update(
+  userId,
+  mileageId,
+  mileageUpdates
+);
 
 console.log(response.data.distance); // 23.3
 ```
@@ -307,7 +311,7 @@ console.log(response.data.displayName);
 Create a `TaxPayment`:
 
 ```ts
-import { TaxPaymentEntity, TaxPeriod } from "@withabound/node-sdk";
+import { TaxPeriod } from "@withabound/node-sdk";
 
 const userId = "userId_506...";
 const paymentMethodId = "paymentMethodId_329...";
@@ -317,7 +321,6 @@ const response = await abound.taxPayments.create(userId, {
   year: "2021",
   period: TaxPeriod.Q1,
   amount: 560.87,
-  entity: TaxPaymentEntity.IRS,
 });
 
 console.log(response.data.taxPaymentId);
@@ -478,7 +481,7 @@ const newPayer = {
   zipcode: "94043",
 };
 
-const response = await abound.payers.create([ newPayer ]);
+const response = await abound.payers.create([newPayer]);
 
 console.log(response.data); // list of created Payers
 ```
