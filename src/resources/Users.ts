@@ -1,6 +1,6 @@
 import { Except } from "type-fest";
 import { AboundBaseResource } from "./base/AboundBaseResource";
-import { Notes, Pagination } from "./base/AboundResource";
+import { DeepPartial, Notes, Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 
 // request body
@@ -133,7 +133,7 @@ export default class Users extends AboundBaseResource<
 
   public async update(
     id: string,
-    user: Partial<UserRequest>
+    user: DeepPartial<UserRequest>
   ): Promise<AboundResponse<User>> {
     return super.updateBaseResource(id, { user });
   }

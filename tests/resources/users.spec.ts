@@ -44,7 +44,7 @@ describe("Abound Users", () => {
 Object {
   "business": Object {
     "address": "3338 Thunder Road",
-    "address2": "",
+    "address2": "Suite 501",
     "city": "Palo Alto",
     "country": "US",
     "name": "Aviato",
@@ -60,7 +60,7 @@ Object {
   "notes": "Board member of Pied Piper",
   "profile": Object {
     "address": "3338 Thunder Road",
-    "address2": "",
+    "address2": "Suite 32",
     "city": "Palo Alto",
     "country": "US",
     "dateOfBirth": "1981-04-06",
@@ -69,9 +69,6 @@ Object {
     "phoneNumber": "8773427222",
     "state": "CA",
     "zipcode": "94306",
-  },
-  "ssnVerification": Object {
-    "status": "unverified",
   },
   "userId": "userId_test24b05d761ff58b5931bd07778c67b4e818e4",
 }
@@ -159,6 +156,12 @@ Array [
         TEST_USER_ID,
         {
           email: "test123test@example.com",
+          profile: {
+            phoneNumber: "1234567890",
+          },
+          business: {
+            taxClassification: TaxClassification.S_CORPORATION,
+          },
         }
       );
 
@@ -171,11 +174,8 @@ Object {
     "country": "US",
     "name": "InGen Corporation",
     "state": "CA",
-    "taxClassification": "cCorporation",
+    "taxClassification": "sCorporation",
     "zipcode": "94306",
-  },
-  "einVerification": Object {
-    "status": "unverified",
   },
   "email": "test123test@example.com",
   "profile": Object {
@@ -186,12 +186,9 @@ Object {
     "dateOfBirth": "1815-12-10",
     "firstName": "Ada",
     "lastName": "Lovelace",
-    "phoneNumber": "6505551010",
+    "phoneNumber": "1234567890",
     "state": "CA",
     "zipcode": "94306",
-  },
-  "ssnVerification": Object {
-    "status": "unverified",
   },
   "userId": "userId_test24b05d761ff58b5931bd07778c67b4e818e4",
 }

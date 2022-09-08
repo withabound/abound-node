@@ -11,6 +11,13 @@ export interface Pagination extends Record<string, unknown> {
   page?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type DeepPartial<TType> = TType extends object
+  ? {
+      [TPropery in keyof TType]?: DeepPartial<TType[TPropery]>;
+    }
+  : TType;
+
 /**
  * Base resource from which all other Abound Resources shall extend that maps an API action
  * (e.g. update) to an HTTP verb (e.g. PUT). Direct subclasses include
@@ -82,7 +89,7 @@ export abstract class AboundResource<I, O, RESP extends O = O> {
 
   protected async _update(
     uri: string,
-    payload: Record<string, Partial<I>>
+    payload: Record<string, DeepPartial<I>>
   ): Promise<AboundResponse<O>> {
     const response: AboundResponse<RESP> = await put(
       this.axiosInstance,
