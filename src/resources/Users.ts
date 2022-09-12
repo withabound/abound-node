@@ -1,12 +1,18 @@
 import { Except } from "type-fest";
 import { AboundBaseResource } from "./base/AboundBaseResource";
-import { DeepPartial, Notes, Pagination } from "./base/AboundResource";
+import {
+  DeepPartial,
+  Metadata,
+  Notes,
+  Pagination,
+} from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 
 // request body
 export interface UserRequest {
   email?: string;
   foreignId?: string;
+  metadata?: Metadata;
   notes?: Notes;
   profile?: UserProfile;
   business?: UserBusiness;
