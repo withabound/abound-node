@@ -18,6 +18,9 @@ describe("Abound Users", () => {
       const createdUser: AboundResponse<User> = await abound.users.create({
         email: "test123test@example.com",
         foreignId: "tj_miller",
+        metadata: {
+          title: "Board member of Pied Piper",
+        },
         notes: "Board member of Pied Piper",
         profile: {
           firstName: "Erlich",
@@ -57,6 +60,9 @@ Object {
   },
   "email": "test123test@example.com",
   "foreignId": "tj_miller",
+  "metadata": Object {
+    "title": "Board member of Pied Piper",
+  },
   "notes": "Board member of Pied Piper",
   "profile": Object {
     "address": "3338 Thunder Road",

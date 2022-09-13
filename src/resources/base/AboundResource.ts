@@ -5,6 +5,8 @@ import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
 // see https://github.com/typescript-eslint/typescript-eslint/issues/2063#issuecomment-675156492
 export type EmptyObject = Record<string, never>;
 
+export type Metadata = Record<string, string>;
+
 export type Notes = string | Record<string, unknown>;
 
 export interface Pagination extends Record<string, unknown> {
