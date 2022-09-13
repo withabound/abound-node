@@ -7,7 +7,6 @@ export interface TaxPaymentRequest {
   year: string;
   period: TaxPeriod;
   amount: number; // float
-  entity: TaxPaymentEntity;
   paymentMethodId: string;
   notes?: Notes;
   foreignId?: string;
@@ -18,49 +17,6 @@ export enum TaxPeriod {
   Q2 = "Q2",
   Q3 = "Q3",
   Q4 = "Q4",
-}
-
-export enum TaxPaymentEntity {
-  IRS = "IRS",
-  AL = "AL",
-  AR = "AR",
-  AZ = "AZ",
-  CA = "CA",
-  CO = "CO",
-  CT = "CT",
-  DC = "DC",
-  DE = "DE",
-  GA = "GA",
-  HI = "HI",
-  IA = "IA",
-  ID = "ID",
-  IL = "IL",
-  IN = "IN",
-  KS = "KS",
-  KY = "KY",
-  MA = "MA",
-  ME = "ME",
-  MD = "MD",
-  MI = "MI",
-  MO = "MO",
-  MS = "MS",
-  MT = "MT",
-  NC = "NC",
-  ND = "ND",
-  NE = "NE",
-  NJ = "NJ",
-  NM = "NM",
-  NY = "NY",
-  OH = "OH",
-  OK = "OK",
-  OR = "OR",
-  PA = "PA",
-  RI = "RI",
-  SC = "SC",
-  VA = "VA",
-  VT = "VT",
-  WI = "WI",
-  WV = "WV",
 }
 
 // query params

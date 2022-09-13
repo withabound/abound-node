@@ -3,16 +3,11 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
-import {
-  TaxPayment,
-  TaxPaymentEntity,
-  TaxPeriod,
-} from "../../src/resources/TaxPayments";
+import { TaxPayment, TaxPeriod } from "../../src/resources/TaxPayments";
 import {
   createAboundClient,
   removeQueryParameters,
   TEST_USER_ID,
-  todayYYYYMMDD,
 } from "../utils";
 
 describe("Abound Tax Payments", () => {
@@ -31,7 +26,6 @@ describe("Abound Tax Payments", () => {
           year,
           period: TaxPeriod.Q1,
           amount: 450.22,
-          entity: TaxPaymentEntity.IRS,
           paymentMethodId:
             "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
         });
@@ -41,13 +35,12 @@ describe("Abound Tax Payments", () => {
         Object {
           "amount": 450.22,
           "createdDate": "2021-09-05",
-          "entity": "IRS",
           "notes": Object {},
           "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
           "period": "Q1",
           "status": "created",
           "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
-          "year": "${year}",
+          "year": "2022",
         }
       `);
     });
@@ -64,7 +57,6 @@ describe("Abound Tax Payments", () => {
           Object {
             "amount": 154.66,
             "createdDate": "2021-09-05",
-            "entity": "IRS",
             "notes": Object {},
             "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
             "period": "Q2",
@@ -87,7 +79,6 @@ describe("Abound Tax Payments", () => {
         Object {
           "amount": 154.66,
           "createdDate": Any<String>,
-          "entity": "IRS",
           "notes": Object {},
           "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
           "period": "Q2",
@@ -119,12 +110,11 @@ describe("Abound Tax Payments", () => {
             "type": "1040ES",
             "year": "2020",
           },
-          "entity": "IRS",
           "notes": Object {},
           "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
           "period": "Q2",
           "status": "done",
-          "submittedDate": "${todayYYYYMMDD()}",
+          "submittedDate": "2022-09-13",
           "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
           "year": "2020",
         }

@@ -1,4 +1,4 @@
-import { AboundResource, EmptyObject } from "./AboundResource";
+import { AboundResource, DeepPartial, EmptyObject } from "./AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
 
 /**
@@ -45,7 +45,7 @@ export abstract class AboundBaseResource<
 
   protected async updateBaseResource(
     id: string,
-    payload: Record<string, Partial<I>>
+    payload: Record<string, DeepPartial<I>>
   ): Promise<AboundResponse<O>> {
     const uri = `${this.path}/${id}`;
 
