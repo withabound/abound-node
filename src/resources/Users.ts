@@ -35,6 +35,7 @@ export interface UserProfile {
 export interface UserBusiness {
   ein: string; // no hyphens, numerical digits only
   name: string;
+  dbaName?: string;
   taxClassification?: TaxClassification;
   address?: string;
   address2?: string;

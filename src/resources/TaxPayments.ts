@@ -30,6 +30,7 @@ export interface TaxPayment extends TaxPaymentRequest {
   createdDate: Readonly<string>;
   document?: TaxPaymentDocument;
   status: string;
+  submittedDate?: Readonly<string>;
 }
 
 export interface TaxPaymentDocument {
