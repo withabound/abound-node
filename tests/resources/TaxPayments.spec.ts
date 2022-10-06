@@ -99,8 +99,12 @@ describe("Abound Tax Payments", () => {
           "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3"
         );
 
-      expect(normalizeNonIdempotentFields(taxPayment.data))
-        .toMatchInlineSnapshot(`
+      expect(
+        normalizeNonIdempotentFields(taxPayment.data)
+      ).toMatchInlineSnapshot(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        { submittedDate: expect.any(String) },
+        `
         Object {
           "amount": 154.66,
           "createdDate": "2021-09-05",
@@ -114,11 +118,12 @@ describe("Abound Tax Payments", () => {
           "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
           "period": "Q2",
           "status": "done",
-          "submittedDate": "2022-09-13",
+          "submittedDate": Any<String>,
           "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
           "year": "2020",
         }
-      `);
+      `
+      );
     });
   });
 });
