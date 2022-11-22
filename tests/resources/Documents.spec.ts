@@ -291,6 +291,8 @@ describe("Abound Documents", () => {
         year: 2021,
         payerId: TEST_PAYER_ID,
         taxClassification: W9TaxClassification.SOLE_PROPRIETOR,
+        exemptPayeeCode: "1",
+        exemptFatcaCode: "A",
         certificationTimestamp: Date.now(),
         accountNumbers: [accountNumber],
       };
