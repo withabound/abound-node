@@ -116,5 +116,5 @@ export interface Ten99INTDocumentRequest extends BaseDocumentRequest {
   /**
    * Up to two (2) state tax information objects.
    */
-  stateTaxInfo?: StateTaxInfo[];
+  stateTaxInfo: StateTaxInfo[];
 }

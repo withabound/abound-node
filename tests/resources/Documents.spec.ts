@@ -14,7 +14,7 @@ import {
   Ten99KDocumentRequest,
   TransactionsReportedClassification,
 } from "../../src/resources/document-types/1099K";
-import { Ten99MISCDocumentRequest } from "../../src/resources/document-types/1099MISC";
+// import { Ten99MISCDocumentRequest } from "../../src/resources/document-types/1099MISC";
 import { Ten99NECDocumentRequest } from "../../src/resources/document-types/1099NEC";
 import { TEST_PAYER_ID } from "./Payers.spec";
 import {
@@ -28,10 +28,7 @@ import {
   removeQueryParameters,
   TEST_USER_ID,
 } from "../utils";
-import {
-  StateTaxInfo,
-  StateTaxInfoWithIncome,
-} from "../../src/resources/document-types/StateTaxInfo";
+import { StateTaxInfo } from "../../src/resources/document-types/StateTaxInfo";
 
 const TEST_DOCUMENT_ID = "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170";
 
@@ -102,6 +99,7 @@ describe("Abound Documents", () => {
           payerId: TEST_PAYER_ID,
           year: 2021,
           interestIncome: 10.18,
+          stateTaxInfo: [{ filingState: "CA" }],
         };
 
         const response: AboundBulkResponse<Document> =
@@ -132,7 +130,7 @@ describe("Abound Documents", () => {
         const bondPremium: number = randomCurrencyAmount(500);
         const taxExemptInterest: number = randomCurrencyAmount(1500);
         const stateTaxInfo: StateTaxInfo = {
-          filingState: "ny",
+          filingState: "NY",
           stateTaxWithheld: 3434.56,
         };
 
@@ -190,6 +188,7 @@ describe("Abound Documents", () => {
         grossAmountsByMonth: {
           january: 1000,
         },
+        stateTaxInfo: [{ filingState: "CA" }],
       };
 
       const response: AboundBulkResponse<Document> =
@@ -212,46 +211,46 @@ describe("Abound Documents", () => {
     });
   });
 
-  describe("create 1099-MISC", () => {
-    it("returns a promise that resolves to an object that includes a list of the created 1099-MISC Documents on success", async () => {
-      const accountNumber = randomNumberString(9);
-      const rents: number = randomCurrencyAmount(7000);
-      const royalties: number = randomCurrencyAmount(1000);
-      const stateTaxInfoWithIncome: StateTaxInfoWithIncome = {
-        filingState: "ca",
-        stateTaxWithheld: 1927.38,
-        stateIncome: 8391.18,
-      };
+  // describe("create 1099-MISC", () => {
+  //   it("returns a promise that resolves to an object that includes a list of the created 1099-MISC Documents on success", async () => {
+  //     const accountNumber = randomNumberString(9);
+  //     const rents: number = randomCurrencyAmount(7000);
+  //     const royalties: number = randomCurrencyAmount(1000);
+  //     const stateTaxInfoWithIncome: StateTaxInfoWithIncome = {
+  //       filingState: "CA",
+  //       stateTaxWithheld: 1927.38,
+  //       stateIncome: 8391.18,
+  //     };
 
-      const ten99MISCToCreate: Ten99MISCDocumentRequest = {
-        type: DocumentType.TEN99MISC,
-        payerId: TEST_PAYER_ID,
-        year: 2021,
-        accountNumber,
-        rents,
-        royalties,
-        stateTaxInfo: [stateTaxInfoWithIncome],
-      };
+  //     const ten99MISCToCreate: Ten99MISCDocumentRequest = {
+  //       type: DocumentType.TEN99MISC,
+  //       payerId: TEST_PAYER_ID,
+  //       year: 2021,
+  //       accountNumber,
+  //       rents,
+  //       royalties,
+  //       stateTaxInfo: [stateTaxInfoWithIncome],
+  //     };
 
-      const response: AboundBulkResponse<Document> =
-        await abound.documents.create(TEST_USER_ID, [ten99MISCToCreate]);
+  //     const response: AboundBulkResponse<Document> =
+  //       await abound.documents.create(TEST_USER_ID, [ten99MISCToCreate]);
 
-      expect(bulkNormalizeNonIdempotentFields(response.data))
-        .toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "createdTimestamp": 1630000000000,
-            "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-            "documentName": "2021 Form 1099-MISC",
-            "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_1099-MISC.pdf",
-            "status": "created",
-            "type": "1099misc",
-            "year": "2021",
-          },
-        ]
-      `);
-    });
-  });
+  //     expect(bulkNormalizeNonIdempotentFields(response.data))
+  //       .toMatchInlineSnapshot(`
+  //       Array [
+  //         Object {
+  //           "createdTimestamp": 1630000000000,
+  //           "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  //           "documentName": "2021 Form 1099-MISC",
+  //           "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_1099-MISC.pdf",
+  //           "status": "created",
+  //           "type": "1099misc",
+  //           "year": "2021",
+  //         },
+  //       ]
+  //     `);
+  //   });
+  // });
 
   describe("create 1099-NEC", () => {
     it("returns a promise that resolves to an object that includes a list of the created 1099-NEC Documents on success", async () => {
@@ -260,6 +259,7 @@ describe("Abound Documents", () => {
         payerId: TEST_PAYER_ID,
         year: 2020,
         nonemployeeCompensation: 15000,
+        stateTaxInfo: [{ filingState: "CA" }],
       };
 
       const response: AboundBulkResponse<Document> =

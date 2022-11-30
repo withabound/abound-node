@@ -3,7 +3,7 @@ import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
 import { Ten99INTDocumentRequest } from "./document-types/1099INT";
 import { Ten99KDocumentRequest } from "./document-types/1099K";
-import { Ten99MISCDocumentRequest } from "./document-types/1099MISC";
+// import { Ten99MISCDocumentRequest } from "./document-types/1099MISC";
 import { Ten99NECDocumentRequest } from "./document-types/1099NEC";
 import { AccountStatementDocumentRequest } from "./document-types/AccountStatement";
 import { W9DocumentRequest } from "./document-types/W9";
@@ -17,7 +17,7 @@ export type DocumentRequest =
   | AccountStatementDocumentRequest
   | Ten99INTDocumentRequest
   | Ten99KDocumentRequest
-  | Ten99MISCDocumentRequest
+  // | Ten99MISCDocumentRequest
   | Ten99NECDocumentRequest
   | W9DocumentRequest;
 
@@ -45,7 +45,7 @@ export enum DocumentType {
   ACCOUNT_STATEMENT = "accountStatement",
   TEN99INT = "1099int",
   TEN99K = "1099k",
-  TEN99MISC = "1099misc",
+  // TEN99MISC = "1099misc",
   TEN99NEC = "1099nec",
   W9 = "w9",
 }
