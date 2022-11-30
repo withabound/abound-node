@@ -1,8 +1,8 @@
 export interface StateTaxInfo {
   /**
-   * The filing state code. The lowercase abbreviation of the state (ca for California).
+   * The filing state code. The abbreviation of the state (CA for California).
    */
-  filingState?: string;
+  filingState: string;
 
   /**
    * The payer's state identification number.

@@ -33,5 +33,5 @@ export interface Ten99NECDocumentRequest extends BaseDocumentRequest {
   /**
    * Up to two (2) state tax information objects.
    */
-  stateTaxInfo?: StateTaxInfoWithIncome[];
+  stateTaxInfo: StateTaxInfoWithIncome[];
 }
