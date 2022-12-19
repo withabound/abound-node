@@ -6,6 +6,7 @@ export * from "./resources/AccessTokens";
 export * from "./resources/Documents";
 export * from "./resources/Expenses";
 export * from "./resources/Incomes";
+export * from "./resources/Mailings";
 export * from "./resources/Mileages";
 export * from "./resources/Payers";
 export * from "./resources/PaymentMethods";

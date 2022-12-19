@@ -4,6 +4,7 @@ import {
   Documents,
   Expenses,
   Incomes,
+  Mailings,
   Mileages,
   TaxCategories,
   TaxPayments,
@@ -34,6 +35,7 @@ export class AboundClient {
   documents: Documents;
   expenses: Expenses;
   incomes: Incomes;
+  mailings: Mailings;
   mileages: Mileages;
   payers: Payers;
   paymentMethods: PaymentMethods;
@@ -50,6 +52,7 @@ export class AboundClient {
     this.accessTokens = new AccessTokens(axiosInstance);
     this.documents = new Documents(axiosInstance);
     this.expenses = new Expenses(axiosInstance);
+    this.mailings = new Mailings(axiosInstance);
     this.mileages = new Mileages(axiosInstance);
     this.incomes = new Incomes(axiosInstance);
     this.payers = new Payers(axiosInstance);

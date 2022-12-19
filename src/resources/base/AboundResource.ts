@@ -59,7 +59,7 @@ export abstract class AboundResource<I, O, RESP extends O = O> {
 
   protected async _create(
     uri: string,
-    payload: Record<string, I>
+    payload?: Record<string, I>
   ): Promise<AboundResponse<O>> {
     const response: AboundResponse<RESP> = await post(
       this.axiosInstance,

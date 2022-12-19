@@ -45,7 +45,7 @@ export enum TaxPaymentDocumentType {
 }
 
 /**
- * See https://docs.withabound.com/reference#tax-payments
+ * See https://docs.withabound.com/reference/tax-payments
  */
 export default class TaxPayments extends AboundUserScopedResource<
   TaxPaymentRequest,

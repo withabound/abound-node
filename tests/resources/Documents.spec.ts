@@ -131,7 +131,7 @@ describe("Abound Documents", () => {
         const taxExemptInterest: number = randomCurrencyAmount(1500);
         const stateTaxInfo: StateTaxInfo = {
           filingState: "NY",
-          stateTaxWithheld: 3434.56,
+          stateTaxWithheld: 0,
         };
 
         const ten99INTToCreate: Ten99INTDocumentRequest = {
