@@ -22,7 +22,7 @@ export interface Mileage extends MileageRequest {
 }
 
 /**
- * See https://docs.withabound.com/reference#mileage
+ * See https://docs.withabound.com/reference/mileage
  */
 export default class Mileages extends AboundUserScopedResource<
   MileageRequest,

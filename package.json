@@ -1,6 +1,6 @@
 {
   "name": "@withabound/node-sdk",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "The Abound Node library provides convenient access to the Abound API from applications written in server-side JavaScript.",
   "author": "Abound <api@withabound.com>",
   "license": "MIT",

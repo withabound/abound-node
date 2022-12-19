@@ -47,7 +47,7 @@ export enum IncomeType {
 }
 
 /**
- * See https://docs.withabound.com/reference#incomes
+ * See https://docs.withabound.com/reference/incomes
  */
 export default class Incomes extends AboundUserScopedResource<
   IncomeRequest,

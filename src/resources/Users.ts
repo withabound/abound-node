@@ -99,7 +99,7 @@ interface UserApiResponse extends User {
 }
 
 /*
- * See https://docs.withabound.com/reference#users
+ * See https://docs.withabound.com/reference/users
  */
 export default class Users extends AboundBaseResource<
   UserRequest,

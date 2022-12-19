@@ -36,7 +36,7 @@ export enum AccountClass {
 }
 
 /**
- * See https://docs.withabound.com/reference#payment-methods
+ * See https://docs.withabound.com/reference/payment-methods
  */
 export default class PaymentMethods extends AboundUserScopedResource<
   PaymentMethodRequest,

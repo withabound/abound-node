@@ -194,6 +194,54 @@ const response = await abound.expenses.delete(userId, expenseId);
 console.log(response.data); // {}
 ```
 
+#### Mailings
+
+List `Mailing`s:
+
+```ts
+const userId = "userId_506...";
+const documentId = "documentId_efb...";
+
+const response = await abound.mailings.list(userId, documentId);
+
+console.log(response.data); // list of Mailings
+```
+
+Create a `Mailing`:
+
+```ts
+const userId = "userId_506...";
+const documentId = "documentId_efb...";
+
+const response = await abound.mailings.create(userId, documentId);
+
+console.log(response.data);
+```
+
+Retrieve a `Mailing`:
+
+```ts
+const userId = "userId_506...";
+const documentId = "documentId_efb...";
+const mailingId = "mailingId_d01...";
+
+const response = await abound.mailings.retrieve(userId, documentId, mailingId);
+
+console.log(response.data);
+```
+
+Delete a `Mailing`:
+
+```ts
+const userId = "userId_506...";
+const documentId = "documentId_efb...";
+const mailingId = "mailingId_d01...";
+
+const response = await abound.mailings.delete(userId, documentId, mailingId);
+
+console.log(response.data); // {}
+```
+
 #### Mileage
 
 List `Mileage`s:
