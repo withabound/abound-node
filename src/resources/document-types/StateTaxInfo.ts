@@ -10,6 +10,11 @@ export interface StateTaxInfo {
   payerStateId?: string;
 
   /**
+   * The user's state identification number.
+   */
+  userStateId?: string;
+
+  /**
    * The state tax withheld.
    */
   stateTaxWithheld?: number; // float
