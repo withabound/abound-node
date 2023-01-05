@@ -17,7 +17,17 @@ export interface W9DocumentRequest extends BaseDocumentRequest {
 }
 
 export enum W9TaxClassification {
+  INDIVIDUAL = "individual",
   SOLE_PROPRIETOR = "soleProprietor",
+  SINGLE_MEMBER_LLC = "singleMemberLlc",
+  C_CORPORATION = "cCorporation",
+  S_CORPORATION = "sCorporation",
+  PARTNERSHIP = "partnership",
+  TRUST = "trust",
+  ESTATE = "estate",
+  LLC_C_CORPORATION = "llcCCorporation",
+  LLC_S_CORPORATION = "llcSCorporation",
+  LLC_PARTNERSHIP = "llcPartnership",
 }
 
 export type ExemptPayeeCode =
