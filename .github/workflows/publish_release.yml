@@ -10,7 +10,7 @@ jobs:
   publish_release:
     runs-on: ubuntu-latest
     steps:
-      - uses: act10ns/slack@v1
+      - uses: act10ns/slack@v2
         with:
           status: starting
           channel: "#deployments"
@@ -46,7 +46,7 @@ jobs:
           token: ${{ secrets.NPM_ACCESS_TOKEN }}
           access: public
 
-      - uses: act10ns/slack@v1
+      - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
