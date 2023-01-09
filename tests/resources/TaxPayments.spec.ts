@@ -73,7 +73,6 @@ describe("Abound Tax Payments", () => {
         await abound.taxPayments.list(TEST_USER_ID, { foreignId: "29SMN2KD9" });
 
       expect(taxPayments.data[0]).toMatchInlineSnapshot(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         { createdDate: expect.any(String) },
         `
         Object {
@@ -102,7 +101,6 @@ describe("Abound Tax Payments", () => {
       expect(
         normalizeNonIdempotentFields(taxPayment.data)
       ).toMatchInlineSnapshot(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         { submittedDate: expect.any(String) },
         `
         Object {

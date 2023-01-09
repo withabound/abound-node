@@ -398,7 +398,10 @@ function bulkNormalizeNonIdempotentFields(documents: Document[]) {
 }
 
 function normalizeNonIdempotentFields(document: Document): Document {
-  document.documentURL = removeQueryParameters(document.documentURL!);
+  if (document.documentURL !== null) {
+    document.documentURL = removeQueryParameters(document.documentURL);
+  }
+
   document.createdTimestamp = 1630000000000;
 
   return document;
