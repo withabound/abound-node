@@ -58,10 +58,9 @@ describe("http", () => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       mockUsersClient.retrieve(TEST_USER_ID).then(() => {
         expect(mockAxios.history.get.length).toBe(1);
-        const requestHeaders: Record<string, string> =
-          mockAxios.history.get[0].headers;
+        const requestHeaders = mockAxios.history.get[0].headers;
 
-        const aboundSDK: string = requestHeaders["Abound-SDK"];
+        const aboundSDK = requestHeaders?.["Abound-SDK"] ?? "";
         expect(aboundSDK).toEqual(`NodeSDK/${version}`);
       });
     });
