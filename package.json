@@ -39,7 +39,7 @@
     "genversion": "3.1.1",
     "husky": "8.0.3",
     "jest": "27.2.1",
-    "lint-staged": "13.1.2",
+    "lint-staged": "13.2.0",
     "prettier": "2.8.4",
     "ts-jest": "27.0.5",
     "type-fest": "3.6.1",
