@@ -42,6 +42,7 @@ export interface Document {
 }
 
 export enum DocumentType {
+  /** @deprecated Our v2 API is now deprecated and will become completely unavailable on Tuesday May 16, 2023. Please consider upgrading to our v3 API as a way to prepare for the sunsetting of v2. For more detail on these product changes, what endpoints are changing in v3 and how that may affect your company, please view our [API Changelog](https://docs.withabound.com/changelog). */
   ACCOUNT_STATEMENT = "accountStatement",
   TEN99INT = "1099int",
   TEN99K = "1099k",

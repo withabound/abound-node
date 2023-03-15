@@ -46,6 +46,7 @@ export enum TaxPaymentDocumentType {
 
 /**
  * See https://docs.withabound.com/reference/tax-payments
+ * @deprecated Our v2 API is now deprecated and will become completely unavailable on Tuesday May 16, 2023. Please consider upgrading to our v3 API as a way to prepare for the sunsetting of v2. For more detail on these product changes, what endpoints are changing in v3 and how that may affect your company, please view our [API Changelog](https://docs.withabound.com/changelog).
  */
 export default class TaxPayments extends AboundUserScopedResource<
   TaxPaymentRequest,
@@ -53,6 +54,7 @@ export default class TaxPayments extends AboundUserScopedResource<
 > {
   path = "/taxPayments";
 
+  /** @deprecated Our v2 API is now deprecated and will become completely unavailable on Tuesday May 16, 2023. Please consider upgrading to our v3 API as a way to prepare for the sunsetting of v2. For more detail on these product changes, what endpoints are changing in v3 and how that may affect your company, please view our [API Changelog](https://docs.withabound.com/changelog). */
   public async create(
     userId: string,
     taxPayment: TaxPaymentRequest
@@ -60,6 +62,7 @@ export default class TaxPayments extends AboundUserScopedResource<
     return super.createForUser(userId, { taxPayment });
   }
 
+  /** @deprecated Our v2 API is now deprecated and will become completely unavailable on Tuesday May 16, 2023. Please consider upgrading to our v3 API as a way to prepare for the sunsetting of v2. For more detail on these product changes, what endpoints are changing in v3 and how that may affect your company, please view our [API Changelog](https://docs.withabound.com/changelog). */
   public async list(
     userId: string,
     parameters?: TaxPaymentParameters
@@ -67,6 +70,7 @@ export default class TaxPayments extends AboundUserScopedResource<
     return super.listForUser(userId, parameters);
   }
 
+  /** @deprecated Our v2 API is now deprecated and will become completely unavailable on Tuesday May 16, 2023. Please consider upgrading to our v3 API as a way to prepare for the sunsetting of v2. For more detail on these product changes, what endpoints are changing in v3 and how that may affect your company, please view our [API Changelog](https://docs.withabound.com/changelog). */
   public async retrieve(userId: string, taxPaymentId: string) {
     return super.retrieveForUser(userId, taxPaymentId);
   }

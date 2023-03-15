@@ -95,6 +95,7 @@ export enum TinVerificationStatus {
 
 // The raw `User` object returned from the APIs returns one deprecated field, which the SDK will remove.
 interface UserApiResponse extends User {
+  /** @deprecated */
   canWithhold: Readonly<boolean>;
 }
 

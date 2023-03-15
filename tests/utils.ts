@@ -1,7 +1,6 @@
 import { URL } from "url";
 
 import Abound, { Environment } from "../src/abound";
-import { AboundConfig } from "../src/AboundClient";
 
 export function randomString(length = 13): string {
   return random(length, CharSet.ALPHANUMERIC_LOWER);
@@ -76,14 +75,33 @@ export const TEST_APP_SECRET = "appSecret_testf54672359db6693429e1d3e14e2c";
  * additional data.
  */
 export function createAboundClient(): Abound {
-  const config: AboundConfig = {
+  return new Abound({
     apiVersion: "v2",
     environment: Environment.SANDBOX,
     appId: TEST_APP_ID,
     appSecret: TEST_APP_SECRET,
-  };
+  });
+}
 
-  return new Abound(config);
+/**
+ * These test credentials ensure consistent data is returned from Abound's APIs, and they do not persist
+ * additional data.
+ */
+export function createAboundClients(): Abound[] {
+  return [
+    new Abound({
+      apiVersion: "v2",
+      environment: Environment.SANDBOX,
+      appId: TEST_APP_ID,
+      appSecret: TEST_APP_SECRET,
+    }),
+    new Abound({
+      apiVersion: "v3",
+      environment: Environment.SANDBOX,
+      appId: TEST_APP_ID,
+      appSecret: TEST_APP_SECRET,
+    }),
+  ];
 }
 
 /**
