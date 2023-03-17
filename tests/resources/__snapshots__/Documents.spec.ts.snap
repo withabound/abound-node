@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year 1`] = `
+Array [
+  Object {
+    "createdTimestamp": 1630000000000,
+    "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+    "documentName": "2021-01-01 - 2021-01-31 Account Statement (7890)",
+    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2020-01-01_2020-01-31_Account_Statement_7890.pdf",
+    "type": "accountStatement",
+    "year": "2021",
+  },
+  Object {
+    "createdTimestamp": 1630000000000,
+    "documentId": null,
+    "documentName": "2021 Q2 Federal Estimated Tax Payment",
+    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/Form_1040ES_Y2020-Q2.pdf",
+    "type": "1040ES",
+    "year": "2021",
+  },
+  Object {
+    "createdTimestamp": 1630000000000,
+    "documentId": null,
+    "documentName": "2021 Expenses",
+    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2020_Expenses.csv",
+    "type": "businessExpenses",
+    "year": "2021",
+  },
+  Object {
+    "createdTimestamp": 1630000000000,
+    "documentId": null,
+    "documentName": "2021 Schedule C",
+    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2020_scheduleC.pdf",
+    "type": "scheduleC",
+    "year": "2021",
+  },
+]
+`;
+
+exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year 2`] = `
+Array [
+  Object {
+    "createdTimestamp": 1630000000000,
+    "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+    "documentName": "2021 Form W-9",
+    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_W-9.pdf",
+    "type": "w9",
+    "year": "2021",
+  },
+]
+`;
+
+exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents on success 1`] = `
+Array [
+  Object {
+    "createdTimestamp": 1630000000000,
+    "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+    "documentName": "2020-01-01 - 2020-01-31 Account Statement (7890)",
+    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2020-01-01_2020-01-31_Account_Statement_7890.pdf",
+    "type": "accountStatement",
+    "year": "2020",
+  },
+]
+`;
+
+exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents on success 2`] = `
+Array [
+  Object {
+    "createdTimestamp": 1630000000000,
+    "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+    "documentName": "2023 Form W-9",
+    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_W-9.pdf",
+    "type": "w9",
+    "year": "2023",
+  },
+]
+`;
