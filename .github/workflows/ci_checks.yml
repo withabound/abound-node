@@ -3,106 +3,35 @@ on:
     branches:
       - main
 
-env:
-  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
 jobs:
   run_unit_tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: act10ns/slack@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          status: starting
-          channel: "#deployments"
-        if: always()
-
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js 14.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14"
-
-      - name: Install npm dependencies
-        id: npm-install
-        run: npm install
-
-      - name: Run unit tests
-        id: npm-test
-        run: npm test
-
-      - uses: act10ns/slack@v2
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: "#deployments"
-        if: always()
+          node-version: "16"
+      - run: npm ci
+      - run: npm test
 
   run_linting:
     runs-on: ubuntu-latest
     steps:
-      - uses: act10ns/slack@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          status: starting
-          channel: "#deployments"
-        if: always()
-
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js 14.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14"
-
-      - name: Install npm dependencies
-        id: npm-install
-        run: npm install
-
-      - name: Run linting
-        id: npm-lint
-        run: npm run lint
-
+          node-version: "16"
+      - run: npm ci
+      - run: npm run lint
       - name: Verify package.json version matches version.ts (genversion --check-only)
-        id: verify-version
         run: ./verify_version.sh
-
-      - uses: act10ns/slack@v2
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: "#deployments"
-        if: always()
 
   run_compiler:
     runs-on: ubuntu-latest
     steps:
-      - uses: act10ns/slack@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          status: starting
-          channel: "#deployments"
-        if: always()
-
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js 14.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14"
-
-      - name: Install npm dependencies
-        id: npm-install
-        run: npm install
-
-      - name: Run compiler
-        id: npm-compile
-        run: npm run compile
-
-      - uses: act10ns/slack@v2
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: "#deployments"
-        if: always()
+          node-version: "16"
+      - run: npm ci
+      - run: npm run compile
