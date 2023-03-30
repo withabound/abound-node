@@ -3,21 +3,11 @@ on:
     types:
       - published
 
-env:
-  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
 jobs:
   publish_release:
     runs-on: ubuntu-latest
     steps:
-      - uses: act10ns/slack@v2
-        with:
-          status: starting
-          channel: "#deployments"
-        if: always()
-
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Validate release version and package version match
         env:
@@ -31,13 +21,11 @@ jobs:
               echo "Release tag matches the package.json version"
           fi
 
-      - name: Setup Node.js 14.x
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: "16"
 
-      - name: Install npm dependencies
-        run: npm ci
+      - run: npm ci
 
       - name: Publish @withabound/node-sdk
         id: npm-publish
@@ -46,14 +34,7 @@ jobs:
           token: ${{ secrets.NPM_ACCESS_TOKEN }}
           access: public
 
-      - uses: act10ns/slack@v2
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: "#deployments"
-        if: always()
-
-      - name: Slack notification
+      - name: Send Slack notification
         if: steps.npm-publish.outputs.type != 'none'
         uses: tokorom/action-slack-incoming-webhook@main
         with:
