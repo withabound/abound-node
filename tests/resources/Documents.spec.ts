@@ -1,8 +1,4 @@
-import {
-  AboundBulkResponse,
-  AboundResponse,
-} from "../../src/resources/base/AboundResponse";
-import { Document, DocumentType } from "../../src/resources/Documents";
+import { DocumentType } from "../../src/resources/Documents";
 import {
   W9DocumentRequest,
   W9TaxClassification,
@@ -20,70 +16,67 @@ import {
   createAboundClient,
   createAboundClients,
   PUBLIC_BANK_LOGO_URL,
-  randomCurrencyAmount,
   randomEmail,
-  randomNumberString,
   randomString,
   randomZip,
-  removeQueryParameters,
   TEST_USER_ID,
 } from "../utils";
-import { StateTaxInfo } from "../../src/resources/document-types/StateTaxInfo";
 
 const TEST_DOCUMENT_ID = "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170";
 
 describe("Abound Documents", () => {
   describe("create account statement", () => {
     it("returns a promise that resolves to an object that includes a list of the created Account Statement Documents on success", async () => {
-      const accountNumber = randomNumberString(9);
-      const last4 = accountNumber.slice(-4);
-
       const abound = createAboundClient();
 
-      const createdDocuments: AboundBulkResponse<Document> =
-        await abound.documents.create(TEST_USER_ID, [
-          {
-            type: DocumentType.ACCOUNT_STATEMENT,
-            year: 2020,
-            beginDate: "2020-03-01",
-            endDate: "2020-05-31",
-            accountNumber,
-            summary: {
-              beginningBalance: 1234.89,
-              endingBalance: 4321.89,
-              interestPercentage: 1.23,
-              interestAmount: 6.78,
-              totalFees: 5.25,
-            },
-            bank: {
-              name: randomString(),
-              logo: PUBLIC_BANK_LOGO_URL,
-              address: randomString(),
-              city: randomString(),
-              state: "CA",
-              zipcode: randomZip(),
-              customerService: {
-                phoneNumber: "555-555-5555",
-                email: randomEmail(),
-                website: "www.example.com",
-              },
+      const createdDocuments = await abound.documents.create(TEST_USER_ID, [
+        {
+          type: DocumentType.ACCOUNT_STATEMENT,
+          year: 2020,
+          beginDate: "2020-03-01",
+          endDate: "2020-05-31",
+          accountNumber: "430912910",
+          summary: {
+            beginningBalance: 1234.89,
+            endingBalance: 4321.89,
+            interestPercentage: 1.23,
+            interestAmount: 6.78,
+            totalFees: 5.25,
+          },
+          bank: {
+            name: randomString(),
+            logo: PUBLIC_BANK_LOGO_URL,
+            address: randomString(),
+            city: randomString(),
+            state: "CA",
+            zipcode: randomZip(),
+            customerService: {
+              phoneNumber: "555-555-5555",
+              email: randomEmail(),
+              website: "www.example.com",
             },
           },
-        ]);
-
-      expect(bulkNormalizeNonIdempotentFields(createdDocuments.data))
-        .toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "createdTimestamp": 1630000000000,
-          "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-          "documentName": "2020-03-01 - 2020-05-31 Account Statement (${last4})",
-          "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2020-01-01_2020-01-31_Account_Statement_7890.pdf",
-          "type": "accountStatement",
-          "year": "2020",
         },
-      ]
-    `);
+      ]);
+
+      expect(createdDocuments.data.at(0)).toMatchInlineSnapshot(
+        {
+          createdTimestamp: expect.any(Number),
+          documentURL: expect.stringContaining(
+            "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
+          ),
+        },
+        `
+          Object {
+            "createdTimestamp": Any<Number>,
+            "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+            "documentName": "2020-03-01 - 2020-05-31 Account Statement (2910)",
+            "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+            "type": "accountStatement",
+            "year": "2020",
+          }
+        `
+      );
     });
   });
 
@@ -99,85 +92,63 @@ describe("Abound Documents", () => {
             stateTaxInfo: [{ filingState: "CA" }],
           };
 
-          const response: AboundBulkResponse<Document> =
-            await abound.documents.create(TEST_USER_ID, [ten99IntToCreate]);
+          const response = await abound.documents.create(TEST_USER_ID, [
+            ten99IntToCreate,
+          ]);
 
-          expect(bulkNormalizeNonIdempotentFields(response.data))
-            .toMatchInlineSnapshot(`
-          Array [
-            Object {
-              "createdTimestamp": 1630000000000,
-              "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-              "documentName": "2021 Form 1099-INT",
-              "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_1099-INT.pdf",
-              "status": "created",
-              "type": "1099int",
-              "year": "2021",
-            },
-          ]
-        `);
+          expect(response.data.at(0)).toMatchSnapshot({
+            createdTimestamp: expect.any(Number),
+            documentURL: expect.stringContaining(
+              "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
+            ),
+          });
         });
       });
 
       describe("with many optional fields", () => {
         it("returns a promise that resolves to an object that includes a list of the created 1099-INT Documents on success", async () => {
-          const accountNumber: string = randomNumberString(9);
-          const payersRoutingNumber = "102001017";
-          const investmentExpenses: number = randomCurrencyAmount(100);
-          const bondPremium: number = randomCurrencyAmount(500);
-          const taxExemptInterest: number = randomCurrencyAmount(1500);
-          const stateTaxInfo: StateTaxInfo = {
-            filingState: "NY",
-            stateTaxWithheld: 0,
-          };
-
           const ten99INTToCreate: Ten99INTDocumentRequest = {
             type: DocumentType.TEN99INT,
             payerId: TEST_PAYER_ID,
             year: 2021,
-            accountNumber,
-            payersRoutingNumber,
-            investmentExpenses,
-            bondPremium,
-            taxExemptInterest,
+            accountNumber: "430912910",
+            payersRoutingNumber: "102001017",
+            investmentExpenses: 54.32,
+            bondPremium: 321.11,
+            taxExemptInterest: 861.31,
             interestIncome: 10.18,
             foreignTaxPaidCountry: "fr",
-            stateTaxInfo: [stateTaxInfo],
+            stateTaxInfo: [
+              {
+                filingState: "NY",
+                stateTaxWithheld: 0,
+              },
+            ],
           };
 
-          const response: AboundBulkResponse<Document> =
-            await abound.documents.create(TEST_USER_ID, [ten99INTToCreate]);
+          const response = await abound.documents.create(TEST_USER_ID, [
+            ten99INTToCreate,
+          ]);
 
-          expect(bulkNormalizeNonIdempotentFields(response.data))
-            .toMatchInlineSnapshot(`
-          Array [
-            Object {
-              "createdTimestamp": 1630000000000,
-              "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-              "documentName": "2021 Form 1099-INT",
-              "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_1099-INT.pdf",
-              "status": "created",
-              "type": "1099int",
-              "year": "2021",
-            },
-          ]
-        `);
+          expect(response.data.at(0)).toMatchSnapshot({
+            createdTimestamp: expect.any(Number),
+            documentURL: expect.stringContaining(
+              "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
+            ),
+          });
         });
       });
     });
 
     describe("create 1099-K", () => {
       it("returns a promise that resolves to an object that includes a list of the created 1099-K Documents on success", async () => {
-        const pseName = randomString();
-        const psePhoneNumber = randomNumberString(10);
-
         const ten99KToCreate: Ten99KDocumentRequest = {
           type: DocumentType.TEN99K,
           payerId: TEST_PAYER_ID,
           year: 2021,
           payerClassification: PayerClassification.PAYMENT_SETTLEMENT_ENTITY,
-          pseName,
-          psePhoneNumber,
+          pseName: "Payment Entity",
+          psePhoneNumber: "5555555555",
           aggregateGrossAmount: 1000,
           transactionsReportedClassification:
             TransactionsReportedClassification.PAYMENT_CARD,
@@ -188,23 +159,16 @@ describe("Abound Documents", () => {
           stateTaxInfo: [{ filingState: "CA" }],
         };
 
-        const response: AboundBulkResponse<Document> =
-          await abound.documents.create(TEST_USER_ID, [ten99KToCreate]);
+        const response = await abound.documents.create(TEST_USER_ID, [
+          ten99KToCreate,
+        ]);
 
-        expect(bulkNormalizeNonIdempotentFields(response.data))
-          .toMatchInlineSnapshot(`
-          Array [
-            Object {
-              "createdTimestamp": 1630000000000,
-              "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-              "documentName": "2021 Form 1099-K",
-              "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_1099-K.pdf",
-              "status": "created",
-              "type": "1099k",
-              "year": "2021",
-            },
-          ]
-        `);
+        expect(response.data.at(0)).toMatchSnapshot({
+          createdTimestamp: expect.any(Number),
+          documentURL: expect.stringContaining(
+            "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
+          ),
+        });
       });
     });
 
@@ -229,12 +193,17 @@ describe("Abound Documents", () => {
     //       stateTaxInfo: [stateTaxInfoWithIncome],
     //     };
 
-    //     const response: AboundBulkResponse<Document> =
+    //     const response =
     //       await abound.documents.create(TEST_USER_ID, [ten99MISCToCreate]);
 
-    //     expect(bulkNormalizeNonIdempotentFields(response.data))
-    //       .toMatchInlineSnapshot(`
-    //       Array [
+    //     expect(response.data.at(0)).toMatchInlineSnapshot(
+    //       {
+    //         createdTimestamp: expect.any(Number),
+    //         documentURL: expect.stringContaining(
+    //           "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
+    //         ),
+    //       },
+    //       `
     //         Object {
     //           "createdTimestamp": 1630000000000,
     //           "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
@@ -244,8 +213,8 @@ describe("Abound Documents", () => {
     //           "type": "1099misc",
     //           "year": "2021",
     //         },
-    //       ]
-    //     `);
+    //     `
+    //     );
     //   });
     // });
 
@@ -259,30 +228,21 @@ describe("Abound Documents", () => {
           stateTaxInfo: [{ filingState: "CA" }],
         };
 
-        const response: AboundBulkResponse<Document> =
-          await abound.documents.create(TEST_USER_ID, [ten99NECToCreate]);
+        const response = await abound.documents.create(TEST_USER_ID, [
+          ten99NECToCreate,
+        ]);
 
-        expect(bulkNormalizeNonIdempotentFields(response.data))
-          .toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "createdTimestamp": 1630000000000,
-            "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-            "documentName": "2020 Form 1099-NEC",
-            "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_1099-NEC.pdf",
-            "status": "created",
-            "type": "1099nec",
-            "year": "2020",
-          },
-        ]
-      `);
+        expect(response.data.at(0)).toMatchSnapshot({
+          createdTimestamp: expect.any(Number),
+          documentURL: expect.stringContaining(
+            "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
+          ),
+        });
       });
     });
 
     describe("create W9", () => {
       it("returns a promise that resolves to an object that includes a list of the created W9 Documents on success", async () => {
-        const accountNumber: string = randomNumberString(9);
-
         const w9ToCreate: W9DocumentRequest = {
           type: DocumentType.W9,
           year: 2021,
@@ -291,72 +251,62 @@ describe("Abound Documents", () => {
           exemptPayeeCode: "1",
           exemptFatcaCode: "A",
           certificationTimestamp: Date.now(),
-          accountNumbers: [accountNumber],
+          accountNumbers: ["430912910"],
         };
 
-        const response: AboundBulkResponse<Document> =
-          await abound.documents.create(TEST_USER_ID, [w9ToCreate]);
+        const response = await abound.documents.create(TEST_USER_ID, [
+          w9ToCreate,
+        ]);
 
-        expect(bulkNormalizeNonIdempotentFields(response.data))
-          .toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "createdTimestamp": 1630000000000,
-            "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-            "documentName": "2021 Form W-9",
-            "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_W-9.pdf",
-            "type": "w9",
-            "year": "2021",
-          },
-        ]
-      `);
+        expect(response.data.at(0)).toMatchSnapshot({
+          createdTimestamp: expect.any(Number),
+          documentURL: expect.stringContaining(
+            "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
+          ),
+        });
       });
     });
 
     describe("list", () => {
       it("returns a promise that resolves to an object that includes a list of the user's Documents on success", async () => {
-        const documents: AboundBulkResponse<Document> =
-          await abound.documents.list(TEST_USER_ID);
+        const documents = await abound.documents.list(TEST_USER_ID);
 
-        expect(
-          bulkNormalizeNonIdempotentFields(documents.data)
-        ).toMatchSnapshot();
+        for (const document of documents.data) {
+          expect(document).toMatchSnapshot({
+            createdTimestamp: expect.any(Number),
+            documentURL: expect.stringContaining(
+              "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
+            ),
+          });
+        }
       });
 
       it("returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year", async () => {
-        const filteredDocuments: AboundBulkResponse<Document> =
-          await abound.documents.list(TEST_USER_ID, {
-            year: "2021",
-          });
+        const filteredDocuments = await abound.documents.list(TEST_USER_ID, {
+          year: "2021",
+        });
 
-        expect(
-          bulkNormalizeNonIdempotentFields(filteredDocuments.data)
-        ).toMatchSnapshot();
+        for (const document of filteredDocuments.data) {
+          expect(document).toMatchSnapshot({
+            createdTimestamp: expect.any(Number),
+            documentURL: expect.stringContaining(
+              "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
+            ),
+          });
+        }
       });
     });
 
     // FIXME: restore this test after the API properly returns a 200 response
     describe.skip("retrieve", () => {
       it("returns a promise that resolves to an object that includes a single Document on success", async () => {
-        const document: AboundResponse<Document> =
-          await abound.documents.retrieve(TEST_USER_ID, TEST_DOCUMENT_ID);
+        const document = await abound.documents.retrieve(
+          TEST_USER_ID,
+          TEST_DOCUMENT_ID
+        );
 
         expect(document.data).toMatchInlineSnapshot();
       });
     });
   }
 });
-
-function bulkNormalizeNonIdempotentFields(documents: Document[]) {
-  return documents.map((d) => normalizeNonIdempotentFields(d));
-}
-
-function normalizeNonIdempotentFields(document: Document): Document {
-  if (document.documentURL !== null) {
-    document.documentURL = removeQueryParameters(document.documentURL);
-  }
-
-  document.createdTimestamp = 1630000000000;
-
-  return document;
-}

@@ -2,10 +2,19 @@ import { BaseDocumentRequest, DocumentType } from "../Documents";
 import { StateTaxInfo } from "./StateTaxInfo";
 
 // request body
-export interface Ten99INTDocumentRequest extends BaseDocumentRequest {
+export interface Ten99INTDocumentRequest
+  extends BaseDocumentRequest,
+    Ten99INTFormFields {
   type: DocumentType.TEN99INT;
   payerId: string;
   year: number;
+}
+
+export interface Ten99INTFormFields {
+  /**
+   * If `true`, the corrected checkbox will be marked on the document.
+   */
+  isCorrected?: boolean;
 
   /**
    * Satisfying a requirement to report with respect to a U.S. account for chapter 4 purposes.

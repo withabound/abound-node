@@ -1,77 +1,319 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Abound Documents create 1099-INT with many optional fields returns a promise that resolves to an object that includes a list of the created 1099-INT Documents on success 1`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2021 Form 1099-INT",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "status": "created",
+  "type": "1099int",
+  "year": "2021",
+}
+`;
+
+exports[`Abound Documents create 1099-INT with many optional fields returns a promise that resolves to an object that includes a list of the created 1099-INT Documents on success 2`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2021 Form 1099-INT",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "formData": Object {
+    "accountNumber": "430912910",
+    "bondPremium": 321.11,
+    "foreignTaxPaidCountry": "fr",
+    "interestIncome": 10.18,
+    "investmentExpenses": 54.32,
+    "payer": Object {
+      "address": "1401 N Shoreline Blvd",
+      "address2": "Suite 1",
+      "city": "Mountain View",
+      "country": "US",
+      "name": "Hooli",
+      "phoneNumber": "6501014096",
+      "state": "CA",
+      "zipcode": "94043",
+    },
+    "payersRoutingNumber": "102001017",
+    "stateTaxInfo": Array [
+      Object {
+        "filingState": "NY",
+        "stateTaxWithheld": 0,
+      },
+    ],
+    "taxExemptInterest": 861.31,
+    "user": Object {
+      "address": "256 Byron Street",
+      "address2": "Suite 32",
+      "city": "Palo Alto",
+      "country": "US",
+      "name": "Ada Lovelace",
+      "state": "CA",
+      "zipcode": "94306",
+    },
+  },
+  "status": "created",
+  "type": "1099int",
+  "year": "2021",
+}
+`;
+
+exports[`Abound Documents create 1099-INT with the minimum number (1) of optional fields returns a promise that resolves to an object that includes a list of the created 1099-INT Documents on success 1`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2021 Form 1099-INT",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "status": "created",
+  "type": "1099int",
+  "year": "2021",
+}
+`;
+
+exports[`Abound Documents create 1099-INT with the minimum number (1) of optional fields returns a promise that resolves to an object that includes a list of the created 1099-INT Documents on success 2`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2021 Form 1099-INT",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "formData": Object {
+    "interestIncome": 10.18,
+    "payer": Object {
+      "address": "1401 N Shoreline Blvd",
+      "address2": "Suite 1",
+      "city": "Mountain View",
+      "country": "US",
+      "name": "Hooli",
+      "phoneNumber": "6501014096",
+      "state": "CA",
+      "zipcode": "94043",
+    },
+    "stateTaxInfo": Array [
+      Object {
+        "filingState": "CA",
+      },
+    ],
+    "user": Object {
+      "address": "256 Byron Street",
+      "address2": "Suite 32",
+      "city": "Palo Alto",
+      "country": "US",
+      "name": "Ada Lovelace",
+      "state": "CA",
+      "zipcode": "94306",
+    },
+  },
+  "status": "created",
+  "type": "1099int",
+  "year": "2021",
+}
+`;
+
+exports[`Abound Documents create 1099-K returns a promise that resolves to an object that includes a list of the created 1099-K Documents on success 1`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2021 Form 1099-K",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "status": "created",
+  "type": "1099k",
+  "year": "2021",
+}
+`;
+
+exports[`Abound Documents create 1099-K returns a promise that resolves to an object that includes a list of the created 1099-K Documents on success 2`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2021 Form 1099-K",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "formData": Object {
+    "aggregateGrossAmount": 1000,
+    "grossAmountsByMonth": Object {
+      "january": 1000,
+    },
+    "numberOfPaymentTransactions": 12,
+    "payer": Object {
+      "address": "1401 N Shoreline Blvd",
+      "address2": "Suite 1",
+      "city": "Mountain View",
+      "country": "US",
+      "name": "Hooli",
+      "phoneNumber": "6501014096",
+      "state": "CA",
+      "zipcode": "94043",
+    },
+    "payerClassification": "pse",
+    "pseName": "Payment Entity",
+    "psePhoneNumber": "5555555555",
+    "stateTaxInfo": Array [
+      Object {
+        "filingState": "CA",
+      },
+    ],
+    "transactionsReportedClassification": "paymentCard",
+    "user": Object {
+      "address": "256 Byron Street",
+      "address2": "Suite 32",
+      "city": "Palo Alto",
+      "country": "US",
+      "name": "Ada Lovelace",
+      "state": "CA",
+      "zipcode": "94306",
+    },
+  },
+  "status": "created",
+  "type": "1099k",
+  "year": "2021",
+}
+`;
+
+exports[`Abound Documents create 1099-NEC returns a promise that resolves to an object that includes a list of the created 1099-NEC Documents on success 1`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2020 Form 1099-NEC",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "status": "created",
+  "type": "1099nec",
+  "year": "2020",
+}
+`;
+
+exports[`Abound Documents create 1099-NEC returns a promise that resolves to an object that includes a list of the created 1099-NEC Documents on success 2`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2020 Form 1099-NEC",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "formData": Object {
+    "nonemployeeCompensation": 15000,
+    "payer": Object {
+      "address": "1401 N Shoreline Blvd",
+      "address2": "Suite 1",
+      "city": "Mountain View",
+      "country": "US",
+      "name": "Hooli",
+      "phoneNumber": "6501014096",
+      "state": "CA",
+      "zipcode": "94043",
+    },
+    "stateTaxInfo": Array [
+      Object {
+        "filingState": "CA",
+      },
+    ],
+    "user": Object {
+      "address": "256 Byron Street",
+      "address2": "Suite 32",
+      "city": "Palo Alto",
+      "country": "US",
+      "name": "Ada Lovelace",
+      "state": "CA",
+      "zipcode": "94306",
+    },
+  },
+  "status": "created",
+  "type": "1099nec",
+  "year": "2020",
+}
+`;
+
+exports[`Abound Documents create W9 returns a promise that resolves to an object that includes a list of the created W9 Documents on success 1`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2021 Form W-9",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "type": "w9",
+  "year": "2021",
+}
+`;
+
+exports[`Abound Documents create W9 returns a promise that resolves to an object that includes a list of the created W9 Documents on success 2`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2021 Form W-9",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "type": "w9",
+  "year": "2021",
+}
+`;
+
 exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year 1`] = `
-Array [
-  Object {
-    "createdTimestamp": 1630000000000,
-    "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-    "documentName": "2021-01-01 - 2021-01-31 Account Statement (7890)",
-    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2020-01-01_2020-01-31_Account_Statement_7890.pdf",
-    "type": "accountStatement",
-    "year": "2021",
-  },
-  Object {
-    "createdTimestamp": 1630000000000,
-    "documentId": null,
-    "documentName": "2021 Q2 Federal Estimated Tax Payment",
-    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/Form_1040ES_Y2020-Q2.pdf",
-    "type": "1040ES",
-    "year": "2021",
-  },
-  Object {
-    "createdTimestamp": 1630000000000,
-    "documentId": null,
-    "documentName": "2021 Expenses",
-    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2020_Expenses.csv",
-    "type": "businessExpenses",
-    "year": "2021",
-  },
-  Object {
-    "createdTimestamp": 1630000000000,
-    "documentId": null,
-    "documentName": "2021 Schedule C",
-    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2020_scheduleC.pdf",
-    "type": "scheduleC",
-    "year": "2021",
-  },
-]
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2021-01-01 - 2021-01-31 Account Statement (7890)",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "type": "accountStatement",
+  "year": "2021",
+}
 `;
 
 exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year 2`] = `
-Array [
-  Object {
-    "createdTimestamp": 1630000000000,
-    "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-    "documentName": "2021 Form W-9",
-    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_W-9.pdf",
-    "type": "w9",
-    "year": "2021",
-  },
-]
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": null,
+  "documentName": "2021 Q2 Federal Estimated Tax Payment",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "type": "1040ES",
+  "year": "2021",
+}
+`;
+
+exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year 3`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": null,
+  "documentName": "2021 Expenses",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "type": "businessExpenses",
+  "year": "2021",
+}
+`;
+
+exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year 4`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": null,
+  "documentName": "2021 Schedule C",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "type": "scheduleC",
+  "year": "2021",
+}
+`;
+
+exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year 5`] = `
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2021 Form W-9",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "type": "w9",
+  "year": "2021",
+}
 `;
 
 exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents on success 1`] = `
-Array [
-  Object {
-    "createdTimestamp": 1630000000000,
-    "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-    "documentName": "2020-01-01 - 2020-01-31 Account Statement (7890)",
-    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2020-01-01_2020-01-31_Account_Statement_7890.pdf",
-    "type": "accountStatement",
-    "year": "2020",
-  },
-]
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2020-01-01 - 2020-01-31 Account Statement (7890)",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "type": "accountStatement",
+  "year": "2020",
+}
 `;
 
 exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents on success 2`] = `
-Array [
-  Object {
-    "createdTimestamp": 1630000000000,
-    "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-    "documentName": "2023 Form W-9",
-    "documentURL": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/test62ae93bafa6310aa9952e8b3bf5796443111/2021_Form_W-9.pdf",
-    "type": "w9",
-    "year": "2023",
-  },
-]
+Object {
+  "createdTimestamp": Any<Number>,
+  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
+  "documentName": "2023 Form W-9",
+  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "type": "w9",
+  "year": "2023",
+}
 `;

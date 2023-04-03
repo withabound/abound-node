@@ -1,10 +1,19 @@
 import { Pagination } from "./base/AboundResource";
 import { AboundBulkResponse, AboundResponse } from "./base/AboundResponse";
 import { AboundUserScopedResource } from "./base/AboundUserScopedResource";
-import { Ten99INTDocumentRequest } from "./document-types/1099INT";
-import { Ten99KDocumentRequest } from "./document-types/1099K";
+import {
+  Ten99INTDocumentRequest,
+  Ten99INTFormFields,
+} from "./document-types/1099INT";
+import {
+  Ten99KDocumentRequest,
+  Ten99KFormFields,
+} from "./document-types/1099K";
 // import { Ten99MISCDocumentRequest } from "./document-types/1099MISC";
-import { Ten99NECDocumentRequest } from "./document-types/1099NEC";
+import {
+  Ten99NECDocumentRequest,
+  Ten99NECFormFields,
+} from "./document-types/1099NEC";
 import { AccountStatementDocumentRequest } from "./document-types/AccountStatement";
 import { W9DocumentRequest } from "./document-types/W9";
 
@@ -31,14 +40,71 @@ export interface DocumentParameters extends Pagination {
 }
 
 export interface Document {
-  documentId: Readonly<string | null>;
-  documentURL: Readonly<string | null>;
-  documentName: Readonly<string>;
-  type: Readonly<DocumentType>;
-  year: Readonly<string>;
-  status?: Readonly<string>;
-  message?: Readonly<string>;
-  createdTimestamp: Readonly<number>;
+  readonly documentId: string | null;
+  readonly documentURL: string | null;
+  readonly documentName: string;
+  readonly type: DocumentType;
+  readonly year: string;
+  readonly status?: string;
+  readonly message?: string;
+  readonly createdTimestamp: number;
+}
+
+interface BaseTen99Document {
+  readonly year: string;
+  readonly documentId: string;
+  readonly documentURL: string;
+  readonly documentName: string;
+  readonly creationDate?: string;
+  readonly createdTimestamp: number;
+  readonly status?: string;
+  readonly message?: string;
+}
+
+export interface Ten99INTDocument extends BaseTen99Document {
+  readonly type: DocumentType.TEN99INT;
+  readonly formData: Readonly<Payer> &
+    Readonly<User> &
+    Readonly<Ten99INTFormFields>;
+}
+
+export interface Ten99KDocument extends BaseTen99Document {
+  readonly type: DocumentType.TEN99K;
+  readonly formData: Readonly<Payer> &
+    Readonly<User> &
+    Readonly<Ten99KFormFields>;
+}
+
+export interface Ten99NECDocument extends BaseTen99Document {
+  readonly type: DocumentType.TEN99NEC;
+  readonly formData: Readonly<Payer> &
+    Readonly<User> &
+    Readonly<Ten99NECFormFields>;
+}
+
+interface User {
+  readonly user: Readonly<{
+    name: string;
+    address: string;
+    address2?: string;
+    city: string;
+    state: string;
+    zipcode: string;
+    country?: string;
+  }>;
+}
+
+interface Payer {
+  readonly payer: Readonly<{
+    name: string;
+    address: string;
+    address2?: string;
+    city: string;
+    state: string;
+    zipcode: string;
+    country: string;
+    phoneNumber: string;
+  }>;
 }
 
 export enum DocumentType {
@@ -53,15 +119,21 @@ export enum DocumentType {
 
 // The raw `Document` object returned from the APIs returns one deprecated field, which the SDK will remove.
 interface DocumentApiResponse extends Document {
-  creationDate: Readonly<string>; // YYYY-MM-DD
+  readonly creationDate: string; // YYYY-MM-DD
 }
+
+export type DocumentResponse =
+  | Document
+  | Ten99INTDocument
+  | Ten99KDocument
+  | Ten99NECDocument;
 
 /**
  * See https://docs.withabound.com/reference/documents
  */
 export default class Documents extends AboundUserScopedResource<
   DocumentRequest,
-  Document,
+  DocumentResponse,
   DocumentApiResponse
 > {
   path = "/documents";
@@ -73,21 +145,21 @@ export default class Documents extends AboundUserScopedResource<
   public async create(
     userId: string,
     documents: DocumentRequest[]
-  ): Promise<AboundBulkResponse<Document>> {
+  ): Promise<AboundBulkResponse<DocumentResponse>> {
     return super.bulkCreateForUser(userId, { documents });
   }
 
   public async list(
     userId: string,
     parameters?: DocumentParameters
-  ): Promise<AboundBulkResponse<Document>> {
+  ): Promise<AboundBulkResponse<DocumentResponse>> {
     return super.listForUser(userId, parameters);
   }
 
   public async retrieve(
     userId: string,
     documentId: string
-  ): Promise<AboundResponse<Document>> {
+  ): Promise<AboundResponse<DocumentResponse>> {
     return super.retrieveForUser(userId, documentId);
   }
 }
