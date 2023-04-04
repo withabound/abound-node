@@ -2,10 +2,19 @@ import { BaseDocumentRequest, DocumentType } from "../Documents";
 import { StateTaxInfo } from "./StateTaxInfo";
 
 // request body
-export interface Ten99KDocumentRequest extends BaseDocumentRequest {
+export interface Ten99KDocumentRequest
+  extends BaseDocumentRequest,
+    Ten99KFormFields {
   type: DocumentType.TEN99K;
   payerId: string;
   year: number;
+}
+
+export interface Ten99KFormFields {
+  /**
+   * If `true`, the corrected checkbox will be marked on the document.
+   */
+  isCorrected?: boolean;
 
   /**
    * The type of payer. Payment settlement entity (PSE) or Electronic Payment Facilitator (EPF)/Other

@@ -2,10 +2,19 @@ import { BaseDocumentRequest, DocumentType } from "../Documents";
 import { StateTaxInfoWithIncome } from "./StateTaxInfo";
 
 // request body
-export interface Ten99NECDocumentRequest extends BaseDocumentRequest {
+export interface Ten99NECDocumentRequest
+  extends BaseDocumentRequest,
+    Ten99NECFormFields {
   type: DocumentType.TEN99NEC;
   payerId: string;
   year: number;
+}
+
+export interface Ten99NECFormFields {
+  /**
+   * If `true`, the corrected checkbox will be marked on the document.
+   */
+  isCorrected?: boolean;
 
   /**
    * If the payer assigns the contractor a unique number for its records, enter the account number in
