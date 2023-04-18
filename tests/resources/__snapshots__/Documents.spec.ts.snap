@@ -236,6 +236,24 @@ Object {
   "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
   "documentName": "2021 Form W-9",
   "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "formData": Object {
+    "accountNumbers": Array [
+      "430912910",
+    ],
+    "certificationTimestamp": Any<Number>,
+    "exemptFatcaCode": "A",
+    "exemptPayeeCode": "1",
+    "taxClassification": "soleProprietor",
+    "user": Object {
+      "address": "256 Byron Street",
+      "address2": "Suite 32",
+      "city": "Palo Alto",
+      "country": "US",
+      "name": "Ada Lovelace",
+      "state": "CA",
+      "zipcode": "94306",
+    },
+  },
   "type": "w9",
   "year": "2021",
 }
@@ -291,6 +309,19 @@ Object {
   "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
   "documentName": "2021 Form W-9",
   "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "formData": Object {
+    "certificationTimestamp": Any<Number>,
+    "taxClassification": "individual",
+    "user": Object {
+      "address": "256 Byron Street",
+      "address2": "Suite 32",
+      "city": "Palo Alto",
+      "country": "US",
+      "name": "Ada Lovelace",
+      "state": "CA",
+      "zipcode": "94306",
+    },
+  },
   "type": "w9",
   "year": "2021",
 }
@@ -313,6 +344,19 @@ Object {
   "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
   "documentName": "2023 Form W-9",
   "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
+  "formData": Object {
+    "certificationTimestamp": Any<Number>,
+    "taxClassification": "individual",
+    "user": Object {
+      "address": "256 Byron Street",
+      "address2": "Suite 32",
+      "city": "Palo Alto",
+      "country": "US",
+      "name": "Ada Lovelace",
+      "state": "CA",
+      "zipcode": "94306",
+    },
+  },
   "type": "w9",
   "year": "2023",
 }
