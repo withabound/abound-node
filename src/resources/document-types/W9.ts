@@ -1,10 +1,13 @@
 import { BaseDocumentRequest, DocumentType } from "../Documents";
 
 // request body
-export interface W9DocumentRequest extends BaseDocumentRequest {
+export interface W9DocumentRequest extends BaseDocumentRequest, W9FormFields {
   type: DocumentType.W9;
   payerId?: string; // The payer filing or issuing this form.
   year: number;
+}
+
+export interface W9FormFields {
   taxClassification: W9TaxClassification;
   exemptPayeeCode?: ExemptPayeeCode;
   exemptFatcaCode?: ExemptFatcaCode;

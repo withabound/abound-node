@@ -15,7 +15,7 @@ import {
   Ten99NECFormFields,
 } from "./document-types/1099NEC";
 import { AccountStatementDocumentRequest } from "./document-types/AccountStatement";
-import { W9DocumentRequest } from "./document-types/W9";
+import { W9DocumentRequest, W9FormFields } from "./document-types/W9";
 
 export {
   StateTaxInfo,
@@ -50,13 +50,16 @@ export interface Document {
   readonly createdTimestamp: number;
 }
 
-interface BaseTen99Document {
+interface BaseDocument {
   readonly year: string;
   readonly documentId: string;
   readonly documentURL: string;
   readonly documentName: string;
   readonly creationDate?: string;
   readonly createdTimestamp: number;
+}
+
+interface BaseTen99Document extends BaseDocument {
   readonly status?: string;
   readonly message?: string;
 }
@@ -80,6 +83,13 @@ export interface Ten99NECDocument extends BaseTen99Document {
   readonly formData: Readonly<Payer> &
     Readonly<User> &
     Readonly<Ten99NECFormFields>;
+}
+
+export interface W9Document extends BaseDocument {
+  readonly type: DocumentType.W9;
+  readonly formData: Readonly<W9Payer> &
+    Readonly<W9User> &
+    Readonly<W9FormFields>;
 }
 
 interface User {
@@ -107,6 +117,30 @@ interface Payer {
   }>;
 }
 
+interface W9User {
+  readonly user: Readonly<{
+    name: string;
+    businessName?: string;
+    address: string;
+    address2?: string;
+    city: string;
+    state: string;
+    zipcode: string;
+    country?: string;
+  }>;
+}
+
+interface W9Payer {
+  readonly payer?: Readonly<{
+    name: string;
+    address: string;
+    address2?: string;
+    city: string;
+    state: string;
+    zipcode: string;
+  }>;
+}
+
 export enum DocumentType {
   /** @deprecated Our v2 API is now deprecated and will become completely unavailable on Tuesday May 16, 2023. Please consider upgrading to our v3 API as a way to prepare for the sunsetting of v2. For more detail on these product changes, what endpoints are changing in v3 and how that may affect your company, please view our [API Changelog](https://docs.withabound.com/changelog). */
   ACCOUNT_STATEMENT = "accountStatement",
@@ -126,7 +160,8 @@ export type DocumentResponse =
   | Document
   | Ten99INTDocument
   | Ten99KDocument
-  | Ten99NECDocument;
+  | Ten99NECDocument
+  | W9Document;
 
 /**
  * See https://docs.withabound.com/reference/documents

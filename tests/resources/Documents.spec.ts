@@ -258,11 +258,20 @@ describe("Abound Documents", () => {
           w9ToCreate,
         ]);
 
-        expect(response.data.at(0)).toMatchSnapshot({
+        const document = response.data.at(0);
+        expect(document).toMatchSnapshot({
           createdTimestamp: expect.any(Number),
           documentURL: expect.stringContaining(
             "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
           ),
+          ...(document &&
+            "formData" in document &&
+            "certificationTimestamp" in document.formData &&
+            document?.formData?.certificationTimestamp && {
+              formData: {
+                certificationTimestamp: expect.any(Number),
+              },
+            }),
         });
       });
     });
@@ -277,6 +286,13 @@ describe("Abound Documents", () => {
             documentURL: expect.stringContaining(
               "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
             ),
+            ...("formData" in document &&
+              "certificationTimestamp" in document.formData &&
+              document?.formData?.certificationTimestamp && {
+                formData: {
+                  certificationTimestamp: expect.any(Number),
+                },
+              }),
           });
         }
       });
@@ -292,6 +308,13 @@ describe("Abound Documents", () => {
             documentURL: expect.stringContaining(
               "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com"
             ),
+            ...("formData" in document &&
+              "certificationTimestamp" in document.formData &&
+              document?.formData?.certificationTimestamp && {
+                formData: {
+                  certificationTimestamp: expect.any(Number),
+                },
+              }),
           });
         }
       });
