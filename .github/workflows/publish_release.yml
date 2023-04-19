@@ -40,4 +40,4 @@ jobs:
         with:
           text: "@withabound/node-sdk@${{ steps.npm-publish.outputs.version }} has been published."
         env:
-          INCOMING_WEBHOOK_URL: ${{ secrets.SUCCESS_DEPLOYMENT_DX_URL }}
+          INCOMING_WEBHOOK_URL: ${{ secrets.SUCCESS_DEPLOYMENT_PRODUCT_URL }}
