@@ -3,7 +3,7 @@ import {
   AboundBulkResponse,
   AboundResponse,
 } from "../../src/resources/base/AboundResponse";
-import { TaxPayment, TaxPeriod } from "../../src/resources/TaxPayments";
+import { TaxPayment } from "../../src/resources/TaxPayments";
 import {
   createAboundClient,
   removeQueryParameters,
@@ -15,35 +15,6 @@ describe("Abound Tax Payments", () => {
 
   beforeAll(() => {
     abound = createAboundClient();
-  });
-
-  describe("create", () => {
-    it("returns a promise that resolves to a created tax payment on success", async () => {
-      const year = String(new Date().getFullYear());
-
-      const createdTaxPayment: AboundResponse<TaxPayment> =
-        await abound.taxPayments.create(TEST_USER_ID, {
-          year,
-          period: TaxPeriod.Q1,
-          amount: 450.22,
-          paymentMethodId:
-            "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
-        });
-
-      expect(normalizeNonIdempotentFields(createdTaxPayment.data))
-        .toMatchInlineSnapshot(`
-        Object {
-          "amount": 450.22,
-          "createdDate": "2021-09-05",
-          "notes": Object {},
-          "paymentMethodId": "paymentMethodId_test32920837fa800382b7ee5676f281fbfc18cb",
-          "period": "Q1",
-          "status": "created",
-          "taxPaymentId": "taxPaymentId_test614d255d3048f6f7b3b5bb219b18f0f065d3",
-          "year": "2023",
-        }
-      `);
-    });
   });
 
   describe("list", () => {

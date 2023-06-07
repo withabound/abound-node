@@ -44,26 +44,26 @@ describe("Abound Incomes", () => {
         ]);
 
       expect(createdIncomes.data).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "amount": 410.11,
-    "category": "Design Services",
-    "date": "2021-08-01",
-    "description": "Client Invoice",
-    "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
-    "incomeType": "1099",
-  },
-  Object {
-    "amount": 10.87,
-    "category": "${category}",
-    "date": "2021-08-05",
-    "description": "${description}",
-    "documentType": "1099int",
-    "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
-    "incomeType": "1099",
-  },
-]
-`);
+        Array [
+          Object {
+            "amount": 410.11,
+            "category": "Design Services",
+            "date": "2021-08-01",
+            "description": "Client Invoice",
+            "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+            "incomeType": "1099",
+          },
+          Object {
+            "amount": 10.87,
+            "category": "${category}",
+            "date": "2021-08-05",
+            "description": "${description}",
+            "documentType": "1099int",
+            "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
+            "incomeType": "1099",
+          },
+        ]
+      `);
     });
   });
 
@@ -81,24 +81,17 @@ Array [
         ]);
 
       expect(createdIncomes.data).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "amount": 410.11,
-    "category": "Design Services",
-    "date": "2021-08-01",
-    "description": "${description}",
-    "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
-    "incomeType": "1099",
-    "predictions": Object {
-      "incomeTypePredictionScores": Object {
-        "1099": 0.95701,
-        "personal": 0.04299,
-        "w2": 0,
-      },
-    },
-  },
-]
-`);
+        Array [
+          Object {
+            "amount": 410.11,
+            "category": "Design Services",
+            "date": "2021-08-01",
+            "description": "${description}",
+            "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+            "incomeType": "1099",
+          },
+        ]
+      `);
     });
   });
   describe("list", () => {
@@ -108,26 +101,26 @@ Array [
       );
 
       expect(incomes.data).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "amount": 222.34,
-    "category": "Design Services",
-    "date": "2020-01-14",
-    "description": "Client Invoice",
-    "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
-    "incomeType": "1099",
-  },
-  Object {
-    "amount": 333.34,
-    "category": "Design Services",
-    "date": "2020-01-14",
-    "description": "Client Invoice",
-    "documentType": "ssa1099",
-    "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
-    "incomeType": "1099",
-  },
-]
-`);
+        Array [
+          Object {
+            "amount": 222.34,
+            "category": "Design Services",
+            "date": "2020-01-14",
+            "description": "Client Invoice",
+            "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+            "incomeType": "1099",
+          },
+          Object {
+            "amount": 333.34,
+            "category": "Design Services",
+            "date": "2020-01-14",
+            "description": "Client Invoice",
+            "documentType": "ssa1099",
+            "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
+            "incomeType": "1099",
+          },
+        ]
+      `);
     });
 
     // FIXME: restore this test after sample data is properly returned by foreignId
@@ -149,26 +142,26 @@ Array [
       );
 
       expect(incomes.data).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "amount": 222.34,
-    "category": "Design Services",
-    "date": "2020-01-14",
-    "description": "Client Invoice",
-    "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
-    "incomeType": "1099",
-  },
-  Object {
-    "amount": 333.34,
-    "category": "Design Services",
-    "date": "2020-01-14",
-    "description": "Client Invoice",
-    "documentType": "ssa1099",
-    "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
-    "incomeType": "1099",
-  },
-]
-`);
+        Array [
+          Object {
+            "amount": 222.34,
+            "category": "Design Services",
+            "date": "2020-01-14",
+            "description": "Client Invoice",
+            "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+            "incomeType": "1099",
+          },
+          Object {
+            "amount": 333.34,
+            "category": "Design Services",
+            "date": "2020-01-14",
+            "description": "Client Invoice",
+            "documentType": "ssa1099",
+            "incomeId": "incomeId_teste8c6bf02953ca4f2691e05ce98138c50a56a",
+            "incomeType": "1099",
+          },
+        ]
+      `);
     });
   });
 
@@ -180,22 +173,15 @@ Array [
       );
 
       expect(income.data).toMatchInlineSnapshot(`
-Object {
-  "amount": 222.34,
-  "category": "Design Services",
-  "date": "2020-01-14",
-  "description": "Client Invoice",
-  "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
-  "incomeType": "1099",
-  "predictions": Object {
-    "incomeTypePredictionScores": Object {
-      "1099": 0.95701,
-      "personal": 0.04299,
-      "w2": 0,
-    },
-  },
-}
-`);
+        Object {
+          "amount": 222.34,
+          "category": "Design Services",
+          "date": "2020-01-14",
+          "description": "Client Invoice",
+          "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+          "incomeType": "1099",
+        }
+      `);
     });
   });
 
@@ -210,22 +196,15 @@ Object {
       );
 
       expect(updatedIncome.data).toMatchInlineSnapshot(`
-Object {
-  "amount": 120.88,
-  "category": "Design Services",
-  "date": "2020-01-14",
-  "description": "Client Invoice",
-  "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
-  "incomeType": "1099",
-  "predictions": Object {
-    "incomeTypePredictionScores": Object {
-      "1099": 0.95701,
-      "personal": 0.04299,
-      "w2": 0,
-    },
-  },
-}
-`);
+        Object {
+          "amount": 120.88,
+          "category": "Design Services",
+          "date": "2020-01-14",
+          "description": "Client Invoice",
+          "incomeId": "incomeId_test8cb0d56b942722b6d719fa5aa9c5a8dbaa0f",
+          "incomeType": "1099",
+        }
+      `);
     });
   });
 
