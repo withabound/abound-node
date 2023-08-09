@@ -72,7 +72,7 @@ function buildAxiosInstance(): AxiosInstance {
     appId: TEST_APP_ID,
     appSecret: TEST_APP_SECRET,
     environment: Environment.SANDBOX,
-    apiVersion: "v2",
+    apiVersion: "v3",
   };
 
   return initAxios(validConfig);
