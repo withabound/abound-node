@@ -35,7 +35,7 @@ const abound = new Abound({
   appId: "appId_f2d...",
   appSecret: "appSecret_bf3...",
   environment: Environment.SANDBOX, // or Environment.PRODUCTION
-  apiVersion: "v2",
+  apiVersion: "v3",
 });
 
 (async () => {

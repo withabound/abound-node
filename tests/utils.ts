@@ -76,32 +76,11 @@ export const TEST_APP_SECRET = "appSecret_testf54672359db6693429e1d3e14e2c";
  */
 export function createAboundClient(): Abound {
   return new Abound({
-    apiVersion: "v2",
+    apiVersion: "v3",
     environment: Environment.SANDBOX,
     appId: TEST_APP_ID,
     appSecret: TEST_APP_SECRET,
   });
-}
-
-/**
- * These test credentials ensure consistent data is returned from Abound's APIs, and they do not persist
- * additional data.
- */
-export function createAboundClients(): Abound[] {
-  return [
-    new Abound({
-      apiVersion: "v2",
-      environment: Environment.SANDBOX,
-      appId: TEST_APP_ID,
-      appSecret: TEST_APP_SECRET,
-    }),
-    new Abound({
-      apiVersion: "v3",
-      environment: Environment.SANDBOX,
-      appId: TEST_APP_ID,
-      appSecret: TEST_APP_SECRET,
-    }),
-  ];
 }
 
 /**

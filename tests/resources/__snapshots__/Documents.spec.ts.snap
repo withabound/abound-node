@@ -6,18 +6,6 @@ Object {
   "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
   "documentName": "2021 Form 1099-INT",
   "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
-  "status": "created",
-  "type": "1099int",
-  "year": "2021",
-}
-`;
-
-exports[`Abound Documents create 1099-INT with many optional fields returns a promise that resolves to an object that includes a list of the created 1099-INT Documents on success 2`] = `
-Object {
-  "createdTimestamp": Any<Number>,
-  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-  "documentName": "2021 Form 1099-INT",
-  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
   "formData": Object {
     "accountNumber": "430912910",
     "bondPremium": 321.11,
@@ -64,18 +52,6 @@ Object {
   "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
   "documentName": "2021 Form 1099-INT",
   "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
-  "status": "created",
-  "type": "1099int",
-  "year": "2021",
-}
-`;
-
-exports[`Abound Documents create 1099-INT with the minimum number (1) of optional fields returns a promise that resolves to an object that includes a list of the created 1099-INT Documents on success 2`] = `
-Object {
-  "createdTimestamp": Any<Number>,
-  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-  "documentName": "2021 Form 1099-INT",
-  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
   "formData": Object {
     "interestIncome": 10.18,
     "payer": Object {
@@ -110,18 +86,6 @@ Object {
 `;
 
 exports[`Abound Documents create 1099-K returns a promise that resolves to an object that includes a list of the created 1099-K Documents on success 1`] = `
-Object {
-  "createdTimestamp": Any<Number>,
-  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-  "documentName": "2021 Form 1099-K",
-  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
-  "status": "created",
-  "type": "1099k",
-  "year": "2021",
-}
-`;
-
-exports[`Abound Documents create 1099-K returns a promise that resolves to an object that includes a list of the created 1099-K Documents on success 2`] = `
 Object {
   "createdTimestamp": Any<Number>,
   "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
@@ -174,18 +138,6 @@ Object {
   "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
   "documentName": "2020 Form 1099-NEC",
   "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
-  "status": "created",
-  "type": "1099nec",
-  "year": "2020",
-}
-`;
-
-exports[`Abound Documents create 1099-NEC returns a promise that resolves to an object that includes a list of the created 1099-NEC Documents on success 2`] = `
-Object {
-  "createdTimestamp": Any<Number>,
-  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-  "documentName": "2020 Form 1099-NEC",
-  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
   "formData": Object {
     "nonemployeeCompensation": 15000,
     "payer": Object {
@@ -225,17 +177,6 @@ Object {
   "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
   "documentName": "2021 Form W-9",
   "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
-  "type": "w9",
-  "year": "2021",
-}
-`;
-
-exports[`Abound Documents create W9 returns a promise that resolves to an object that includes a list of the created W9 Documents on success 2`] = `
-Object {
-  "createdTimestamp": Any<Number>,
-  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-  "documentName": "2021 Form W-9",
-  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
   "formData": Object {
     "accountNumbers": Array [
       "430912910",
@@ -263,50 +204,6 @@ exports[`Abound Documents list returns a promise that resolves to an object that
 Object {
   "createdTimestamp": Any<Number>,
   "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-  "documentName": "2021-01-01 - 2021-01-31 Account Statement (7890)",
-  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
-  "type": "accountStatement",
-  "year": "2021",
-}
-`;
-
-exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year 2`] = `
-Object {
-  "createdTimestamp": Any<Number>,
-  "documentId": null,
-  "documentName": "2021 Q2 Federal Estimated Tax Payment",
-  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
-  "type": "1040ES",
-  "year": "2021",
-}
-`;
-
-exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year 3`] = `
-Object {
-  "createdTimestamp": Any<Number>,
-  "documentId": null,
-  "documentName": "2021 Expenses",
-  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
-  "type": "businessExpenses",
-  "year": "2021",
-}
-`;
-
-exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year 4`] = `
-Object {
-  "createdTimestamp": Any<Number>,
-  "documentId": null,
-  "documentName": "2021 Schedule C",
-  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
-  "type": "scheduleC",
-  "year": "2021",
-}
-`;
-
-exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents filtered by year on success when querying by year 5`] = `
-Object {
-  "createdTimestamp": Any<Number>,
-  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
   "documentName": "2021 Form W-9",
   "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
   "formData": Object {
@@ -328,17 +225,6 @@ Object {
 `;
 
 exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents on success 1`] = `
-Object {
-  "createdTimestamp": Any<Number>,
-  "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
-  "documentName": "2020-01-01 - 2020-01-31 Account Statement (7890)",
-  "documentURL": StringContaining "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com",
-  "type": "accountStatement",
-  "year": "2020",
-}
-`;
-
-exports[`Abound Documents list returns a promise that resolves to an object that includes a list of the user's Documents on success 2`] = `
 Object {
   "createdTimestamp": Any<Number>,
   "documentId": "documentId_testefbd5d3d9ee9526ef9ff89a7c6b879174170",
