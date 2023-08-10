@@ -4,7 +4,7 @@ import { AboundUserScopedResource } from "./AboundUserScopedResource";
 
 /**
  * Abstract class for all document-scoped resources, wherein a document-scoped resource is one
- * having the relative path `https://baseURL/v2/users/{userId}/documents/{documentId}/resource`
+ * having the relative path `https://baseURL/v3/users/{userId}/documents/{documentId}/resource`
  *
  * @param {I} input — the data type of the request body
  * @param {O} output — the data type of the payloads returned by SDK methods.
