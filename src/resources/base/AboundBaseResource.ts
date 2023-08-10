@@ -3,7 +3,7 @@ import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
 
 /**
  * Abstract class for all base resources, wherein a base resource is one
- * having the relative path `https://baseURL/v2/resource` (i.e. it is not
+ * having the relative path `https://baseURL/v3/resource` (i.e. it is not
  * scoped to a user).
  *
  * @param {I} input — the data type of the request body

@@ -3,7 +3,7 @@ import { AboundBulkResponse, AboundResponse } from "./AboundResponse";
 
 /**
  * Abstract class for all user-scoped resources, wherein a user-scoped resource is one
- * having the relative path `https://baseURL/v2/users/{userId}/resource`
+ * having the relative path `https://baseURL/v3/users/{userId}/resource`
  *
  * @param {I} input — the data type of the request body
  * @param {O} output — the data type of the payloads returned by SDK methods.
