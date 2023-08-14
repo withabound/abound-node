@@ -44,7 +44,7 @@
     "ts-jest": "27.0.5",
     "type-fest": "4.2.0",
     "typescript": "4.9.5",
-    "xo": "0.39.x"
+    "xo": "0.56.x"
   },
   "repository": {
     "type": "git",
