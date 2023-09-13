@@ -26,6 +26,7 @@ jobs:
           node-version: "16"
 
       - run: npm ci
+      - run: npm run build
 
       - name: Publish @withabound/node-sdk
         id: npm-publish
