@@ -1,14 +1,3 @@
-// TODO
-// resources
-// export type * from "./resources/1099-int.js";
-// export type * from "./resources/1099-k.js";
-// export type * from "./resources/1099-nec.js";
-// export type * from "./resources/access-tokens.js";
-// export type * from "./resources/mailings2.js";
-// export type * from "./resources/tin-verifications.js";
-// export type * from "./resources/users.js";
-// export type * from "./resources/w-9.js";
-
 import {
   accessTokensResource,
   mailingsResource,
@@ -86,3 +75,13 @@ function validateAboundConfig(config: AboundConfig): void {
     }
   }
 }
+
+// Resources
+export type * from "./resources/1099-int.js";
+export type * from "./resources/1099-k.js";
+export type * from "./resources/1099-nec.js";
+export type * from "./resources/access-tokens.js";
+export type * from "./resources/mailings.js";
+export type * from "./resources/tin-verifications.js";
+export type * from "./resources/users.js";
+export type * from "./resources/w-9.js";
