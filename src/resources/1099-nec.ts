@@ -7,7 +7,7 @@ import {
   list,
   post,
 } from "./base/base-resource.js";
-import type { MailingRequest } from "./mailings2.js";
+import type { MailingRequest } from "./mailings.js";
 import type {
   StateTaxInfoWithStateIncome,
   Form1099,
