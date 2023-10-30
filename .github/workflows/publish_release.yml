@@ -5,7 +5,7 @@ on:
 
 jobs:
   publish_release:
-    runs-on: ubuntu-latest
+    runs-on: X4
     steps:
       - uses: actions/checkout@v4
 
@@ -23,7 +23,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "16"
+          node-version: "18"
 
       - run: npm ci
       - run: npm run build
@@ -42,3 +42,9 @@ jobs:
           text: "@withabound/node-sdk@${{steps.npm-publish.outputs.version}} has been published."
         env:
           INCOMING_WEBHOOK_URL: ${{secrets.SUCCESS_DEPLOYMENT_PRODUCT_URL}}
+
+      - name: Smoke test NPM release
+        run: npm run test:smoke
+        env:
+          ABOUND_SMOKE_TEST_APP_ID: ${{secrets.ABOUND_SMOKE_TEST_APP_ID}}
+          ABOUND_SMOKE_TEST_APP_SECRET: ${{secrets.ABOUND_SMOKE_TEST_APP_SECRET}}

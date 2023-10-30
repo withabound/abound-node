@@ -1,5 +1,6 @@
-import path from "path";
-import fs from "fs";
+import fs from "node:fs";
+import path from "node:path";
+import process from "node:process";
 
 const IMPORT_REGEXP =
   /^((import|export) [^';]* from "(\.\/|(\.\.\/)+)[^';]*)"/g;
@@ -35,12 +36,12 @@ function fixImportsAtFile(filePath) {
 
     const fullPath = path.join(filePath, "..", importPath);
     if (!fs.existsSync(fullPath)) {
-      return line.replace(IMPORT_REGEXP, '$1.js"');
+      return line.replaceAll(IMPORT_REGEXP, '$1.js"');
     }
 
     const stat = fs.statSync(fullPath);
     if (stat.isDirectory()) {
-      return line.replace(IMPORT_REGEXP, '$1/index.js"');
+      return line.replaceAll(IMPORT_REGEXP, '$1/index.js"');
     }
 
     return line;

@@ -22,29 +22,24 @@
     "build:cjs": "npx tsc -p tsconfig.cjs.json",
     "compile": "npx tsc --noEmit",
     "lint": "npx xo",
-    "postinstall": "npx genversion --es6 --semi --double src/util/version.ts",
-    "test": "npx jest"
+    "postinstall": "npx genversion --es6 --semi --double src/version.ts",
+    "test": "npx vitest",
+    "test:smoke": "./smoke_test_npm_release.sh"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
     "**/*.(js|ts)": "xo"
   },
-  "dependencies": {
-    "axios": "0.27.2"
-  },
   "devDependencies": {
-    "@tsconfig/node14": "14.1.0",
-    "@types/jest": "27.0.1",
-    "axios-mock-adapter": "1.22.0",
+    "@tsconfig/node18": "18.2.2",
     "genversion": "3.1.1",
     "husky": "8.0.3",
-    "jest": "27.2.1",
     "lint-staged": "15.0.2",
-    "prettier": "2.8.8",
-    "ts-jest": "27.0.5",
+    "prettier": "3.0.3",
     "type-fest": "4.6.0",
-    "typescript": "4.9.5",
-    "xo": "0.39.x"
+    "typescript": "5.2.2",
+    "vitest": "0.34.6",
+    "xo": "0.56.0"
   },
   "repository": {
     "type": "git",

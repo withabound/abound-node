@@ -1,7 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx genversion --es6 --semi --double src/util/version.ts
-git add src/util/version.ts
+npx genversion --es6 --semi --double src/version.ts
+git add src/version.ts
 
 npx lint-staged

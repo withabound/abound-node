@@ -8,7 +8,7 @@ The Abound Node SDK supports all Abound API endpoints. See the [API Documentatio
 
 ### Requirements
 
-You can start to integrate the Abound Node library into your solution as soon as you [create an account with Abound][developer-dashboard-signup] and [obtain your API keys][developer-dashboard-keys].
+You can start to integrate the Abound Node library into your solution as soon as you [create an account with Abound][developer-dashboard-registration] and [obtain your API keys][developer-dashboard-keys].
 
 ### Installation
 
@@ -29,13 +29,12 @@ The Abound client must be configured with your account's `appId` and `appSecret`
 Every method returns a promise which can either be chained or handled via `async/await`.
 
 ```ts
-import Abound, { Environment } from "@withabound/node-sdk";
+import Abound from "@withabound/node-sdk";
 
 const abound = new Abound({
   appId: "appId_f2d...",
   appSecret: "appSecret_bf3...",
-  environment: Environment.SANDBOX, // or Environment.PRODUCTION
-  apiVersion: "v3",
+  environment: "SANDBOX", // or "PRODUCTION"
 });
 
 (async () => {
@@ -43,7 +42,7 @@ const abound = new Abound({
     email: "user1@example.com",
   });
 
-  console.log(user.data.userId);
+  console.log(user.userId);
 })();
 
 // or
@@ -52,11 +51,23 @@ abound.users
   .create({
     email: "user1@example.com",
   })
-  .then((user) => console.log(user.data.userId))
+  .then((user) => console.log(user.userId))
   .catch((error) => console.error(error));
 ```
 
 ### Examples
+
+#### Access Tokens (TODO)
+
+#### 1099-INT (TODO)
+
+#### 1099-K (TODO)
+
+#### 1099-NEC (TODO)
+
+#### W-9 (TODO)
+
+#### TIN Verifications (TODO)
 
 #### Users
 
@@ -65,21 +76,9 @@ Create a `User`:
 ```ts
 const response = await abound.users.create({
   email: "jane.doe@example.com",
-  profile: {
-    firstName: "Jane",
-    lastName: "Doe",
-    address: "123 Maple Street",
-    address2: "Apt #123",
-    city: "Anytown",
-    state: "PA",
-    zipcode: "17101",
-    phoneNumber: "5555555555",
-    dateOfBirth: "1989-05-01",
-    socialSecurityNumber: "123456789",
-  },
 });
 
-console.log(response.data.userId);
+console.log(response.userId);
 ```
 
 List `User`s:
@@ -87,7 +86,7 @@ List `User`s:
 ```ts
 const response = await abound.users.list();
 
-console.log(response.data); // list of Users
+console.log(response); // list of Users
 ```
 
 Retrieve a `User`:
@@ -97,26 +96,22 @@ const userId = "userId_506...";
 
 const response = await abound.users.retrieve(userId);
 
-console.log(response.data.userId);
+console.log(response.userId);
 ```
 
 Update a `User`:
 
 ```ts
 const userId = "userId_506...";
-const userUpdates = {
+
+const response = await abound.users.update(userId, {
   email: "janedoe123@example.com",
-  profile: {
-    phoneNumber: "4444444444",
-  },
-};
+});
 
-const response = await abound.users.update(userId, userUpdates);
-
-console.log(response.data.email);
+console.log(response.email);
 ```
 
-#### Mailings
+#### Mailings (TODO)
 
 List `Mailing`s:
 
@@ -126,7 +121,7 @@ const documentId = "documentId_efb...";
 
 const response = await abound.mailings.list(userId, documentId);
 
-console.log(response.data); // list of Mailings
+console.log(response); // list of Mailings
 ```
 
 Create a `Mailing`:
@@ -137,7 +132,7 @@ const documentId = "documentId_efb...";
 
 const response = await abound.mailings.create(userId, documentId);
 
-console.log(response.data);
+console.log(response);
 ```
 
 Retrieve a `Mailing`:
@@ -149,7 +144,7 @@ const mailingId = "mailingId_d01...";
 
 const response = await abound.mailings.retrieve(userId, documentId, mailingId);
 
-console.log(response.data);
+console.log(response);
 ```
 
 Delete a `Mailing`:
@@ -161,75 +156,10 @@ const mailingId = "mailingId_d01...";
 
 const response = await abound.mailings.delete(userId, documentId, mailingId);
 
-console.log(response.data); // {}
+console.log(response); // {}
 ```
 
-#### Payers
-
-Create a `Payer`:
-
-```ts
-const newPayer = {
-  name: "Hooli",
-  address: "1401 N Shoreline Blvd",
-  address2: "Suite 1",
-  city: "Mountain View",
-  country: "US",
-  phoneNumber: "6501014096",
-  state: "CA",
-  zipcode: "94043",
-};
-
-const response = await abound.payers.create([newPayer]);
-
-console.log(response.data); // list of created Payers
-```
-
-List `Payers`:
-
-```ts
-const response = await abound.payers.list();
-
-console.log(response.data); // list of Payers
-```
-
-Retrieve a `Payer`:
-
-```ts
-const payerId = "payerId_362...";
-
-const response = await abound.payers.retrieve(payerId);
-
-console.log(response.data.name);
-```
-
-Update a `Payer`:
-
-```ts
-const payerId = "payerId_362...";
-
-const payerUpdates = {
-  name: "Pied Piper",
-  address: "5230 Newell Road",
-  city: "Palo Alto",
-};
-
-const response = await abound.payers.update(payerId, payerUpdates);
-
-console.log(response.data.name);
-```
-
-Delete a `Payer`:
-
-```ts
-const payerId = "payerId_362...";
-
-const response = await abound.payers.delete(payerId);
-
-console.log(response.data); // {}
-```
-
-#### Documents
+#### Documents (TODO)
 
 Create `Document`s for a `User`:
 
@@ -252,7 +182,7 @@ const response = await abound.documents.create(userId, [
   // additional documents to create
 ]);
 
-console.log(response.data[0].documentURL);
+console.log(response[0].documentURL);
 ```
 
 List all `Document`s for a `User`:
@@ -264,7 +194,7 @@ const response = await abound.documents.list(userId);
 // or, filter by year
 const response = await abound.documents.list(userId, { year: "2020" });
 
-console.log(response.data); // list of Documents
+console.log(response); // list of Documents
 ```
 
 Retrieve a `Document`:
@@ -275,7 +205,7 @@ const documentId = "documentId_efb...";
 
 const response = await abound.documents.retrieve(userId, documentId);
 
-console.log(response.data.documentURL);
+console.log(response.documentURL);
 ```
 
 ### Development
@@ -283,7 +213,7 @@ console.log(response.data.documentURL);
 Run all tests:
 
 ```console
-npx jest
+npx vitest
 ```
 
 Run xo:
@@ -315,7 +245,7 @@ Publish artifacts locally:
 Install `yalc` with `npm` or `yarn`:
 
 ```console
-npm i yalc -g
+npm install yalc -g
 ```
 
 ```console
@@ -344,4 +274,4 @@ Install the local artifacts:
 [api-reference]: https://docs.withabound.com/reference
 [developer-dashboard]: https://dashboard.withabound.com
 [developer-dashboard-keys]: https://dashboard.withabound.com/keys
-[developer-dashboard-signup]: https://dashboard.withabound.com/signup
+[developer-dashboard-registration]: https://dashboard.withabound.com/register-organization

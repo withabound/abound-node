@@ -1,5 +1,5 @@
 {
-  "extends": "@tsconfig/node14/tsconfig.json",
+  "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     "module": "ES2020",
     "moduleResolution": "Node",
@@ -7,7 +7,7 @@
     "declaration": true,
     "declarationDir": "dist/types",
     "outDir": "dist/esm",
-    "types": ["node", "jest"]
+    "types": ["node"]
   },
-  "include": ["src/**/*", "test/**/*"]
+  "include": ["src/**/*"]
 }
