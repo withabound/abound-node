@@ -1,5 +1,8 @@
-export { default as AccessTokens } from "./AccessTokens";
-export { default as Documents } from "./Documents";
-export { default as Mailings } from "./Mailings";
-export { default as Payers } from "./Payers";
-export { default as Users } from "./Users";
+export * from "./1099-int.js";
+export * from "./1099-k.js";
+export * from "./1099-nec.js";
+export * from "./access-tokens.js";
+export * from "./mailings.js";
+export * from "./tin-verifications.js";
+export * from "./users.js";
+export * from "./w-9.js";
