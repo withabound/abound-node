@@ -1,6 +1,6 @@
 {
   "name": "@withabound/node-sdk",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "The Abound Node library provides convenient access to the Abound API from applications written in server-side JavaScript.",
   "author": "Abound <api@withabound.com>",
   "license": "MIT",
@@ -23,8 +23,7 @@
     "compile": "npx tsc --noEmit",
     "lint": "npx xo",
     "postinstall": "npx genversion --es6 --semi --double src/version.ts",
-    "test": "npx vitest",
-    "test:smoke": "./smoke_test_npm_release.sh"
+    "test": "npx vitest"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
