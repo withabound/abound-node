@@ -29,7 +29,7 @@ The Abound client must be configured with your account's `appId` and `appSecret`
 Every method returns a promise which can either be chained or handled via `async/await`.
 
 ```ts
-import Abound from "@withabound/node-sdk";
+import { Abound } from "@withabound/node-sdk";
 
 const abound = new Abound({
   appId: "appId_f2d...",
