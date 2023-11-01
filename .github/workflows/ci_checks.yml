@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: "18"
       - run: npm ci
-      - run: npm test
+      - run: npm run test -- --coverage --run
 
   run_linting:
     runs-on: ubuntu-latest
