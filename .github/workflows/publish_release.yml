@@ -43,8 +43,7 @@ jobs:
         env:
           INCOMING_WEBHOOK_URL: ${{secrets.SUCCESS_DEPLOYMENT_PRODUCT_URL}}
 
-      - name: Smoke test NPM release
-        run: npm run test:smoke
+      - run: ./smoke_test_npm_release.sh
         env:
           ABOUND_SMOKE_TEST_APP_ID: ${{secrets.ABOUND_SMOKE_TEST_APP_ID}}
           ABOUND_SMOKE_TEST_APP_SECRET: ${{secrets.ABOUND_SMOKE_TEST_APP_SECRET}}
