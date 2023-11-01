@@ -57,17 +57,584 @@ abound.users
 
 ### Examples
 
-#### Access Tokens (TODO)
+#### Access Tokens
 
-#### 1099-INT (TODO)
+Create an `Access Token`:
 
-#### 1099-K (TODO)
+```ts
+const userId = "userId_506...";
 
-#### 1099-NEC (TODO)
+const response = await abound.accessTokens.create({
+  expiresIn: 300,
+  userId,
+});
 
-#### W-9 (TODO)
+console.log(response.userId);
+```
 
-#### TIN Verifications (TODO)
+#### Form 1099-INT
+
+Create a `Form 1099-INT`:
+
+```ts
+const response = await abound.form1099Int.create({
+  filingYear: 2022
+  payer: {
+    name: "Hooli",
+    tin: "111111111",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+    phoneNumber: "6501014096",
+  },
+  payee: {
+    name: "Ada Lovelace",
+    tin: "000000000",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+  formFields: {
+    interestIncome: 83_232,
+    stateTaxInfo: [{ filingState: "CA" as const }],
+  },
+});
+
+console.log(response.payeeUrl);
+```
+
+List `Form 1099-INT`s:
+
+```ts
+const response = await abound.form1099Int.list();
+
+console.log(response); // list of Form 1099-INTs
+```
+
+Mail a `Form 1099-INT`:
+
+```ts
+const documentId = "documentId_f03...";
+
+const response = await abound.form1099Int.mail(documentId, {
+  to: {
+    name: "Ada Lovelace",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+  from: {
+    name: "Hooli",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+});
+
+console.log(response);
+```
+
+File a `Form 1099-INT`:
+
+```ts
+const documentId = "documentId_f03...";
+
+const response = await abound.form1099Int.file(documentId);
+
+console.log(response.status);
+```
+
+Correct a `Form 1099-INT`:
+
+```ts
+const documentId = "documentId_f03...";
+
+const response = await abound.form1099Int.correct(documentId, {
+  payee: {
+    name: "Ada Lovelace",
+    tin: "000000000",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+  formFields: {
+    interestIncome: 24_271,
+    stateTaxInfo: [{ filingState: "CA" as const }],
+  },
+});
+
+console.log(response);
+```
+
+Void a `Form 1099-INT`:
+
+```ts
+const documentId = "documentId_f03...";
+
+const response = await abound.form1099Int.void(documentId);
+
+console.log(response);
+```
+
+Retrieve a `Form 1099-INT`:
+
+```ts
+const documentId = "documentId_f03...";
+
+const response = await abound.form1099Int.retrieve(documentId);
+
+console.log(response);
+```
+
+Delete a `Form 1099-INT`:
+
+```ts
+const documentId = "documentId_f03...";
+
+const response = await abound.form1099Int.delete(documentId);
+
+console.log(response); // {}
+```
+
+#### Form 1099-K
+
+Create a `Form 1099-K`:
+
+```ts
+const response = await abound.form1099K.create({
+  filingYear: 2022
+  payer: {
+    name: "Hooli",
+    tin: "111111111",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+    phoneNumber: "6501014096",
+  },
+  payee: {
+    name: "Ada Lovelace",
+    tin: "000000000",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+  formFields: {
+    payerClassification: "EPF_OTHER" as const,
+    transactionsReportedClassification: "PAYMENT_CARD" as const,
+    aggregateGrossAmount: 2_332_323,
+    numberOfPaymentTransactions: 767,
+    grossAmountsByMonth: {
+      december: 2_332_323,
+    },
+    stateTaxInfo: [{ filingState: "CA" as const }],
+  },
+});
+
+console.log(response.payeeUrl);
+```
+
+List `Form 1099-K`s:
+
+```ts
+const response = await abound.form1099K.list();
+
+console.log(response); // list of Form 1099-Ks
+```
+
+Mail a `Form 1099-K`:
+
+```ts
+const documentId = "documentId_fef...";
+
+const response = await abound.form1099K.mail(documentId, {
+  to: {
+    name: "Ada Lovelace",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+  from: {
+    name: "Hooli",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+});
+
+console.log(response);
+```
+
+File a `Form 1099-K`:
+
+```ts
+const documentId = "documentId_fef...";
+
+const response = await abound.form1099K.file(documentId);
+
+console.log(response.status);
+```
+
+Correct a `Form 1099-K`:
+
+```ts
+const documentId = "documentId_fef...";
+
+const response = await abound.form1099K.correct(documentId, {
+  payee: {
+    name: "Ada Lovelace",
+    tin: "000000000",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+  formFields: {
+    payerClassification: "EPF_OTHER" as const,
+    transactionsReportedClassification: "PAYMENT_CARD" as const,
+    aggregateGrossAmount: 512_223,
+    numberOfPaymentTransactions: 767,
+    grossAmountsByMonth: {
+      december: 512_223,
+    },
+    stateTaxInfo: [{ filingState: "CA" as const }],
+  },
+});
+
+console.log(response);
+```
+
+Void a `Form 1099-K`:
+
+```ts
+const documentId = "documentId_fef...";
+
+const response = await abound.form1099K.void(documentId);
+
+console.log(response);
+```
+
+Retrieve a `Form 1099-K`:
+
+```ts
+const documentId = "documentId_fef...";
+
+const response = await abound.form1099K.retrieve(documentId);
+
+console.log(response);
+```
+
+Delete a `Form 1099-K`:
+
+```ts
+const documentId = "documentId_fef...";
+
+const response = await abound.form1099K.delete(documentId);
+
+console.log(response); // {}
+```
+
+#### Form 1099-NEC
+
+Create a `Form 1099-NEC`:
+
+```ts
+const response = await abound.form1099Nec.create({
+  filingYear: 2022
+  payer: {
+    name: "Hooli",
+    tin: "111111111",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+    phoneNumber: "6501014096",
+  },
+  payee: {
+    name: "Ada Lovelace",
+    tin: "000000000",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+  formFields: {
+    nonemployeeCompensation: 23_423,
+    stateTaxInfo: [{ filingState: "CA" as const }],
+  },
+});
+
+console.log(response.payeeUrl);
+```
+
+List `Form 1099-NEC`s:
+
+```ts
+const response = await abound.form1099Nec.list();
+
+console.log(response); // list of Form 1099-NECs
+```
+
+Mail a `Form 1099-NEC`:
+
+```ts
+const documentId = "documentId_63a...";
+
+const response = await abound.form1099Nec.mail(documentId, {
+  to: {
+    name: "Ada Lovelace",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+  from: {
+    name: "Hooli",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+});
+
+console.log(response);
+```
+
+File a `Form 1099-NEC`:
+
+```ts
+const documentId = "documentId_63a...";
+
+const response = await abound.form1099Nec.file(documentId);
+
+console.log(response.status);
+```
+
+Correct a `Form 1099-NEC`:
+
+```ts
+const documentId = "documentId_63a...";
+
+const response = await abound.form1099Nec.correct(documentId, {
+  payee: {
+    name: "Ada Lovelace",
+    tin: "000000000",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+  formFields: {
+    nonemployeeCompensation: 24_389,
+    stateTaxInfo: [{ filingState: "CA" as const }],
+  },
+});
+
+console.log(response);
+```
+
+Void a `Form 1099-NEC`:
+
+```ts
+const documentId = "documentId_63a...";
+
+const response = await abound.form1099Nec.void(documentId);
+
+console.log(response);
+```
+
+Retrieve a `Form 1099-NEC`:
+
+```ts
+const documentId = "documentId_63a...";
+
+const response = await abound.form1099Nec.retrieve(documentId);
+
+console.log(response);
+```
+
+Delete a `Form 1099-NEC`:
+
+```ts
+const documentId = "documentId_63a...";
+
+const response = await abound.form1099Nec.delete(documentId);
+
+console.log(response); // {}
+```
+
+#### Form W-9
+
+Create a `Form W-9`:
+
+```ts
+const response = await abound.formW9.create({
+  payee: {
+    name: "Ada Lovelace",
+    tin: "000000000",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+  formFields: {
+    taxClassification: "SOLE_PROPRIETOR" as const,
+    certifiedAt: "2023-01-01T00:00:00.000Z",
+  },
+});
+
+console.log(response.url);
+```
+
+List `Form W-9`s:
+
+```ts
+const response = await abound.formW9.list();
+
+console.log(response); // list of Form W-9s
+```
+
+Retrieve a `Form W-9`:
+
+```ts
+const documentId = "documentId_f48...";
+
+const response = await abound.formW9.retrieve(documentId);
+
+console.log(response);
+```
+
+#### Mailings
+
+List `Mailing`s:
+
+```ts
+const documentId = "documentId_efb...";
+
+const response = await abound.mailings.list();
+
+console.log(response); // list of Mailings
+```
+
+Retrieve a `Mailing`:
+
+```ts
+const mailingId = "mailingId_d01...";
+
+const response = await abound.mailings.retrieve(mailingId);
+
+console.log(response);
+```
+
+Update a `Mailing`:
+
+```ts
+const mailingId = "mailingId_d01...";
+
+const response = await abound.mailings.update(mailingId, {
+  to: {
+    name: "Ada Lovelace",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+  from: {
+    name: "Hooli",
+    address: "256 Byron Street",
+    address2: "Suite 32",
+    city: "Palo Alto",
+    state: "CA",
+    postalCode: "94306",
+    country: "US",
+  },
+});
+
+console.log(response);
+```
+
+Delete a `Mailing`:
+
+```ts
+const mailingId = "mailingId_d01...";
+
+const response = await abound.mailings.delete(mailingId);
+
+console.log(response); // {}
+```
+
+#### TIN Verifications
+
+Create a `TIN Verification`:
+
+```ts
+const response = await abound.tinVerifications.create({
+  name: "Ada Lovelace",
+  tin: "111111111",
+});
+
+console.log(response.tinFingerprint);
+```
+
+List `TIN Verifications`s:
+
+```ts
+const response = await abound.tinVerifications.list();
+
+console.log(response); // list of TIN Verifications
+```
+
+Retrieve a `TIN Verification`:
+
+```ts
+const tinVerificationId = "tinVerificationId_40c...";
+
+const response = await abound.tinVerifications.retrieve(tinVerificationId);
+
+console.log(response.tinFingerprint);
+```
 
 #### Users
 
@@ -109,103 +676,6 @@ const response = await abound.users.update(userId, {
 });
 
 console.log(response.email);
-```
-
-#### Mailings (TODO)
-
-List `Mailing`s:
-
-```ts
-const userId = "userId_506...";
-const documentId = "documentId_efb...";
-
-const response = await abound.mailings.list(userId, documentId);
-
-console.log(response); // list of Mailings
-```
-
-Create a `Mailing`:
-
-```ts
-const userId = "userId_506...";
-const documentId = "documentId_efb...";
-
-const response = await abound.mailings.create(userId, documentId);
-
-console.log(response);
-```
-
-Retrieve a `Mailing`:
-
-```ts
-const userId = "userId_506...";
-const documentId = "documentId_efb...";
-const mailingId = "mailingId_d01...";
-
-const response = await abound.mailings.retrieve(userId, documentId, mailingId);
-
-console.log(response);
-```
-
-Delete a `Mailing`:
-
-```ts
-const userId = "userId_506...";
-const documentId = "documentId_efb...";
-const mailingId = "mailingId_d01...";
-
-const response = await abound.mailings.delete(userId, documentId, mailingId);
-
-console.log(response); // {}
-```
-
-#### Documents (TODO)
-
-Create `Document`s for a `User`:
-
-```ts
-import { DocumentType } from "@withabound/node-sdk";
-
-const userId = "userId_506...";
-const payerId = "payerId_362...";
-
-const ten99NecDocument: Ten99NECDocumentRequest = {
-  type: DocumentType.TEN99NEC,
-  payerId,
-  year: 2020,
-  nonemployeeCompensation: 15000,
-  stateTaxInfo: [{ filingState: "CA" }],
-};
-
-const response = await abound.documents.create(userId, [
-  ten99NecDocument,
-  // additional documents to create
-]);
-
-console.log(response[0].documentURL);
-```
-
-List all `Document`s for a `User`:
-
-```ts
-const userId = "userId_506...";
-
-const response = await abound.documents.list(userId);
-// or, filter by year
-const response = await abound.documents.list(userId, { year: "2020" });
-
-console.log(response); // list of Documents
-```
-
-Retrieve a `Document`:
-
-```ts
-const userId = "userId_506...";
-const documentId = "documentId_efb...";
-
-const response = await abound.documents.retrieve(userId, documentId);
-
-console.log(response.documentURL);
 ```
 
 ### Development
