@@ -81,8 +81,8 @@ describe(`abound.${resource}.create()`, () => {
     // Assert
     expect(response).toMatchInlineSnapshot(
       {
-  createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-,
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      },
       `
     {
       "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
@@ -131,8 +131,8 @@ describe(`abound.${resource}.list()`, () => {
     // Assert
     expect(response.at(0)).toMatchInlineSnapshot(
       {
-  createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-,
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
@@ -155,8 +155,8 @@ describe(`abound.${resource}.retrieve()`, () => {
     // Assert
     expect(response).toMatchInlineSnapshot(
       {
-  createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-,
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
@@ -208,8 +208,8 @@ describe(`abound.${resource}.update()`, () => {
     // Assert
     expect(response).toMatchInlineSnapshot(
       {
-  createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-,
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
