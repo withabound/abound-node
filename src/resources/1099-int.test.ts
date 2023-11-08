@@ -252,7 +252,8 @@ describe(`abound.${resource}.create()`, () => {
         "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-INT-COPY-C.pdf",
         "status": "CREATED",
         "userId": "userId_sampleXGMFnhOpeR",
-      }`
+      }
+    `
     );
   });
 });
