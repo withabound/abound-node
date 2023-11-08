@@ -52,13 +52,6 @@ const invalidRequest = {
   userId: 1000,
 };
 
-const propertyMatchers = {
-  createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-  formFields: {
-    certifiedAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-  },
-};
-
 describe(`abound.${resource}.create()`, () => {
   test("throws an error when the sdk config is invalid", async () => {
     // Arrange
@@ -142,7 +135,14 @@ describe(`abound.${resource}.create()`, () => {
 
     // Assert
     expect(response).toMatchInlineSnapshot(
-      propertyMatchers,
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+        formFields: {
+          certifiedAt: expect.stringMatching(
+            matchers.isoDatetimeRegex
+          ) as string,
+        },
+      },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
@@ -169,6 +169,8 @@ describe(`abound.${resource}.create()`, () => {
           "tin": "*******00",
           "tinFingerprint": "tinFingerprint_samplehy2BWO6JJG",
           "tinType": "INDIVIDUAL",
+          "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
+          "tinVerificationStatus": "MATCH",
         },
         "payer": {
           "address": "256 Byron Street",
@@ -183,6 +185,8 @@ describe(`abound.${resource}.create()`, () => {
           "tin": "*******11",
           "tinFingerprint": "tinFingerprint_sample847jI1LwxF",
           "tinType": "BUSINESS",
+          "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
+          "tinVerificationStatus": "MATCH",
         },
         "url": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-W-9.pdf",
         "userId": "userId_sampleXGMFnhOpeR",
@@ -224,7 +228,14 @@ describe(`abound.${resource}.list()`, () => {
 
     // Assert
     expect(response.at(0)).toMatchInlineSnapshot(
-      propertyMatchers,
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+        formFields: {
+          certifiedAt: expect.stringMatching(
+            matchers.isoDatetimeRegex
+          ) as string,
+        },
+      },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
@@ -248,6 +259,8 @@ describe(`abound.${resource}.list()`, () => {
           "tin": "*******00",
           "tinFingerprint": "tinFingerprint_samplehy2BWO6JJG",
           "tinType": "INDIVIDUAL",
+          "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
+          "tinVerificationStatus": "MATCH",
         },
         "url": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-W-9.pdf",
       }
@@ -266,7 +279,14 @@ describe(`abound.${resource}.retrieve()`, () => {
 
     // Assert
     expect(response).toMatchInlineSnapshot(
-      propertyMatchers,
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+        formFields: {
+          certifiedAt: expect.stringMatching(
+            matchers.isoDatetimeRegex
+          ) as string,
+        },
+      },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
@@ -290,6 +310,8 @@ describe(`abound.${resource}.retrieve()`, () => {
           "tin": "*******00",
           "tinFingerprint": "tinFingerprint_samplehy2BWO6JJG",
           "tinType": "INDIVIDUAL",
+          "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
+          "tinVerificationStatus": "MATCH",
         },
         "url": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-W-9.pdf",
       }

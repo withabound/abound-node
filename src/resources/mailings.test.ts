@@ -45,10 +45,6 @@ const updateRequest = {
   },
 };
 
-const propertyMatchers = {
-  createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-};
-
 describe(`abound.${resource}.list()`, () => {
   test("throws a bad request error when the page query string parameter is invalid", async () => {
     // Arrange
@@ -81,7 +77,9 @@ describe(`abound.${resource}.list()`, () => {
 
     // Assert
     expect(response.at(0)).toMatchInlineSnapshot(
-      propertyMatchers,
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
@@ -123,7 +121,9 @@ describe(`abound.${resource}.retrieve()`, () => {
 
     // Assert
     expect(response).toMatchInlineSnapshot(
-      propertyMatchers,
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
@@ -231,7 +231,9 @@ describe(`abound.${resource}.update()`, () => {
 
     // Assert
     expect(response).toMatchInlineSnapshot(
-      propertyMatchers,
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,

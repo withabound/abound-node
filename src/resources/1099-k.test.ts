@@ -103,10 +103,6 @@ const mailingRequest = {
   },
 };
 
-const propertyMatchers = {
-  createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-};
-
 describe(`abound.${resource}.create()`, () => {
   test("throws an error when the sdk config is invalid", async () => {
     // Arrange
@@ -214,8 +210,9 @@ describe(`abound.${resource}.create()`, () => {
 
     // Assert
     expect(response).toMatchInlineSnapshot(
-      propertyMatchers,
-      `
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      }, `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": 2022,
@@ -267,6 +264,8 @@ describe(`abound.${resource}.create()`, () => {
           "tin": "*******00",
           "tinFingerprint": "tinFingerprint_samplehy2BWO6JJG",
           "tinType": "INDIVIDUAL",
+          "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
+          "tinVerificationStatus": "MATCH",
         },
         "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-B.pdf",
         "payer": {
@@ -282,13 +281,14 @@ describe(`abound.${resource}.create()`, () => {
           "tin": "*******11",
           "tinFingerprint": "tinFingerprint_sample847jI1LwxF",
           "tinType": "BUSINESS",
+          "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
+          "tinVerificationStatus": "MATCH",
         },
         "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-C.pdf",
         "status": "CREATED",
         "userId": "userId_sampleXGMFnhOpeR",
       }
-    `
-    );
+    `);
   });
 });
 
@@ -324,8 +324,9 @@ describe(`abound.${resource}.list()`, () => {
 
     // Assert
     expect(response.at(0)).toMatchInlineSnapshot(
-      propertyMatchers,
-      `
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      }, `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": 2022,
@@ -376,6 +377,8 @@ describe(`abound.${resource}.list()`, () => {
           "tin": "*******00",
           "tinFingerprint": "tinFingerprint_samplehy2BWO6JJG",
           "tinType": "INDIVIDUAL",
+          "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
+          "tinVerificationStatus": "MATCH",
         },
         "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-B.pdf",
         "payer": {
@@ -390,12 +393,13 @@ describe(`abound.${resource}.list()`, () => {
           "tin": "*******11",
           "tinFingerprint": "tinFingerprint_sample847jI1LwxF",
           "tinType": "BUSINESS",
+          "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
+          "tinVerificationStatus": "MATCH",
         },
         "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-C.pdf",
         "status": "CREATED",
       }
-    `
-    );
+    `);
   });
 });
 
@@ -409,7 +413,9 @@ describe(`abound.${resource}.mail()`, () => {
 
     // Assert
     expect(response).toMatchInlineSnapshot(
-      propertyMatchers,
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
@@ -453,8 +459,9 @@ describe(`abound.${resource}.file()`, () => {
 
     // Assert
     expect(response).toMatchInlineSnapshot(
-      propertyMatchers,
-      `
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      }, `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": 2022,
@@ -505,6 +512,8 @@ describe(`abound.${resource}.file()`, () => {
           "tin": "*******00",
           "tinFingerprint": "tinFingerprint_samplehy2BWO6JJG",
           "tinType": "INDIVIDUAL",
+          "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
+          "tinVerificationStatus": "MATCH",
         },
         "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-B.pdf",
         "payer": {
@@ -519,12 +528,13 @@ describe(`abound.${resource}.file()`, () => {
           "tin": "*******11",
           "tinFingerprint": "tinFingerprint_sample847jI1LwxF",
           "tinType": "BUSINESS",
+          "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
+          "tinVerificationStatus": "MATCH",
         },
         "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-C.pdf",
         "status": "FILED",
       }
-    `
-    );
+    `);
   });
 });
 
@@ -541,8 +551,9 @@ describe(`abound.${resource}.correct()`, () => {
 
     // Assert
     expect(response).toMatchInlineSnapshot(
-      propertyMatchers,
-      `
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      }, `
       {
         "correctedFromId": "documentId_sampletTtqNfulW8",
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
@@ -595,6 +606,8 @@ describe(`abound.${resource}.correct()`, () => {
           "tin": "*******00",
           "tinFingerprint": "tinFingerprint_samplehy2BWO6JJG",
           "tinType": "INDIVIDUAL",
+          "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
+          "tinVerificationStatus": "MATCH",
         },
         "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-CORRECTED-COPY-B.pdf",
         "payer": {
@@ -609,12 +622,13 @@ describe(`abound.${resource}.correct()`, () => {
           "tin": "*******11",
           "tinFingerprint": "tinFingerprint_sample847jI1LwxF",
           "tinType": "BUSINESS",
+          "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
+          "tinVerificationStatus": "MATCH",
         },
         "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-CORRECTED-COPY-C.pdf",
         "status": "FILED",
       }
-    `
-    );
+    `);
   });
 });
 
@@ -628,8 +642,9 @@ describe(`abound.${resource}.void()`, () => {
 
     // Assert
     expect(response).toMatchInlineSnapshot(
-      propertyMatchers,
-      `
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      }, `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": 2022,
@@ -680,6 +695,8 @@ describe(`abound.${resource}.void()`, () => {
           "tin": "*******00",
           "tinFingerprint": "tinFingerprint_samplehy2BWO6JJG",
           "tinType": "INDIVIDUAL",
+          "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
+          "tinVerificationStatus": "MATCH",
         },
         "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-VOID-COPY-B.pdf",
         "payer": {
@@ -694,13 +711,14 @@ describe(`abound.${resource}.void()`, () => {
           "tin": "*******11",
           "tinFingerprint": "tinFingerprint_sample847jI1LwxF",
           "tinType": "BUSINESS",
+          "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
+          "tinVerificationStatus": "MATCH",
         },
         "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-VOID-COPY-C.pdf",
         "status": "FILED",
         "voidedFromId": "documentId_sampletTtqNfulW8",
       }
-    `
-    );
+    `);
   });
 });
 
@@ -714,8 +732,9 @@ describe(`abound.${resource}.retrieve()`, () => {
 
     // Assert
     expect(response).toMatchInlineSnapshot(
-      propertyMatchers,
-      `
+      {
+        createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+      }, `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": 2022,
@@ -766,6 +785,8 @@ describe(`abound.${resource}.retrieve()`, () => {
           "tin": "*******00",
           "tinFingerprint": "tinFingerprint_samplehy2BWO6JJG",
           "tinType": "INDIVIDUAL",
+          "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
+          "tinVerificationStatus": "MATCH",
         },
         "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-B.pdf",
         "payer": {
@@ -780,12 +801,13 @@ describe(`abound.${resource}.retrieve()`, () => {
           "tin": "*******11",
           "tinFingerprint": "tinFingerprint_sample847jI1LwxF",
           "tinType": "BUSINESS",
+          "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
+          "tinVerificationStatus": "MATCH",
         },
         "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-C.pdf",
         "status": "CREATED",
       }
-    `
-    );
+    `);
   });
 });
 
