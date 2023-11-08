@@ -212,7 +212,8 @@ describe(`abound.${resource}.create()`, () => {
     expect(response).toMatchInlineSnapshot(
       {
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-      }, `
+      },
+      `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": 2022,
@@ -288,7 +289,8 @@ describe(`abound.${resource}.create()`, () => {
         "status": "CREATED",
         "userId": "userId_sampleXGMFnhOpeR",
       }
-    `);
+    `
+    );
   });
 });
 
@@ -326,7 +328,8 @@ describe(`abound.${resource}.list()`, () => {
     expect(response.at(0)).toMatchInlineSnapshot(
       {
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-      }, `
+      },
+      `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": 2022,
@@ -399,7 +402,8 @@ describe(`abound.${resource}.list()`, () => {
         "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-C.pdf",
         "status": "CREATED",
       }
-    `);
+    `
+    );
   });
 });
 
@@ -461,7 +465,8 @@ describe(`abound.${resource}.file()`, () => {
     expect(response).toMatchInlineSnapshot(
       {
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-      }, `
+      },
+      `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": 2022,
@@ -534,7 +539,8 @@ describe(`abound.${resource}.file()`, () => {
         "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-C.pdf",
         "status": "FILED",
       }
-    `);
+    `
+    );
   });
 });
 
@@ -553,7 +559,8 @@ describe(`abound.${resource}.correct()`, () => {
     expect(response).toMatchInlineSnapshot(
       {
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-      }, `
+      },
+      `
       {
         "correctedFromId": "documentId_sampletTtqNfulW8",
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
@@ -628,7 +635,8 @@ describe(`abound.${resource}.correct()`, () => {
         "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-CORRECTED-COPY-C.pdf",
         "status": "FILED",
       }
-    `);
+    `
+    );
   });
 });
 
@@ -644,7 +652,8 @@ describe(`abound.${resource}.void()`, () => {
     expect(response).toMatchInlineSnapshot(
       {
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-      }, `
+      },
+      `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": 2022,
@@ -718,7 +727,8 @@ describe(`abound.${resource}.void()`, () => {
         "status": "FILED",
         "voidedFromId": "documentId_sampletTtqNfulW8",
       }
-    `);
+    `
+    );
   });
 });
 
@@ -734,7 +744,8 @@ describe(`abound.${resource}.retrieve()`, () => {
     expect(response).toMatchInlineSnapshot(
       {
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
-      }, `
+      },
+      `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": 2022,
@@ -807,7 +818,8 @@ describe(`abound.${resource}.retrieve()`, () => {
         "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-C.pdf",
         "status": "CREATED",
       }
-    `);
+    `
+    );
   });
 });
 
