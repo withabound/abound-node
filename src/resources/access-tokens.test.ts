@@ -26,7 +26,7 @@ describe(`abound.${resource}.create()`, () => {
     await expect(async () =>
       abound[resource].create(request)
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Your app is not authorized to do this (Code 6b6d7bbe)"'
+      `[Error: Your app is not authorized to do this (Code 6b6d7bbe)]`
     );
   });
 
