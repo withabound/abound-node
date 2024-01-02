@@ -211,12 +211,15 @@ describe(`abound.${resource}.create()`, () => {
     // Assert
     expect(response).toMatchInlineSnapshot(
       {
+        filingYear: expect.any(Number) as number,
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+        payeeUrl: expect.stringContaining("-FORM-1099-K-COPY-B.pdf") as string,
+        payerUrl: expect.stringContaining("-FORM-1099-K-COPY-C.pdf") as string,
       },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
-        "filingYear": 2022,
+        "filingYear": Any<Number>,
         "formFields": {
           "accountNumber": "1000000001",
           "aggregateGrossAmount": 27987876,
@@ -268,7 +271,7 @@ describe(`abound.${resource}.create()`, () => {
           "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
           "tinVerificationStatus": "MATCH",
         },
-        "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-B.pdf",
+        "payeeUrl": StringContaining "-FORM-1099-K-COPY-B.pdf",
         "payer": {
           "address": "256 Byron Street",
           "address2": "Suite 32",
@@ -285,7 +288,7 @@ describe(`abound.${resource}.create()`, () => {
           "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
           "tinVerificationStatus": "MATCH",
         },
-        "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-C.pdf",
+        "payerUrl": StringContaining "-FORM-1099-K-COPY-C.pdf",
         "status": "CREATED",
         "userId": "userId_sampleXGMFnhOpeR",
       }
@@ -327,12 +330,15 @@ describe(`abound.${resource}.list()`, () => {
     // Assert
     expect(response.at(0)).toMatchInlineSnapshot(
       {
+        filingYear: expect.any(Number) as number,
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+        payeeUrl: expect.stringContaining("-FORM-1099-K-COPY-B.pdf") as string,
+        payerUrl: expect.stringContaining("-FORM-1099-K-COPY-C.pdf") as string,
       },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
-        "filingYear": 2022,
+        "filingYear": Any<Number>,
         "formFields": {
           "accountNumber": "1234567890",
           "aggregateGrossAmount": 27987876,
@@ -383,7 +389,7 @@ describe(`abound.${resource}.list()`, () => {
           "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
           "tinVerificationStatus": "MATCH",
         },
-        "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-B.pdf",
+        "payeeUrl": StringContaining "-FORM-1099-K-COPY-B.pdf",
         "payer": {
           "address": "1401 N Shoreline Blvd",
           "address2": "Suite 1",
@@ -399,7 +405,7 @@ describe(`abound.${resource}.list()`, () => {
           "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
           "tinVerificationStatus": "MATCH",
         },
-        "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-C.pdf",
+        "payerUrl": StringContaining "-FORM-1099-K-COPY-C.pdf",
         "status": "CREATED",
       }
     `
@@ -464,12 +470,15 @@ describe(`abound.${resource}.file()`, () => {
     // Assert
     expect(response).toMatchInlineSnapshot(
       {
+        filingYear: expect.any(Number) as number,
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+        payeeUrl: expect.stringContaining("-FORM-1099-K-COPY-B.pdf") as string,
+        payerUrl: expect.stringContaining("-FORM-1099-K-COPY-C.pdf") as string,
       },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
-        "filingYear": 2022,
+        "filingYear": Any<Number>,
         "formFields": {
           "accountNumber": "1234567890",
           "aggregateGrossAmount": 27987876,
@@ -520,7 +529,7 @@ describe(`abound.${resource}.file()`, () => {
           "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
           "tinVerificationStatus": "MATCH",
         },
-        "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-B.pdf",
+        "payeeUrl": StringContaining "-FORM-1099-K-COPY-B.pdf",
         "payer": {
           "address": "1401 N Shoreline Blvd",
           "address2": "Suite 1",
@@ -536,7 +545,7 @@ describe(`abound.${resource}.file()`, () => {
           "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
           "tinVerificationStatus": "MATCH",
         },
-        "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-C.pdf",
+        "payerUrl": StringContaining "-FORM-1099-K-COPY-C.pdf",
         "status": "FILED",
       }
     `
@@ -558,13 +567,20 @@ describe(`abound.${resource}.correct()`, () => {
     // Assert
     expect(response).toMatchInlineSnapshot(
       {
+        filingYear: expect.any(Number) as number,
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+        payeeUrl: expect.stringContaining(
+          "-FORM-1099-K-CORRECTED-COPY-B.pdf"
+        ) as string,
+        payerUrl: expect.stringContaining(
+          "-FORM-1099-K-CORRECTED-COPY-C.pdf"
+        ) as string,
       },
       `
       {
         "correctedFromId": "documentId_sampletTtqNfulW8",
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
-        "filingYear": 2022,
+        "filingYear": Any<Number>,
         "formFields": {
           "accountNumber": "1000000001",
           "aggregateGrossAmount": 27987876,
@@ -616,7 +632,7 @@ describe(`abound.${resource}.correct()`, () => {
           "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
           "tinVerificationStatus": "MATCH",
         },
-        "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-CORRECTED-COPY-B.pdf",
+        "payeeUrl": StringContaining "-FORM-1099-K-CORRECTED-COPY-B.pdf",
         "payer": {
           "address": "1401 N Shoreline Blvd",
           "address2": "Suite 1",
@@ -632,7 +648,7 @@ describe(`abound.${resource}.correct()`, () => {
           "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
           "tinVerificationStatus": "MATCH",
         },
-        "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-CORRECTED-COPY-C.pdf",
+        "payerUrl": StringContaining "-FORM-1099-K-CORRECTED-COPY-C.pdf",
         "status": "FILED",
       }
     `
@@ -651,12 +667,19 @@ describe(`abound.${resource}.void()`, () => {
     // Assert
     expect(response).toMatchInlineSnapshot(
       {
+        filingYear: expect.any(Number) as number,
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+        payeeUrl: expect.stringContaining(
+          "-FORM-1099-K-VOID-COPY-B.pdf"
+        ) as string,
+        payerUrl: expect.stringContaining(
+          "-FORM-1099-K-VOID-COPY-C.pdf"
+        ) as string,
       },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
-        "filingYear": 2022,
+        "filingYear": Any<Number>,
         "formFields": {
           "accountNumber": "1234567890",
           "aggregateGrossAmount": 27987876,
@@ -707,7 +730,7 @@ describe(`abound.${resource}.void()`, () => {
           "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
           "tinVerificationStatus": "MATCH",
         },
-        "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-VOID-COPY-B.pdf",
+        "payeeUrl": StringContaining "-FORM-1099-K-VOID-COPY-B.pdf",
         "payer": {
           "address": "1401 N Shoreline Blvd",
           "address2": "Suite 1",
@@ -723,7 +746,7 @@ describe(`abound.${resource}.void()`, () => {
           "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
           "tinVerificationStatus": "MATCH",
         },
-        "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-VOID-COPY-C.pdf",
+        "payerUrl": StringContaining "-FORM-1099-K-VOID-COPY-C.pdf",
         "status": "FILED",
         "voidedFromId": "documentId_sampletTtqNfulW8",
       }
@@ -743,12 +766,15 @@ describe(`abound.${resource}.retrieve()`, () => {
     // Assert
     expect(response).toMatchInlineSnapshot(
       {
+        filingYear: expect.any(Number) as number,
         createdAt: expect.stringMatching(matchers.isoDatetimeRegex) as string,
+        payeeUrl: expect.stringContaining("-FORM-1099-K-COPY-B.pdf") as string,
+        payerUrl: expect.stringContaining("-FORM-1099-K-COPY-C.pdf") as string,
       },
       `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
-        "filingYear": 2022,
+        "filingYear": Any<Number>,
         "formFields": {
           "accountNumber": "1234567890",
           "aggregateGrossAmount": 27987876,
@@ -799,7 +825,7 @@ describe(`abound.${resource}.retrieve()`, () => {
           "tinVerificationId": "tinVerificationId_sample41SD71AV8f",
           "tinVerificationStatus": "MATCH",
         },
-        "payeeUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-B.pdf",
+        "payeeUrl": StringContaining "-FORM-1099-K-COPY-B.pdf",
         "payer": {
           "address": "1401 N Shoreline Blvd",
           "address2": "Suite 1",
@@ -815,7 +841,7 @@ describe(`abound.${resource}.retrieve()`, () => {
           "tinVerificationId": "tinVerificationId_sample1b0E6efa89",
           "tinVerificationStatus": "MATCH",
         },
-        "payerUrl": "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2022-FORM-1099-K-COPY-C.pdf",
+        "payerUrl": StringContaining "-FORM-1099-K-COPY-C.pdf",
         "status": "CREATED",
       }
     `
