@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@tsconfig/node18": "18.2.2",
-    "@vitest/coverage-v8": "1.2.1",
+    "@vitest/coverage-v8": "1.2.2",
     "genversion": "3.2.0",
     "husky": "8.0.3",
     "lint-staged": "15.2.0",
