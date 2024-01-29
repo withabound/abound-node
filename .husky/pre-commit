@@ -1,6 +1,3 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 npx genversion --es6 --semi --double src/version.ts
 git add src/version.ts
 
