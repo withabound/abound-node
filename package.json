@@ -29,7 +29,7 @@
     "**/*.(js|ts)": "xo"
   },
   "dependencies": {
-    "type-fest": "4.11.0"
+    "type-fest": "4.12.0"
   },
   "devDependencies": {
     "@tsconfig/node18": "18.2.2",
