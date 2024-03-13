@@ -12,13 +12,17 @@ import type {
   StateTaxInfo,
   Form1099,
   Form1099Request,
+  Form1099Response,
   Form1099Status,
 } from "./types/1099.js";
 import type { Pagination } from "./types/pagination.js";
 import type { PayeeRequest } from "./types/payee.js";
 
 // Response body
-export type Form1099Int = Form1099 & Form1099IntRequest;
+export type Form1099Int = Form1099 &
+  Form1099Response & {
+    formFields: Form1099IntFormFields;
+  };
 
 // Request body
 export type Form1099IntRequest = Form1099Request & {
