@@ -12,15 +12,19 @@ import type {
   StateTaxInfoWithStateIncome,
   Form1099,
   Form1099Request,
+  Form1099Response,
   Form1099Status,
 } from "./types/1099.js";
 import type { Pagination } from "./types/pagination.js";
 import type { PayeeRequest } from "./types/payee.js";
 
 // Response body
-export type Form1099Nec = Form1099 & Form1099NecRequest;
+export type Form1099Nec = Form1099 &
+  Form1099Response & {
+    formFields: Form1099NecFormFields;
+  };
 
-// Response body
+// Request body
 export type Form1099NecRequest = Form1099Request & {
   formFields: Form1099NecFormFields;
 };

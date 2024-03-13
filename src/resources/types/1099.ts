@@ -1,5 +1,5 @@
-import type { PayeeRequest } from "./payee.js";
-import type { PayerRequest } from "./payer.js";
+import type { Payee, PayeeRequest } from "./payee.js";
+import type { Payer, PayerRequest } from "./payer.js";
 
 export type StateTaxInfo = {
   filingState: string;
@@ -27,6 +27,13 @@ export type Form1099 = {
   correctedFromId?: string;
   voidedById?: string;
   voidedFromId?: string;
+};
+
+export type Form1099Response = {
+  filingYear: number;
+  payer: Payer;
+  payee: Payee;
+  userId?: string;
 };
 
 // Request body

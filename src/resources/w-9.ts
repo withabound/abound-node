@@ -1,15 +1,19 @@
 import type { AboundContext } from "../abound.js";
 import { get, list, post } from "./base/base-resource.js";
 import type { Pagination } from "./types/pagination.js";
-import type { PayeeRequest } from "./types/payee.js";
-import type { PayerRequest } from "./types/payer.js";
+import type { Payee, PayeeRequest } from "./types/payee.js";
+import type { Payer, PayerRequest } from "./types/payer.js";
 
 // Response body
 export type FormW9 = {
   id: string;
   createdAt: string;
   url: string;
-} & FormW9Request;
+  payee: Payee;
+  payer?: Payer;
+  formFields: FormW9FormFields;
+  userId?: string;
+};
 
 // Request body
 export type FormW9Request = {
