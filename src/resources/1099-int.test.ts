@@ -306,13 +306,12 @@ describe(`abound.${resource}.list()`, () => {
         payerUrl: expect.stringContaining(
           "-FORM-1099-INT-COPY-C.pdf"
         ) as string,
-      },
-      `
+      }, `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
         "formFields": {
-          "accountNumber": "1234567890",
+          "accountNumber": "A006SVmcrieFAbm3gsaV",
           "bondPremium": 19423,
           "bondPremiumTaxExemptBond": 19423,
           "bondPremiumTreasury": 19423,
@@ -372,8 +371,7 @@ describe(`abound.${resource}.list()`, () => {
         "payerUrl": StringContaining "-FORM-1099-INT-COPY-C.pdf",
         "status": "CREATED",
       }
-    `
-    );
+    `);
   });
 });
 
@@ -442,13 +440,12 @@ describe(`abound.${resource}.file()`, () => {
         payerUrl: expect.stringContaining(
           "-FORM-1099-INT-COPY-C.pdf"
         ) as string,
-      },
-      `
+      }, `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
         "formFields": {
-          "accountNumber": "1234567890",
+          "accountNumber": "A006SVmcrieFAbm3gsaV",
           "bondPremium": 19423,
           "bondPremiumTaxExemptBond": 19423,
           "bondPremiumTreasury": 19423,
@@ -508,8 +505,7 @@ describe(`abound.${resource}.file()`, () => {
         "payerUrl": StringContaining "-FORM-1099-INT-COPY-C.pdf",
         "status": "FILED",
       }
-    `
-    );
+    `);
   });
 });
 
@@ -627,13 +623,12 @@ describe(`abound.${resource}.void()`, () => {
         payerUrl: expect.stringContaining(
           "-FORM-1099-INT-VOID-COPY-C.pdf"
         ) as string,
-      },
-      `
+      }, `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
         "formFields": {
-          "accountNumber": "1234567890",
+          "accountNumber": "A006SVmcrieFAbm3gsaV",
           "bondPremium": 19423,
           "bondPremiumTaxExemptBond": 19423,
           "bondPremiumTreasury": 19423,
@@ -694,8 +689,7 @@ describe(`abound.${resource}.void()`, () => {
         "status": "FILED",
         "voidedFromId": "documentId_samplepWpJ9Snlzb",
       }
-    `
-    );
+    `);
   });
 });
 
@@ -718,13 +712,12 @@ describe(`abound.${resource}.retrieve()`, () => {
         payerUrl: expect.stringContaining(
           "-FORM-1099-INT-COPY-C.pdf"
         ) as string,
-      },
-      `
+      }, `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
         "formFields": {
-          "accountNumber": "1234567890",
+          "accountNumber": "A006SVmcrieFAbm3gsaV",
           "bondPremium": 19423,
           "bondPremiumTaxExemptBond": 19423,
           "bondPremiumTreasury": 19423,
@@ -784,8 +777,7 @@ describe(`abound.${resource}.retrieve()`, () => {
         "payerUrl": StringContaining "-FORM-1099-INT-COPY-C.pdf",
         "status": "CREATED",
       }
-    `
-    );
+    `);
   });
 });
 
