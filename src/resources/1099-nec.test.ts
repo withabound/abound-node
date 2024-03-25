@@ -295,7 +295,7 @@ describe(`abound.${resource}.list()`, () => {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
         "formFields": {
-          "accountNumber": "1234567890",
+          "accountNumber": "A0NEqtav7n0sBGoq88w0",
           "federalIncomeTaxWithheld": 0,
           "hasDirectSalesOver5000": false,
           "isCorrected": false,
@@ -420,7 +420,7 @@ describe(`abound.${resource}.file()`, () => {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
         "formFields": {
-          "accountNumber": "1234567890",
+          "accountNumber": "A0NEqtav7n0sBGoq88w0",
           "federalIncomeTaxWithheld": 0,
           "hasDirectSalesOver5000": false,
           "isCorrected": false,
@@ -583,7 +583,7 @@ describe(`abound.${resource}.void()`, () => {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
         "formFields": {
-          "accountNumber": "1234567890",
+          "accountNumber": "A0NEqtav7n0sBGoq88w0",
           "federalIncomeTaxWithheld": 0,
           "hasDirectSalesOver5000": false,
           "isCorrected": false,
@@ -663,7 +663,7 @@ describe(`abound.${resource}.retrieve()`, () => {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
         "formFields": {
-          "accountNumber": "1234567890",
+          "accountNumber": "A0NEqtav7n0sBGoq88w0",
           "federalIncomeTaxWithheld": 0,
           "hasDirectSalesOver5000": false,
           "isCorrected": false,
