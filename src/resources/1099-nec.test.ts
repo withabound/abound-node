@@ -289,7 +289,8 @@ describe(`abound.${resource}.list()`, () => {
         payerUrl: expect.stringContaining(
           "-FORM-1099-NEC-COPY-C.pdf"
         ) as string,
-      }, `
+      },
+      `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
@@ -343,7 +344,8 @@ describe(`abound.${resource}.list()`, () => {
         "payerUrl": StringContaining "-FORM-1099-NEC-COPY-C.pdf",
         "status": "CREATED",
       }
-    `);
+    `
+    );
   });
 });
 
@@ -412,7 +414,8 @@ describe(`abound.${resource}.file()`, () => {
         payerUrl: expect.stringContaining(
           "-FORM-1099-NEC-COPY-C.pdf"
         ) as string,
-      }, `
+      },
+      `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
@@ -466,7 +469,8 @@ describe(`abound.${resource}.file()`, () => {
         "payerUrl": StringContaining "-FORM-1099-NEC-COPY-C.pdf",
         "status": "FILED",
       }
-    `);
+    `
+    );
   });
 });
 
@@ -573,7 +577,8 @@ describe(`abound.${resource}.void()`, () => {
         payerUrl: expect.stringContaining(
           "-FORM-1099-NEC-VOID-COPY-C.pdf"
         ) as string,
-      }, `
+      },
+      `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
@@ -628,7 +633,8 @@ describe(`abound.${resource}.void()`, () => {
         "status": "FILED",
         "voidedFromId": "documentId_sampletTtqNfulW8",
       }
-    `);
+    `
+    );
   });
 });
 
@@ -651,7 +657,8 @@ describe(`abound.${resource}.retrieve()`, () => {
         payerUrl: expect.stringContaining(
           "-FORM-1099-NEC-COPY-C.pdf"
         ) as string,
-      }, `
+      },
+      `
       {
         "createdAt": StringMatching /\\^\\\\d\\{4\\}-\\\\d\\{2\\}-\\\\d\\{2\\}T\\\\d\\{2\\}:\\\\d\\{2\\}:\\\\d\\{2\\}\\\\\\.\\\\d\\{3\\}Z\\$/,
         "filingYear": Any<Number>,
@@ -705,7 +712,8 @@ describe(`abound.${resource}.retrieve()`, () => {
         "payerUrl": StringContaining "-FORM-1099-NEC-COPY-C.pdf",
         "status": "CREATED",
       }
-    `);
+    `
+    );
   });
 });
 
