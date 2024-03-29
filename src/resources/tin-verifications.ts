@@ -23,8 +23,9 @@ export type TinVerificationRequest = {
 
 // Query params
 export type TinVerificationParameters = Pagination & {
-  email?: string;
-  foreignId?: string;
+  tinFingerprint?: string;
+  status?: TinVerificationStatus;
+  userId?: string;
 };
 
 const resource = "tin-verifications";
