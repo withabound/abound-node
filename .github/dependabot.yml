@@ -7,9 +7,13 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    reviewers:
+      - "withabound/api-team"
 
   # Check for npm package updates every week
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
+    reviewers:
+      - "withabound/api-team"
