@@ -9,6 +9,7 @@ updates:
       interval: "weekly"
     reviewers:
       - "withabound/api-team"
+      - "bmealhouse"
 
   # Check for npm package updates every week
   - package-ecosystem: "npm"
@@ -17,3 +18,11 @@ updates:
       interval: "weekly"
     reviewers:
       - "withabound/api-team"
+      - "bmealhouse"
+    groups:
+      vitest:
+        pattern:
+          - "*vitest*"
+      patch:
+        update-types:
+          - "patch"
