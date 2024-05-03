@@ -21,7 +21,7 @@ updates:
       - "bmealhouse"
     groups:
       vitest:
-        pattern:
+        patterns:
           - "*vitest*"
       patch:
         update-types:
