@@ -115,11 +115,7 @@ describe(`abound.${resource}.create()`, () => {
           },
           {
             "field": "formFields.taxClassification",
-            "message": "Expected formFields.taxClassification to be INDIVIDUAL, SOLE_PROPRIETOR, SINGLE_MEMBER_LLC, C_CORPORATION, S_CORPORATION, PARTNERSHIP, TRUST, ESTATE, LLC_PARTNERSHIP, LLC_C_CORPORATION, or LLC_S_CORPORATION, but received undefined",
-          },
-          {
-            "field": "formFields.certifiedAt",
-            "message": "Expected formFields.certifiedAt to be of type string, but received undefined",
+            "message": "Expected formFields.taxClassification to be INDIVIDUAL, SOLE_PROPRIETOR, SINGLE_MEMBER_LLC, C_CORPORATION, S_CORPORATION, PARTNERSHIP, TRUST, ESTATE, LLC_PARTNERSHIP, LLC_C_CORPORATION, LLC_S_CORPORATION, or OTHER, but received undefined",
           },
           {
             "field": "userId",
