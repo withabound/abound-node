@@ -21,7 +21,7 @@ export function post<TResponse, TRequest>(
       const error = await response.json();
       if (response.status === 400) {
         const { errors } = error as ApiBadRequest;
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw new AboundBadRequest(errors);
       }
 
@@ -58,7 +58,7 @@ export function list<
       const error = await response.json();
       if (response.status === 400) {
         const { errors } = error as ApiBadRequest;
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw new AboundBadRequest(errors);
       }
 
@@ -103,7 +103,7 @@ export function put<TResponse, TRequest>(
       const error = await response.json();
       if (response.status === 400) {
         const { errors } = error as ApiBadRequest;
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw new AboundBadRequest(errors);
       }
 
@@ -147,7 +147,7 @@ export function action<TResponse, TRequest>(
       const error = await response.json();
       if (response.status === 400) {
         const { errors } = error as ApiBadRequest;
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw new AboundBadRequest(errors);
       }
 
@@ -174,7 +174,7 @@ export function actionWithEmptyRequest<TResponse>(
       const error = await response.json();
       if (response.status === 400) {
         const { errors } = error as ApiBadRequest;
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw new AboundBadRequest(errors);
       }
 

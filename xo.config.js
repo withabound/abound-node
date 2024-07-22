@@ -6,5 +6,8 @@ module.exports = {
     // Shut off "capitalized-comments" since commenting a section of code out
     // causes this error to be reported.
     "capitalized-comments": "off",
+    // Shut off "n/file-extension-in-import" since TS curretly has issues
+    // handling this.
+    "n/file-extension-in-import": "off",
   },
 };
