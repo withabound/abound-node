@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import { Abound } from "../abound.js";
 import { matchers, sampleConfig, singular } from "../test-utils.js";
 
-const slug = "mailings" as const;
-const resource = "mailings" as const;
+const slug = "mailings";
+const resource = "mailings";
 const sampleId = "mailingId_sampleFV9b73IvAD";
 
 const request = {

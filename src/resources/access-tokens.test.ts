@@ -7,8 +7,8 @@ import {
   singular,
 } from "../test-utils.js";
 
-const slug = "access-tokens" as const;
-const resource = "accessTokens" as const;
+const slug = "access-tokens";
+const resource = "accessTokens";
 
 const request = {
   expiresIn: 300,

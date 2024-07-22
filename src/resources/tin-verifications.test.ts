@@ -7,8 +7,8 @@ import {
   singular,
 } from "../test-utils.js";
 
-const slug = "tin-verifications" as const;
-const resource = "tinVerifications" as const;
+const slug = "tin-verifications";
+const resource = "tinVerifications";
 const sampleId = "tinVerificationId_sample41SD71AV8f";
 
 const request = {

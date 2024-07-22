@@ -7,8 +7,8 @@ import {
   singular,
 } from "../test-utils.js";
 
-const slug = "documents/w-9" as const;
-const resource = "formW9" as const;
+const slug = "documents/w-9";
+const resource = "formW9";
 const sampleId = "documentId_sampleVppNzzIbQT";
 
 const request = {
