@@ -36,7 +36,7 @@
     "@tsconfig/node18": "18.2.4",
     "@vitest/coverage-v8": "2.0.4",
     "genversion": "3.2.0",
-    "husky": "9.0.11",
+    "husky": "9.1.1",
     "lint-staged": "15.2.7",
     "prettier": "3.3.3",
     "typescript": "5.5.3",
