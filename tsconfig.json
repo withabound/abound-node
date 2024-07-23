@@ -1,13 +1,17 @@
 {
-  "extends": "@tsconfig/node18/tsconfig.json",
-  "compilerOptions": {
-    "module": "ES2020",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "declaration": true,
-    "declarationDir": "dist/types",
-    "outDir": "dist/esm",
-    "types": ["node"]
-  },
-  "include": ["src/**/*"]
+    "compilerOptions": {
+        "extendedDiagnostics": true,
+        "strict": true,
+        "target": "ES6",
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "declaration": true,
+        "outDir": "dist",
+        "rootDir": "src",
+        "baseUrl": "src"
+    },
+    "include": ["src"],
+    "exclude": []
 }
