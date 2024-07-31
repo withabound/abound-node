@@ -1,0 +1,215 @@
+types:
+  MailingsListRequestStatus:
+    enum:
+      - CREATED
+      - PROCESSING_FOR_DELIVERY
+      - IN_TRANSIT
+      - DELIVERED
+      - RETURNED_TO_SENDER
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /mailings
+      method: GET
+      auth: true
+      docs: Returns a list of mailings. Up to 100 mailings are returned per request.
+      display-name: List all mailings
+      request:
+        name: MailingsListRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: >-
+              The specific page of results you're requesting. Responses are
+              limited to a maximum of 100 records.
+          status:
+            type: optional<MailingsListRequestStatus>
+            docs: Filters the list of mailings based on the `status` field.
+          userId:
+            type: optional<string>
+            docs: The unique identifier for a single end-user of your application.
+      response:
+        docs: OK
+        type: list<root.MailingSchema>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          response:
+            body:
+              - to:
+                  address: 256 Byron Street
+                  address2: Suite 32
+                  city: Palo Alto
+                  state: CA
+                  postalCode: '94306'
+                  country: US
+                  name: Ada Lovelace
+                  name2: InGen Corporation
+                from:
+                  address: 1401 N Shoreline Blvd
+                  address2: Suite 1
+                  city: Mountain View
+                  state: CA
+                  postalCode: '94043'
+                  country: US
+                  name: Hooli
+                  name2: InGen Corporation
+                id: mailingId_sampleFV9b73IvAD
+                createdAt: '2024-01-01T00:00:00Z'
+                status: CREATED
+                url: >-
+                  https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-B.pdf
+                userId: '{{userId}}'
+                mailedFromId: documentId_sampletTtqNfulW8
+    retrieve:
+      path: /mailings/{mailingId}
+      method: GET
+      auth: true
+      docs: Retrieves the details of an existing mailing.
+      path-parameters:
+        mailingId:
+          type: string
+          docs: The unique identifier for this mailing.
+      display-name: Retrieve a mailing
+      response:
+        docs: OK
+        type: root.MailingSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            mailingId: '{{mailingId}}'
+          response:
+            body:
+              to:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Ada Lovelace
+                name2: InGen Corporation
+              from:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Hooli
+                name2: InGen Corporation
+              id: mailingId_sampleFV9b73IvAD
+              createdAt: '2024-01-01T00:00:00Z'
+              status: CREATED
+              url: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-B.pdf
+              userId: '{{userId}}'
+              mailedFromId: documentId_sampletTtqNfulW8
+    update:
+      path: /mailings/{mailingId}
+      method: PUT
+      auth: true
+      docs: >-
+        Updates an existing mailing. Once a mailing has reached the
+        `PROCESSING_FOR_DELIVERY` status, it cannot be updated. Any body
+        parameters not provided will be removed.
+      path-parameters:
+        mailingId:
+          type: string
+          docs: The unique identifier for this mailing.
+      display-name: Update a mailing
+      request:
+        body: root.MailingRequestSchema
+        headers:
+          Idempotency-Key:
+            type: optional<string>
+            name: idempotencyKey
+            docs: >-
+              The unique key used to identify a request that has already been
+              processed.
+        name: MailingsUpdateRequest
+      response:
+        docs: OK
+        type: root.MailingSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            mailingId: '{{mailingId}}'
+          headers:
+            Idempotency-Key: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+          request:
+            to: {}
+            from: {}
+          response:
+            body:
+              to:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Ada Lovelace
+                name2: InGen Corporation
+              from:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Hooli
+                name2: InGen Corporation
+              id: mailingId_sampleFV9b73IvAD
+              createdAt: '2024-01-01T00:00:00Z'
+              status: CREATED
+              url: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-B.pdf
+              userId: '{{userId}}'
+              mailedFromId: documentId_sampletTtqNfulW8
+    delete:
+      path: /mailings/{mailingId}
+      method: DELETE
+      auth: true
+      docs: >-
+        Deletes a mailing. Once a mailing has reached the
+        `PROCESSING_FOR_DELIVERY` status, it cannot be deleted.
+      path-parameters:
+        mailingId:
+          type: string
+          docs: The unique identifier for this mailing.
+      display-name: Delete a mailing
+      response:
+        docs: OK
+        type: root.OkSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            mailingId: '{{mailingId}}'
+          response:
+            body:
+              key: value
+  display-name: Mailings

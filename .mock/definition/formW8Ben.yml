@@ -1,0 +1,82 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /documents/w-8ben
+      method: GET
+      auth: true
+      docs: Returns a list of W-8BEN documents.
+      display-name: List all W-8BEN documents
+      request:
+        name: FormW8BenListRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: >-
+              The specific page of results you're requesting. Responses are
+              limited to a maximum of 100 records.
+          payeeTinFingerprint:
+            type: optional<string>
+            docs: >-
+              Filters the list of documents based on the `payee.tinFingerprint`
+              field.
+          payeeForeignTinFingerprint:
+            type: optional<string>
+            docs: >-
+              Filters the list of documents based on the
+              `payee.foreignTinFingerprint` field.
+          userId:
+            type: optional<string>
+            docs: The unique identifier for a single end-user of your application.
+      response:
+        docs: OK
+        type: list<unknown>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          response:
+            body: []
+    create:
+      path: /documents/w-8ben
+      method: POST
+      auth: true
+      docs: >-
+        Creates a W-8BEN document and, if present, subsequently kicks off a TIN
+        Verification. A TIN Verification will only kickoff if the name and TIN
+        combo has not been seen before.
+      display-name: Create a W-8BEN
+      request:
+        body: unknown
+      response:
+        docs: OK
+        type: unknown
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+    retrieve:
+      path: /documents/w-8ben/{documentId}
+      method: GET
+      auth: true
+      docs: Retrieves the details of an existing W-8BEN document.
+      path-parameters:
+        documentId:
+          type: string
+          docs: The unique identifier for an existing document.
+      display-name: Retrieve a W-8BEN
+      response:
+        docs: OK
+        type: unknown
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError

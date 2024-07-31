@@ -1,0 +1,151 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /users
+      method: GET
+      auth: true
+      docs: Returns a list of users. Up to 100 users are returned per request.
+      display-name: List all users
+      request:
+        name: UsersListRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: >-
+              The specific page of results you're requesting. Responses are
+              limited to a maximum of 100 records.
+          email:
+            type: optional<string>
+            docs: Filters the list of users based on the `email` field.
+          foreignId:
+            type: optional<string>
+            docs: >-
+              The customer-specific unique identifier associated to an Abound
+              record. Allows developers to forego making their own tables every
+              time they integrate and/or add an application.
+      response:
+        docs: OK
+        type: list<root.UserSchema>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          response:
+            body:
+              - email: your-users-email@domain.com
+                foreignId: your-foreign-id
+                metadata:
+                  key: value
+                id: userId_sampleXGMFnhOpeR
+                createdAt: '2024-01-01T00:00:00Z'
+    create:
+      path: /users
+      method: POST
+      auth: true
+      docs: Creates a user for a single end-user of your application.
+      display-name: Create a user
+      request:
+        body: root.UserRequestSchema
+        headers:
+          Idempotency-Key:
+            type: optional<string>
+            name: idempotencyKey
+            docs: >-
+              The unique key used to identify a request that has already been
+              processed.
+        name: UsersCreateRequest
+      response:
+        docs: OK
+        type: root.UserSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.ConflictError
+        - root.InternalServerError
+      examples:
+        - name: default
+          headers:
+            Idempotency-Key: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+          request: {}
+          response:
+            body:
+              email: your-users-email@domain.com
+              foreignId: your-foreign-id
+              metadata:
+                key: value
+              id: userId_sampleXGMFnhOpeR
+              createdAt: '2024-01-01T00:00:00Z'
+    retrieve:
+      path: /users/{userId}
+      method: GET
+      auth: true
+      docs: Retrieves the details of an existing user.
+      path-parameters:
+        userId:
+          type: string
+          docs: The unique identifier for a single end-user of your application.
+      display-name: Retrieve a user
+      response:
+        docs: OK
+        type: root.UserSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            userId: '{{userId}}'
+          response:
+            body:
+              email: your-users-email@domain.com
+              foreignId: your-foreign-id
+              metadata:
+                key: value
+              id: userId_sampleXGMFnhOpeR
+              createdAt: '2024-01-01T00:00:00Z'
+    update:
+      path: /users/{userId}
+      method: PUT
+      auth: true
+      docs: >-
+        Updates an existing user. Any body parameters not provided will be
+        removed.
+      path-parameters:
+        userId:
+          type: string
+          docs: The unique identifier for a single end-user of your application.
+      display-name: Update a user
+      request:
+        body: root.UserRequestSchema
+      response:
+        docs: OK
+        type: root.UserSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.ConflictError
+      examples:
+        - name: default
+          path-parameters:
+            userId: '{{userId}}'
+          request: {}
+          response:
+            body:
+              email: your-users-email@domain.com
+              foreignId: your-foreign-id
+              metadata:
+                key: value
+              id: userId_sampleXGMFnhOpeR
+              createdAt: '2024-01-01T00:00:00Z'
+  display-name: Users

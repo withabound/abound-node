@@ -1,0 +1,12 @@
+name: api
+error-discrimination:
+  strategy: status-code
+display-name: Abound API
+default-environment: Production
+environments:
+  Production: https://production-api.withabound.com
+  Sandbox: https://sandbox-api.withabound.com/v4
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+auth: BearerAuthScheme

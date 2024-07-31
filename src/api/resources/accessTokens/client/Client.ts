@@ -60,7 +60,7 @@ export class AccessTokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "abound",
-                "X-Fern-SDK-Version": "6.0.0-alpha0",
+                "X-Fern-SDK-Version": "1.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,

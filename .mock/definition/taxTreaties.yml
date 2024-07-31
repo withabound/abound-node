@@ -1,0 +1,37 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /tax-treaties
+      method: GET
+      auth: true
+      docs: Returns a list of tax treaties.
+      display-name: List all tax treaties
+      request:
+        name: TaxTreatiesListRequest
+        query-parameters:
+          country:
+            type: optional<string>
+            docs: >-
+              Filters the list of tax treaties based on the specified foreign
+              `country`, adhering to `ISO 3166-2` standards.
+      response:
+        docs: OK
+        type: list<root.TaxTreatySchema>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          response:
+            body:
+              - taxTreatyCode: GB_17_INDEPENDENT_PERSONAL_SERVICES
+                residentCountry: GB
+                rateOfWithholding: 0
+                incomeDescription: Independent personal services
+  display-name: Tax Treaties

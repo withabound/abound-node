@@ -1,0 +1,1455 @@
+errors:
+  BadRequestError:
+    status-code: 400
+    type: ErrorBadRequestSchema
+    docs: Bad Request
+    examples:
+      - value:
+          errors:
+            - field: metadata.key
+              message: Expected metadata.key to be of type string, but received number
+        name: default
+  UnauthorizedError:
+    status-code: 401
+    type: ErrorSchema
+    docs: Unauthorized
+    examples:
+      - value:
+          message: Unauthorized
+        name: default
+  NotFoundError:
+    status-code: 404
+    type: ErrorSchema
+    docs: Not Found
+    examples:
+      - value:
+          message: Not Found
+        name: default
+  InternalServerError:
+    status-code: 500
+    type: ErrorSchema
+    docs: Internal Server Error
+    examples:
+      - value:
+          message: Internal Server Error
+        name: default
+  ConflictError:
+    status-code: 409
+    type: ErrorSchema
+    docs: Conflict
+    examples:
+      - value:
+          message: Conflict
+        name: default
+types:
+  AccessTokenSchema:
+    properties:
+      accessToken:
+        type: string
+        docs: The access token to authenticate your Drop-In UI Components.
+      createdAt:
+        type: datetime
+        docs: The creation date and time of the access token in `ISO 8601` format.
+      expiresAt:
+        type: datetime
+        docs: The expiration date and time of the access token in `ISO 8601` format.
+  ErrorBadRequestSchemaErrorsItem:
+    properties:
+      field:
+        type: optional<string>
+        docs: The field that caused the error.
+      message:
+        type: string
+        docs: The error message associated with the field.
+  ErrorBadRequestSchema:
+    properties:
+      errors:
+        docs: The error message(s) associated with the response status code.
+        type: list<ErrorBadRequestSchemaErrorsItem>
+  ErrorSchema:
+    properties:
+      message:
+        type: string
+        docs: The error message associated with the response status code.
+  one_thousand_ninety_nine_SchemaStatus:
+    enum:
+      - CREATED
+      - FILED
+      - ACCEPTED
+      - REJECTED
+    docs: >-
+      The status of the 1099 document.<br/>&nbsp;&nbsp;• `CREATED`: The document
+      has passed data validation and the PDFs have been
+      generated.<br/>&nbsp;&nbsp;• `FILED`: The payee's TIN has been verified
+      and the 1099 has been filed with the appropriate tax
+      authorities.<br/>&nbsp;&nbsp;• `ACCEPTED`: The document has been
+      acknowledged and accepted by the appropriate tax
+      authorities.<br/>&nbsp;&nbsp;• `REJECTED`: The document has a TIN
+      verification `MISMATCH` or has been rejected by one or more tax authories.
+  Form1099Schema:
+    properties:
+      createdAt:
+        type: datetime
+        docs: The `ISO 8601` timestamp when the document was created.
+      status:
+        type: one_thousand_ninety_nine_SchemaStatus
+        docs: >-
+          The status of the 1099 document.<br/>&nbsp;&nbsp;• `CREATED`: The
+          document has passed data validation and the PDFs have been
+          generated.<br/>&nbsp;&nbsp;• `FILED`: The payee's TIN has been
+          verified and the 1099 has been filed with the appropriate tax
+          authorities.<br/>&nbsp;&nbsp;• `ACCEPTED`: The document has been
+          acknowledged and accepted by the appropriate tax
+          authorities.<br/>&nbsp;&nbsp;• `REJECTED`: The document has a TIN
+          verification `MISMATCH` or has been rejected by one or more tax
+          authories.
+      payerUrl:
+        type: string
+        docs: The URL to the payer's 1099 document.
+      payeeUrl:
+        type: string
+        docs: The URL to the payee's 1099 document.
+  Form1099RequestSchema:
+    properties:
+      filingYear:
+        type: integer
+        docs: The filing year associated with this document.
+  AddressOptionalSchema:
+    properties:
+      address:
+        type: optional<string>
+        docs: The legal address.
+      address2:
+        type: optional<string>
+        docs: >-
+          The second part of the legal address, such as an apartment or suite
+          number.
+      city:
+        type: optional<string>
+        docs: >-
+          The city associated with the street address. Required if `country` is
+          `US`.
+      state:
+        type: optional<string>
+        docs: >-
+          The two-letter character code for this state (`CA` for California,
+          `ME` for Maine). Required if `country` is `US`. If foreign, use the
+          province.
+      postalCode:
+        type: optional<string>
+        docs: >-
+          The postal code associated with the street address. Required to be a
+          5-digit numerical value if `country` is `US`. If foreign, use the
+          foreign postal code.
+      country:
+        type: optional<string>
+        docs: The country adhering to `ISO 3166-2` standards.
+        validation:
+          minLength: 2
+          maxLength: 2
+  PayerNestedOptionalSchema:
+    properties:
+      name:
+        type: optional<string>
+        docs: The payer's legal name (first + last) or business name.
+      name2:
+        type: optional<string>
+        docs: >-
+          The payer's trade name, DBA name, or disregarded entity name, if
+          different from `name`.
+      tin:
+        type: optional<string>
+        docs: >-
+          The payer's tax identification number, commonly referred to as a TIN.
+          No hyphens. Numerical digits only. Alternatively, you may pass the
+          corresponding `tinFingerprint`.
+        validation:
+          minLength: 9
+          maxLength: 9
+      phoneNumber:
+        type: optional<string>
+        docs: The payer's phone number.
+    extends:
+      - AddressOptionalSchema
+  PayerSchema:
+    properties:
+      payer: optional<PayerNestedOptionalSchema>
+  PayeeNestedOptionalSchema:
+    properties:
+      name:
+        type: optional<string>
+        docs: The payee's legal name (first + last) or business name.
+      name2:
+        type: optional<string>
+        docs: >-
+          The payee's trade name, DBA name, or disregarded entity name, if
+          different from `name`.
+      tin:
+        type: optional<string>
+        docs: >-
+          The payee's tax identification number, commonly referred to as a TIN.
+          No hyphens. Numerical digits only. Alternatively, you may pass the
+          corresponding `tinFingerprint`.
+        validation:
+          minLength: 9
+          maxLength: 9
+    extends:
+      - AddressOptionalSchema
+  PayeeSchema:
+    properties:
+      payee: optional<PayeeNestedOptionalSchema>
+  PayerTinSchemaPayerTinType:
+    enum:
+      - INDIVIDUAL
+      - BUSINESS
+    docs: The type of the payer's TIN.
+  PayerTinSchemaPayerTinVerificationStatus:
+    enum:
+      - PENDING
+      - MATCH
+      - MISMATCH
+    docs: The status of the payer's associated tin verification.
+  PayerTinSchemaPayer:
+    properties:
+      tinType:
+        type: optional<PayerTinSchemaPayerTinType>
+        docs: The type of the payer's TIN.
+      tinFingerprint:
+        type: string
+        docs: The fingerprint of the payer's TIN.
+      tinVerificationId:
+        type: string
+        docs: The unique identifier of the payer's associated tin verification.
+      tinVerificationStatus:
+        type: PayerTinSchemaPayerTinVerificationStatus
+        docs: The status of the payer's associated tin verification.
+  PayerTinSchema:
+    properties:
+      payer: optional<PayerTinSchemaPayer>
+  PayeeTinOptionalSchemaPayeeTinType:
+    enum:
+      - INDIVIDUAL
+      - BUSINESS
+    docs: The type of the payee's TIN.
+  PayeeTinOptionalSchemaPayeeTinVerificationStatus:
+    enum:
+      - PENDING
+      - MATCH
+      - MISMATCH
+    docs: The status of the payee's associated tin verification.
+  PayeeTinOptionalSchemaPayee:
+    properties:
+      tinType:
+        type: optional<PayeeTinOptionalSchemaPayeeTinType>
+        docs: The type of the payee's TIN.
+      tinFingerprint:
+        type: optional<string>
+        docs: The fingerprint of the payee's TIN.
+      tinVerificationId:
+        type: optional<string>
+        docs: The unique identifier of the payee's associated tin verification.
+      tinVerificationStatus:
+        type: optional<PayeeTinOptionalSchemaPayeeTinVerificationStatus>
+        docs: The status of the payee's associated tin verification.
+  PayeeTinOptionalSchema:
+    properties:
+      payee: optional<PayeeTinOptionalSchemaPayee>
+  one_thousand_ninety_nine_CorrectionFormFieldsSchemaFormFields:
+    properties:
+      isVoid:
+        type: boolean
+        docs: If `true`, the void checkbox will be marked on the 1099 document.
+      isCorrected:
+        type: boolean
+        docs: If `true`, the corrected checkbox will be marked on the 1099 document.
+  Form1099CorrectionFormFieldsSchema:
+    properties:
+      formFields: optional<one_thousand_ninety_nine_CorrectionFormFieldsSchemaFormFields>
+  Form1099IntNestedFormFieldsOptionalSchema:
+    docs: The 1099-INT form fields.
+    properties:
+      hasFatcaFilingRequirement:
+        type: optional<boolean>
+        docs: >-
+          Satisfying a requirement to report with respect to a U.S. account for
+          chapter 4 purposes.
+      accountNumber:
+        type: optional<string>
+        docs: >-
+          The IRS “encourages” a payer to designate an account number for all
+          Form 1099-INT filed. This field is required if payer has multiple
+          accounts for a recipient for whom it is filing more than one Form
+          1099-INT. This field is also required if `fatca` is `true`.
+        validation:
+          maxLength: 20
+      payersRoutingNumber:
+        type: optional<string>
+        docs: >-
+          A routing and transit number (RTN) is a unique nine-digit number used
+          to identify a bank for purposes of directing financial flows. This is
+          essentially bank's bank account – their account with the Federal
+          Reserve.
+        validation:
+          maxLength: 20
+      interestIncome:
+        type: optional<integer>
+        docs: >-
+          The taxable interest paid to you during the calendar year by the
+          payer. This does not include interest for `usSavingsBondsInterest`.
+          May also show the total amount of the credits from clean renewable
+          energy bonds, new clean renewable energy bonds, qualified energy
+          conservation bonds, qualified zone academy bonds, qualified school
+          construction bonds, and build America bonds that must be included in
+          your interest income. Value must be in cents.
+        validation:
+          min: 0
+      earlyWithdrawalPenalty:
+        type: optional<integer>
+        docs: >-
+          The interest or principal forfeited because of early withdrawal of
+          time savings. You may deduct this amount to figure your adjusted gross
+          income on your income tax return. Value must be in cents.
+        validation:
+          min: 0
+      usSavingsBondsInterest:
+        type: optional<integer>
+        docs: >-
+          Shows interest on U.S. Savings Bonds, Treasury bills, Treasury bonds,
+          and Treasury notes. This may or may not all be taxable. This interest
+          is exempt from state and local income taxes. This interest is not
+          included in `interestIncome`. Value must be in cents.
+        validation:
+          min: 0
+      federalIncomeTaxWithheld:
+        type: optional<integer>
+        docs: >-
+          The federal income tax withheld. A payer must backup withhold on
+          certain payments if recipient did not provide a TIN to the payer.
+          Value must be in cents. Abound does not currently support
+          `federalIncomeTaxWithheld` reporting on the 1099-INT, please contact
+          us for more information.
+        validation:
+          min: 0
+          max: 0
+      investmentExpenses:
+        type: optional<integer>
+        docs: >-
+          Any amount is your share of investment expenses of a singleclass
+          REMIC. This amount is included in `interestIncome`. *Note: This amount
+          is not deductible.* Value must be in cents.
+        validation:
+          min: 0
+      foreignTaxPaid:
+        type: optional<integer>
+        docs: The foreign tax paid. Value must be in cents.
+        validation:
+          min: 0
+      foreignTaxPaidCountry:
+        type: optional<string>
+        docs: The country or U.S. possession to which the foreign tax was paid.
+        validation:
+          minLength: 2
+          maxLength: 2
+      taxExemptInterest:
+        type: optional<integer>
+        docs: >-
+          The tax-exempt interest paid to you during the calendar year by the
+          payer. This amount may be subject to backup withholding. See
+          `federalIncomeTaxWithheld` above. Value must be in cents.
+        validation:
+          min: 0
+      specifiedPrivateActivityBondInterest:
+        type: optional<integer>
+        docs: >-
+          The tax-exempt interest subject to the alternative minimum tax. This
+          amount is included in `taxExemptInterest`. Value must be in cents.
+        validation:
+          min: 0
+      marketDiscount:
+        type: optional<integer>
+        docs: >-
+          For a taxable or tax-exempt covered security, if you made an election
+          under section 1278(b) to include market discount in income as it
+          accrues and you notified your payer of the election in writing in
+          accordance with Regulations section 1.6045-1(n)(5), shows the market
+          discount that accrued on the debt instrument during the year while
+          held by you, unless it was reported on Form 1099-OID. Value must be in
+          cents.
+        validation:
+          min: 0
+      bondPremium:
+        type: optional<integer>
+        docs: >-
+          For a taxable covered security (other than a U.S. Treasury
+          obligation), shows the amount of premium amortization allocable to the
+          interest payment(s), unless you notified the payer in writing in
+          accordance with Regulations section 1.6045-1(n)(5) that you did not
+          want to amortize bond premium under section 171. Value must be in
+          cents.
+        validation:
+          min: 0
+      bondPremiumTreasury:
+        type: optional<integer>
+        docs: >-
+          For a U.S. Treasury obligation that is a covered security, shows the
+          amount of premium amortization allocable to the interest payment(s),
+          unless you notified the payer in writing in accordance with
+          Regulations section 1.6045-1(n)(5) that you did not want to amortize
+          bond premium under section 171. Value must be in cents.
+        validation:
+          min: 0
+      bondPremiumTaxExemptBond:
+        type: optional<integer>
+        docs: >-
+          For a tax-exempt covered security, shows the amount of premium
+          amortization allocable to the interest payment(s). Value must be in
+          cents.
+        validation:
+          min: 0
+  StateTaxInfoNestedOptionalSchemaFilingState:
+    enum:
+      - AA
+      - AE
+      - AK
+      - AL
+      - AP
+      - AR
+      - AS
+      - AZ
+      - CA
+      - CO
+      - CT
+      - DC
+      - DE
+      - FL
+      - GA
+      - GU
+      - HI
+      - IA
+      - ID
+      - IL
+      - IN
+      - KY
+      - KS
+      - LA
+      - MA
+      - MD
+      - ME
+      - MI
+      - MN
+      - MO
+      - MP
+      - MS
+      - MT
+      - value: N/A
+        name: NOT_APPLICABLE
+      - NC
+      - ND
+      - NE
+      - NH
+      - NJ
+      - NM
+      - NV
+      - NY
+      - OH
+      - OK
+      - OR
+      - PA
+      - PR
+      - RI
+      - SC
+      - SD
+      - TN
+      - TX
+      - UT
+      - VA
+      - VI
+      - VT
+      - WA
+      - WI
+      - WV
+      - WY
+    docs: >-
+      The filing state code. The abbreviation of the state (`CA` for
+      California).
+  StateTaxInfoNestedOptionalSchema:
+    properties:
+      filingState:
+        type: optional<StateTaxInfoNestedOptionalSchemaFilingState>
+        docs: >-
+          The filing state code. The abbreviation of the state (`CA` for
+          California).
+      payeeStateId:
+        type: optional<string>
+        docs: The payee's state identification number.
+      payerStateId:
+        type: optional<string>
+        docs: The payer's state identification number.
+      stateTaxWithheld:
+        type: optional<integer>
+        docs: >-
+          The state tax withheld. Value must be in cents. Abound does not
+          currently support `stateTaxWithheld` reporting, please contact us for
+          more information.
+        validation:
+          min: 0
+          max: 0
+  StateTaxInfoSchema:
+    properties:
+      stateTaxInfo:
+        type: optional<list<StateTaxInfoNestedOptionalSchema>>
+        docs: An array that contains up to two (1) state tax information objects.
+  one_thousand_ninety_nine_IntFormFieldsSchemaFormFields:
+    properties: {}
+    extends:
+      - Form1099IntNestedFormFieldsOptionalSchema
+      - StateTaxInfoSchema
+  Form1099IntFormFieldsSchema:
+    properties:
+      formFields: optional<one_thousand_ninety_nine_IntFormFieldsSchemaFormFields>
+  ReferencesSchema:
+    properties:
+      userId:
+        type: optional<string>
+        docs: The unique identifier of the user associated with this document.
+  Form1099RelationsSchema:
+    properties:
+      correctedById:
+        type: optional<string>
+        docs: The `documentId` of the corrected 1099 document.
+      correctedFromId:
+        type: optional<string>
+        docs: The `documentId` of the original 1099 document.
+      voidedById:
+        type: optional<string>
+        docs: The `documentId` of the voided 1099 document.
+      voidedFromId:
+        type: optional<string>
+        docs: The `documentId` of the original 1099 document.
+  Form1099IntSchema:
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this 1099-INT document.
+      payer: optional<PayerNestedOptionalSchema>
+      payee: optional<PayeeNestedOptionalSchema>
+      formFields: optional<one_thousand_ninety_nine_CorrectionFormFieldsSchemaFormFields>
+    extends:
+      - Form1099Schema
+      - Form1099RequestSchema
+      - ReferencesSchema
+      - Form1099RelationsSchema
+  WebhookSchema:
+    properties:
+      id:
+        type: string
+        docs: '`webhookLogId_sample4RMH0Ly5DQ`'
+      webhookId:
+        type: string
+        docs: '`webhookId_samplexGCArf0Tcv`'
+      timestamp:
+        type: datetime
+        docs: '`2023-01-01T00:00:00.000Z`'
+  MailingNameSchema:
+    properties:
+      name:
+        type: optional<string>
+        docs: The individual's name (first + last) or business name.
+      name2:
+        type: optional<string>
+        docs: >-
+          The business name, trade name, DBA name, or disregarded entity name,
+          if different from `name`.
+  MailingRequestSchemaTo:
+    docs: The mailing address of the recipient.
+    properties: {}
+    extends:
+      - MailingNameSchema
+      - AddressOptionalSchema
+  MailingRequestSchemaFrom:
+    docs: The mailing address of the sender.
+    properties: {}
+    extends:
+      - MailingNameSchema
+      - AddressOptionalSchema
+  MailingRequestSchema:
+    properties:
+      to:
+        type: MailingRequestSchemaTo
+        docs: The mailing address of the recipient.
+      from:
+        type: MailingRequestSchemaFrom
+        docs: The mailing address of the sender.
+  MailingSchemaStatus:
+    enum:
+      - CREATED
+      - PROCESSING_FOR_DELIVERY
+      - IN_TRANSIT
+      - DELIVERED
+      - RETURNED_TO_SENDER
+    docs: The status of the mailing.
+  MailingSchema:
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this mailing.
+      createdAt:
+        type: datetime
+        docs: The creation date and time of the mailing in `ISO 8601` format.
+      status:
+        type: MailingSchemaStatus
+        docs: The status of the mailing.
+      url:
+        type: string
+        docs: The URL to the mailed document.
+      userId:
+        type: optional<string>
+        docs: The unique identifier of the user associated with this mailing.
+      mailedFromId:
+        type: string
+        docs: The `documentId` of the mailed document.
+    extends:
+      - MailingRequestSchema
+  OkSchema: map<string, unknown>
+  one_thousand_ninety_nine_KNestedFormFieldsOptionalSchemaPayerClassification:
+    enum:
+      - PSE
+      - EPF_OTHER
+    docs: >-
+      The type of payer. Payment settlement entity (PSE) or Electronic Payment
+      Facilitator (EPF)/Other third party.
+  one_thousand_ninety_nine_KNestedFormFieldsOptionalSchemaTransactionsReportedClassification:
+    enum:
+      - PAYMENT_CARD
+      - THIRD_PARTY_NETWORK
+    docs: The type of transactions reported.
+  one_thousand_ninety_nine_KNestedFormFieldsOptionalSchemaGrossAmountsByMonth:
+    docs: >-
+      An object that contains the gross amount of transactions for each month.
+      At least one month must have a value above zero. Values must be in cents.
+    properties:
+      january:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in January. Value must be in cents.
+        validation:
+          min: 0
+      february:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in February. Value must be in cents.
+        validation:
+          min: 0
+      march:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in March. Value must be in cents.
+        validation:
+          min: 0
+      april:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in April. Value must be in cents.
+        validation:
+          min: 0
+      may:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in May. Value must be in cents.
+        validation:
+          min: 0
+      june:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in June. Value must be in cents.
+        validation:
+          min: 0
+      july:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in July. Value must be in cents.
+        validation:
+          min: 0
+      august:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in August. Value must be in cents.
+        validation:
+          min: 0
+      september:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in September. Value must be in cents.
+        validation:
+          min: 0
+      october:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in October. Value must be in cents.
+        validation:
+          min: 0
+      november:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in November. Value must be in cents.
+        validation:
+          min: 0
+      december:
+        type: optional<integer>
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in December. Value must be in cents.
+        validation:
+          min: 0
+  Form1099KNestedFormFieldsOptionalSchema:
+    docs: The 1099-K form fields.
+    properties:
+      payerClassification:
+        type: >-
+          optional<one_thousand_ninety_nine_KNestedFormFieldsOptionalSchemaPayerClassification>
+        docs: >-
+          The type of payer. Payment settlement entity (PSE) or Electronic
+          Payment Facilitator (EPF)/Other third party.
+      transactionsReportedClassification:
+        type: >-
+          optional<one_thousand_ninety_nine_KNestedFormFieldsOptionalSchemaTransactionsReportedClassification>
+        docs: The type of transactions reported.
+      pseName:
+        type: optional<string>
+        docs: >-
+          The payment settlement entity name. Required if `payerClassification`
+          is `PSE`.
+      psePhoneNumber:
+        type: optional<string>
+        docs: >-
+          The payment settlement entity phone number. Required if
+          `payerClassification` is `PSE`.
+      accountNumber:
+        type: optional<string>
+        docs: >-
+          The account number or other unique number the PSE assigned to
+          distinguish a account.
+        validation:
+          maxLength: 20
+      aggregateGrossAmount:
+        type: optional<integer>
+        docs: >-
+          Aggregate gross amount of payment card/third party network
+          transactions made to you through the PSE during the calendar year.
+          Value must be in cents.
+        validation:
+          min: 0
+      aggregateGrossAmountCardNotPresent:
+        type: optional<integer>
+        docs: >-
+          The aggregate gross amount of all reportable payment transactions made
+          to you through the PSE during the calendar year where the card was not
+          present at the time of the transaction or the card number was keyed
+          into the terminal. Typically, this relates to online sales, phone
+          sales, or catalogue sales. If `transactionsReportedClassification` is
+          `thirdPartyNetwork`, or if these are third party network transactions,
+          card not present transactions will not be reported. Value must be in
+          cents.
+        validation:
+          min: 0
+      merchantCategoryCode:
+        type: optional<string>
+        docs: >-
+          Payment brands use merchant category codes (MCCs) to classify
+          merchants and businesses by the type of goods or services provided. It
+          is a four (4) digit code. This may be left blank.
+        validation:
+          pattern: ^\d{4}$
+          minLength: 4
+          maxLength: 4
+      numberOfPaymentTransactions:
+        type: optional<integer>
+        docs: >-
+          The number of payment transactions (not including refund transactions)
+          processed through the payment card/third party network.
+        validation:
+          min: 0
+      federalIncomeTaxWithheld:
+        type: optional<integer>
+        docs: >-
+          The federal income tax withheld. Generally, a payer must backup
+          withhold if you did not furnish your TIN or you did not furnish the
+          correct TIN to the payer. Value must be in cents. Abound does not
+          currently support `federalIncomeTaxWithheld` reporting on the 1099-K,
+          please contact us for more information.
+        validation:
+          min: 0
+          max: 0
+      grossAmountsByMonth:
+        type: >-
+          optional<one_thousand_ninety_nine_KNestedFormFieldsOptionalSchemaGrossAmountsByMonth>
+        docs: >-
+          An object that contains the gross amount of transactions for each
+          month. At least one month must have a value above zero. Values must be
+          in cents.
+  one_thousand_ninety_nine_KFormFieldsSchemaFormFields:
+    properties: {}
+    extends:
+      - Form1099KNestedFormFieldsOptionalSchema
+      - StateTaxInfoSchema
+  Form1099KFormFieldsSchema:
+    properties:
+      formFields: optional<one_thousand_ninety_nine_KFormFieldsSchemaFormFields>
+  Form1099KSchema:
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this 1099-K document.
+      payer: optional<PayerNestedOptionalSchema>
+      payee: optional<PayeeNestedOptionalSchema>
+      formFields: optional<one_thousand_ninety_nine_CorrectionFormFieldsSchemaFormFields>
+    extends:
+      - Form1099Schema
+      - Form1099RequestSchema
+      - ReferencesSchema
+      - Form1099RelationsSchema
+  Form1099NecNestedFormFieldsOptionalSchema:
+    docs: The 1099-NEC form fields.
+    properties:
+      accountNumber:
+        type: optional<string>
+        docs: >-
+          If the payer assigns the contractor a unique number for its records,
+          enter the account number in this box. If not, leave the box blank.
+        validation:
+          maxLength: 20
+      nonemployeeCompensation:
+        type: optional<integer>
+        docs: >-
+          The total amount remitted by payer to recipient during the year. Value
+          must be in cents.
+        validation:
+          min: 0
+      hasDirectSalesOver5000:
+        type: optional<boolean>
+        docs: >-
+          If `true`, consumer products totaling $5,000 or more were sold to
+          recipient for resale, on a buy-sell, a deposit-commission, or other
+          basis.
+      federalIncomeTaxWithheld:
+        type: optional<integer>
+        docs: >-
+          The federal income tax withheld. A payer must backup withhold on
+          certain payments if recipient did not provide a TIN to the payer.
+          Value must be in cents. Abound does not currently support
+          `federalIncomeTaxWithheld` reporting on the 1099-NEC, please contact
+          us for more information.
+        validation:
+          min: 0
+          max: 0
+  StateTaxInfoWithIncomeNestedOptionalSchemaFilingState:
+    enum:
+      - AA
+      - AE
+      - AK
+      - AL
+      - AP
+      - AR
+      - AS
+      - AZ
+      - CA
+      - CO
+      - CT
+      - DC
+      - DE
+      - FL
+      - GA
+      - GU
+      - HI
+      - IA
+      - ID
+      - IL
+      - IN
+      - KY
+      - KS
+      - LA
+      - MA
+      - MD
+      - ME
+      - MI
+      - MN
+      - MO
+      - MP
+      - MS
+      - MT
+      - value: N/A
+        name: NOT_APPLICABLE
+      - NC
+      - ND
+      - NE
+      - NH
+      - NJ
+      - NM
+      - NV
+      - NY
+      - OH
+      - OK
+      - OR
+      - PA
+      - PR
+      - RI
+      - SC
+      - SD
+      - TN
+      - TX
+      - UT
+      - VA
+      - VI
+      - VT
+      - WA
+      - WI
+      - WV
+      - WY
+    docs: >-
+      The filing state code. The abbreviation of the state (`CA` for
+      California).
+  StateTaxInfoWithIncomeNestedOptionalSchema:
+    properties:
+      filingState:
+        type: optional<StateTaxInfoWithIncomeNestedOptionalSchemaFilingState>
+        docs: >-
+          The filing state code. The abbreviation of the state (`CA` for
+          California).
+      payeeStateId:
+        type: optional<string>
+        docs: The payee's state identification number.
+      payerStateId:
+        type: optional<string>
+        docs: The payer's state identification number.
+      stateTaxWithheld:
+        type: optional<integer>
+        docs: >-
+          The state tax withheld. Value must be in cents. Abound does not
+          currently support `stateTaxWithheld` reporting, please contact us for
+          more information.
+        validation:
+          min: 0
+          max: 0
+      stateIncome:
+        type: optional<integer>
+        docs: The state income. Value must be in cents.
+        validation:
+          min: 0
+  StateTaxInfoWithIncomeSchema:
+    properties:
+      stateTaxInfo:
+        type: optional<list<StateTaxInfoWithIncomeNestedOptionalSchema>>
+        docs: An array that contains up to two (1) state tax information objects.
+  one_thousand_ninety_nine_NecFormFieldsSchemaFormFields:
+    properties: {}
+    extends:
+      - Form1099NecNestedFormFieldsOptionalSchema
+      - StateTaxInfoWithIncomeSchema
+  Form1099NecFormFieldsSchema:
+    properties:
+      formFields: optional<one_thousand_ninety_nine_NecFormFieldsSchemaFormFields>
+  Form1099NecSchema:
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this 1099-NEC document.
+      payer: optional<PayerNestedOptionalSchema>
+      payee: optional<PayeeNestedOptionalSchema>
+      formFields: optional<one_thousand_ninety_nine_CorrectionFormFieldsSchemaFormFields>
+    extends:
+      - Form1099Schema
+      - Form1099RequestSchema
+      - ReferencesSchema
+      - Form1099RelationsSchema
+  ForeignAddressOptionalSchema:
+    properties:
+      address:
+        type: optional<string>
+        docs: The legal address.
+      address2:
+        type: optional<string>
+        docs: >-
+          The second part of the legal address, such as an apartment or suite
+          number.
+      city:
+        type: optional<string>
+        docs: The city associated with the street address.
+      state:
+        type: optional<string>
+        docs: The province associated with the street address.
+      postalCode:
+        type: optional<string>
+        docs: The foreign postal code associated with the street address.
+      country:
+        type: optional<string>
+        docs: The country adhering to `ISO 3166-2` standards.
+        validation:
+          minLength: 2
+          maxLength: 2
+  W8BenBeneficialOwnerNestedOptionalSchema:
+    docs: The payee (benefical owner) completing the document.
+    properties:
+      name:
+        type: optional<string>
+        docs: The payee's legal name (first + last).
+      citizenshipCountry:
+        type: optional<string>
+        docs: The payee's country of citizenship adhering to `ISO 3166-2` standards.
+        validation:
+          minLength: 2
+          maxLength: 2
+      tin:
+        type: optional<string>
+        docs: >-
+          The payee's US tax identification number, commonly referred to as a
+          TIN. No hyphens. Numerical digits only. Alternatively, you may pass
+          the corresponding `tinFingerprint`.
+        validation:
+          minLength: 9
+          maxLength: 9
+      foreignTin:
+        type: optional<string>
+        docs: >-
+          The payee's foreign tax identifying number, commonly referred to as a
+          FTIN. No hyphens. AlphaNumberic digits only. Alternatively, you may
+          pass the corresponding `foreignTinFingerprint`.
+      dateOfBirth:
+        type: optional<string>
+        docs: The date, in `YYYY-MM-DD` format, the payee was born on.
+        validation:
+          pattern: ^\d{4}-\d{2}-\d{2}$
+      permanentResidenceAddress:
+        type: optional<ForeignAddressOptionalSchema>
+        docs: >-
+          Permanent residence address (street, apt. or suite no., or rural
+          route). Do not use a P.O. box or in-care-of address.
+      mailingAddress:
+        type: optional<AddressOptionalSchema>
+        docs: >-
+          The mailing address. Only include if different from the permanent
+          residence address.
+  W8BenBeneficialOwnerSchema:
+    properties:
+      payee: optional<W8BenBeneficialOwnerNestedOptionalSchema>
+  PayeeForeignTinOptionalSchemaPayee:
+    properties:
+      foreignTinFingerprint:
+        type: optional<string>
+        docs: The fingerprint of the payee's Foreign TIN (FTIN).
+  PayeeForeignTinOptionalSchema:
+    properties:
+      payee: optional<PayeeForeignTinOptionalSchemaPayee>
+  ElectronicSignatureNestedOptionalSchema:
+    docs: The electronic signature of the payee.
+    properties:
+      signature:
+        type: optional<string>
+        docs: The signature of the payee.
+      printedName:
+        type: optional<string>
+        docs: The printed name of the payee.
+      signedAt:
+        type: optional<datetime>
+        docs: The date and time in `ISO 8601` format of the signature.
+      ipAddress:
+        type: optional<string>
+        docs: The IP address of the payee when signing the W-8BEN.
+        validation:
+          format: ipv4
+  ElectronicSignatureSchema:
+    properties:
+      electronicSignature: optional<ElectronicSignatureNestedOptionalSchema>
+  W8BenEBeneficialOwnerNestedOptionalSchema:
+    docs: The payee (benefical owner) completing the document.
+    properties:
+      name:
+        type: optional<string>
+        docs: The payee's legal business name.
+      name2:
+        type: optional<string>
+        docs: >-
+          The payee's trade name, DBA name, or disregarded entity name, if
+          different from `name`.
+      incorporationCountry:
+        type: optional<string>
+        docs: >-
+          The payee's country of incorporation adhering to `ISO 3166-2`
+          standards.
+        validation:
+          minLength: 2
+          maxLength: 2
+      tin:
+        type: optional<string>
+        docs: >-
+          The payee's US tax identification number, commonly referred to as a
+          TIN. No hyphens. Numerical digits only. Alternatively, you may pass
+          the corresponding `tinFingerprint`.
+        validation:
+          minLength: 9
+          maxLength: 9
+      foreignTin:
+        type: optional<string>
+        docs: >-
+          The payee's foreign tax identifying number, commonly referred to as a
+          FTIN. No hyphens. AlphaNumberic digits only. Alternatively, you may
+          pass the corresponding `foreignTinFingerprint`.
+      permanentResidenceAddress:
+        type: optional<ForeignAddressOptionalSchema>
+        docs: >-
+          Permanent residence address (street, apt. or suite no., or rural
+          route). Do not use a P.O. box or in-care-of address.
+      mailingAddress:
+        type: optional<AddressOptionalSchema>
+        docs: >-
+          The mailing address. Only include if different from the permanent
+          residence address.
+  W8BenEBeneficialOwnerSchema:
+    properties:
+      payee: optional<W8BenEBeneficialOwnerNestedOptionalSchema>
+  W8BenESchemaFormFieldsTaxClassification:
+    enum:
+      - CENTRAL_BANK_OF_ISSUE
+      - COMPLEX_TRUST
+      - CORPORATION
+      - DISREGARDED_ENTITY
+      - ESTATE
+      - FOREIGN_GOVERNMENT_CONTROLLED_ENTITY
+      - FOREIGN_GOVERNMENT_INTEGRAL_PART
+      - GRANTOR_TRUST
+      - INTERNATIONAL_ORGANIZATION
+      - PARTNERSHIP
+      - PRIVATE_FOUNDATION
+      - SIMPLE_TRUST
+      - TAX_EXEMPT_ORGANIZATION
+    docs: The tax classification of the payee.
+  W8BenESchemaFormFieldsTaxTreatyCode:
+    enum:
+      - AU_17_INDEPENDENT_PERSONAL_SERVICES
+      - AU_18_DEPENDENT_PERSONAL_SERVICES
+      - AU_42_PUBLIC_ENTERTAINMENT
+      - CA_17_INDEPENDENT_PERSONAL_SERVICES
+      - CA_18_DEPENDENT_PERSONAL_SERVICES
+      - CA_42_PUBLIC_ENTERTAINMENT
+      - CN_17_INDEPENDENT_PERSONAL_SERVICES
+      - CN_18_DEPENDENT_PERSONAL_SERVICES
+      - CN_42_PUBLIC_ENTERTAINMENT
+      - GB_17_INDEPENDENT_PERSONAL_SERVICES
+      - GB_18_DEPENDENT_PERSONAL_SERVICES
+      - GB_42_PUBLIC_ENTERTAINMENT
+      - IL_16_SCHOLARSHIP_AND_FELLOWSHIP_GRANT
+      - IL_17_INDEPENDENT_PERSONAL_SERVICES
+      - IL_18_DEPENDENT_PERSONAL_SERVICES
+      - IL_42_PUBLIC_ENTERTAINMENT
+      - IN_17_INDEPENDENT_PERSONAL_SERVICES
+      - IN_18_DEPENDENT_PERSONAL_SERVICES
+      - IN_42_PUBLIC_ENTERTAINMENT
+      - MX_17_INDEPENDENT_PERSONAL_SERVICES
+      - MX_18_DEPENDENT_PERSONAL_SERVICES
+      - MX_42_PUBLIC_ENTERTAINMENT
+    docs: The tax treaty code the payee is claiming.
+  W8BenESchemaFormFieldsTaxTreatyBenefitsIncomeCode:
+    enum:
+      - value: '16'
+        name: Sixteen
+      - value: '17'
+        name: Seventeen
+      - value: '18'
+        name: Eighteen
+      - value: '42'
+        name: FortyTwo
+    docs: The code of the income associated with the claimed rate of withholding.
+  W8BenESchemaFormFieldsTaxTreatyBenefits:
+    docs: The tax treaty benefits the payee is claiming.
+    properties:
+      residentCountry:
+        type: string
+        docs: >-
+          The foreign country, adhering to `ISO 3166-2` standards, the payee is
+          claiming treaty benefits as a resident with which the United States
+          has an income tax treaty for payments subject to withholding under
+          chapter 3 or under section 1446(a) or (f).
+        validation:
+          minLength: 2
+          maxLength: 2
+      claimedProvision:
+        type: string
+        docs: >-
+          The article and paragraph of the tax treaty that cite the provisions
+          the payee is claiming. Max 20 charaters.
+        validation:
+          maxLength: 20
+      rateOfWithholding:
+        type: float
+        docs: >-
+          The decimal percentage rate of withholding the cited tax treaty
+          allows.
+      incomeCode:
+        type: W8BenESchemaFormFieldsTaxTreatyBenefitsIncomeCode
+        docs: >-
+          The code of the income associated with the claimed rate of
+          withholding.
+      incomeType:
+        type: literal<"SERVICES">
+        docs: The type of income associated with the claimed rate of withholding.
+      additionalConditions:
+        type: optional<string>
+        docs: >-
+          The additional conditions the payee is claiming under the cited tax
+          treaty.
+  W8BenESchemaFormFields:
+    docs: The W-8BEN-E form fields.
+    properties:
+      taxClassification:
+        type: optional<W8BenESchemaFormFieldsTaxClassification>
+        docs: The tax classification of the payee.
+      isForeignTinNotRequired:
+        type: optional<boolean>
+        docs: Pass true if a foreign TIN is not legally required. Otherwise false.
+      taxTreatyCode:
+        type: optional<W8BenESchemaFormFieldsTaxTreatyCode>
+        docs: The tax treaty code the payee is claiming.
+      taxTreatyBenefits:
+        type: optional<W8BenESchemaFormFieldsTaxTreatyBenefits>
+        docs: The tax treaty benefits the payee is claiming.
+      referenceNumbers:
+        type: optional<list<string>>
+        docs: >-
+          The reference numbers to list on this W-8BEN-E. Two reference numbers
+          are allowed. Max 20 characters each.
+      isCertified:
+        type: optional<boolean>
+        docs: Pass true if the payee has certified the W-8BEN-E. Otherwise false.
+    extends:
+      - ElectronicSignatureSchema
+  W8BenESchema:
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this W-8BEN-E document.
+      createdAt:
+        type: datetime
+        docs: The creation date and time of the W-8BEN-E in `ISO 8601` format.
+      expiresAt:
+        type: datetime
+        docs: >-
+          The expiration date and time of the W-8BEN-E in `ISO 8601` format.
+          Once past, the W-8BEN-E is no longer valid and re-collection is
+          required.
+      url:
+        type: string
+        docs: The URL to the W-8BEN-E document.
+      formFields:
+        type: W8BenESchemaFormFields
+        docs: The W-8BEN-E form fields.
+      payee: optional<W8BenEBeneficialOwnerNestedOptionalSchema>
+    extends:
+      - ReferencesSchema
+  W9FormFieldsSchemaFormFieldsTaxClassification:
+    enum:
+      - INDIVIDUAL
+      - SOLE_PROPRIETOR
+      - C_CORPORATION
+      - S_CORPORATION
+      - PARTNERSHIP
+      - TRUST
+      - ESTATE
+      - LLC_PARTNERSHIP
+      - LLC_C_CORPORATION
+      - LLC_S_CORPORATION
+      - OTHER
+    docs: The U.S. federal tax classification of the person.
+  W9FormFieldsSchemaFormFieldsExemptPayeeCode:
+    enum:
+      - value: '1'
+        name: One
+      - value: '2'
+        name: Two
+      - value: '3'
+        name: Three
+      - value: '4'
+        name: Four
+      - value: '5'
+        name: Five
+      - value: '6'
+        name: Six
+      - value: '7'
+        name: Seven
+      - value: '8'
+        name: Eight
+      - value: '9'
+        name: Nine
+      - value: '10'
+        name: Ten
+      - value: '11'
+        name: Eleven
+      - value: '12'
+        name: Twelve
+      - value: '13'
+        name: Thirteen
+    docs: The code to identify a payee that is exempt from backup withholding.
+  W9FormFieldsSchemaFormFieldsExemptFatcaCode:
+    enum:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      - G
+      - H
+      - I
+      - J
+      - K
+      - L
+      - M
+      - NOT_APPLICABLE
+    docs: The code to identify a payee that is exempt from reporting under FATCA.
+  W9FormFieldsSchemaFormFields:
+    properties:
+      taxClassification:
+        type: W9FormFieldsSchemaFormFieldsTaxClassification
+        docs: The U.S. federal tax classification of the person.
+      otherTaxClassification:
+        type: optional<string>
+        docs: The tax classification of the payee if `taxClassification` is `OTHER`.
+      hasIndirectForeignOwnership:
+        type: optional<boolean>
+        docs: >-
+          If your `taxClassification` is `PARTNERSHIP`, `TRUST`, `ESTATE`, or
+          `LLC_PARTNERSHIP`, and you are providing this form to a partnership,
+          trust, or estate in which you have an ownership interest, pass `true`
+          if you have any foreign partners, owners, or beneficiaries.
+      exemptPayeeCode:
+        type: optional<W9FormFieldsSchemaFormFieldsExemptPayeeCode>
+        docs: The code to identify a payee that is exempt from backup withholding.
+      exemptFatcaCode:
+        type: optional<W9FormFieldsSchemaFormFieldsExemptFatcaCode>
+        docs: >-
+          The code to identify a payee that is exempt from reporting under
+          FATCA.
+      accountNumbers:
+        type: optional<list<string>>
+        docs: The account numbers to list on this W-9.
+      isSubjectToBackupWithholding:
+        type: optional<boolean>
+        docs: If the payee is subject to backup withholding, pass `true`.
+      certifiedAt:
+        type: optional<datetime>
+        docs: >-
+          The certification date and time in `ISO 8601` format. This field is
+          deprecated. Please use `electronicSignature` instead.
+        availability: deprecated
+    extends:
+      - ElectronicSignatureSchema
+  W9FormFieldsSchema:
+    properties:
+      formFields: W9FormFieldsSchemaFormFields
+  TaxTreatySchema:
+    properties:
+      taxTreatyCode:
+        type: string
+        docs: Abound's shorthand code for a particular US tax treaty.
+      residentCountry:
+        type: string
+        docs: >-
+          The foreign country, adhering to `ISO 3166-2` standards, associated
+          with the tax treaty.
+        validation:
+          minLength: 2
+          maxLength: 2
+      rateOfWithholding:
+        type: float
+        docs: >-
+          The decimal percentage rate of withholding the tax treaty allows by
+          default. Rates are subject to validation and approval by the Payer.
+      incomeDescription:
+        type: string
+        docs: The income description associated with the tax treaty.
+  TinVerificationRequestSchema:
+    properties:
+      name:
+        type: string
+        docs: The legal name (first + last) or business name.
+      tin:
+        type: string
+        docs: >-
+          The tax identification number, commonly referred to as a TIN. No
+          hyphens. Numerical digits only.
+        validation:
+          minLength: 9
+          maxLength: 9
+      userId:
+        type: optional<string>
+        docs: >-
+          The unique identifier of the user associated with this TIN
+          verification.
+  TinVerificationSchemaStatus:
+    enum:
+      - PENDING
+      - MATCH
+      - MISMATCH
+    docs: The status of the TIN verification.
+  TinVerificationSchemaTinType:
+    enum:
+      - INDIVIDUAL
+      - BUSINESS
+    docs: The type of TIN.
+  TinVerificationSchema:
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this TIN verification.
+      createdAt:
+        type: datetime
+        docs: >-
+          The creation date and time of the TIN verification in `ISO 8601`
+          format.
+      status:
+        type: TinVerificationSchemaStatus
+        docs: The status of the TIN verification.
+      tinType:
+        type: optional<TinVerificationSchemaTinType>
+        docs: The type of TIN.
+      tinFingerprint:
+        type: string
+        docs: The fingerprint for this TIN verification.
+    extends:
+      - TinVerificationRequestSchema
+  UserRequestSchema:
+    properties:
+      email:
+        type: optional<string>
+        docs: >-
+          The user's email address. Abound assume's you have taken the proper
+          steps to verify the ownership of this email address.
+        validation:
+          format: email
+      foreignId:
+        type: optional<string>
+        docs: The customer-specific unique identifier associated with this user.
+      metadata:
+        type: optional<map<string, string>>
+        docs: >-
+          Use metadata for storing additional user data. For filtering, please
+          use `forgeinId`.
+  UserSchema:
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this user.
+      createdAt:
+        type: datetime
+        docs: The creation date and time of the user in `ISO 8601` format.
+    extends:
+      - UserRequestSchema

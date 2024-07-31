@@ -1,0 +1,95 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /documents/w-9
+      method: GET
+      auth: true
+      docs: Returns a list of W-9 documents.
+      display-name: List all W-9 documents
+      request:
+        name: FormW9ListRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: >-
+              The specific page of results you're requesting. Responses are
+              limited to a maximum of 100 records.
+          payeeTinFingerprint:
+            type: optional<string>
+            docs: >-
+              Filters the list of documents based on the `payee.tinFingerprint`
+              field.
+          payerTinFingerprint:
+            type: optional<string>
+            docs: >-
+              Filters the list of documents based on the `payer.tinFingerprint`
+              field.
+          userId:
+            type: optional<string>
+            docs: The unique identifier for a single end-user of your application.
+      response:
+        docs: OK
+        type: list<unknown>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          response:
+            body: []
+    create:
+      path: /documents/w-9
+      method: POST
+      auth: true
+      docs: >-
+        Creates a W-9 document and subsequently kicks off a TIN verification, if
+        the name and TIN combo has not been used before.
+      display-name: Create a W-9
+      request:
+        name: W9RequestSchema
+        headers:
+          Idempotency-Key:
+            type: optional<string>
+            name: idempotencyKey
+            docs: >-
+              The unique key used to identify a request that has already been
+              processed.
+        body:
+          properties: {}
+          extends:
+            - root.PayeeSchema
+            - root.PayerSchema
+            - root.W9FormFieldsSchema
+            - root.ReferencesSchema
+      response:
+        docs: OK
+        type: unknown
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+    retrieve:
+      path: /documents/w-9/{documentId}
+      method: GET
+      auth: true
+      docs: Retrieves the details of an existing W-9 document.
+      path-parameters:
+        documentId:
+          type: string
+          docs: The unique identifier for an existing document.
+      display-name: Retrieve a W-9
+      response:
+        docs: OK
+        type: unknown
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError

@@ -1,0 +1,133 @@
+types:
+  TinVerificationsListRequestStatus:
+    enum:
+      - PENDING
+      - MATCH
+      - MISMATCH
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /tin-verifications
+      method: GET
+      auth: true
+      docs: >-
+        Returns a list of TIN verifications. Up to 100 TIN verifications are
+        returned per request.
+      display-name: List all TIN verifications
+      request:
+        name: TinVerificationsListRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: >-
+              The specific page of results you're requesting. Responses are
+              limited to a maximum of 100 records.
+          tinFingerprint:
+            type: optional<string>
+            docs: >-
+              Filters the list of TIN verifications based on the
+              `tinFingerprint` field.
+          status:
+            type: optional<TinVerificationsListRequestStatus>
+            docs: Filters the list of TIN verifications based on the `status` field.
+          userId:
+            type: optional<string>
+            docs: The unique identifier for a single end-user of your application.
+      response:
+        docs: OK
+        type: list<root.TinVerificationSchema>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          response:
+            body:
+              - name: Ada Lovelace
+                tin: '*******00'
+                userId: '{{userId}}'
+                id: tinVerificationId_sample41SD71AV8f
+                createdAt: '2024-01-01T00:00:00Z'
+                status: MATCH
+                tinType: INDIVIDUAL
+                tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+    create:
+      path: /tin-verifications
+      method: POST
+      auth: true
+      docs: Creates an asynchronous TIN verification.
+      display-name: Create a TIN verification
+      request:
+        body: root.TinVerificationRequestSchema
+        headers:
+          Idempotency-Key:
+            type: optional<string>
+            name: idempotencyKey
+            docs: >-
+              The unique key used to identify a request that has already been
+              processed.
+        name: TinVerificationsCreateRequest
+      response:
+        docs: OK
+        type: root.TinVerificationSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          headers:
+            Idempotency-Key: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+          request:
+            name: Ada Lovelace
+            tin: '000000000'
+          response:
+            body:
+              name: Ada Lovelace
+              tin: '*******00'
+              userId: '{{userId}}'
+              id: tinVerificationId_sample41SD71AV8f
+              createdAt: '2024-01-01T00:00:00Z'
+              status: MATCH
+              tinType: INDIVIDUAL
+              tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+    retrieve:
+      path: /tin-verifications/{tinVerificationId}
+      method: GET
+      auth: true
+      docs: Retrieves the details of an existing TIN verification.
+      path-parameters:
+        tinVerificationId:
+          type: string
+          docs: The unique identifier for an existing TIN verification.
+      display-name: Retrieve a TIN verification
+      response:
+        docs: OK
+        type: root.TinVerificationSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            tinVerificationId: '{{tinVerificationId}}'
+          response:
+            body:
+              name: Ada Lovelace
+              tin: '*******00'
+              userId: '{{userId}}'
+              id: tinVerificationId_sample41SD71AV8f
+              createdAt: '2024-01-01T00:00:00Z'
+              status: MATCH
+              tinType: INDIVIDUAL
+              tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+  display-name: TIN Verifications

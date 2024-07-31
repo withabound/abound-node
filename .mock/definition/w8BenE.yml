@@ -1,0 +1,244 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /documents/w-8ben-e
+      method: GET
+      auth: true
+      docs: Returns a list of W-8BEN-E documents.
+      display-name: List all W-8BEN-E documents
+      request:
+        name: W8BenEListRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: >-
+              The specific page of results you're requesting. Responses are
+              limited to a maximum of 100 records.
+          payeeTinFingerprint:
+            type: optional<string>
+            docs: >-
+              Filters the list of documents based on the `payee.tinFingerprint`
+              field.
+          payeeForeignTinFingerprint:
+            type: optional<string>
+            docs: >-
+              Filters the list of documents based on the
+              `payee.foreignTinFingerprint` field.
+          userId:
+            type: optional<string>
+            docs: The unique identifier for a single end-user of your application.
+      response:
+        docs: OK
+        type: list<root.W8BenESchema>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          response:
+            body:
+              - userId: '{{userId}}'
+                payee:
+                  name: Hooli
+                  name2: Hooli
+                  incorporationCountry: GB
+                  tin: '*******11'
+                  foreignTin: '*******6C'
+                  permanentResidenceAddress:
+                    address: 43 Hilly Fields
+                    address2: Suite 32
+                    city: Lewisham
+                    state: London
+                    postalCode: SE13 7JN
+                    country: GB
+                  mailingAddress:
+                    address: 256 Byron Street
+                    address2: Suite 32
+                    city: Palo Alto
+                    state: CA
+                    postalCode: '94306'
+                    country: US
+                id: documentId_sampleGyuBXlfAwo
+                createdAt: '2024-01-01T00:00:00Z'
+                expiresAt: '2028-01-01T00:00:00Z'
+                url: >-
+                  https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-W-8BEN-E.pdf
+                formFields:
+                  electronicSignature:
+                    signature: Ada Lovelace
+                    printedName: Ada Lovelace
+                    signedAt: '2024-01-01T05:00:00Z'
+                    ipAddress: 0.0.0.0
+                  taxClassification: CORPORATION
+                  isForeignTinNotRequired: false
+                  taxTreatyCode: AU_17_INDEPENDENT_PERSONAL_SERVICES
+                  taxTreatyBenefits:
+                    residentCountry: GB
+                    claimedProvision: '7'
+                    rateOfWithholding: 0
+                    incomeCode: '17'
+                    incomeType: SERVICES
+                    additionalConditions: Independent personal services performed in the US
+                  referenceNumbers:
+                    - '10000001'
+                  isCertified: true
+    create:
+      path: /documents/w-8ben-e
+      method: POST
+      auth: true
+      docs: >-
+        Creates a W-8BEN-E document and, if present, subsequently kicks off a
+        TIN Verification. A TIN Verification will only kickoff if the name and
+        TIN combo has not been seen before.
+      display-name: Create a W-8BEN-E
+      request:
+        body: root.W8BenESchema
+        headers:
+          Idempotency-Key:
+            type: optional<string>
+            name: idempotencyKey
+            docs: >-
+              The unique key used to identify a request that has already been
+              processed.
+        name: W8BenECreateRequest
+      response:
+        docs: OK
+        type: root.W8BenESchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          headers:
+            Idempotency-Key: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+          request:
+            id: documentId_sampleGyuBXlfAwo
+            createdAt: '2024-01-01T00:00:00Z'
+            expiresAt: '2028-01-01T00:00:00Z'
+            url: >-
+              https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-W-8BEN-E.pdf
+            formFields: {}
+          response:
+            body:
+              userId: '{{userId}}'
+              payee:
+                name: Hooli
+                name2: Hooli
+                incorporationCountry: GB
+                tin: '*******00'
+                foreignTin: '*******6C'
+                permanentResidenceAddress:
+                  address: 43 Hilly Fields
+                  address2: Suite 32
+                  city: Lewisham
+                  state: London
+                  postalCode: SE13 7JN
+                  country: GB
+                mailingAddress:
+                  address: 256 Byron Street
+                  address2: Suite 32
+                  city: Palo Alto
+                  state: CA
+                  postalCode: '94306'
+                  country: US
+              id: documentId_sampleGyuBXlfAwo
+              createdAt: '2024-01-01T00:00:00Z'
+              expiresAt: '2028-01-01T00:00:00Z'
+              url: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-W-8BEN-E.pdf
+              formFields:
+                electronicSignature:
+                  signature: Ada Lovelace
+                  printedName: Ada Lovelace
+                  signedAt: '2024-01-01T05:00:00Z'
+                  ipAddress: 0.0.0.0
+                taxClassification: CORPORATION
+                isForeignTinNotRequired: false
+                taxTreatyCode: AU_17_INDEPENDENT_PERSONAL_SERVICES
+                taxTreatyBenefits:
+                  residentCountry: GB
+                  claimedProvision: '7'
+                  rateOfWithholding: 0
+                  incomeCode: '17'
+                  incomeType: SERVICES
+                  additionalConditions: Independent personal services performed in the US
+                referenceNumbers:
+                  - '10000001'
+                isCertified: true
+    get:
+      path: /documents/w-8ben-e/{documentId}
+      method: GET
+      auth: true
+      docs: Retrieves the details of an existing W-8BEN-E document.
+      path-parameters:
+        documentId:
+          type: string
+          docs: The unique identifier for an existing document.
+      display-name: Retrieve a W-8BEN-E
+      response:
+        docs: OK
+        type: root.W8BenESchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            documentId: '{{documentId}}'
+          response:
+            body:
+              userId: '{{userId}}'
+              payee:
+                name: Hooli
+                name2: Hooli
+                incorporationCountry: GB
+                tin: '*******00'
+                foreignTin: '*******6C'
+                permanentResidenceAddress:
+                  address: 43 Hilly Fields
+                  address2: Suite 32
+                  city: Lewisham
+                  state: London
+                  postalCode: SE13 7JN
+                  country: GB
+                mailingAddress:
+                  address: 256 Byron Street
+                  address2: Suite 32
+                  city: Palo Alto
+                  state: CA
+                  postalCode: '94306'
+                  country: US
+              id: documentId_sampleGyuBXlfAwo
+              createdAt: '2024-01-01T00:00:00Z'
+              expiresAt: '2028-01-01T00:00:00Z'
+              url: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-W-8BEN-E.pdf
+              formFields:
+                electronicSignature:
+                  signature: Ada Lovelace
+                  printedName: Ada Lovelace
+                  signedAt: '2024-01-01T05:00:00Z'
+                  ipAddress: 0.0.0.0
+                taxClassification: CORPORATION
+                isForeignTinNotRequired: false
+                taxTreatyCode: AU_17_INDEPENDENT_PERSONAL_SERVICES
+                taxTreatyBenefits:
+                  residentCountry: GB
+                  claimedProvision: '7'
+                  rateOfWithholding: 0
+                  incomeCode: '17'
+                  incomeType: SERVICES
+                  additionalConditions: Independent personal services performed in the US
+                referenceNumbers:
+                  - '10000001'
+                isCertified: true

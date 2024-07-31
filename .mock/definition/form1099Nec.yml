@@ -1,0 +1,554 @@
+types:
+  Form1099NecListRequestStatus:
+    enum:
+      - CREATED
+      - FILED
+      - ACCEPTED
+      - REJECTED
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /documents/1099-nec
+      method: GET
+      auth: true
+      docs: Returns a list of 1099-NEC documents.
+      display-name: List all 1099-NEC documents
+      request:
+        name: Form1099NecListRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: >-
+              The specific page of results you're requesting. Responses are
+              limited to a maximum of 100 records.
+          filingYear:
+            type: optional<string>
+            docs: Filters the list of documents based on the `filingYear` field.
+          payeeTinFingerprint:
+            type: optional<string>
+            docs: >-
+              Filters the list of documents based on the `payee.tinFingerprint`
+              field.
+          payerTinFingerprint:
+            type: optional<string>
+            docs: >-
+              Filters the list of documents based on the `payer.tinFingerprint`
+              field.
+          status:
+            type: optional<Form1099NecListRequestStatus>
+            docs: Filters the list of documents based on the `status` field.
+          userId:
+            type: optional<string>
+            docs: The unique identifier for a single end-user of your application.
+      response:
+        docs: OK
+        type: list<root.Form1099NecSchema>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          response:
+            body:
+              - correctedById: documentId_samplenOHhUUVnh6
+                correctedFromId: documentId_samplegU0eR8oc8a
+                voidedById: documentId_sampleb6HQLsVuM9
+                voidedFromId: documentId_samplepWpJ9Snlzb
+                userId: '{{userId}}'
+                formFields:
+                  isVoid: false
+                  isCorrected: false
+                payer:
+                  address: 1401 N Shoreline Blvd
+                  address2: Suite 1
+                  city: Mountain View
+                  state: CA
+                  postalCode: '94043'
+                  country: US
+                  name: Hooli
+                  name2: Hooli
+                  tin: '*******11'
+                  phoneNumber: '6501014096'
+                payee:
+                  address: 256 Byron Street
+                  address2: Suite 32
+                  city: Palo Alto
+                  state: CA
+                  postalCode: '94306'
+                  country: US
+                  name: Ada Lovelace
+                  name2: InGen Corporation
+                  tin: '*******00'
+                filingYear: 2023
+                createdAt: '2024-01-01T00:00:00Z'
+                status: CREATED
+                payerUrl: >-
+                  https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-C.pdf
+                payeeUrl: >-
+                  https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-B.pdf
+                id: documentId_samplegU0eR8oc8a
+    create:
+      path: /documents/1099-nec
+      method: POST
+      auth: true
+      docs: >-
+        Creates a 1099-NEC document and subsequently kicks off a TIN
+        verification, if the name and TIN combo has not been used before.
+      display-name: Create a 1099-NEC
+      request:
+        name: Form1099NecRequestSchema
+        headers:
+          Idempotency-Key:
+            type: optional<string>
+            name: idempotencyKey
+            docs: >-
+              The unique key used to identify a request that has already been
+              processed.
+        body:
+          properties: {}
+          extends:
+            - root.Form1099RequestSchema
+            - root.PayerSchema
+            - root.PayeeSchema
+            - root.Form1099NecFormFieldsSchema
+            - root.ReferencesSchema
+      response:
+        docs: OK
+        type: root.Form1099NecSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          headers:
+            Idempotency-Key: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+          request:
+            filingYear: 2023
+          response:
+            body:
+              correctedById: documentId_samplenOHhUUVnh6
+              correctedFromId: documentId_samplegU0eR8oc8a
+              voidedById: documentId_sampleb6HQLsVuM9
+              voidedFromId: documentId_samplepWpJ9Snlzb
+              userId: '{{userId}}'
+              formFields:
+                isVoid: false
+                isCorrected: false
+              payer:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Hooli
+                name2: Hooli
+                tin: '*******11'
+                phoneNumber: '6501014096'
+              payee:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Ada Lovelace
+                name2: InGen Corporation
+                tin: '*******00'
+              filingYear: 2023
+              createdAt: '2024-01-01T00:00:00Z'
+              status: CREATED
+              payerUrl: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-C.pdf
+              payeeUrl: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-B.pdf
+              id: documentId_samplegU0eR8oc8a
+    mail:
+      path: /documents/1099-nec/{documentId}/mail
+      method: POST
+      auth: true
+      docs: Mails a 1099-NEC document.
+      path-parameters:
+        documentId:
+          type: string
+          docs: The unique identifier for an existing document.
+      display-name: Mail a 1099-NEC
+      request:
+        body: root.MailingRequestSchema
+        headers:
+          Idempotency-Key:
+            type: optional<string>
+            name: idempotencyKey
+            docs: >-
+              The unique key used to identify a request that has already been
+              processed.
+        name: Form1099NecMailRequest
+      response:
+        docs: OK
+        type: root.MailingSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            documentId: '{{documentId}}'
+          headers:
+            Idempotency-Key: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+          request:
+            to: {}
+            from: {}
+          response:
+            body:
+              to:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Ada Lovelace
+                name2: InGen Corporation
+              from:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Hooli
+                name2: InGen Corporation
+              id: mailingId_sampleFV9b73IvAD
+              createdAt: '2024-01-01T00:00:00Z'
+              status: CREATED
+              url: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-B.pdf
+              userId: '{{userId}}'
+              mailedFromId: documentId_sampletTtqNfulW8
+    file:
+      path: /documents/1099-nec/{documentId}/file
+      method: POST
+      auth: true
+      docs: Files a 1099-NEC document.
+      path-parameters:
+        documentId:
+          type: string
+          docs: The unique identifier for an existing document.
+      display-name: File a 1099-NEC
+      request:
+        name: Form1099NecFileRequest
+        headers:
+          Idempotency-Key:
+            type: optional<string>
+            name: idempotencyKey
+            docs: >-
+              The unique key used to identify a request that has already been
+              processed.
+      response:
+        docs: OK
+        type: root.Form1099NecSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            documentId: '{{documentId}}'
+          headers:
+            Idempotency-Key: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+          response:
+            body:
+              correctedById: documentId_samplenOHhUUVnh6
+              correctedFromId: documentId_samplegU0eR8oc8a
+              voidedById: documentId_sampleb6HQLsVuM9
+              voidedFromId: documentId_samplepWpJ9Snlzb
+              userId: '{{userId}}'
+              formFields:
+                isVoid: false
+                isCorrected: false
+              payer:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Hooli
+                name2: Hooli
+                tin: '*******11'
+                phoneNumber: '6501014096'
+              payee:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Ada Lovelace
+                name2: InGen Corporation
+                tin: '*******00'
+              filingYear: 2023
+              createdAt: '2024-01-01T00:00:00Z'
+              status: FILED
+              payerUrl: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-C.pdf
+              payeeUrl: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-B.pdf
+              id: documentId_samplegU0eR8oc8a
+    correct:
+      path: /documents/1099-nec/{documentId}/correct
+      method: POST
+      auth: true
+      docs: >-
+        Files a new corrected 1099-NEC and relates it to the original document.
+        A 1099-NEC can be corrected only after it has reached the `FILED`
+        status. Automatically handles both one-transaction and two-transaction
+        corrections.
+      path-parameters:
+        documentId:
+          type: string
+          docs: The unique identifier for an existing document.
+      display-name: Correct a 1099-NEC
+      request:
+        name: Form1099NecCorrectRequestSchema
+        headers:
+          Idempotency-Key:
+            type: optional<string>
+            name: idempotencyKey
+            docs: >-
+              The unique key used to identify a request that has already been
+              processed.
+        body:
+          properties: {}
+          extends:
+            - root.PayeeSchema
+            - root.Form1099NecFormFieldsSchema
+      response:
+        docs: OK
+        type: root.Form1099NecSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            documentId: '{{documentId}}'
+          headers:
+            Idempotency-Key: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+          request: {}
+          response:
+            body:
+              correctedById: documentId_samplenOHhUUVnh6
+              correctedFromId: documentId_samplegU0eR8oc8a
+              voidedById: documentId_sampleb6HQLsVuM9
+              voidedFromId: documentId_samplepWpJ9Snlzb
+              userId: '{{userId}}'
+              formFields:
+                isVoid: false
+                isCorrected: true
+              payer:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Hooli
+                name2: Hooli
+                tin: '*******11'
+                phoneNumber: '6501014096'
+              payee:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Ada Lovelace
+                name2: InGen Corporation
+                tin: '*******00'
+              filingYear: 2023
+              createdAt: '2024-01-01T00:00:00Z'
+              status: FILED
+              payerUrl: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-CORRECT-COPY-C.pdf
+              payeeUrl: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-CORRECT-COPY-B.pdf
+              id: documentId_sampletdeUbrEgYw
+    void:
+      path: /documents/1099-nec/{documentId}/void
+      method: POST
+      auth: true
+      docs: >-
+        Files a new voided 1099-NEC and relates it to the original document. A
+        1099-NEC can be voided only after it has reached the `FILED` status.
+      path-parameters:
+        documentId:
+          type: string
+          docs: The unique identifier for an existing document.
+      display-name: Void a 1099-NEC
+      request:
+        name: Form1099NecVoidRequest
+        headers:
+          Idempotency-Key:
+            type: optional<string>
+            name: idempotencyKey
+            docs: >-
+              The unique key used to identify a request that has already been
+              processed.
+      response:
+        docs: OK
+        type: root.Form1099NecSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            documentId: '{{documentId}}'
+          headers:
+            Idempotency-Key: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+          response:
+            body:
+              correctedById: documentId_samplenOHhUUVnh6
+              correctedFromId: documentId_samplegU0eR8oc8a
+              voidedById: documentId_sampleb6HQLsVuM9
+              voidedFromId: documentId_samplegU0eR8oc8a
+              userId: '{{userId}}'
+              formFields:
+                isVoid: true
+                isCorrected: false
+              payer:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Hooli
+                name2: Hooli
+                tin: '*******11'
+                phoneNumber: '6501014096'
+              payee:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Ada Lovelace
+                name2: InGen Corporation
+                tin: '*******00'
+              filingYear: 2023
+              createdAt: '2024-01-01T00:00:00Z'
+              status: FILED
+              payerUrl: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-VOID-COPY-C.pdf
+              payeeUrl: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-VOID-COPY-B.pdf
+              id: documentId_sampleSaOkfbLdUb
+    retrieve:
+      path: /documents/1099-nec/{documentId}
+      method: GET
+      auth: true
+      docs: Retrieves the details of an existing 1099-NEC document.
+      path-parameters:
+        documentId:
+          type: string
+          docs: The unique identifier for an existing document.
+      display-name: Retrieve a 1099-NEC
+      response:
+        docs: OK
+        type: root.Form1099NecSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            documentId: '{{documentId}}'
+          response:
+            body:
+              correctedById: documentId_samplenOHhUUVnh6
+              correctedFromId: documentId_samplegU0eR8oc8a
+              voidedById: documentId_sampleb6HQLsVuM9
+              voidedFromId: documentId_samplepWpJ9Snlzb
+              userId: '{{userId}}'
+              formFields:
+                isVoid: false
+                isCorrected: false
+              payer:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Hooli
+                name2: Hooli
+                tin: '*******11'
+                phoneNumber: '6501014096'
+              payee:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Ada Lovelace
+                name2: InGen Corporation
+                tin: '*******00'
+              filingYear: 2023
+              createdAt: '2024-01-01T00:00:00Z'
+              status: CREATED
+              payerUrl: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-C.pdf
+              payeeUrl: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/documents/FORM-1099-COPY-B.pdf
+              id: documentId_samplegU0eR8oc8a
+    delete:
+      path: /documents/1099-nec/{documentId}
+      method: DELETE
+      auth: true
+      docs: >-
+        Deletes a 1099-NEC document. Once an action (`/mail`, `/file`,
+        `/correct`, `/void`) has been executed on a 1099-NEC, it cannot be
+        deleted.
+      path-parameters:
+        documentId:
+          type: string
+          docs: The unique identifier for an existing document.
+      display-name: Delete a 1099-NEC
+      response:
+        docs: OK
+        type: root.OkSchema
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: default
+          path-parameters:
+            documentId: '{{documentId}}'
+          response:
+            body:
+              key: value
