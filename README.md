@@ -18,11 +18,9 @@ Instantiate and use the client with the following:
 ```typescript
 import { AboundClient } from "abound";
 
-const client = new AboundClient({ 
-    appId: "YOUR_APP_ID", 
-    appSecret: "YOUR_APP_SECRET" 
-});
+const client = new AboundClient({ token: "YOUR_TOKEN" });
 await client.form1099Int.create({
+    "Idempotency-Key": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
     filingYear: 2023,
 });
 ```
