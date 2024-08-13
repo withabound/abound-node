@@ -1,5 +1,6 @@
 import type { AboundContext } from "../abound.js";
 import { get, list, post } from "./base/base-resource.js";
+import type { TinType } from "./tin-verifications.js";
 import type { Pagination } from "./types/pagination.js";
 import type { Payee, PayeeRequest } from "./types/payee.js";
 import type { Payer, PayerRequest } from "./types/payer.js";
@@ -17,7 +18,9 @@ export type FormW9 = {
 
 // Request body
 export type FormW9Request = {
-  payee: PayeeRequest;
+  payee: PayeeRequest & {
+    tinType?: TinType;
+  };
   payer?: PayerRequest;
   formFields: FormW9FormFields;
   userId?: string;
@@ -32,6 +35,7 @@ export type FormW9Parameters = Pagination & {
 
 export type FormW9FormFields = {
   taxClassification: TaxClassification;
+  otherTaxClassification?: string;
   exemptPayeeCode?: ExemptPayeeCode;
   exemptFatcaCode?: ExemptFatcaCode;
   accountNumbers?: string[];
@@ -49,7 +53,8 @@ export type TaxClassification =
   | "ESTATE"
   | "LLC_PARTNERSHIP"
   | "LLC_C_CORPORATION"
-  | "LLC_S_CORPORATION";
+  | "LLC_S_CORPORATION"
+  | "OTHER";
 
 export type ExemptPayeeCode =
   | "1"
