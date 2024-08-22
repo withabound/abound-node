@@ -1,0 +1,131 @@
+imports:
+  errors: types/errors.yml
+  headers: types/headers.yml
+  common: types/common.yml
+types:
+  TinVerificationRequestSchema:
+    examples:
+      - name: RequestExample
+        value:
+          name: Ada Lovelace
+          tin: '000000000'
+    properties:
+      name:
+        type: string
+        docs: The legal name (first + last) or business name.
+      tin:
+        type: string
+        validation:
+          minLength: 9
+          maxLength: 9
+        docs: >-
+          The tax identification number, commonly referred to as a TIN. No
+          hyphens. Numerical digits only.
+      userId: optional<common.UserId>
+  TinVerificationSchema:
+    examples:
+      - name: ResponseExample
+        value:
+          name: Ada Lovelace
+          id: tinVerificationId_sample41SD71AV8f
+          createdAt: '2024-01-01T00:00:00Z'
+          status: MATCH
+          tin: '*******00'
+          tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+          tinType: INDIVIDUAL
+    extends:
+      - TinVerificationRequestSchema
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this TIN Verification.
+      createdAt:
+        type: datetime
+        docs: >-
+          The creation date and time of the TIN Verification in `ISO 8601`
+          format.
+      status: common.TinVerificationStatusEnum
+      tinType:
+        type: optional<common.TinTypeEnum>
+      tinFingerprint:
+        type: string
+        docs: The fingerprint for this TIN Verification.
+service:
+  auth: false
+  display-name: TIN Verifications
+  base-path: ''
+  endpoints:
+    list:
+      docs: >-
+        Returns a list of TIN Verifications. Up to 100 TIN Verifications are
+        returned per request.
+      method: GET
+      display-name: List all TIN Verifications
+      path: /tin-verifications
+      auth: true
+      request:
+        name: TinVerificationsListRequest
+        query-parameters:
+          page: optional<common.Page>
+          tinFingerprint: optional<common.TinFingerprintQueryParam>
+          status: optional<common.TinVerificationStatusQueryParam>
+          userId: optional<common.UserId>
+      response:
+        docs: OK
+        type: list<TinVerificationSchema>
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          response:
+            body:
+              - $TinVerificationSchema.ResponseExample
+    create:
+      docs: Creates an asynchronous TIN Verification.
+      method: POST
+      display-name: Create a TIN Verification
+      path: /tin-verifications
+      auth: true
+      request:
+        name: TinVerificationRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: TinVerificationRequestSchema
+      response:
+        docs: OK
+        type: TinVerificationSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          request: $TinVerificationRequestSchema.RequestExample
+          response:
+            body: $TinVerificationSchema.ResponseExample
+    retrieve:
+      docs: Retrieves the details of an existing TIN Verification.
+      method: GET
+      display-name: Retrieve a TIN Verification
+      path: /tin-verifications/{tinVerificationId}
+      path-parameters:
+        tinVerificationId: common.TinVerificationId
+      auth: true
+      response:
+        docs: OK
+        type: TinVerificationSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+          response:
+            body: $TinVerificationSchema.ResponseExample

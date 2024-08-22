@@ -1,0 +1,167 @@
+imports:
+  common: common.yml
+  payer: payer.yml
+  payee: payee.yml
+types:
+  Form1099AccountNumber:
+    docs: >-
+      The account number or other unique number assigned to distinguish an
+      account. Abound will auto-generate this for you if left omitted.
+    type: string
+    validation:
+      maxLength: 20
+  Form1099StatusEnum:
+    enum:
+      - CREATED
+      - FILED
+      - ACCEPTED
+      - REJECTED
+  Form1099FilingStateEnum:
+    docs: >-
+      The filing state code. The abbreviation of the state (`CA` for
+      California).
+    enum:
+      - AA
+      - AE
+      - AK
+      - AL
+      - AP
+      - AR
+      - AS
+      - AZ
+      - CA
+      - CO
+      - CT
+      - DC
+      - DE
+      - FL
+      - GA
+      - GU
+      - HI
+      - IA
+      - ID
+      - IL
+      - IN
+      - KY
+      - KS
+      - LA
+      - MA
+      - MD
+      - ME
+      - MI
+      - MN
+      - MO
+      - MP
+      - MS
+      - MT
+      - name: NOT_APPLICABLE
+        value: N/A
+      - NC
+      - ND
+      - NE
+      - NH
+      - NJ
+      - NM
+      - NV
+      - NY
+      - OH
+      - OK
+      - OR
+      - PA
+      - PR
+      - RI
+      - SC
+      - SD
+      - TN
+      - TX
+      - UT
+      - VA
+      - VI
+      - VT
+      - WA
+      - WI
+      - WV
+      - WY
+  Form1099StateTaxInfoSchema:
+    properties:
+      filingState: Form1099FilingStateEnum
+      payeeStateId:
+        type: optional<string>
+        docs: The payee's state identification number.
+      payerStateId:
+        type: optional<string>
+        docs: The payer's state identification number.
+      stateTaxWithheld:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 0
+        docs: >-
+          The state tax withheld. Value must be in cents. Abound does not
+          currently support `stateTaxWithheld` reporting, please contact us for
+          more information.
+  Form1099StateTaxInfoWithStateIncomeSchema:
+    extends: Form1099StateTaxInfoSchema
+    properties:
+      stateIncome:
+        type: integer
+        validation:
+          min: 0
+        docs: The state income. Value must be in cents.
+  Form1099BaseRequestSchema:
+    properties:
+      filingYear: common.FilingYear
+      payer: payer.PayerRequestSchema
+      payee: payee.PayeeRequestSchema
+  Form1099BaseSchema:
+    properties:
+      id: common.DocumentId
+      createdAt:
+        type: datetime
+        docs: The `ISO 8601` timestamp when the document was created.
+      filingYear: common.FilingYear
+      status:
+        type: Form1099StatusEnum
+        docs: >-
+          The status of the 1099 document.<br/>&nbsp;&nbsp;• `CREATED`: The
+          document has passed data validation and the PDFs have been
+          generated.<br/>&nbsp;&nbsp;• `FILED`: The payee's TIN has been
+          verified and the 1099 has been filed with the appropriate tax
+          authorities.<br/>&nbsp;&nbsp;• `ACCEPTED`: The document has been
+          acknowledged and accepted by the appropriate tax
+          authorities.<br/>&nbsp;&nbsp;• `REJECTED`: The document has a TIN
+          verification `MISMATCH` or has been rejected by one or more tax
+          authories.
+      payerUrl:
+        type: string
+        docs: >-
+          The URL to the payer's 1099 document. The Payee's TIN is masked in
+          this document.
+      payeeUrl:
+        type: string
+        docs: >-
+          The URL to the payee's 1099 document. The Payee's TIN is not masked in
+          this document.
+      payer: payer.PayerSchema
+      payee: payee.PayeeSchema
+      correctedById:
+        type: optional<string>
+        docs: The `documentId` of the corrected 1099 document.
+      correctedFromId:
+        type: optional<string>
+        docs: The `documentId` of the original 1099 document.
+      voidedById:
+        type: optional<string>
+        docs: The `documentId` of the voided 1099 document.
+      voidedFromId:
+        type: optional<string>
+        docs: The `documentId` of the original 1099 document.
+      userId: optional<common.UserId>
+  Form1099FormFieldsBaseSchema:
+    properties:
+      isVoid:
+        type: boolean
+        docs: If `true`, the void checkbox will be marked on the 1099 document.
+      isCorrected:
+        type: boolean
+        docs: If `true`, the corrected checkbox will be marked on the 1099 document.

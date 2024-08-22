@@ -1,0 +1,157 @@
+imports:
+  errors: types/errors.yml
+  headers: types/headers.yml
+  common: types/common.yml
+types:
+  UserRequestSchema:
+    examples:
+      - name: RequestExample
+        value:
+          email: your-users-email@example.com
+          foreignId: my-foreign-id
+          metadata:
+            my-key: my-value
+    properties:
+      email:
+        type: optional<string>
+        validation:
+          format: email
+        docs: >-
+          The user's email address. Abound assume's you have taken the proper
+          steps to verify the ownership of this email address.
+        availability: deprecated
+      foreignId:
+        type: optional<string>
+        docs: The customer-specific unique identifier associated with this user.
+      metadata:
+        type: optional<map<string, string>>
+        docs: >-
+          Use metadata for storing additional user data. For filtering, please
+          use `foreignId`.
+  UserSchema:
+    examples:
+      - name: ResponseExample
+        value:
+          id: userId_sampleXGMFnhOpeR
+          createdAt: '2024-01-01T00:00:00Z'
+          email: your-users-email@example.com
+          foreignId: my-foreign-id
+          metadata:
+            my-key: my-value
+    extends:
+      - UserRequestSchema
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this user.
+      createdAt:
+        type: datetime
+        docs: The creation date and time of the user in `ISO 8601` format.
+service:
+  auth: false
+  display-name: Users
+  base-path: ''
+  endpoints:
+    list:
+      docs: Returns a list of users. Up to 100 users are returned per request.
+      method: GET
+      display-name: List all users
+      path: /users
+      auth: true
+      request:
+        name: UsersListRequest
+        query-parameters:
+          page: optional<common.Page>
+          email: optional<common.Email>
+          foreignId: optional<common.ForeignId>
+      response:
+        docs: OK
+        type: list<UserSchema>
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          response:
+            body:
+              - $UserSchema.ResponseExample
+        - name: default222
+          response:
+            body:
+              - $UserSchema.ResponseExample
+    create:
+      docs: Creates a user for a single end-user of your application.
+      method: POST
+      display-name: Create a user
+      path: /users
+      auth: true
+      request:
+        name: UsersCreateRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: UserRequestSchema
+      response:
+        docs: OK
+        type: UserSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.ConflictErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          request: $UserRequestSchema.RequestExample
+          response:
+            body: $UserSchema.ResponseExample
+    retrieve:
+      docs: Retrieves the details of an existing user.
+      method: GET
+      display-name: Retrieve a user
+      path: /users/{userId}
+      path-parameters:
+        userId: common.UserId
+      auth: true
+      response:
+        docs: OK
+        type: UserSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            userId: userId_sampleXGMFnhOpeR
+          response:
+            body: $UserSchema.ResponseExample
+    update:
+      docs: >-
+        Updates an existing user. Any body parameters not provided will be
+        removed.
+      method: PUT
+      display-name: Update a user
+      path: /users/{userId}
+      path-parameters:
+        userId: common.UserId
+      auth: true
+      request:
+        body: UserRequestSchema
+      response:
+        docs: OK
+        type: UserSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.ConflictErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            userId: userId_sampleXGMFnhOpeR
+          request: $UserRequestSchema.RequestExample
+          response:
+            body: $UserSchema.ResponseExample

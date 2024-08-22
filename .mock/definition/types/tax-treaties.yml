@@ -1,0 +1,74 @@
+types:
+  TaxTreatyAboundCodeEnum:
+    docs: The tax treaty code the payee is claiming.
+    enum:
+      - AU_17_INDEPENDENT_PERSONAL_SERVICES
+      - AU_18_DEPENDENT_PERSONAL_SERVICES
+      - AU_42_PUBLIC_ENTERTAINMENT
+      - CA_17_INDEPENDENT_PERSONAL_SERVICES
+      - CA_18_DEPENDENT_PERSONAL_SERVICES
+      - CA_42_PUBLIC_ENTERTAINMENT
+      - CN_17_INDEPENDENT_PERSONAL_SERVICES
+      - CN_18_DEPENDENT_PERSONAL_SERVICES
+      - CN_42_PUBLIC_ENTERTAINMENT
+      - GB_17_INDEPENDENT_PERSONAL_SERVICES
+      - GB_18_DEPENDENT_PERSONAL_SERVICES
+      - GB_42_PUBLIC_ENTERTAINMENT
+      - IL_16_SCHOLARSHIP_AND_FELLOWSHIP_GRANT
+      - IL_17_INDEPENDENT_PERSONAL_SERVICES
+      - IL_18_DEPENDENT_PERSONAL_SERVICES
+      - IL_42_PUBLIC_ENTERTAINMENT
+      - IN_17_INDEPENDENT_PERSONAL_SERVICES
+      - IN_18_DEPENDENT_PERSONAL_SERVICES
+      - IN_42_PUBLIC_ENTERTAINMENT
+      - MX_17_INDEPENDENT_PERSONAL_SERVICES
+      - MX_18_DEPENDENT_PERSONAL_SERVICES
+      - MX_42_PUBLIC_ENTERTAINMENT
+  TaxTreatyIncomeCodeEnum:
+    enum:
+      - name: Sixteen
+        value: '16'
+      - name: Seventeen
+        value: '17'
+      - name: Eighteen
+        value: '18'
+      - name: FortyTwo
+        value: '42'
+  TaxTreatyBenefitsSchema:
+    docs: The tax treaty benefits the payee is claiming.
+    properties:
+      residentCountry:
+        type: string
+        validation:
+          minLength: 2
+          maxLength: 2
+        docs: >-
+          The foreign country, adhering to `ISO 3166-2` standards, the payee is
+          claiming treaty benefits as a resident with which the United States
+          has an income tax treaty for payments subject to withholding under
+          chapter 3 or under section 1446(a) or (f).
+      claimedProvision:
+        type: string
+        validation:
+          maxLength: 20
+        docs: >-
+          The article and paragraph of the tax treaty that cite the provisions
+          the payee is claiming. Max 20 characters.
+      rateOfWithholding:
+        type: float
+        docs: >-
+          The decimal percentage rate of withholding the tax treaty allows by
+          default. Rates are subject to validation and approval by the Payer.
+      incomeCode:
+        type: TaxTreatyIncomeCodeEnum
+        docs: >-
+          The code of the income associated with the claimed rate of
+          withholding.
+      incomeType:
+        type: literal<"SERVICES">
+        docs: The type of income associated with the claimed rate of withholding.
+      additionalConditions:
+        type: optional<string>
+        docs: >-
+          The additional conditions the payee is claiming under the cited tax
+          treaty.

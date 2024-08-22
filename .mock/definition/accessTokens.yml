@@ -1,0 +1,58 @@
+imports:
+  errors: types/errors.yml
+  headers: types/headers.yml
+  common: types/common.yml
+types:
+  AccessTokenSchema:
+    properties:
+      accessToken:
+        type: string
+        docs: The access token to authenticate your Drop-In UI Components.
+      createdAt:
+        type: datetime
+        docs: The creation date and time of the access token in `ISO 8601` format.
+      expiresAt:
+        type: datetime
+        docs: The expiration date and time of the access token in `ISO 8601` format.
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      docs: Creates an access token for authenticating Drop-In UI Components.
+      method: POST
+      display-name: Create an access token
+      path: /access-tokens
+      auth: true
+      request:
+        name: AccessTokenRequestSchema
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body:
+          properties:
+            expiresIn:
+              type: integer
+              docs: The number of seconds until the access token expires.
+            userId:
+              type: optional<string>
+              docs: >-
+                The unique identifier of the user associated with this access
+                token.
+      response:
+        docs: OK
+        type: AccessTokenSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          request:
+            expiresIn: 300
+          response:
+            body:
+              accessToken: >-
+                accessToken_sampleeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5ODczNTcsImV4cCI6MTY5Njk4NzY1NywiYXVkIjoiYXBwSWRfc2FtcGxlcU5oVmNkWVFZVSIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hcGkud2l0aGFib3VuZC5jb20vdjQiLCJzdWIiOiJ1c2VySWRfc2FtcGxlWEdNRm5oT3BlUiJ9.-NrPVQvsnM8vJouyuP5yeFGlYb1xGgR-gS3v87p5BQk
+              createdAt: '2024-01-01T00:00:00Z'
+              expiresAt: '2024-01-02T00:00:00Z'

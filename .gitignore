@@ -1,6 +1,3 @@
 node_modules
-coverage/
-dist/
-tmp/
-
 .DS_Store
+/dist
