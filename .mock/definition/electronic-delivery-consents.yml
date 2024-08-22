@@ -1,0 +1,71 @@
+imports:
+  errors: types/errors.yml
+  headers: types/headers.yml
+  common: types/common.yml
+types:
+  EDeliveryConsentStatusEnum:
+    enum:
+      - ASSENTED
+      - WITHDRAWN
+  EDeliveryConsentSchema:
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this electronic delivery consent.
+      createdAt:
+        type: datetime
+        docs: >-
+          The creation date and time of the electronic delivery consent in `ISO
+          8601` format.
+      status:
+        type: EDeliveryConsentStatusEnum
+        docs: The status of the electronic delivery consent.
+      email:
+        type: string
+        docs: >-
+          The email address associated with the electronic delivery consent.
+          Abound assume's you have taken the proper steps to verify the
+          ownership of this email address.
+      tinFingerprint:
+        type: common.TinFingerprint
+        docs: The TIN fingerprint for this electronic delivery consent.
+service:
+  auth: false
+  display-name: Electronic Delivery Consents
+  base-path: ''
+  endpoints:
+    list:
+      docs: Returns a list of Electronic Delivery Consents.
+      method: GET
+      display-name: List all Electronic Delivery Consents
+      path: /electronic-delivery-consents
+      auth: true
+      request:
+        name: eDeliveryConsentListRequest
+        query-parameters:
+          page: optional<common.Page>
+          status: optional<EDeliveryConsentStatusEnum>
+          email:
+            type: optional<string>
+            docs: >-
+              Filters the list of Electronic Delivery Consents based on the
+              `email` field.
+          tinFingerprint: optional<common.TinFingerprint>
+          userId: optional<common.UserId>
+      response:
+        docs: OK
+        type: list<EDeliveryConsentSchema>
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          response:
+            body:
+              - id: eDeliveryConsentId_sample7zmM4xCWxe
+                createdAt: '2024-01-01T00:00:00.000Z'
+                status: ASSENTED
+                email: user1@example.com
+                tinFingerprint: tinFingerprint_samplehy2BWO6JJG

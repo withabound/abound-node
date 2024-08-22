@@ -1,0 +1,16 @@
+name: api
+display-name: Abound API
+auth: BearerAuthScheme
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+    token:
+      name: sampleKey
+      env: appId_sampleqNhVcdYQYU.appSecret_sampleMz2Zbj3Hq
+default-environment: Production
+environments:
+  Production: https://production-api.withabound.com
+  Sandbox: https://sandbox-api.withabound.com
+error-discrimination:
+  strategy: status-code
+base-path: /v4
