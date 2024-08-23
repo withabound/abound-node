@@ -1,4 +1,0 @@
-npx genversion --es6 --semi --double src/version.ts
-git add src/version.ts
-
-npx lint-staged

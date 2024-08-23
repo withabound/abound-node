@@ -1,0 +1,633 @@
+imports:
+  errors: types/errors.yml
+  headers: types/headers.yml
+  common: types/common.yml
+  form1099s: types/form-1099s.yml
+  mailings: mailings.yml
+types:
+  Form1099KPayerClassificationEnum:
+    docs: >-
+      The type of payer. Payment settlement entity (PSE) or Electronic Payment
+      Facilitator (EPF)/Other third party.
+    enum:
+      - PSE
+      - EPF_OTHER
+  Form1099KTransactionsReportedClassificationSchema:
+    docs: The type of transactions reported.
+    enum:
+      - PAYMENT_CARD
+      - THIRD_PARTY_NETWORK
+  Form1099KGrossAmountsByMonthSchema:
+    docs: >-
+      An object that contains the gross amount of transactions for each month.
+      At least one month must have a value above zero. Values must be in cents.
+    properties:
+      january:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in January. Value must be in cents.
+      february:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in February. Value must be in cents.
+      march:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in March. Value must be in cents.
+      april:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in April. Value must be in cents.
+      may:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in May. Value must be in cents.
+      june:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in June. Value must be in cents.
+      july:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in July. Value must be in cents.
+      august:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in August. Value must be in cents.
+      september:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in September. Value must be in cents.
+      october:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in October. Value must be in cents.
+      november:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in November. Value must be in cents.
+      december:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The gross amount of payment card/third party network transactions made
+          to you in December. Value must be in cents.
+  Form1099KFormFieldsRequestSchema:
+    docs: The 1099-K form fields.
+    properties:
+      payerClassification:
+        type: Form1099KPayerClassificationEnum
+      transactionsReportedClassification:
+        type: Form1099KTransactionsReportedClassificationSchema
+      pseName:
+        type: optional<string>
+        docs: >-
+          The payment settlement entity name. Required if `payerClassification`
+          is `PSE`.
+      psePhoneNumber:
+        type: optional<string>
+        docs: >-
+          The payment settlement entity phone number. Required if
+          `payerClassification` is `PSE`.
+      accountNumber: optional<form1099s.Form1099AccountNumber>
+      aggregateGrossAmount:
+        type: integer
+        validation:
+          min: 0
+        docs: >-
+          Aggregate gross amount of payment card/third party network
+          transactions made to you through the PSE during the calendar year.
+          Value must be in cents.
+      aggregateGrossAmountCardNotPresent:
+        type: integer
+        validation:
+          min: 0
+        docs: >-
+          The aggregate gross amount of all reportable payment transactions made
+          to you through the PSE during the calendar year where the card was not
+          present at the time of the transaction or the card number was keyed
+          into the terminal. Typically, this relates to online sales, phone
+          sales, or catalogue sales. If `transactionsReportedClassification` is
+          `thirdPartyNetwork`, or if these are third party network transactions,
+          card not present transactions will not be reported. Value must be in
+          cents.
+      merchantCategoryCode:
+        type: string
+        validation:
+          minLength: 4
+          maxLength: 4
+          pattern: ^\d{4}$
+        docs: >-
+          Payment brands use merchant category codes (MCCs) to classify
+          merchants and businesses by the type of goods or services provided. It
+          is a four (4) digit code. This may be left blank.
+      numberOfPaymentTransactions:
+        type: integer
+        validation:
+          min: 0
+        docs: >-
+          The number of payment transactions (not including refund transactions)
+          processed through the payment card/third party network.
+      federalIncomeTaxWithheld:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 0
+        docs: >-
+          The federal income tax withheld. Generally, a payer must backup
+          withhold if you did not furnish your TIN or you did not furnish the
+          correct TIN to the payer. Value must be in cents. Abound does not
+          currently support `federalIncomeTaxWithheld` reporting on the 1099-K,
+          please contact us for more information.
+      grossAmountsByMonth:
+        type: Form1099KGrossAmountsByMonthSchema
+      stateTaxInfo:
+        type: list<form1099s.Form1099StateTaxInfoSchema>
+        docs: >-
+          An array that contains up to two state tax information objects. Abound
+          currently only supports one state tax information object in this
+          array. Abound does not currently support state-level tax withholding
+          reporting on the 1099-K, please contact us for more information.
+  Form1099KRequestSchema:
+    examples:
+      - name: RequestExample
+        value:
+          filingYear: 2023
+          payer:
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            name: Hooli
+            name2: Hooli
+            tin: '111111111'
+            phoneNumber: '6501014096'
+          payee:
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            name: Ada Lovelace
+            name2: InGen Corporation
+            tin: '000000000'
+          formFields:
+            payerClassification: PSE
+            transactionsReportedClassification: PAYMENT_CARD
+            pseName: Acme Payments
+            psePhoneNumber: '6501014096'
+            accountNumber: '123456789'
+            aggregateGrossAmount: 120000
+            aggregateGrossAmountCardNotPresent: 50000
+            merchantCategoryCode: '1234'
+            numberOfPaymentTransactions: 100
+            grossAmountsByMonth:
+              january: 10000
+              february: 10000
+              march: 10000
+              april: 10000
+              may: 10000
+              june: 10000
+              july: 10000
+              august: 10000
+              september: 10000
+              october: 10000
+              november: 10000
+              december: 10000
+            stateTaxInfo:
+              - filingState: CA
+                stateTaxWithheld: 0
+    extends: form1099s.Form1099BaseRequestSchema
+    properties:
+      formFields: Form1099KFormFieldsRequestSchema
+  Form1099KFormFieldsSchema:
+    extends:
+      - form1099s.Form1099FormFieldsBaseSchema
+      - Form1099KFormFieldsRequestSchema
+  Form1099KSchema:
+    examples:
+      - name: CreateResponseExample
+        value:
+          id: documentId_sampletTtqNfulW8
+          userId: userId_sampleXGMFnhOpeR
+          formFields:
+            isVoid: false
+            isCorrected: false
+            payerClassification: PSE
+            transactionsReportedClassification: PAYMENT_CARD
+            pseName: Acme Payments
+            psePhoneNumber: '6501014096'
+            accountNumber: '123456789'
+            aggregateGrossAmount: 120000
+            aggregateGrossAmountCardNotPresent: 50000
+            merchantCategoryCode: '1234'
+            numberOfPaymentTransactions: 100
+            grossAmountsByMonth:
+              january: 10000
+              february: 10000
+              march: 10000
+              april: 10000
+              may: 10000
+              june: 10000
+              july: 10000
+              august: 10000
+              september: 10000
+              october: 10000
+              november: 10000
+              december: 10000
+            stateTaxInfo:
+              - filingState: CA
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00Z'
+          status: CREATED
+          payer:
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            name: Hooli
+            name2: Hooli
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            name: Ada Lovelace
+            name2: InGen Corporation
+            tin: '*******00'
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: https://documents.withabound.com/documentId_sampletTtqNfulW8
+          payeeUrl: https://documents.withabound.com/documentId_sampletTtqNfulW8
+      - name: FileResponseExample
+        value:
+          id: documentId_sampletTtqNfulW8
+          userId: userId_sampleXGMFnhOpeR
+          formFields:
+            isVoid: false
+            isCorrected: false
+            payerClassification: PSE
+            transactionsReportedClassification: PAYMENT_CARD
+            pseName: Acme Payments
+            psePhoneNumber: '6501014096'
+            accountNumber: '123456789'
+            aggregateGrossAmount: 120000
+            aggregateGrossAmountCardNotPresent: 50000
+            merchantCategoryCode: '1234'
+            numberOfPaymentTransactions: 100
+            grossAmountsByMonth:
+              january: 10000
+              february: 10000
+              march: 10000
+              april: 10000
+              may: 10000
+              june: 10000
+              july: 10000
+              august: 10000
+              september: 10000
+              october: 10000
+              november: 10000
+              december: 10000
+            stateTaxInfo:
+              - filingState: CA
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00Z'
+          status: FILED
+          payer:
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            name: Hooli
+            name2: Hooli
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            name: Ada Lovelace
+            name2: InGen Corporation
+            tin: '*******00'
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: https://documents.withabound.com/documentId_sampletTtqNfulW8
+          payeeUrl: https://documents.withabound.com/documentId_sampletTtqNfulW8
+    extends: form1099s.Form1099BaseSchema
+    properties:
+      formFields: Form1099KFormFieldsSchema
+service:
+  auth: false
+  display-name: 1099-K
+  base-path: ''
+  endpoints:
+    list:
+      docs: Returns a list of 1099-K documents.
+      method: GET
+      display-name: List all 1099-K documents
+      path: /documents/1099-k
+      auth: true
+      request:
+        name: Form1099KListRequest
+        query-parameters:
+          page: optional<common.Page>
+          filingYear: optional<common.FilingYear>
+          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
+          payerTinFingerprint: optional<common.PayerTinFingerprint>
+          status: optional<form1099s.Form1099StatusEnum>
+          userId: optional<common.UserId>
+      response:
+        docs: OK
+        type: list<Form1099KSchema>
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          response:
+            body:
+              - $Form1099KSchema.FileResponseExample
+    create:
+      docs: >-
+        Creates a 1099-K document and subsequently kicks off a TIN Verification,
+        if the name and TIN combo has not been used before.
+      method: POST
+      display-name: Create a 1099-K
+      path: /documents/1099-k
+      auth: true
+      request:
+        name: Form1099KRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: Form1099KRequestSchema
+      response:
+        docs: OK
+        type: Form1099KSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          request: $Form1099KRequestSchema.RequestExample
+          response:
+            body: $Form1099KSchema.CreateResponseExample
+    mail:
+      docs: Mails a 1099-K document.
+      method: POST
+      display-name: Mail a 1099-K
+      path: /documents/1099-k/{documentId}/mail
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099KMailRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: mailings.MailingRequestSchema
+      response:
+        docs: OK
+        type: mailings.MailingSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          request:
+            to:
+              address: 256 Byron Street
+              address2: Suite 32
+              city: Palo Alto
+              state: CA
+              postalCode: '94306'
+              country: US
+              name: Ada Lovelace
+              name2: InGen Corporation
+            from:
+              address: 1401 N Shoreline Blvd
+              address2: Suite 1
+              city: Mountain View
+              state: CA
+              postalCode: '94043'
+              country: US
+              name: Hooli
+              name2: InGen Corporation
+          response:
+            body:
+              to:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Ada Lovelace
+                name2: InGen Corporation
+              from:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Hooli
+                name2: InGen Corporation
+              id: mailingId_sampleFV9b73IvAD
+              createdAt: '2024-01-01T00:00:00Z'
+              status: CREATED
+              url: https://document.,withabound.com/documentId_sampletTtqNfulW8
+              userId: userId_sampleXGMFnhOpeR
+              mailedFromId: documentId_sampletTtqNfulW8
+    file:
+      docs: Files a 1099-K document.
+      method: POST
+      display-name: File a 1099-K
+      path: /documents/1099-k/{documentId}/file
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099KFileRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+      response:
+        type: Form1099KSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          response:
+            body: $Form1099KSchema.FileResponseExample
+    correct:
+      docs: >-
+        Files a new corrected 1099-K and relates it to the original document. A
+        1099-K can be corrected only after it has reached the `FILED` status.
+        Automatically handles both one-transaction and two-transaction
+        corrections.
+      method: POST
+      display-name: Correct a 1099-K
+      path: /documents/1099-k/{documentId}/correct
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099KCorrectRequestSchema
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+      response:
+        type: Form1099KSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          response:
+            body: $Form1099KSchema.FileResponseExample
+    void:
+      docs: >-
+        Files a new voided 1099-K and relates it to the original document. A
+        1099-K can be voided only after it has reached the `FILED` status.
+      method: POST
+      display-name: Void a 1099-K
+      path: /documents/1099-k/{documentId}/void
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099KVoidRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+      response:
+        docs: OK
+        type: Form1099KSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          response:
+            body: $Form1099KSchema.FileResponseExample
+    retrieve:
+      docs: Retrieves the details of an existing 1099-K document.
+      method: GET
+      display-name: Retrieve a 1099-K
+      path: /documents/1099-k/{documentId}
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      response:
+        docs: OK
+        type: Form1099KSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          response:
+            body: $Form1099KSchema.CreateResponseExample
+    delete:
+      docs: >-
+        Deletes a 1099-K document. Once an action (`/file`, `/correct`, `/void`)
+        has been executed on a 1099-K, it cannot be deleted.
+      method: DELETE
+      display-name: Delete a 1099-K
+      path: /documents/1099-k/{documentId}
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      response:
+        docs: OK
+        type: common.OkSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          response:
+            body: {}

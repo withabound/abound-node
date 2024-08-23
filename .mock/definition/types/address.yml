@@ -1,0 +1,59 @@
+types:
+  AddressSchema:
+    properties:
+      address:
+        type: string
+        docs: The legal address.
+      address2:
+        type: optional<string>
+        docs: >-
+          The second part of the legal address, such as an apartment or suite
+          number.
+      city:
+        type: optional<string>
+        docs: >-
+          The city associated with the street address. Required if `country` is
+          `US`.
+      state:
+        type: optional<string>
+        docs: >-
+          The two-letter character code for this state (`CA` for California,
+          `ME` for Maine). Required if `country` is `US`. If foreign, use the
+          province.
+      postalCode:
+        type: optional<string>
+        docs: >-
+          The postal code associated with the street address. Required to be a
+          5-digit numerical value if `country` is `US`. If foreign, use the
+          foreign postal code.
+      country:
+        type: string
+        validation:
+          minLength: 2
+          maxLength: 2
+        docs: The country adhering to `ISO 3166-2` standards.
+  ForeignAddressSchema:
+    properties:
+      address:
+        type: string
+        docs: The legal address.
+      address2:
+        type: optional<string>
+        docs: >-
+          The second part of the legal address, such as an apartment or suite
+          number.
+      city:
+        type: optional<string>
+        docs: The city associated with the street address.
+      state:
+        type: optional<string>
+        docs: The province associated with the street address.
+      postalCode:
+        type: optional<string>
+        docs: The foreign postal code associated with the street address.
+      country:
+        type: string
+        validation:
+          minLength: 2
+          maxLength: 2
+        docs: The country adhering to `ISO 3166-2` standards.
