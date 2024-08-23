@@ -1,0 +1,69 @@
+types:
+  OkSchema: map<string, unknown>
+  Page:
+    docs: >-
+      The specific page of results you're requesting. Responses are limited to a
+      maximum of 100 records.
+    type: integer
+  Email:
+    docs: Filters the list of users based on the `email` field.
+    type: string
+  ForeignId:
+    docs: >-
+      The customer-specific unique identifier associated to an Abound record.
+      Allows developers to forego making their own tables every time they
+      integrate and/or add an application.
+    type: string
+  TinFingerprintQueryParam:
+    docs: Filters the list of TIN Verifications based on the `tinFingerprint` field.
+    type: string
+  TinFingerprint:
+    docs: Your unique token that points to a TIN.
+    type: string
+  PayeeTinFingerprint:
+    docs: Filters the list of documents based on the `payee.tinFingerprint` field.
+    type: string
+  PayeeForeignTinFingerprint:
+    docs: >-
+      Filters the list of documents based on the `payee.foreignTinFingerprint`
+      field.
+    type: string
+  PayerTinFingerprint:
+    docs: Filters the list of documents based on the `payer.tinFingerprint` field.
+    type: string
+  TinVerificationStatusQueryParam:
+    docs: Filters the list of TIN Verifications based on the `status` field.
+    type: string
+  DocumentId:
+    docs: The unique identifier for an existing document.
+    type: string
+  MailingId:
+    docs: The unique identifier for an existing mailing.
+    type: string
+  UserId:
+    docs: The unique identifier for a single end-user of your application.
+    type: string
+  FilingYear:
+    docs: The filing year associated with this document.
+    type: integer
+  TinTypeEnum:
+    docs: >-
+      The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While
+      `BUSINESS` refers to EINs.
+    enum:
+      - INDIVIDUAL
+      - BUSINESS
+  TinVerificationStatusEnum:
+    docs: The status of the TIN Verification.
+    enum:
+      - MATCH
+      - MISMATCH
+      - PENDING
+  TinVerificationId:
+    docs: The unique identifier for the TIN Verification.
+    type: string
+  TaxTreatyCountry:
+    docs: >-
+      Filters the list of tax treaties based on the specified foreign `country`,
+      adhering to `ISO 3166-2` standards.
+    type: string

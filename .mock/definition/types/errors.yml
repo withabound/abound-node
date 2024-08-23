@@ -1,0 +1,62 @@
+types:
+  ErrorBadRequestSchemaErrorsItem:
+    properties:
+      field:
+        type: optional<string>
+        docs: The field that caused the error.
+      message:
+        type: string
+        docs: The error message associated with the field.
+  ErrorBadRequestSchema:
+    properties:
+      errors:
+        type: list<ErrorBadRequestSchemaErrorsItem>
+        docs: The error message(s) associated with the response status code.
+  DefaultErrorSchema:
+    properties:
+      message:
+        type: string
+        docs: The error message associated with the response status code.
+errors:
+  BadRequestErrorSchema:
+    docs: Bad Request
+    status-code: 400
+    type: ErrorBadRequestSchema
+    examples:
+      - name: default
+        value:
+          errors:
+            - field: metadata.key
+              message: Expected metadata.key to be of type string, but received number
+  UnauthorizedErrorSchema:
+    docs: Unauthorized
+    status-code: 401
+    type: DefaultErrorSchema
+    examples:
+      - name: default
+        value:
+          message: Unauthorized
+  NotFoundErrorSchema:
+    docs: Not Found
+    status-code: 404
+    type: DefaultErrorSchema
+    examples:
+      - name: default
+        value:
+          message: Not Found
+  InternalServerErrorSchema:
+    docs: Internal Server Error
+    status-code: 500
+    type: DefaultErrorSchema
+    examples:
+      - name: default
+        value:
+          message: Internal Server Error
+  ConflictErrorSchema:
+    docs: Conflict
+    status-code: 409
+    type: DefaultErrorSchema
+    examples:
+      - name: default
+        value:
+          message: Conflict

@@ -1,0 +1,443 @@
+imports:
+  errors: types/errors.yml
+  headers: types/headers.yml
+  common: types/common.yml
+  form1099s: types/form-1099s.yml
+  mailings: mailings.yml
+types:
+  Form1099NecFormFieldsRequestSchema:
+    docs: The 1099-NEC form fields.
+    properties:
+      accountNumber:
+        type: optional<string>
+        validation:
+          maxLength: 20
+        docs: >-
+          If the payer assigns the contractor a unique number for its records,
+          enter the account number in this box. If not, leave the box blank.
+      nonemployeeCompensation:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The total amount remitted by payer to recipient during the year. Value
+          must be in cents.
+      hasDirectSalesOver5000:
+        type: optional<boolean>
+        docs: >-
+          If `true`, consumer products totaling $5,000 or more were sold to
+          recipient for resale, on a buy-sell, a deposit-commission, or other
+          basis.
+      federalIncomeTaxWithheld:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 0
+        docs: >-
+          The federal income tax withheld. A payer must backup withhold on
+          certain payments if recipient did not provide a TIN to the payer.
+          Value must be in cents. Abound does not currently support
+          `federalIncomeTaxWithheld` reporting on the 1099-NEC, please contact
+          us for more information.
+      stateTaxInfo:
+        type: list<form1099s.Form1099StateTaxInfoWithStateIncomeSchema>
+        docs: >-
+          An array that contains up to two state tax information objects. Abound
+          currently only supports one state tax information object in this
+          array. Abound does not currently support state-level tax withholding
+          reporting on the 1099-NEC, please contact us for more information.
+  Form1099NecRequestSchema:
+    examples:
+      - name: RequestExample
+        value:
+          filingYear: 2023
+          payer:
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            name: Hooli
+            name2: Hooli
+            tin: '111111111'
+            phoneNumber: '6501014096'
+          payee:
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            name: Ada Lovelace
+            name2: InGen Corporation
+            tin: '000000000'
+          formFields:
+            nonemployeeCompensation: 100000
+            hasDirectSalesOver5000: false
+            federalIncomeTaxWithheld: 0
+            stateTaxInfo:
+              - filingState: CA
+                stateIncome: 100000
+                stateTaxWithheld: 0
+    extends: form1099s.Form1099BaseRequestSchema
+    properties:
+      formFields: Form1099NecFormFieldsRequestSchema
+  Form1099NecFormFieldsSchema:
+    extends:
+      - form1099s.Form1099FormFieldsBaseSchema
+      - Form1099NecFormFieldsRequestSchema
+  Form1099NecSchema:
+    examples:
+      - name: CreateResponseExample
+        value:
+          id: documentId_samplegU0eR8oc8a
+          userId: userId_sampleXGMFnhOpeR
+          formFields:
+            isCorrected: false
+            isVoid: false
+            nonemployeeCompensation: 100000
+            hasDirectSalesOver5000: false
+            federalIncomeTaxWithheld: 0
+            stateTaxInfo:
+              - filingState: CA
+                stateIncome: 100000
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00Z'
+          status: CREATED
+          payer:
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            name: Hooli
+            name2: Hooli
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            name: Ada Lovelace
+            name2: InGen Corporation
+            tin: '*******00'
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: https://documents.withabound.com/documentId_samplegU0eR8oc8a
+          payeeUrl: https://documents.withabound.com/documentId_samplegU0eR8oc8a
+      - name: FileResponseExample
+        value:
+          id: documentId_samplegU0eR8oc8a
+          userId: userId_sampleXGMFnhOpeR
+          formFields:
+            isCorrected: false
+            isVoid: false
+            nonemployeeCompensation: 100000
+            hasDirectSalesOver5000: false
+            federalIncomeTaxWithheld: 0
+            stateTaxInfo:
+              - filingState: CA
+                stateIncome: 100000
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00Z'
+          status: FILED
+          payer:
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            name: Hooli
+            name2: Hooli
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            name: Ada Lovelace
+            name2: InGen Corporation
+            tin: '*******00'
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: https://documents.withabound.com/documentId_samplegU0eR8oc8a
+          payeeUrl: https://documents.withabound.com/documentId_samplegU0eR8oc8a
+    extends: form1099s.Form1099BaseSchema
+    properties:
+      formFields: Form1099NecFormFieldsSchema
+service:
+  auth: false
+  display-name: 1099-NEC
+  base-path: ''
+  endpoints:
+    list:
+      docs: Returns a list of 1099-NEC documents.
+      method: GET
+      display-name: List all 1099-NEC documents
+      path: /documents/1099-nec
+      auth: true
+      request:
+        name: Form1099NecListRequest
+        query-parameters:
+          page: optional<common.Page>
+          filingYear: optional<common.FilingYear>
+          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
+          payerTinFingerprint: optional<common.PayerTinFingerprint>
+          status: optional<form1099s.Form1099StatusEnum>
+          userId: optional<common.UserId>
+      response:
+        docs: OK
+        type: list<Form1099NecSchema>
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          response:
+            body:
+              - $Form1099NecSchema.FileResponseExample
+    create:
+      docs: >-
+        Creates a 1099-NEC document and subsequently kicks off a TIN
+        Verification, if the name and TIN combo has not been used before.
+      method: POST
+      display-name: Create a 1099-NEC
+      path: /documents/1099-nec
+      auth: true
+      request:
+        name: Form1099NecRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: Form1099NecRequestSchema
+      response:
+        docs: OK
+        type: Form1099NecSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          request: $Form1099NecRequestSchema.RequestExample
+          response:
+            body: $Form1099NecSchema.CreateResponseExample
+    mail:
+      docs: Mails a 1099-NEC document.
+      method: POST
+      display-name: Mail a 1099-NEC
+      path: /documents/1099-nec/{documentId}/mail
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099NecMailRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: mailings.MailingRequestSchema
+      response:
+        docs: OK
+        type: mailings.MailingSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_samplegU0eR8oc8a
+          request:
+            to:
+              address: 256 Byron Street
+              address2: Suite 32
+              city: Palo Alto
+              state: CA
+              postalCode: '94306'
+              country: US
+              name: Ada Lovelace
+              name2: InGen Corporation
+            from:
+              address: 1401 N Shoreline Blvd
+              address2: Suite 1
+              city: Mountain View
+              state: CA
+              postalCode: '94043'
+              country: US
+              name: Hooli
+              name2: InGen Corporation
+          response:
+            body:
+              to:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Ada Lovelace
+                name2: InGen Corporation
+              from:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Hooli
+                name2: InGen Corporation
+              id: mailingId_sampleFV9b73IvAD
+              createdAt: '2024-01-01T00:00:00Z'
+              status: CREATED
+              url: https://document.,withabound.com/documentId_samplegU0eR8oc8a
+              userId: userId_sampleXGMFnhOpeR
+              mailedFromId: documentId_samplegU0eR8oc8a
+    file:
+      docs: Files a 1099-NEC document.
+      method: POST
+      display-name: File a 1099-NEC
+      path: /documents/1099-nec/{documentId}/file
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099NecFileRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+      response:
+        type: Form1099NecSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_samplegU0eR8oc8a
+          response:
+            body: $Form1099NecSchema.FileResponseExample
+    correct:
+      docs: >-
+        Files a new corrected 1099-NEC and relates it to the original document.
+        A 1099-NEC can be corrected only after it has reached the `FILED`
+        status. Automatically handles both one-transaction and two-transaction
+        corrections.
+      method: POST
+      display-name: Correct a 1099-NEC
+      path: /documents/1099-nec/{documentId}/correct
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099NecCorrectRequestSchema
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+      response:
+        type: Form1099NecSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_samplegU0eR8oc8a
+          response:
+            body: $Form1099NecSchema.FileResponseExample
+    void:
+      docs: >-
+        Files a new voided 1099-NEC and relates it to the original document. A
+        1099-NEC can be voided only after it has reached the `FILED` status.
+      method: POST
+      display-name: Void a 1099-NEC
+      path: /documents/1099-nec/{documentId}/void
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099NecVoidRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+      response:
+        docs: OK
+        type: Form1099NecSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sample
+          response:
+            body: $Form1099NecSchema.FileResponseExample
+    retrieve:
+      docs: Retrieves the details of an existing 1099-NEC document.
+      method: GET
+      display-name: Retrieve a 1099-NEC
+      path: /documents/1099-nec/{documentId}
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      response:
+        docs: OK
+        type: Form1099NecSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_samplegU0eR8oc8a
+          response:
+            body: $Form1099NecSchema.CreateResponseExample
+    delete:
+      docs: >-
+        Deletes a 1099-NEC document. Once an action (`/file`, `/correct`,
+        `/void`) has been executed on a 1099-NEC, it cannot be deleted.
+      method: DELETE
+      display-name: Delete a 1099-NEC
+      path: /documents/1099-nec/{documentId}
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      response:
+        docs: OK
+        type: common.OkSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_samplegU0eR8oc8a
+          response:
+            body: {}
