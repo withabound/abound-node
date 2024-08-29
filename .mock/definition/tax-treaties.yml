@@ -1,0 +1,59 @@
+imports:
+  errors: types/errors.yml
+  headers: types/headers.yml
+  taxTreaties: types/tax-treaties.yml
+  common: types/common.yml
+types:
+  TaxTreatySchema:
+    examples:
+      - name: ResponseExample
+        value:
+          taxTreatyCode: GB_17_INDEPENDENT_PERSONAL_SERVICES
+          residentCountry: GB
+          rateOfWithholding: 0
+          description: Independent personal services performed in the US
+    properties:
+      taxTreatyCode:
+        type: taxTreaties.TaxTreatyAboundCodeEnum
+        docs: Abound's shorthand code for a particular US tax treaty.
+      residentCountry:
+        type: string
+        docs: >-
+          The foreign country, adhering to `ISO 3166-2` standards, associated
+          with the tax treaty.
+      rateOfWithholding:
+        type: float
+        docs: >-
+          The decimal percentage rate of withholding the tax treaty allows by
+          default. Rates are subject to validation and approval by the Payer.
+      description:
+        type: string
+        docs: The income description associated with the tax treaty.
+service:
+  auth: false
+  display-name: Tax Treaties
+  base-path: ''
+  endpoints:
+    list:
+      docs: Returns a list of tax treaties.
+      method: GET
+      display-name: List all tax treaties
+      path: /tax-treaties
+      auth: true
+      request:
+        name: TaxTreatiesListRequest
+        query-parameters:
+          country: optional<common.TaxTreatyCountry>
+      response:
+        docs: OK
+        type: list<TaxTreatySchema>
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          response:
+            body:
+              - $TaxTreatySchema.ResponseExample

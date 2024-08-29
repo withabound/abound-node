@@ -1,0 +1,41 @@
+imports:
+  common: common.yml
+  address: address.yml
+types:
+  PayeeRequestSchema:
+    docs: The payee of the document.
+    extends:
+      - address.AddressSchema
+    properties:
+      name:
+        type: string
+        docs: The payee's legal name (first + last) or business name.
+      name2:
+        type: optional<string>
+        docs: >-
+          The payee's trade name, DBA name, or disregarded entity name, if
+          different from `name`.
+      tin:
+        type: string
+        validation:
+          minLength: 9
+          maxLength: 9
+        docs: >-
+          The payee's tax identification number, commonly referred to as a TIN.
+          No hyphens. Numerical digits only. Alternatively, you may pass the
+          corresponding `tinFingerprint`.
+  PayeeSchema:
+    docs: The payee of the document.
+    extends:
+      - PayeeRequestSchema
+    properties:
+      tinFingerprint: common.TinFingerprint
+      tinType: optional<common.TinTypeEnum>
+      tinVerificationId: common.TinVerificationId
+      tinVerificationStatus: common.TinVerificationStatusEnum
+  PayeeWithOptionalTinTypeRequestSchema:
+    docs: The payee of the document.
+    extends:
+      - PayeeRequestSchema
+    properties:
+      tinType: optional<common.TinTypeEnum>

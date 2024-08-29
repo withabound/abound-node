@@ -1,0 +1,18 @@
+types:
+  ElectronicSignatureOfPayeeSchema:
+    docs: The electronic signature of the payee.
+    properties:
+      signature:
+        type: string
+        docs: The signature of the payee.
+      printedName:
+        type: string
+        docs: The printed name of the payee.
+      signedAt:
+        type: datetime
+        docs: The date and time in `ISO 8601` format of the signature.
+      ipAddress:
+        type: string
+        validation:
+          format: ipv4
+        docs: The IP address of the payee when signing this document.

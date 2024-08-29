@@ -1,0 +1,268 @@
+imports:
+  errors: types/errors.yml
+  electronicSignature: types/electronic-signature.yml
+  headers: types/headers.yml
+  payee: types/payee.yml
+  payer: types/payer.yml
+  common: types/common.yml
+types:
+  W9TaxClassificationSchema:
+    docs: The U.S. federal tax classification of the person.
+    enum:
+      - INDIVIDUAL
+      - SOLE_PROPRIETOR
+      - C_CORPORATION
+      - S_CORPORATION
+      - PARTNERSHIP
+      - TRUST
+      - ESTATE
+      - LLC_PARTNERSHIP
+      - LLC_C_CORPORATION
+      - LLC_S_CORPORATION
+      - OTHER
+  W9ExemptPayeeCodeSchema:
+    docs: The code to identify a payee that is exempt from backup withholding.
+    enum:
+      - name: One
+        value: '1'
+      - name: Two
+        value: '2'
+      - name: Three
+        value: '3'
+      - name: Four
+        value: '4'
+      - name: Five
+        value: '5'
+      - name: Six
+        value: '6'
+      - name: Seven
+        value: '7'
+      - name: Eight
+        value: '8'
+      - name: Nine
+        value: '9'
+      - name: Ten
+        value: '10'
+      - name: Eleven
+        value: '11'
+      - name: Twelve
+        value: '12'
+      - name: Thirteen
+        value: '13'
+  W9ExemptFatcaCodeSchema:
+    docs: The code to identify a payee that is exempt from reporting under FATCA.
+    enum:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      - G
+      - H
+      - I
+      - J
+      - K
+      - L
+      - M
+      - NOT_APPLICABLE
+  W9FormFieldsSchema:
+    properties:
+      taxClassification:
+        type: W9TaxClassificationSchema
+        docs: The U.S. federal tax classification of the person.
+      otherTaxClassification:
+        type: optional<string>
+        docs: The tax classification of the payee if `taxClassification` is `OTHER`.
+      hasIndirectForeignOwnership:
+        type: optional<boolean>
+        docs: >-
+          If your `taxClassification` is `PARTNERSHIP`, `TRUST`, `ESTATE`, or
+          `LLC_PARTNERSHIP`, and you are providing this form to a partnership,
+          trust, or estate in which you have an ownership interest, pass `true`
+          if you have any foreign partners, owners, or beneficiaries.
+      exemptPayeeCode:
+        type: optional<W9ExemptPayeeCodeSchema>
+        docs: The code to identify a payee that is exempt from backup withholding.
+      exemptFatcaCode:
+        type: optional<W9ExemptFatcaCodeSchema>
+        docs: >-
+          The code to identify a payee that is exempt from reporting under
+          FATCA.
+      accountNumbers:
+        type: optional<list<string>>
+        docs: The account numbers to list on this W-9.
+      isSubjectToBackupWithholding:
+        type: optional<boolean>
+        docs: If the payee is subject to backup withholding, pass `true`.
+      certifiedAt:
+        type: optional<datetime>
+        docs: >-
+          The certification date and time in `ISO 8601` format. This field is
+          deprecated. Please use `electronicSignature` instead.
+        availability: deprecated
+      electronicSignature:
+        type: optional<electronicSignature.ElectronicSignatureOfPayeeSchema>
+        docs: The electronic signature of the payee.
+  W9RequestSchema:
+    examples:
+      - name: RequestExample
+        value:
+          payee:
+            name: Ada Lovelace
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            country: US
+            postalCode: '94043'
+            state: CA
+            tin: '000000000'
+            tinType: INDIVIDUAL
+          formFields:
+            taxClassification: INDIVIDUAL
+            isSubjectToBackupWithholding: false
+            electronicSignature:
+              signature: Ada Lovelace
+              printedName: Ada Lovelace
+              signedAt: '2024-01-01T00:00:00.000Z'
+              ipAddress: 127.0.0.1
+    properties:
+      payee:
+        type: payee.PayeeWithOptionalTinTypeRequestSchema
+      payer:
+        type: optional<payer.PayerRequestSchema>
+      formFields:
+        type: W9FormFieldsSchema
+      userId:
+        type: optional<common.UserId>
+  W9Schema:
+    examples:
+      - name: ResponseExample
+        value:
+          id: documentId_sampleVppNzzIbQT
+          createdAt: '2024-01-01T00:00:00.000Z'
+          url: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-W-9.pdf
+          payee:
+            name: Ada Lovelace
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            country: US
+            postalCode: '94043'
+            state: CA
+            tin: '*******00'
+            tinType: INDIVIDUAL
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          formFields:
+            accountNumbers:
+              - '1234567890'
+              - '1234567891'
+            taxClassification: INDIVIDUAL
+            isSubjectToBackupWithholding: false
+            electronicSignature:
+              signature: Ada Lovelace
+              printedName: Ada Lovelace
+              signedAt: '2024-01-01T00:00:00.000Z'
+              ipAddress: 127.0.0.1
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for the W-9 document.
+      createdAt:
+        type: datetime
+        docs: >-
+          The date and time in `ISO 8601` format when the W-9 document was
+          created.
+      url:
+        type: string
+        docs: The URL to the W-9 document.
+      payee:
+        type: payee.PayeeSchema
+      payer:
+        type: optional<payer.PayerSchema>
+      formFields:
+        type: W9FormFieldsSchema
+      userId:
+        type: optional<common.UserId>
+service:
+  auth: false
+  display-name: W-9
+  base-path: ''
+  endpoints:
+    list:
+      docs: Returns a list of W-9 documents.
+      method: GET
+      display-name: List all W-9 documents
+      path: /documents/w-9
+      auth: true
+      request:
+        name: FormW9ListRequest
+        query-parameters:
+          page: optional<common.Page>
+          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
+          payerTinFingerprint: optional<common.PayerTinFingerprint>
+          userId: optional<common.UserId>
+      response:
+        docs: OK
+        type: list<W9Schema>
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          response:
+            body:
+              - $W9Schema.ResponseExample
+    create:
+      docs: >-
+        Creates a W-9 document and subsequently kicks off a TIN verification, if
+        the name and TIN combo has not been used before.
+      method: POST
+      display-name: Create a W-9
+      path: /documents/w-9
+      auth: true
+      request:
+        name: FormW-9RequestSchema
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: W9RequestSchema
+      response:
+        docs: OK
+        type: W9Schema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          request: $W9RequestSchema.RequestExample
+          response:
+            body: $W9Schema.ResponseExample
+    retrieve:
+      docs: Retrieves the details of an existing W-9 document.
+      method: GET
+      display-name: Retrieve a W-9
+      path: /documents/w-9/{documentId}
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      response:
+        docs: OK
+        type: W9Schema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampleVppNzzIbQT
+          response:
+            body: $W9Schema.ResponseExample
