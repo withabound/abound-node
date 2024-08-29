@@ -1,7 +1,7 @@
 # Abound TypeScript Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
-[![npm shield](https://img.shields.io/npm/v/abound)](https://www.npmjs.com/package/abound)
+[![npm shield](https://img.shields.io/npm/v/@withabound/node-sdk)](https://www.npmjs.com/package/@withabound/node-sdk)
 
 The Abound TypeScript library provides convenient access to the Abound API from TypeScript.
 
@@ -12,7 +12,7 @@ API reference documentation is available [here](https://docs.withabound.com).
 ## Installation
 
 ```sh
-npm i -s abound
+npm i -s @withabound/node-sdk
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ npm i -s abound
 Instantiate and use the client with the following:
 
 ```typescript
-import { AboundClient, Abound } from "abound";
+import { AboundClient, Abound } from "@withabound/node-sdk";
 
 const client = new AboundClient({ sampleKey: "YOUR_SAMPLE_KEY" });
 await client.form1099Nec.create({
@@ -70,7 +70,7 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { Abound } from "abound";
+import { Abound } from "@withabound/node-sdk";
 
 const request: Abound.AccessTokenRequestSchema = {
     ...
@@ -83,7 +83,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { AboundError } from "abound";
+import { AboundError } from "@withabound/node-sdk";
 
 try {
     await client.form1099Nec.create(...);
@@ -158,7 +158,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { AboundClient } from "abound";
+import { AboundClient } from "@withabound/node-sdk";
 
 const client = new AboundClient({
     ...

@@ -61,9 +61,9 @@ export class TaxTreaties {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "abound",
-                "X-Fern-SDK-Version": "6.0.0-alpha.2",
-                "User-Agent": "abound/6.0.0-alpha.2",
+                "X-Fern-SDK-Name": "@withabound/node-sdk",
+                "X-Fern-SDK-Version": "6.0.0-alpha.3",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
