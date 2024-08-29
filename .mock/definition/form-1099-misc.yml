@@ -1,0 +1,718 @@
+imports:
+  errors: types/errors.yml
+  headers: types/headers.yml
+  common: types/common.yml
+  form1099s: types/form-1099s.yml
+  mailings: mailings.yml
+types:
+  Form1099MiscFormFieldsRequestSchema:
+    docs: The 1099-MISC form fields.
+    properties:
+      hasFatcaFilingRequirement:
+        type: optional<boolean>
+        docs: >-
+          If the FATCA filing requirement box is checked, the payer is reporting
+          on this Form 1099 to satisfy its account reporting requirement under
+          chapter 4 of the Internal Revenue Code. You may also have a filing
+          requirement. See the Instructions for Form 8938.
+      accountNumber:
+        type: optional<string>
+        validation:
+          maxLength: 20
+        docs: >-
+          May show an account or other unique number the payer assigned to
+          distinguish your account. This field is also required if `fatca` is
+          `true`. Abound will auto-generated this field if not provided.
+      rents:
+        type: optional<integer>
+        docs: >-
+          Report rents from real estate on Schedule E (Form 1040). However,
+          report rents on Schedule C (Form 1040) if you provided significant
+          services to the tenant, sold real estate as a business, or rented
+          personal property as a business. Value must be in cents.
+      royalties:
+        type: optional<integer>
+        docs: >-
+          Report royalties from oil, gas, or mineral properties; copyrights; and
+          patents on Schedule E (Form 1040). However, report payments for a
+          working interest as explained in the Schedule E (Form 1040)
+          instructions. For royalties on timber, coal, and iron ore, see Pub.
+          544. Value must be in cents.
+      otherIncome:
+        type: optional<integer>
+        docs: >-
+          Generally, report this amount on the “Other income” line of Schedule 1
+          (Form 1040) and identify the payment. The amount shown may be payments
+          received as the beneficiary of a deceased employee, prizes, awards,
+          taxable damages, Indian gaming profits, or other taxable income. See
+          Pub. 525. If it is trade or business income, report this amount on
+          Schedule C or F (Form 1040). Value must be in cents.
+      federalIncomeTaxWithheld:
+        type: optional<integer>
+        docs: >-
+          Shows backup withholding or withholding on Indian gaming
+          profits.Generally, a payer must backup withhold if you did not furnish
+          your TIN. See Form W-9 and Pub. 505 for more information. Report this
+          amount on your income tax return as tax withheld. Abound does not
+          currently support `federalIncomeTaxWithheld` reporting on the
+          1099-MISC, please contact us for more information.
+      fishingBoatProceeds:
+        type: optional<integer>
+        docs: >-
+          Shows the amount paid to you as a fishing boat crew member by the
+          operator, who considers you to be self-employed. Self-employed
+          individuals must report this amount on Schedule C (Form 1040). See
+          Pub. 334. Value must be in cents.
+      medicalAndHealthCarePayments:
+        type: optional<integer>
+        docs: >-
+          For individuals, report on Schedule C (Form 1040). Value must be in
+          cents. Value must be in cents.
+      hasDirectSalesOver5000:
+        type: optional<boolean>
+        docs: >-
+          If checked, consumer products totaling $5,000 or more were sold to you
+          for resale, on a buy-sell, a deposit-commission, or other basis.
+          Generally, report any income from your sale of these products on
+          Schedule C (Form 1040).
+      substitutePaymentsInLieuOfDividendsOrInterest:
+        type: optional<integer>
+        docs: >-
+          Shows substitute payments in lieu of dividends or tax-exempt interest
+          received by your broker on your behalf as a result of a loan of your
+          securities. Report on the “Other income” line of Schedule 1 (Form
+          1040). Value must be in cents.
+      cropInsuranceProceeds:
+        type: optional<integer>
+        docs: Report this amount on Schedule F (Form 1040). Value must be in cents.
+      grossProceedsPaidToAnAttorney:
+        type: optional<integer>
+        docs: >-
+          Shows gross proceeds paid to an attorney in connection with legal
+          services. Report only the taxable part as income on your return. Value
+          must be in cents.
+      fishPurchasedForResale:
+        type: optional<integer>
+        docs: >-
+          Shows the amount of cash you received for the sale of fish if you are
+          in the trade or business of catching fish. Value must be in cents.
+      section409ADeferrals:
+        type: optional<integer>
+        docs: >-
+          May show current year deferrals as a nonemployee under a nonqualified
+          deferred compensation (NQDC) plan that is subject to the requirements
+          of section 409A plus any earnings on current and prior year
+          deferrals.  Value must be in cents.
+      excessGoldenParachutePayments:
+        type: optional<integer>
+        docs: >-
+          Shows your total compensation of excess golden parachute payments
+          subject to a 20% excise tax. See your tax return instructions for
+          where to report. Value must be in cents.
+      nonqualifiedDeferredCompensation:
+        type: optional<integer>
+        docs: >-
+          Shows income as a nonemployee under an NQDC plan that does not meet
+          the requirements of section 409A. Any amount included in box 12 that
+          is currently taxable is also included in this box. Report this amount
+          as income on your tax return. This income is also subject to a
+          substantial additional tax to be reported on Form 1040, 1040-SR, or
+          1040-NR. See the instructions for your tax return. Value must be in
+          cents.
+      stateTaxInfo:
+        type: list<form1099s.Form1099StateTaxInfoWithStateIncomeSchema>
+        docs: >-
+          An array that contains up to two state tax information objects. Abound
+          currently only supports one state tax information object in this
+          array. Abound does not currently support state-level tax withholding
+          reporting on the 1099-MISC, please contact us for more information.
+  Form1099MiscRequestSchema:
+    examples:
+      - name: RequestCreateExample
+        value:
+          filingYear: 2023
+          payer:
+            name: Hooli
+            tin: '111111111'
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            phoneNumber: '6501014096'
+          payee:
+            name: Ada Lovelace
+            tin: '000000000'
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+          formFields:
+            cropInsuranceProceeds: 97109
+            excessGoldenParachutePayments: 97109
+            federalIncomeTaxWithheld: 0
+            fishPurchasedForResale: 97109
+            fishingBoatProceeds: 97109
+            grossProceedsPaidToAnAttorney: 97109
+            hasDirectSalesOver5000: false
+            hasFatcaFilingRequirement: true
+            medicalAndHealthCarePayments: 97109
+            nonqualifiedDeferredCompensation: 97109
+            substitutePaymentsInLieuOfDividendsOrInterest: 97109
+            otherIncome: 97109
+            rents: 97109
+            royalties: 97109
+            section409ADeferrals: 97109
+            accountNumber: A00AskD1ZTO4YB8oBHav
+            stateTaxInfo:
+              - filingState: CA
+                stateIncome: 345543
+                stateTaxWithheld: 0
+    extends: form1099s.Form1099BaseRequestSchema
+    properties:
+      formFields: Form1099MiscFormFieldsRequestSchema
+  Form1099MiscCorrectRequestSchema:
+    examples:
+      - name: CorrectRequestExample
+        value:
+          payee:
+            name: Ada Lovelace
+            tin: '000000000'
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+          formFields:
+            cropInsuranceProceeds: 97109
+            excessGoldenParachutePayments: 97109
+            federalIncomeTaxWithheld: 0
+            fishPurchasedForResale: 97109
+            fishingBoatProceeds: 97109
+            grossProceedsPaidToAnAttorney: 97109
+            hasDirectSalesOver5000: false
+            hasFatcaFilingRequirement: true
+            medicalAndHealthCarePayments: 97109
+            nonqualifiedDeferredCompensation: 97109
+            substitutePaymentsInLieuOfDividendsOrInterest: 97109
+            otherIncome: 97109
+            rents: 10000
+            royalties: 97109
+            section409ADeferrals: 97109
+            accountNumber: A00AskD1ZTO4YB8oBHav
+            stateTaxInfo:
+              - filingState: CA
+                stateIncome: 258434
+    extends: form1099s.Form1099BaseCorrectRequestSchema
+    properties:
+      formFields: Form1099MiscFormFieldsRequestSchema
+  Form1099MiscFormFieldsSchema:
+    extends:
+      - form1099s.Form1099FormFieldsBaseSchema
+      - Form1099MiscFormFieldsRequestSchema
+  Form1099MiscSchema:
+    examples:
+      - name: CreateResponseExample
+        value:
+          id: documentId_sampleGNPOKNmIgF
+          formFields:
+            isCorrected: false
+            isVoid: false
+            cropInsuranceProceeds: 97109
+            excessGoldenParachutePayments: 97109
+            federalIncomeTaxWithheld: 0
+            fishPurchasedForResale: 97109
+            fishingBoatProceeds: 97109
+            grossProceedsPaidToAnAttorney: 97109
+            hasDirectSalesOver5000: false
+            hasFatcaFilingRequirement: true
+            medicalAndHealthCarePayments: 97109
+            nonqualifiedDeferredCompensation: 97109
+            substitutePaymentsInLieuOfDividendsOrInterest: 97109
+            otherIncome: 97109
+            rents: 97109
+            royalties: 97109
+            section409ADeferrals: 97109
+            accountNumber: A00AskD1ZTO4YB8oBHav
+            stateTaxInfo:
+              - filingState: CA
+                stateIncome: 345543
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00.000Z'
+          status: CREATED
+          payer:
+            name: Hooli
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinType: BUSINESS
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            name: Ada Lovelace
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            tin: '*******00'
+            tinType: INDIVIDUAL
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-C.pdf
+          payeeUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-B.pdf
+      - name: FileResponseExample
+        value:
+          id: documentId_sampleGNPOKNmIgF
+          formFields:
+            isCorrected: false
+            isVoid: false
+            cropInsuranceProceeds: 97109
+            excessGoldenParachutePayments: 97109
+            federalIncomeTaxWithheld: 0
+            fishPurchasedForResale: 97109
+            fishingBoatProceeds: 97109
+            grossProceedsPaidToAnAttorney: 97109
+            hasDirectSalesOver5000: false
+            hasFatcaFilingRequirement: true
+            medicalAndHealthCarePayments: 97109
+            nonqualifiedDeferredCompensation: 97109
+            substitutePaymentsInLieuOfDividendsOrInterest: 97109
+            otherIncome: 97109
+            rents: 97109
+            royalties: 97109
+            section409ADeferrals: 97109
+            accountNumber: A00AskD1ZTO4YB8oBHav
+            stateTaxInfo:
+              - filingState: CA
+                stateIncome: 345543
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00.000Z'
+          status: FILED
+          payer:
+            name: Hooli
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinType: BUSINESS
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            name: Ada Lovelace
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            tin: '*******00'
+            tinType: INDIVIDUAL
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-C.pdf
+          payeeUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-B.pdf
+      - name: CorrectResponseExample
+        value:
+          id: documentId_sampleaTA4jltVVx
+          correctedFromId: documentId_sampleGNPOKNmIgF
+          formFields:
+            isCorrected: true
+            isVoid: false
+            cropInsuranceProceeds: 97109
+            excessGoldenParachutePayments: 97109
+            federalIncomeTaxWithheld: 0
+            fishPurchasedForResale: 97109
+            fishingBoatProceeds: 97109
+            grossProceedsPaidToAnAttorney: 97109
+            hasDirectSalesOver5000: false
+            hasFatcaFilingRequirement: true
+            medicalAndHealthCarePayments: 97109
+            nonqualifiedDeferredCompensation: 97109
+            substitutePaymentsInLieuOfDividendsOrInterest: 97109
+            otherIncome: 97109
+            rents: 10000
+            royalties: 97109
+            section409ADeferrals: 97109
+            accountNumber: A00AskD1ZTO4YB8oBHav
+            stateTaxInfo:
+              - filingState: CA
+                stateIncome: 258434
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00.000Z'
+          status: FILED
+          payer:
+            name: Hooli
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinType: BUSINESS
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            name: Ada Lovelace
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            tin: '*******00'
+            tinType: INDIVIDUAL
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-CORRECTED-COPY-C.pdf
+          payeeUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-CORRECTED-COPY-B.pdf
+      - name: VoidResponseExample
+        value:
+          id: documentId_sampleStGnVcbd57
+          voidedFromId: documentId_sampleGNPOKNmIgF
+          formFields:
+            isCorrected: false
+            isVoid: true
+            cropInsuranceProceeds: 97109
+            excessGoldenParachutePayments: 97109
+            federalIncomeTaxWithheld: 0
+            fishPurchasedForResale: 97109
+            fishingBoatProceeds: 97109
+            grossProceedsPaidToAnAttorney: 97109
+            hasDirectSalesOver5000: false
+            hasFatcaFilingRequirement: true
+            medicalAndHealthCarePayments: 97109
+            nonqualifiedDeferredCompensation: 97109
+            substitutePaymentsInLieuOfDividendsOrInterest: 97109
+            otherIncome: 97109
+            rents: 97109
+            royalties: 97109
+            section409ADeferrals: 97109
+            accountNumber: A00AskD1ZTO4YB8oBHav
+            stateTaxInfo:
+              - filingState: CA
+                stateIncome: 345543
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00.000Z'
+          status: FILED
+          payer:
+            name: Hooli
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinType: BUSINESS
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            name: Ada Lovelace
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            tin: '*******00'
+            tinType: INDIVIDUAL
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-VOID-COPY-C.pdf
+          payeeUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-VOID-COPY-B.pdf
+    extends: form1099s.Form1099BaseSchema
+    properties:
+      formFields: Form1099MiscFormFieldsSchema
+service:
+  auth: false
+  display-name: 1099-MISC
+  base-path: ''
+  endpoints:
+    list:
+      docs: Returns a list of 1099-MISC documents.
+      method: GET
+      display-name: List all 1099-MISC documents
+      path: /documents/1099-misc
+      auth: true
+      request:
+        name: Form1099MiscListRequest
+        query-parameters:
+          page: optional<common.Page>
+          filingYear: optional<common.FilingYear>
+          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
+          payerTinFingerprint: optional<common.PayerTinFingerprint>
+          status: optional<form1099s.Form1099StatusEnum>
+          userId: optional<common.UserId>
+      response:
+        docs: OK
+        type: list<Form1099MiscSchema>
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          response:
+            body:
+              - $Form1099MiscSchema.CreateResponseExample
+    create:
+      docs: >-
+        Creates a 1099-MISC document and subsequently kicks off a TIN
+        Verification, if the name and TIN combo has not been used before.
+      method: POST
+      display-name: Create a 1099-MISC
+      path: /documents/1099-misc
+      auth: true
+      request:
+        name: Form1099MiscRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: Form1099MiscRequestSchema
+      response:
+        docs: OK
+        type: Form1099MiscSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          request: $Form1099MiscRequestSchema.RequestCreateExample
+          response:
+            body: $Form1099MiscSchema.CreateResponseExample
+    mail:
+      docs: Mails a 1099-MISC document.
+      method: POST
+      display-name: Mail a 1099-MISC
+      path: /documents/1099-misc/{documentId}/mail
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099MiscMailingRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: mailings.MailingRequestSchema
+      response:
+        docs: OK
+        type: mailings.MailingSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          request:
+            to:
+              address: 1401 N Shoreline Blvd
+              address2: Suite 1
+              city: Mountain View
+              state: CA
+              postalCode: '94043'
+              country: US
+              name: Ada Lovelace
+            from:
+              address: 256 Byron Street
+              address2: Suite 32
+              city: Palo Alto
+              state: CA
+              postalCode: '94306'
+              country: US
+              name: Hooli
+          response:
+            body:
+              id: mailingId_sampleFV9b73IvAD
+              createdAt: '2024-01-01T00:00:00.000Z'
+              status: CREATED
+              url: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
+              mailedFromId: documentId_sampletTtqNfulW8
+              to:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Ada Lovelace
+              from:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Hooli
+    file:
+      docs: Files a 1099-MISC document.
+      method: POST
+      display-name: File a 1099-MISC
+      path: /documents/1099-misc/{documentId}/file
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099MiscFileRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+      response:
+        type: Form1099MiscSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          response:
+            body: $Form1099MiscSchema.FileResponseExample
+    correct:
+      docs: >-
+        Files a new corrected 1099-MISC and relates it to the original document.
+        A 1099-MISC can be corrected only after it has reached the `FILED`
+        status. Automatically handles both one-transaction and two-transaction
+        corrections.
+      method: POST
+      display-name: Correct a 1099-MISC
+      path: /documents/1099-misc/{documentId}/correct
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099MiscCorrectRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: Form1099MiscCorrectRequestSchema
+      response:
+        type: Form1099MiscSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          request: $Form1099MiscCorrectRequestSchema.CorrectRequestExample
+          response:
+            body: $Form1099MiscSchema.CorrectResponseExample
+    void:
+      docs: >-
+        Files a new voided 1099-MISC and relates it to the original document. A
+        1099-MISC can be voided only after it has reached the `FILED` status.
+      method: POST
+      display-name: Void a 1099-MISC
+      path: /documents/1099-misc/{documentId}/void
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099MiscVoidRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+      response:
+        docs: OK
+        type: Form1099MiscSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          response:
+            body: $Form1099MiscSchema.VoidResponseExample
+    retrieve:
+      docs: Retrieves the details of an existing 1099-MISC document.
+      method: GET
+      display-name: Retrieve a 1099-MISC
+      path: /documents/1099-misc/{documentId}
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      response:
+        docs: OK
+        type: Form1099MiscSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          response:
+            body: $Form1099MiscSchema.CreateResponseExample
+    delete:
+      docs: >-
+        Deletes a 1099-MISC document. Once an action (`/file`, `/correct`,
+        `/void`) has been executed on a 1099-MISC, it cannot be deleted.
+      method: DELETE
+      display-name: Delete a 1099-MISC
+      path: /documents/1099-misc/{documentId}
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      response:
+        docs: OK
+        type: common.OkSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          response:
+            body: {}

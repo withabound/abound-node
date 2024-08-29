@@ -1,0 +1,740 @@
+imports:
+  errors: types/errors.yml
+  headers: types/headers.yml
+  common: types/common.yml
+  form1099s: types/form-1099s.yml
+  mailings: mailings.yml
+types:
+  Form1099IntFormFieldsRequestSchema:
+    docs: The 1099-INT form fields.
+    properties:
+      hasFatcaFilingRequirement:
+        type: optional<boolean>
+        docs: >-
+          Satisfying a requirement to report with respect to a U.S. account for
+          chapter 4 purposes.
+      accountNumber:
+        type: optional<string>
+        validation:
+          maxLength: 20
+        docs: >-
+          The IRS “encourages” a payer to designate an account number for all
+          Form 1099-INT filed. This field is required if payer has multiple
+          accounts for a recipient for whom it is filing more than one Form
+          1099-INT. This field is also required if `fatca` is `true`. Abound
+          will auto-generated this field if not provided.
+      payersRoutingNumber:
+        type: optional<string>
+        validation:
+          maxLength: 20
+        docs: >-
+          A routing and transit number (RTN) is a unique nine-digit number used
+          to identify a bank for purposes of directing financial flows. This is
+          essentially bank's bank account - their account with the Federal
+          Reserve.
+      interestIncome:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The taxable interest paid to you during the calendar year by the
+          payer. This does not include interest for `usSavingsBondsInterest`.
+          May also show the total amount of the credits from clean renewable
+          energy bonds, new clean renewable energy bonds, qualified energy
+          conservation bonds, qualified zone academy bonds, qualified school
+          construction bonds, and build America bonds that must be included in
+          your interest income. Value must be in cents.
+      earlyWithdrawalPenalty:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The interest or principal forfeited because of early withdrawal of
+          time savings. You may deduct this amount to figure your adjusted gross
+          income on your income tax return. Value must be in cents.
+      usSavingsBondsInterest:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          Shows interest on U.S. Savings Bonds, Treasury bills, Treasury bonds,
+          and Treasury notes. This may or may not all be taxable. This interest
+          is exempt from state and local income taxes. This interest is not
+          included in `interestIncome`. Value must be in cents.
+      federalIncomeTaxWithheld:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 0
+        docs: >-
+          The federal income tax withheld. A payer must backup withhold on
+          certain payments if recipient did not provide a TIN to the payer.
+          Value must be in cents. Abound does not currently support
+          `federalIncomeTaxWithheld` reporting on the 1099-INT, please contact
+          us for more information.
+      investmentExpenses:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          Any amount is your share of investment expenses of a singleclass
+          REMIC. This amount is included in `interestIncome`. *Note: This amount
+          is not deductible.* Value must be in cents.
+      foreignTaxPaid:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: The foreign tax paid. Value must be in cents.
+      foreignTaxPaidCountry:
+        type: optional<string>
+        validation:
+          minLength: 2
+          maxLength: 2
+        docs: The country or U.S. possession to which the foreign tax was paid.
+      taxExemptInterest:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The tax-exempt interest paid to you during the calendar year by the
+          payer. This amount may be subject to backup withholding. See
+          `federalIncomeTaxWithheld` above. Value must be in cents.
+      specifiedPrivateActivityBondInterest:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          The tax-exempt interest subject to the alternative minimum tax. This
+          amount is included in `taxExemptInterest`. Value must be in cents.
+      marketDiscount:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          For a taxable or tax-exempt covered security, if you made an election
+          under section 1278(b) to include market discount in income as it
+          accrues and you notified your payer of the election in writing in
+          accordance with Regulations section 1.6045-1(n)(5), shows the market
+          discount that accrued on the debt instrument during the year while
+          held by you, unless it was reported on Form 1099-OID. Value must be in
+          cents.
+      bondPremium:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          For a taxable covered security (other than a U.S. Treasury
+          obligation), shows the amount of premium amortization allocable to the
+          interest payment(s), unless you notified the payer in writing in
+          accordance with Regulations section 1.6045-1(n)(5) that you did not
+          want to amortize bond premium under section 171. Value must be in
+          cents.
+      bondPremiumTreasury:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          For a U.S. Treasury obligation that is a covered security, shows the
+          amount of premium amortization allocable to the interest payment(s),
+          unless you notified the payer in writing in accordance with
+          Regulations section 1.6045-1(n)(5) that you did not want to amortize
+          bond premium under section 171. Value must be in cents.
+      bondPremiumTaxExemptBond:
+        type: optional<integer>
+        validation:
+          min: 0
+        docs: >-
+          For a tax-exempt covered security, shows the amount of premium
+          amortization allocable to the interest payment(s). Value must be in
+          cents.
+      stateTaxInfo:
+        type: list<form1099s.Form1099StateTaxInfoSchema>
+        docs: >-
+          An array that contains up to two state tax information objects. Abound
+          currently only supports one state tax information object in this
+          array. Abound does not currently support state-level tax withholding
+          reporting on the 1099-INT, please contact us for more information.
+  Form1099IntRequestSchema:
+    examples:
+      - name: RequestCreateExample
+        value:
+          filingYear: 2023
+          payer:
+            name: Hooli
+            tin: '111111111'
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            phoneNumber: '6501014096'
+          payee:
+            name: Ada Lovelace
+            tin: '000000000'
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+          formFields:
+            bondPremium: 19423
+            bondPremiumTaxExemptBond: 19423
+            bondPremiumTreasury: 19423
+            earlyWithdrawalPenalty: 23223
+            foreignTaxPaid: 19423
+            foreignTaxPaidCountry: FR
+            hasFatcaFilingRequirement: true
+            interestIncome: 83232
+            investmentExpenses: 19423
+            marketDiscount: 19423
+            payersRoutingNumber: '054000030'
+            specifiedPrivateActivityBondInterest: 19423
+            taxExemptInterest: 19423
+            usSavingsBondsInterest: 19423
+            federalIncomeTaxWithheld: 0
+            accountNumber: A006SVmcrieFAbm3gsaV
+            stateTaxInfo:
+              - filingState: CA
+                stateTaxWithheld: 0
+    extends: form1099s.Form1099BaseRequestSchema
+    properties:
+      formFields: Form1099IntFormFieldsRequestSchema
+  Form1099IntCorrectRequestSchema:
+    examples:
+      - name: CorrectRequestExample
+        value:
+          payee:
+            name: Ada Lovelace
+            tin: '000000000'
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+          formFields:
+            bondPremium: 19423
+            bondPremiumTaxExemptBond: 19423
+            bondPremiumTreasury: 19423
+            earlyWithdrawalPenalty: 23223
+            foreignTaxPaid: 19423
+            foreignTaxPaidCountry: FR
+            hasFatcaFilingRequirement: true
+            interestIncome: 10000
+            investmentExpenses: 19423
+            marketDiscount: 19423
+            payersRoutingNumber: '054000030'
+            specifiedPrivateActivityBondInterest: 19423
+            taxExemptInterest: 19423
+            usSavingsBondsInterest: 19423
+            federalIncomeTaxWithheld: 0
+            accountNumber: A006SVmcrieFAbm3gsaV
+            stateTaxInfo:
+              - filingState: CA
+    extends: form1099s.Form1099BaseCorrectRequestSchema
+    properties:
+      formFields: Form1099IntFormFieldsRequestSchema
+  Form1099IntFormFieldsSchema:
+    extends:
+      - form1099s.Form1099FormFieldsBaseSchema
+      - Form1099IntFormFieldsRequestSchema
+  Form1099IntSchema:
+    examples:
+      - name: CreateResponseExample
+        value:
+          id: documentId_samplepWpJ9Snlzb
+          formFields:
+            isCorrected: false
+            isVoid: false
+            bondPremium: 19423
+            bondPremiumTaxExemptBond: 19423
+            bondPremiumTreasury: 19423
+            earlyWithdrawalPenalty: 23223
+            foreignTaxPaid: 19423
+            foreignTaxPaidCountry: FR
+            hasFatcaFilingRequirement: true
+            interestIncome: 83232
+            investmentExpenses: 19423
+            marketDiscount: 19423
+            payersRoutingNumber: '054000030'
+            specifiedPrivateActivityBondInterest: 19423
+            taxExemptInterest: 19423
+            usSavingsBondsInterest: 19423
+            federalIncomeTaxWithheld: 0
+            accountNumber: A006SVmcrieFAbm3gsaV
+            stateTaxInfo:
+              - filingState: CA
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00.000Z'
+          status: CREATED
+          payer:
+            name: Hooli
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinType: BUSINESS
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            name: Ada Lovelace
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            tin: '*******00'
+            tinType: INDIVIDUAL
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-INT-COPY-C.pdf
+          payeeUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-INT-COPY-B.pdf
+      - name: FileResponseExample
+        value:
+          id: documentId_samplepWpJ9Snlzb
+          formFields:
+            isCorrected: false
+            isVoid: false
+            bondPremium: 19423
+            bondPremiumTaxExemptBond: 19423
+            bondPremiumTreasury: 19423
+            earlyWithdrawalPenalty: 23223
+            foreignTaxPaid: 19423
+            foreignTaxPaidCountry: FR
+            hasFatcaFilingRequirement: true
+            interestIncome: 83232
+            investmentExpenses: 19423
+            marketDiscount: 19423
+            payersRoutingNumber: '054000030'
+            specifiedPrivateActivityBondInterest: 19423
+            taxExemptInterest: 19423
+            usSavingsBondsInterest: 19423
+            federalIncomeTaxWithheld: 0
+            accountNumber: A006SVmcrieFAbm3gsaV
+            stateTaxInfo:
+              - filingState: CA
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00.000Z'
+          status: FILED
+          payer:
+            name: Hooli
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinType: BUSINESS
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            name: Ada Lovelace
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            tin: '*******00'
+            tinType: INDIVIDUAL
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-INT-COPY-C.pdf
+          payeeUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-INT-COPY-B.pdf
+      - name: CorrectResponseExample
+        value:
+          id: documentId_samplexc6Aw2Qr9R
+          correctedFromId: documentId_samplepWpJ9Snlzb
+          formFields:
+            isCorrected: true
+            isVoid: false
+            bondPremium: 19423
+            bondPremiumTaxExemptBond: 19423
+            bondPremiumTreasury: 19423
+            earlyWithdrawalPenalty: 23223
+            foreignTaxPaid: 19423
+            foreignTaxPaidCountry: FR
+            hasFatcaFilingRequirement: true
+            interestIncome: 10000
+            investmentExpenses: 19423
+            marketDiscount: 19423
+            payersRoutingNumber: '054000030'
+            specifiedPrivateActivityBondInterest: 19423
+            taxExemptInterest: 19423
+            usSavingsBondsInterest: 19423
+            federalIncomeTaxWithheld: 0
+            accountNumber: A006SVmcrieFAbm3gsaV
+            stateTaxInfo:
+              - filingState: CA
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00.000Z'
+          status: FILED
+          payer:
+            name: Hooli
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinType: BUSINESS
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            name: Ada Lovelace
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            tin: '*******00'
+            tinType: INDIVIDUAL
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-INT-CORRECTED-COPY-C.pdf
+          payeeUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-INT-CORRECTED-COPY-B.pdf
+      - name: VoidResponseExample
+        value:
+          id: documentId_sampleVwRnewIBMu
+          voidedFromId: documentId_samplepWpJ9Snlzb
+          formFields:
+            isCorrected: false
+            isVoid: true
+            bondPremium: 19423
+            bondPremiumTaxExemptBond: 19423
+            bondPremiumTreasury: 19423
+            earlyWithdrawalPenalty: 23223
+            foreignTaxPaid: 19423
+            foreignTaxPaidCountry: FR
+            hasFatcaFilingRequirement: true
+            interestIncome: 83232
+            investmentExpenses: 19423
+            marketDiscount: 19423
+            payersRoutingNumber: '054000030'
+            specifiedPrivateActivityBondInterest: 19423
+            taxExemptInterest: 19423
+            usSavingsBondsInterest: 19423
+            federalIncomeTaxWithheld: 0
+            accountNumber: A006SVmcrieFAbm3gsaV
+            stateTaxInfo:
+              - filingState: CA
+                stateTaxWithheld: 0
+          filingYear: 2023
+          createdAt: '2024-01-01T00:00:00.000Z'
+          status: FILED
+          payer:
+            name: Hooli
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            phoneNumber: '6501014096'
+            tin: '*******11'
+            tinType: BUSINESS
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+          payee:
+            name: Ada Lovelace
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            tin: '*******00'
+            tinType: INDIVIDUAL
+            tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+            tinVerificationStatus: MATCH
+          payerUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-INT-VOID-COPY-C.pdf
+          payeeUrl: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-INT-VOID-COPY-B.pdf
+    extends: form1099s.Form1099BaseSchema
+    properties:
+      formFields: Form1099IntFormFieldsSchema
+service:
+  auth: false
+  display-name: 1099-INT
+  base-path: ''
+  endpoints:
+    list:
+      docs: Returns a list of 1099-INT documents.
+      method: GET
+      display-name: List all 1099-INT documents
+      path: /documents/1099-int
+      auth: true
+      request:
+        name: Form1099IntListRequest
+        query-parameters:
+          page: optional<common.Page>
+          filingYear: optional<common.FilingYear>
+          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
+          payerTinFingerprint: optional<common.PayerTinFingerprint>
+          status: optional<form1099s.Form1099StatusEnum>
+          userId: optional<common.UserId>
+      response:
+        docs: OK
+        type: list<Form1099IntSchema>
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          response:
+            body:
+              - $Form1099IntSchema.CreateResponseExample
+    create:
+      docs: >-
+        Creates a 1099-INT document and subsequently kicks off a TIN
+        Verification, if the name and TIN combo has not been used before.
+      method: POST
+      display-name: Create a 1099-INT
+      path: /documents/1099-int
+      auth: true
+      request:
+        name: Form1099IntRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: Form1099IntRequestSchema
+      response:
+        docs: OK
+        type: Form1099IntSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          request: $Form1099IntRequestSchema.RequestCreateExample
+          response:
+            body: $Form1099IntSchema.CreateResponseExample
+    mail:
+      docs: Mails a 1099-INT document.
+      method: POST
+      display-name: Mail a 1099-INT
+      path: /documents/1099-int/{documentId}/mail
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099IntMailingRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: mailings.MailingRequestSchema
+      response:
+        docs: OK
+        type: mailings.MailingSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_samplepWpJ9Snlzb
+          request:
+            to:
+              address: 1401 N Shoreline Blvd
+              address2: Suite 1
+              city: Mountain View
+              state: CA
+              postalCode: '94043'
+              country: US
+              name: Ada Lovelace
+            from:
+              address: 256 Byron Street
+              address2: Suite 32
+              city: Palo Alto
+              state: CA
+              postalCode: '94306'
+              country: US
+              name: Hooli
+          response:
+            body:
+              id: mailingId_sampleFV9b73IvAD
+              createdAt: '2024-01-01T00:00:00.000Z'
+              status: CREATED
+              url: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
+              mailedFromId: documentId_sampletTtqNfulW8
+              to:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Ada Lovelace
+              from:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Hooli
+    file:
+      docs: Files a 1099-INT document.
+      method: POST
+      display-name: File a 1099-INT
+      path: /documents/1099-int/{documentId}/file
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099IntFileRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+      response:
+        type: Form1099IntSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_samplepWpJ9Snlzb
+          response:
+            body: $Form1099IntSchema.FileResponseExample
+    correct:
+      docs: >-
+        Files a new corrected 1099-INT and relates it to the original document.
+        A 1099-INT can be corrected only after it has reached the `FILED`
+        status. Automatically handles both one-transaction and two-transaction
+        corrections.
+      method: POST
+      display-name: Correct a 1099-INT
+      path: /documents/1099-int/{documentId}/correct
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099IntCorrectRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: Form1099IntCorrectRequestSchema
+      response:
+        type: Form1099IntSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_samplepWpJ9Snlzb
+          request: $Form1099IntCorrectRequestSchema.CorrectRequestExample
+          response:
+            body: $Form1099IntSchema.CorrectResponseExample
+    void:
+      docs: >-
+        Files a new voided 1099-INT and relates it to the original document. A
+        1099-INT can be voided only after it has reached the `FILED` status.
+      method: POST
+      display-name: Void a 1099-INT
+      path: /documents/1099-int/{documentId}/void
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      request:
+        name: Form1099IntVoidRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+      response:
+        docs: OK
+        type: Form1099IntSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_samplepWpJ9Snlzb
+          response:
+            body: $Form1099IntSchema.VoidResponseExample
+    retrieve:
+      docs: Retrieves the details of an existing 1099-INT document.
+      method: GET
+      display-name: Retrieve a 1099-INT
+      path: /documents/1099-int/{documentId}
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      response:
+        docs: OK
+        type: Form1099IntSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_samplepWpJ9Snlzb
+          response:
+            body: $Form1099IntSchema.CreateResponseExample
+    delete:
+      docs: >-
+        Deletes a 1099-INT document. Once an action (`/file`, `/correct`,
+        `/void`) has been executed on a 1099-INT, it cannot be deleted.
+      method: DELETE
+      display-name: Delete a 1099-INT
+      path: /documents/1099-int/{documentId}
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      response:
+        docs: OK
+        type: common.OkSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_samplepWpJ9Snlzb
+          response:
+            body: {}

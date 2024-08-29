@@ -1,0 +1,38 @@
+imports:
+  common: common.yml
+  address: address.yml
+types:
+  PayerRequestSchema:
+    docs: The payer of the document.
+    extends:
+      - address.AddressSchema
+    properties:
+      name:
+        type: string
+        docs: The payer's legal name (first + last) or business name.
+      name2:
+        type: optional<string>
+        docs: >-
+          The payer's trade name, DBA name, or disregarded entity name, if
+          different from `name`.
+      tin:
+        type: string
+        validation:
+          minLength: 9
+          maxLength: 9
+        docs: >-
+          The payee's tax identification number, commonly referred to as a TIN.
+          No hyphens. Numerical digits only. Alternatively, you may pass the
+          corresponding `tinFingerprint`.
+      phoneNumber:
+        type: string
+        docs: The payer's phone number.
+  PayerSchema:
+    docs: The payer of the document.
+    extends:
+      - PayerRequestSchema
+    properties:
+      tinFingerprint: common.TinFingerprint
+      tinType: optional<common.TinTypeEnum>
+      tinVerificationId: common.TinVerificationId
+      tinVerificationStatus: common.TinVerificationStatusEnum

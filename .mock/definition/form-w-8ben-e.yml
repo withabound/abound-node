@@ -1,0 +1,304 @@
+imports:
+  address: types/address.yml
+  errors: types/errors.yml
+  electronicSignature: types/electronic-signature.yml
+  headers: types/headers.yml
+  payee: types/payee.yml
+  payer: types/payer.yml
+  common: types/common.yml
+  taxTreaties: types/tax-treaties.yml
+types:
+  W8BenETaxClassificationEnum:
+    docs: The tax classification of the payee.
+    enum:
+      - CENTRAL_BANK_OF_ISSUE
+      - COMPLEX_TRUST
+      - CORPORATION
+      - DISREGARDED_ENTITY
+      - ESTATE
+      - FOREIGN_GOVERNMENT_CONTROLLED_ENTITY
+      - FOREIGN_GOVERNMENT_INTEGRAL_PART
+      - GRANTOR_TRUST
+      - INTERNATIONAL_ORGANIZATION
+      - PARTNERSHIP
+      - PRIVATE_FOUNDATION
+      - SIMPLE_TRUST
+      - TAX_EXEMPT_ORGANIZATION
+  W8BenEBeneficialOwnerRequestSchema:
+    docs: The payee (beneficial owner) completing the document.
+    properties:
+      name:
+        type: string
+        docs: The payee's legal name (first + last).
+      incorporationCountry:
+        type: string
+        validation:
+          minLength: 2
+          maxLength: 2
+        docs: >-
+          The payee's country of incorporation adhering to `ISO 3166-2`
+          standards.
+      tin:
+        type: optional<string>
+        validation:
+          minLength: 9
+          maxLength: 9
+        docs: >-
+          The payee's US tax identification number, commonly referred to as a
+          TIN. No hyphens. Numerical digits only. Alternatively, you may pass
+          the corresponding `tinFingerprint`.
+      foreignTin:
+        type: optional<string>
+        docs: >-
+          The payee's foreign tax identifying number, commonly referred to as a
+          FTIN. No hyphens. Alphanumeric digits only. Alternatively, you may
+          pass the corresponding `foreignTinFingerprint`.
+      permanentResidenceAddress:
+        type: address.ForeignAddressSchema
+        docs: >-
+          Permanent residence address (street, apt. or suite no., or rural
+          route). Do not use a P.O. box or in-care-of address.
+      mailingAddress:
+        type: optional<address.AddressSchema>
+        docs: >-
+          The mailing address. Only include if different from the permanent
+          residence address.
+  W8BenEFormFieldsRequestSchema:
+    properties:
+      taxClassification:
+        type: W8BenETaxClassificationEnum
+      isForeignTinNotRequired:
+        type: optional<boolean>
+        docs: Pass true if a foreign TIN is not legally required. Otherwise false.
+      taxTreatyCode:
+        type: optional<taxTreaties.TaxTreatyAboundCodeEnum>
+        docs: >-
+          Abound's shorthand code for the particular US tax treaty the payee is
+          claiming.
+      referenceNumbers:
+        type: optional<list<string>>
+        docs: >-
+          The reference numbers to list on this W-8BEN-E. Two reference numbers
+          are allowed. Max 20 characters each.
+      isCertified:
+        type: boolean
+        docs: Pass true if the payee has certified the W-8BEN-E. Otherwise false.
+      electronicSignature:
+        type: optional<electronicSignature.ElectronicSignatureOfPayeeSchema>
+        docs: The electronic signature of the payee.
+  W8BenERequestSchema:
+    examples:
+      - name: ResponseExample
+        value:
+          payee:
+            name: Hooli
+            incorporationCountry: GB
+            tin: '111111111'
+            foreignTin: DQ123456C
+            permanentResidenceAddress:
+              address: 43 Hilly Fields
+              address2: Suite 32
+              city: Lewisham
+              state: London
+              postalCode: SE13 7JN
+              country: GB
+            mailingAddress:
+              address: 256 Byron Street
+              address2: Suite 32
+              city: Palo Alto
+              postalCode: '94306'
+              state: CA
+              country: US
+          formFields:
+            taxClassification: CORPORATION
+            isForeignTinNotRequired: false
+            taxTreatyCode: GB_17_INDEPENDENT_PERSONAL_SERVICES
+            referenceNumbers:
+              - '123456789'
+            isCertified: true
+            electronicSignature:
+              signature: Hooli Representative
+              printedName: Hooli Representative
+              signedAt: '2024-01-01T00:00:00.000Z'
+              ipAddress: 127.0.0.1
+    properties:
+      payee: W8BenEBeneficialOwnerRequestSchema
+      formFields: W8BenEFormFieldsRequestSchema
+      userId: optional<common.UserId>
+  W8BenEBeneficialOwnerSchema:
+    extends: W8BenEBeneficialOwnerRequestSchema
+    properties:
+      tinFingerprint: optional<common.TinFingerprint>
+      tinType: optional<common.TinTypeEnum>
+      tinVerificationId: optional<common.TinVerificationId>
+      tinVerificationStatus: optional<common.TinVerificationStatusEnum>
+      foreignTinFingerprint: optional<common.ForeignTinFingerprint>
+  W8BenEFormFieldsSchema:
+    properties:
+      taxClassification:
+        type: W8BenETaxClassificationEnum
+      isForeignTinNotRequired:
+        type: optional<boolean>
+        docs: Pass true if a foreign TIN is not legally required. Otherwise false.
+      taxTreatyBenefits:
+        type: optional<taxTreaties.TaxTreatyBenefitsSchema>
+        docs: The tax treaty benefits the payee is claiming.
+      referenceNumbers:
+        type: optional<list<string>>
+        docs: >-
+          The reference numbers to list on this W-8BEN-E. Two reference numbers
+          are allowed. Max 20 characters each.
+      isCertified:
+        type: boolean
+        docs: Pass true if the payee has certified the W-8BEN-E. Otherwise false.
+      electronicSignature:
+        type: optional<electronicSignature.ElectronicSignatureOfPayeeSchema>
+        docs: The electronic signature of the payee.
+  W8BenESchema:
+    examples:
+      - name: ResponseExample
+        value:
+          id: documentId_sampleGyuBXlfAwo
+          createdAt: '2024-01-01T00:00:00.000Z'
+          expiresAt: '2028-01-01T00:00:00.000Z'
+          url: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-W-8BEN-E.pdf
+          payee:
+            name: Hooli
+            incorporationCountry: GB
+            tin: '*******11'
+            permanentResidenceAddress:
+              address: 43 Hilly Fields
+              address2: Suite 32
+              city: Lewisham
+              state: London
+              postalCode: SE13 7JN
+              country: GB
+            mailingAddress:
+              address: 256 Byron Street
+              address2: Suite 32
+              city: Palo Alto
+              postalCode: '94306'
+              state: CA
+              country: US
+            tinType: BUSINESS
+            tinFingerprint: tinFingerprint_sample847jI1LwxF
+            tinVerificationId: tinVerificationId_sample1b0E6efa89
+            tinVerificationStatus: MATCH
+            foreignTin: '*******6C'
+            foreignTinFingerprint: tinFingerprint_sampleanXo4V9nL9
+          formFields:
+            taxClassification: CORPORATION
+            isForeignTinNotRequired: false
+            taxTreatyBenefits:
+              residentCountry: GB
+              claimedProvision: '7'
+              rateOfWithholding: 0
+              incomeCode: '17'
+              incomeType: SERVICES
+              additionalConditions: Independent personal services performed in the US
+            referenceNumbers:
+              - '123456789'
+            isCertified: true
+            electronicSignature:
+              signature: Hooli Representative
+              printedName: Hooli Representative
+              signedAt: '2024-01-01T00:00:00.000Z'
+              ipAddress: 127.0.0.1
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for the W-8BEN-E document.
+      createdAt:
+        type: datetime
+        docs: >-
+          The date and time in `ISO 8601` format when the W-8BEN-E document was
+          created.
+      expiresAt:
+        type: datetime
+        docs: >-
+          The date and time in `ISO 8601` format when the W-8BEN-E is expired
+          and requires re-collection.
+      url:
+        type: string
+        docs: The URL to the W-8BEN-E document.
+      payee: W8BenEBeneficialOwnerSchema
+      formFields: W8BenEFormFieldsSchema
+      userId: optional<common.UserId>
+service:
+  auth: false
+  display-name: W-8BEN-E
+  base-path: ''
+  endpoints:
+    list:
+      docs: Returns a list of W-8BEN-E documents.
+      method: GET
+      display-name: List all W-8BEN-E documents
+      path: /documents/w-8ben-e
+      auth: true
+      request:
+        name: FormW8BenEListRequest
+        query-parameters:
+          page: optional<common.Page>
+          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
+          payeeForeignTinFingerprint: optional<common.PayeeForeignTinFingerprint>
+          userId: optional<common.UserId>
+      response:
+        docs: OK
+        type: list<W8BenESchema>
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          response:
+            body:
+              - $W8BenESchema.ResponseExample
+    create:
+      docs: >-
+        Creates a W-8BEN-E document and, if present, subsequently kicks off a
+        TIN Verification. A TIN Verification will only kickoff if the name and
+        TIN combo has not been seen before.
+      method: POST
+      display-name: Create a W-8BEN-E
+      path: /documents/w-8ben-e
+      auth: true
+      request:
+        body: W8BenERequestSchema
+      response:
+        docs: OK
+        type: W8BenESchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          request: $W8BenERequestSchema.ResponseExample
+          response:
+            body: $W8BenESchema.ResponseExample
+    retrieve:
+      docs: Retrieves the details of an existing W-8BEN-E document.
+      method: GET
+      display-name: Retrieve a W-8BEN-E
+      path: /documents/w-8ben-e/{documentId}
+      path-parameters:
+        documentId: common.DocumentId
+      auth: true
+      response:
+        docs: OK
+        type: W8BenESchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            documentId: documentId_sampleGyuBXlfAwo
+          response:
+            body: $W8BenESchema.ResponseExample

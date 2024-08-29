@@ -1,747 +1,177 @@
-# Abound Node.js Library
+# Abound TypeScript Library
 
-The Abound Node library provides convenient access to the Abound API from applications written in server-side JavaScript.
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![npm shield](https://img.shields.io/npm/v/abound)](https://www.npmjs.com/package/abound)
 
-### Documentation
+The Abound TypeScript library provides convenient access to the Abound API from TypeScript.
 
-The Abound Node SDK supports all Abound API endpoints. See the [API Documentation][docs] and the [API Reference][api-reference] for complete information about the APIs.
+## Documentation
 
-### Requirements
+API reference documentation is available [here](https://docs.withabound.com).
 
-You can start to integrate the Abound Node library into your solution as soon as you [create an account with Abound][developer-dashboard-registration] and [obtain your API keys][developer-dashboard-keys].
+## Installation
 
-### Installation
-
-Install the SDK with `npm` or `yarn`:
-
-```console
-npm install @withabound/node-sdk --save
+```sh
+npm i -s abound
 ```
 
-```console
-yarn add @withabound/node-sdk
-```
+## Usage
 
-### Usage
+Instantiate and use the client with the following:
 
-The Abound client must be configured with your account's `appId` and `appSecret`, which are available on the [Keys page][developer-dashboard-keys] of the [Abound Dashboard][developer-dashboard].
+```typescript
+import { AboundClient, Abound } from "abound";
 
-Every method returns a promise which can either be chained or handled via `async/await`.
-
-```ts
-import { Abound } from "@withabound/node-sdk";
-
-const abound = new Abound({
-  appId: "appId_f2d...",
-  appSecret: "appSecret_bf3...",
-  environment: "SANDBOX", // or "PRODUCTION"
-});
-
-(async () => {
-  const user = await abound.users.create({
-    email: "user1@example.com",
-  });
-
-  console.log(user.userId);
-})();
-
-// or
-
-abound.users
-  .create({
-    email: "user1@example.com",
-  })
-  .then((user) => console.log(user.userId))
-  .catch((error) => console.error(error));
-```
-
-### Examples
-
-#### Access Tokens
-
-Create an `Access Token`:
-
-```ts
-const userId = "userId_506...";
-
-const response = await abound.accessTokens.create({
-  expiresIn: 300,
-  userId,
-});
-
-console.log(response.userId);
-```
-
-#### Form 1099-INT
-
-Create a `Form 1099-INT`:
-
-```ts
-const response = await abound.form1099Int.create({
-  filingYear: 2022
-  payer: {
-    name: "Hooli",
-    tin: "111111111",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-    phoneNumber: "6501014096",
-  },
-  payee: {
-    name: "Ada Lovelace",
-    tin: "000000000",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-  formFields: {
-    interestIncome: 83_232,
-    stateTaxInfo: [{ filingState: "CA" as const }],
-  },
-});
-
-console.log(response.payeeUrl);
-```
-
-List `Form 1099-INT`s:
-
-```ts
-const response = await abound.form1099Int.list();
-
-console.log(response); // list of Form 1099-INTs
-```
-
-Mail a `Form 1099-INT`:
-
-```ts
-const documentId = "documentId_f03...";
-
-const response = await abound.form1099Int.mail(documentId, {
-  to: {
-    name: "Ada Lovelace",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-  from: {
-    name: "Hooli",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-});
-
-console.log(response);
-```
-
-File a `Form 1099-INT`:
-
-```ts
-const documentId = "documentId_f03...";
-
-const response = await abound.form1099Int.file(documentId);
-
-console.log(response.status);
-```
-
-Correct a `Form 1099-INT`:
-
-```ts
-const documentId = "documentId_f03...";
-
-const response = await abound.form1099Int.correct(documentId, {
-  payee: {
-    name: "Ada Lovelace",
-    tin: "000000000",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-  formFields: {
-    interestIncome: 24_271,
-    stateTaxInfo: [{ filingState: "CA" as const }],
-  },
-});
-
-console.log(response);
-```
-
-Void a `Form 1099-INT`:
-
-```ts
-const documentId = "documentId_f03...";
-
-const response = await abound.form1099Int.void(documentId);
-
-console.log(response);
-```
-
-Retrieve a `Form 1099-INT`:
-
-```ts
-const documentId = "documentId_f03...";
-
-const response = await abound.form1099Int.retrieve(documentId);
-
-console.log(response);
-```
-
-Delete a `Form 1099-INT`:
-
-```ts
-const documentId = "documentId_f03...";
-
-const response = await abound.form1099Int.delete(documentId);
-
-console.log(response); // {}
-```
-
-#### Form 1099-K
-
-Create a `Form 1099-K`:
-
-```ts
-const response = await abound.form1099K.create({
-  filingYear: 2022
-  payer: {
-    name: "Hooli",
-    tin: "111111111",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-    phoneNumber: "6501014096",
-  },
-  payee: {
-    name: "Ada Lovelace",
-    tin: "000000000",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-  formFields: {
-    payerClassification: "EPF_OTHER" as const,
-    transactionsReportedClassification: "PAYMENT_CARD" as const,
-    aggregateGrossAmount: 2_332_323,
-    numberOfPaymentTransactions: 767,
-    grossAmountsByMonth: {
-      december: 2_332_323,
+const client = new AboundClient({ sampleKey: "YOUR_SAMPLE_KEY" });
+await client.form1099Nec.create({
+    body: {
+        filingYear: 2023,
+        payer: {
+            name: "Hooli",
+            tin: "111111111",
+            address: "256 Byron Street",
+            address2: "Suite 32",
+            city: "Palo Alto",
+            state: "CA",
+            postalCode: "94306",
+            country: "US",
+            phoneNumber: "6501014096",
+        },
+        payee: {
+            name: "Ada Lovelace",
+            tin: "000000000",
+            address: "1401 N Shoreline Blvd",
+            address2: "Suite 1",
+            city: "Mountain View",
+            state: "CA",
+            postalCode: "94043",
+            country: "US",
+        },
+        formFields: {
+            nonemployeeCompensation: 23423,
+            hasDirectSalesOver5000: false,
+            federalIncomeTaxWithheld: 0,
+            accountNumber: "A0NEqtav7n0sBGoq88w0",
+            stateTaxInfo: [
+                {
+                    filingState: Abound.Form1099FilingStateEnum.Ca,
+                    stateIncome: 23423,
+                    stateTaxWithheld: 0,
+                },
+            ],
+        },
     },
-    stateTaxInfo: [{ filingState: "CA" as const }],
-  },
 });
-
-console.log(response.payeeUrl);
 ```
 
-List `Form 1099-K`s:
+## Request And Response Types
 
-```ts
-const response = await abound.form1099K.list();
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
 
-console.log(response); // list of Form 1099-Ks
+```typescript
+import { Abound } from "abound";
+
+const request: Abound.AccessTokenRequestSchema = {
+    ...
+};
 ```
 
-Mail a `Form 1099-K`:
+## Exception Handling
 
-```ts
-const documentId = "documentId_fef...";
+When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+will be thrown.
 
-const response = await abound.form1099K.mail(documentId, {
-  to: {
-    name: "Ada Lovelace",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-  from: {
-    name: "Hooli",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
+```typescript
+import { AboundError } from "abound";
+
+try {
+    await client.form1099Nec.create(...);
+} catch (err) {
+    if (err instanceof AboundError) {
+        console.log(err.statusCode);
+        console.log(err.message);
+        console.log(err.body);
+    }
+}
+```
+
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+-   [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+-   [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+-   [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `maxRetries` request option to configure this behavior.
+
+```typescript
+const response = await client.form1099Nec.create(..., {
+    maxRetries: 0 // override maxRetries at the request level
 });
-
-console.log(response);
 ```
 
-File a `Form 1099-K`:
+### Timeouts
 
-```ts
-const documentId = "documentId_fef...";
+The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
-const response = await abound.form1099K.file(documentId);
-
-console.log(response.status);
-```
-
-Correct a `Form 1099-K`:
-
-```ts
-const documentId = "documentId_fef...";
-
-const response = await abound.form1099K.correct(documentId, {
-  payee: {
-    name: "Ada Lovelace",
-    tin: "000000000",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-  formFields: {
-    payerClassification: "EPF_OTHER" as const,
-    transactionsReportedClassification: "PAYMENT_CARD" as const,
-    aggregateGrossAmount: 512_223,
-    numberOfPaymentTransactions: 767,
-    grossAmountsByMonth: {
-      december: 512_223,
-    },
-    stateTaxInfo: [{ filingState: "CA" as const }],
-  },
+```typescript
+const response = await client.form1099Nec.create(..., {
+    timeoutInSeconds: 30 // override timeout to 30s
 });
-
-console.log(response);
 ```
 
-Void a `Form 1099-K`:
+### Aborting Requests
 
-```ts
-const documentId = "documentId_fef...";
+The SDK allows users to abort requests at any point by passing in an abort signal.
 
-const response = await abound.form1099K.void(documentId);
-
-console.log(response);
-```
-
-Retrieve a `Form 1099-K`:
-
-```ts
-const documentId = "documentId_fef...";
-
-const response = await abound.form1099K.retrieve(documentId);
-
-console.log(response);
-```
-
-Delete a `Form 1099-K`:
-
-```ts
-const documentId = "documentId_fef...";
-
-const response = await abound.form1099K.delete(documentId);
-
-console.log(response); // {}
-```
-
-#### Form 1099-NEC
-
-Create a `Form 1099-NEC`:
-
-```ts
-const response = await abound.form1099Nec.create({
-  filingYear: 2022
-  payer: {
-    name: "Hooli",
-    tin: "111111111",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-    phoneNumber: "6501014096",
-  },
-  payee: {
-    name: "Ada Lovelace",
-    tin: "000000000",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-  formFields: {
-    nonemployeeCompensation: 23_423,
-    stateTaxInfo: [{ filingState: "CA" as const }],
-  },
+```typescript
+const controller = new AbortController();
+const response = await client.form1099Nec.create(..., {
+    abortSignal: controller.signal
 });
-
-console.log(response.payeeUrl);
+controller.abort(); // aborts the request
 ```
 
-List `Form 1099-NEC`s:
+### Runtime Compatibility
 
-```ts
-const response = await abound.form1099Nec.list();
+The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
+runtimes:
 
-console.log(response); // list of Form 1099-NECs
-```
+-   Node.js 18+
+-   Vercel
+-   Cloudflare Workers
+-   Deno v1.25+
+-   Bun 1.0+
+-   React Native
 
-Mail a `Form 1099-NEC`:
+### Customizing Fetch Client
 
-```ts
-const documentId = "documentId_63a...";
+The SDK provides a way for your to customize the underlying HTTP client / Fetch function. If you're running in an
+unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
-const response = await abound.form1099Nec.mail(documentId, {
-  to: {
-    name: "Ada Lovelace",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-  from: {
-    name: "Hooli",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
+```typescript
+import { AboundClient } from "abound";
+
+const client = new AboundClient({
+    ...
+    fetcher: // provide your implementation here
 });
-
-console.log(response);
 ```
 
-File a `Form 1099-NEC`:
-
-```ts
-const documentId = "documentId_63a...";
-
-const response = await abound.form1099Nec.file(documentId);
-
-console.log(response.status);
-```
-
-Correct a `Form 1099-NEC`:
-
-```ts
-const documentId = "documentId_63a...";
-
-const response = await abound.form1099Nec.correct(documentId, {
-  payee: {
-    name: "Ada Lovelace",
-    tin: "000000000",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-  formFields: {
-    nonemployeeCompensation: 24_389,
-    stateTaxInfo: [{ filingState: "CA" as const }],
-  },
-});
-
-console.log(response);
-```
-
-Void a `Form 1099-NEC`:
-
-```ts
-const documentId = "documentId_63a...";
-
-const response = await abound.form1099Nec.void(documentId);
-
-console.log(response);
-```
-
-Retrieve a `Form 1099-NEC`:
-
-```ts
-const documentId = "documentId_63a...";
-
-const response = await abound.form1099Nec.retrieve(documentId);
-
-console.log(response);
-```
-
-Delete a `Form 1099-NEC`:
-
-```ts
-const documentId = "documentId_63a...";
-
-const response = await abound.form1099Nec.delete(documentId);
-
-console.log(response); // {}
-```
-
-#### Form W-9
-
-Create a `Form W-9`:
-
-```ts
-const response = await abound.formW9.create({
-  payee: {
-    name: "Ada Lovelace",
-    tin: "000000000",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-  formFields: {
-    taxClassification: "SOLE_PROPRIETOR" as const,
-    certifiedAt: "2023-01-01T00:00:00.000Z",
-  },
-});
-
-console.log(response.url);
-```
-
-List `Form W-9`s:
-
-```ts
-const response = await abound.formW9.list();
-
-console.log(response); // list of Form W-9s
-```
-
-Retrieve a `Form W-9`:
-
-```ts
-const documentId = "documentId_f48...";
-
-const response = await abound.formW9.retrieve(documentId);
-
-console.log(response);
-```
-
-#### Mailings
-
-List `Mailing`s:
-
-```ts
-const documentId = "documentId_efb...";
-
-const response = await abound.mailings.list();
-
-console.log(response); // list of Mailings
-```
-
-Retrieve a `Mailing`:
-
-```ts
-const mailingId = "mailingId_d01...";
-
-const response = await abound.mailings.retrieve(mailingId);
-
-console.log(response);
-```
-
-Update a `Mailing`:
-
-```ts
-const mailingId = "mailingId_d01...";
-
-const response = await abound.mailings.update(mailingId, {
-  to: {
-    name: "Ada Lovelace",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-  from: {
-    name: "Hooli",
-    address: "256 Byron Street",
-    address2: "Suite 32",
-    city: "Palo Alto",
-    state: "CA",
-    postalCode: "94306",
-    country: "US",
-  },
-});
-
-console.log(response);
-```
-
-Delete a `Mailing`:
-
-```ts
-const mailingId = "mailingId_d01...";
-
-const response = await abound.mailings.delete(mailingId);
-
-console.log(response); // {}
-```
-
-#### TIN Verifications
-
-Create a `TIN Verification`:
-
-```ts
-const response = await abound.tinVerifications.create({
-  name: "Ada Lovelace",
-  tin: "111111111",
-});
-
-console.log(response.tinFingerprint);
-```
-
-List `TIN Verifications`s:
-
-```ts
-const response = await abound.tinVerifications.list();
-
-console.log(response); // list of TIN Verifications
-```
-
-Retrieve a `TIN Verification`:
-
-```ts
-const tinVerificationId = "tinVerificationId_40c...";
-
-const response = await abound.tinVerifications.retrieve(tinVerificationId);
-
-console.log(response.tinFingerprint);
-```
-
-#### Users
-
-Create a `User`:
-
-```ts
-const response = await abound.users.create({
-  email: "jane.doe@example.com",
-});
-
-console.log(response.userId);
-```
-
-List `User`s:
-
-```ts
-const response = await abound.users.list();
-
-console.log(response); // list of Users
-```
-
-Retrieve a `User`:
-
-```ts
-const userId = "userId_506...";
-
-const response = await abound.users.retrieve(userId);
-
-console.log(response.userId);
-```
-
-Update a `User`:
-
-```ts
-const userId = "userId_506...";
-
-const response = await abound.users.update(userId, {
-  email: "janedoe123@example.com",
-});
-
-console.log(response.email);
-```
-
-### Development
-
-Run all tests:
-
-```console
-npx vitest
-```
-
-Run xo:
-
-```console
-npx xo
-```
-
-or, run with autofix:
-
-```console
-npx xo --fix
-```
-
-Compile:
-
-```console
-npm run compile
-```
-
-Install husky:
-
-```console
-npx husky install
-```
-
-Publish artifacts locally:
-
-Install `yalc` with `npm` or `yarn`:
-
-```console
-npm install yalc -g
-```
-
-```console
-yarn global add yalc
-```
-
-Build the SDK:
-
-```console
-npm run build
-```
-
-Publish artifacts to local `yalc` registry:
-
-```console
-yalc push
-```
-
-Install the local artifacts:
-
-```console
-~/my-project $ yalc add @withabound/node-sdk
-```
-
-[docs]: https://docs.withabound.com
-[api-reference]: https://docs.withabound.com/reference
-[developer-dashboard]: https://dashboard.withabound.com
-[developer-dashboard-keys]: https://dashboard.withabound.com/keys
-[developer-dashboard-registration]: https://dashboard.withabound.com/register-organization
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!

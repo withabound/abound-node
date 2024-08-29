@@ -1,0 +1,214 @@
+imports:
+  errors: types/errors.yml
+  address: types/address.yml
+  headers: types/headers.yml
+  common: types/common.yml
+types:
+  MailingStatusEnum:
+    enum:
+      - CREATED
+      - PROCESSING_FOR_DELIVERY
+      - IN_TRANSIT
+      - DELIVERED
+      - RETURNED_TO_SENDER
+  MailingNameSchema:
+    properties:
+      name:
+        type: optional<string>
+        docs: The individual's name (first + last) or business name.
+      name2:
+        type: optional<string>
+        docs: >-
+          The business name, trade name, DBA name, or disregarded entity name,
+          if different from `name`.
+  MailingRequestToSchema:
+    docs: The mailing address of the recipient.
+    extends:
+      - MailingNameSchema
+      - address.AddressSchema
+    properties: {}
+  MailingRequestFromSchema:
+    docs: The mailing address of the sender.
+    extends:
+      - MailingNameSchema
+      - address.AddressSchema
+    properties: {}
+  MailingRequestSchema:
+    examples:
+      - name: RequestExample
+        value:
+          to:
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            name: Ada Lovelace
+          from:
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            name: Hooli
+    properties:
+      to:
+        type: MailingRequestToSchema
+      from:
+        type: MailingRequestFromSchema
+  MailingSchema:
+    examples:
+      - name: ResponseExample
+        value:
+          id: mailingId_sampleFV9b73IvAD
+          createdAt: '2024-01-01T00:00:00.000Z'
+          url: >-
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
+          status: CREATED
+          to:
+            address: 1401 N Shoreline Blvd
+            address2: Suite 1
+            city: Mountain View
+            state: CA
+            postalCode: '94043'
+            country: US
+            name: Ada Lovelace
+          from:
+            address: 256 Byron Street
+            address2: Suite 32
+            city: Palo Alto
+            state: CA
+            postalCode: '94306'
+            country: US
+            name: Hooli
+          mailedFromId: documentId_sampletTtqNfulW8
+    extends:
+      - MailingRequestSchema
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this mailing.
+      createdAt:
+        type: datetime
+        docs: The creation date and time of the mailing in `ISO 8601` format.
+      url:
+        type: string
+        docs: The URL to the mailed document.
+      status:
+        type: MailingStatusEnum
+        docs: The status of the mailing.
+      userId: optional<common.UserId>
+      mailedFromId:
+        type: string
+        docs: The `documentId` of the mailed document.
+service:
+  auth: false
+  display-name: Mailings
+  base-path: ''
+  endpoints:
+    list:
+      docs: Returns a list of mailings. Up to 100 mailings are returned per request.
+      method: GET
+      display-name: List all mailings
+      path: /mailings
+      auth: true
+      request:
+        name: MailingsListRequest
+        query-parameters:
+          page: optional<common.Page>
+          status:
+            type: optional<MailingStatusEnum>
+            docs: Filters the list of mailings based on the `status` field.
+          userId: optional<common.UserId>
+      response:
+        docs: OK
+        type: list<MailingSchema>
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          response:
+            body:
+              - $MailingSchema.ResponseExample
+    retrieve:
+      docs: Retrieves the details of an existing mailing.
+      method: GET
+      display-name: Retrieve a mailing
+      path: /mailings/{mailingId}
+      path-parameters:
+        mailingId: common.MailingId
+      auth: true
+      response:
+        docs: OK
+        type: MailingSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            mailingId: mailingId_sampleFV9b73IvAD
+          response:
+            body: $MailingSchema.ResponseExample
+    update:
+      docs: >-
+        Updates an existing mailing. Once a mailing has reached the
+        `PROCESSING_FOR_DELIVERY` status, it cannot be updated. Any body
+        parameters not provided will be removed.
+      method: PUT
+      display-name: Update a mailing
+      path: /mailings/{mailingId}
+      path-parameters:
+        mailingId: common.MailingId
+      auth: true
+      request:
+        name: MailingRequest
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: MailingRequestSchema
+      response:
+        docs: OK
+        type: MailingSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            mailingId: mailingId_sampleFV9b73IvAD
+          request: $MailingRequestSchema.RequestExample
+          response:
+            body: $MailingSchema.ResponseExample
+    delete:
+      docs: >-
+        Deletes a mailing. Once a mailing has reached the
+        `PROCESSING_FOR_DELIVERY` status, it cannot be deleted.
+      method: DELETE
+      display-name: Delete a mailing
+      path: /mailings/{mailingId}
+      path-parameters:
+        mailingId: common.MailingId
+      auth: true
+      response:
+        docs: OK
+        type: common.OkSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - name: default
+          path-parameters:
+            mailingId: mailingId_sampleFV9b73IvAD
+          response:
+            body: {}
