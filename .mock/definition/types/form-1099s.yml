@@ -140,13 +140,13 @@ types:
       payerUrl:
         type: string
         docs: >-
-          The URL to the payer's 1099 document. The Payee's TIN is masked in
-          this document.
+          The URL to the payer's 1099 document. Both the Payer's and Payee's
+          TINs are not masked in this document.
       payeeUrl:
         type: string
         docs: >-
-          The URL to the payee's 1099 document. The Payee's TIN is not masked in
-          this document.
+          The URL to the payee's 1099 document. The Payee's TIN is masked in
+          this document. The Payer's TIN is not masked.
       payer: payer.PayerSchema
       payee: payee.PayeeSchema
       correctedById:

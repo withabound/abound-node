@@ -11,9 +11,9 @@ export interface Form1099BaseSchema {
     filingYear: Abound.types.FilingYear;
     /** The status of the 1099 document.<br/>&nbsp;&nbsp;• `CREATED`: The document has passed data validation and the PDFs have been generated.<br/>&nbsp;&nbsp;• `FILED`: The payee's TIN has been verified and the 1099 has been filed with the appropriate tax authorities.<br/>&nbsp;&nbsp;• `ACCEPTED`: The document has been acknowledged and accepted by the appropriate tax authorities.<br/>&nbsp;&nbsp;• `REJECTED`: The document has a TIN verification `MISMATCH` or has been rejected by one or more tax authories. */
     status: Abound.types.Form1099StatusEnum;
-    /** The URL to the payer's 1099 document. The Payee's TIN is masked in this document. */
+    /** The URL to the payer's 1099 document. Both the Payer's and Payee's TINs are not masked in this document. */
     payerUrl: string;
-    /** The URL to the payee's 1099 document. The Payee's TIN is not masked in this document. */
+    /** The URL to the payee's 1099 document. The Payee's TIN is masked in this document. The Payer's TIN is not masked. */
     payeeUrl: string;
     payer: Abound.types.PayerSchema;
     payee: Abound.types.PayeeSchema;
