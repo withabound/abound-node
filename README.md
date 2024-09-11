@@ -15,6 +15,19 @@ API reference documentation is available [here](https://docs.withabound.com).
 npm i -s @withabound/node-sdk
 ```
 
+## Client Instantiation
+
+The `apiKey` needs be the concatenation of your Abound `appId` and `appSecret` separated by a period. For example: `appId_sampleqNhVcdYQYU.appSecret_sampleMz2Zbj3Hq`.
+
+The SDK points to the `Sandbox` environment by default. To change the environment, specifying the `environment` in the client instantiation using a value from `AboundEnvironment`.
+
+```typescript
+import { AboundClient, Abound, AboundEnvironment } from "@withabound/node-sdk";
+
+const client = new AboundClient({ apiKey: `appId_sampleqNhVcdYQYU.appSecret_sampleMz2Zbj3Hq`, environment: environment: AboundEnvironment.Sandbox });
+
+```
+
 ## Usage
 
 Instantiate and use the client with the following:
