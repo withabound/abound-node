@@ -24,8 +24,10 @@ The SDK points to the `Sandbox` environment by default. To change the environmen
 ```typescript
 import { AboundClient, Abound, AboundEnvironment } from "@withabound/node-sdk";
 
-const client = new AboundClient({ apiKey: `appId_sampleqNhVcdYQYU.appSecret_sampleMz2Zbj3Hq`, environment: environment: AboundEnvironment.Sandbox });
-
+const client = new AboundClient({
+    apiKey: `appId_sampleqNhVcdYQYU.appSecret_sampleMz2Zbj3Hq`,
+    environment: AboundEnvironment.Sandbox,
+});
 ```
 
 ## Usage
