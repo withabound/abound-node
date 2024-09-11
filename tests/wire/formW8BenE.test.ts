@@ -7,7 +7,7 @@ import { AboundClient } from "../../src/Client";
 
 const client = new AboundClient({
     environment: process.env.TESTS_BASE_URL || "test",
-    sampleKey: process.env.TESTS_AUTH || "test",
+    apiKey: process.env.TESTS_AUTH || "test",
 });
 
 describe("FormW8BenE", () => {

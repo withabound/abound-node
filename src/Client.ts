@@ -21,7 +21,7 @@ import { Users } from "./api/resources/users/client/Client";
 export declare namespace AboundClient {
     interface Options {
         environment?: core.Supplier<environments.AboundEnvironment | string>;
-        sampleKey: core.Supplier<core.BearerToken>;
+        apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 

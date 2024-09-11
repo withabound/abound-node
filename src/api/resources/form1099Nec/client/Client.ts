@@ -11,7 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Form1099Nec {
     interface Options {
         environment?: core.Supplier<environments.AboundEnvironment | string>;
-        sampleKey: core.Supplier<core.BearerToken>;
+        apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
@@ -74,7 +74,7 @@ export class Form1099Nec {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 "/v4/documents/1099-nec"
             ),
             method: "GET",
@@ -82,8 +82,8 @@ export class Form1099Nec {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -194,7 +194,7 @@ export class Form1099Nec {
         const { "Idempotency-Key": idempotencyKey, body: _body } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 "/v4/documents/1099-nec"
             ),
             method: "POST",
@@ -202,8 +202,8 @@ export class Form1099Nec {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
@@ -302,7 +302,7 @@ export class Form1099Nec {
         const { "Idempotency-Key": idempotencyKey, body: _body } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/mail`
             ),
             method: "POST",
@@ -310,8 +310,8 @@ export class Form1099Nec {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
@@ -389,7 +389,7 @@ export class Form1099Nec {
         const { "Idempotency-Key": idempotencyKey } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/file`
             ),
             method: "POST",
@@ -397,8 +397,8 @@ export class Form1099Nec {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
@@ -496,7 +496,7 @@ export class Form1099Nec {
         const { "Idempotency-Key": idempotencyKey, body: _body } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/correct`
             ),
             method: "POST",
@@ -504,8 +504,8 @@ export class Form1099Nec {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
@@ -583,7 +583,7 @@ export class Form1099Nec {
         const { "Idempotency-Key": idempotencyKey } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/void`
             ),
             method: "POST",
@@ -591,8 +591,8 @@ export class Form1099Nec {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
@@ -666,7 +666,7 @@ export class Form1099Nec {
     ): Promise<Abound.Form1099NecSchema> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 `/v4/documents/1099-nec/${encodeURIComponent(documentId)}`
             ),
             method: "GET",
@@ -674,8 +674,8 @@ export class Form1099Nec {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -748,7 +748,7 @@ export class Form1099Nec {
     ): Promise<Abound.types.OkSchema> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 `/v4/documents/1099-nec/${encodeURIComponent(documentId)}`
             ),
             method: "DELETE",
@@ -756,8 +756,8 @@ export class Form1099Nec {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -811,6 +811,6 @@ export class Form1099Nec {
     }
 
     protected async _getAuthorizationHeader(): Promise<string> {
-        return `Bearer ${await core.Supplier.get(this._options.sampleKey)}`;
+        return `Bearer ${await core.Supplier.get(this._options.apiKey)}`;
     }
 }

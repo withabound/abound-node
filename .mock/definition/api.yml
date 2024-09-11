@@ -1,15 +1,15 @@
 name: api
 display-name: Abound API - v4
+error-discrimination:
+  strategy: status-code
+base-path: /v4
+default-environment: Sandbox
+environments:
+  Production: https://production-api.withabound.com
+  Sandbox: https://sandbox-api.withabound.com
 auth: BearerAuthScheme
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer
     token:
-      name: sampleKey
-default-environment: Production
-environments:
-  Production: https://production-api.withabound.com
-  Sandbox: https://sandbox-api.withabound.com
-error-discrimination:
-  strategy: status-code
-base-path: /v4
+      name: apiKey

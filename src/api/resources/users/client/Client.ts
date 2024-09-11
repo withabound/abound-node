@@ -11,7 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Users {
     interface Options {
         environment?: core.Supplier<environments.AboundEnvironment | string>;
-        sampleKey: core.Supplier<core.BearerToken>;
+        apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
@@ -62,7 +62,7 @@ export class Users {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 "/v4/users"
             ),
             method: "GET",
@@ -70,8 +70,8 @@ export class Users {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -151,7 +151,7 @@ export class Users {
         const { "Idempotency-Key": idempotencyKey, body: _body } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 "/v4/users"
             ),
             method: "POST",
@@ -159,8 +159,8 @@ export class Users {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
@@ -237,7 +237,7 @@ export class Users {
     ): Promise<Abound.UserSchema> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 `/v4/users/${encodeURIComponent(userId)}`
             ),
             method: "GET",
@@ -245,8 +245,8 @@ export class Users {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -323,7 +323,7 @@ export class Users {
     ): Promise<Abound.UserSchema> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
                 `/v4/users/${encodeURIComponent(userId)}`
             ),
             method: "PUT",
@@ -331,8 +331,8 @@ export class Users {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.4",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.4",
+                "X-Fern-SDK-Version": "6.0.0-alpha.5",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -385,6 +385,6 @@ export class Users {
     }
 
     protected async _getAuthorizationHeader(): Promise<string> {
-        return `Bearer ${await core.Supplier.get(this._options.sampleKey)}`;
+        return `Bearer ${await core.Supplier.get(this._options.apiKey)}`;
     }
 }

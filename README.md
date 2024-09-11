@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { AboundClient, Abound } from "@withabound/node-sdk";
 
-const client = new AboundClient({ sampleKey: "YOUR_SAMPLE_KEY" });
+const client = new AboundClient({ apiKey: "YOUR_API_KEY" });
 await client.form1099Nec.create({
     body: {
         filingYear: 2023,
