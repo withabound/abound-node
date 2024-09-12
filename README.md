@@ -35,7 +35,7 @@ const client = new AboundClient({
 Instantiate and use the client with the following:
 
 ```typescript
-import { AboundClient, Abound } from "@withabound/node-sdk";
+import { AboundClient } from "@withabound/node-sdk";
 
 const client = new AboundClient({ apiKey: "YOUR_API_KEY" });
 await client.form1099Nec.create({
@@ -69,7 +69,7 @@ await client.form1099Nec.create({
             accountNumber: "A0NEqtav7n0sBGoq88w0",
             stateTaxInfo: [
                 {
-                    filingState: Abound.Form1099FilingStateEnum.Ca,
+                    filingState: "CA",
                     stateIncome: 23423,
                     stateTaxWithheld: 0,
                 },

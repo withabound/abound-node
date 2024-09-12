@@ -463,13 +463,11 @@ types:
       formFields: Form1099MiscFormFieldsSchema
 service:
   auth: false
-  display-name: 1099-MISC
   base-path: ''
   endpoints:
     list:
       docs: Returns a list of 1099-MISC documents.
       method: GET
-      display-name: List all 1099-MISC documents
       path: /documents/1099-misc
       auth: true
       request:
@@ -494,12 +492,12 @@ service:
           response:
             body:
               - $Form1099MiscSchema.CreateResponseExample
+      display-name: List all 1099-MISC documents
     create:
       docs: >-
         Creates a 1099-MISC document and subsequently kicks off a TIN
         Verification, if the name and TIN combo has not been used before.
       method: POST
-      display-name: Create a 1099-MISC
       path: /documents/1099-misc
       auth: true
       request:
@@ -520,10 +518,10 @@ service:
           request: $Form1099MiscRequestSchema.RequestCreateExample
           response:
             body: $Form1099MiscSchema.CreateResponseExample
+      display-name: Create a 1099-MISC
     mail:
       docs: Mails a 1099-MISC document.
       method: POST
-      display-name: Mail a 1099-MISC
       path: /documents/1099-misc/{documentId}/mail
       path-parameters:
         documentId: common.DocumentId
@@ -586,10 +584,10 @@ service:
                 postalCode: '94306'
                 country: US
                 name: Hooli
+      display-name: Mail a 1099-MISC
     file:
       docs: Files a 1099-MISC document.
       method: POST
-      display-name: File a 1099-MISC
       path: /documents/1099-misc/{documentId}/file
       path-parameters:
         documentId: common.DocumentId
@@ -611,6 +609,7 @@ service:
             documentId: documentId_sampleGNPOKNmIgF
           response:
             body: $Form1099MiscSchema.FileResponseExample
+      display-name: File a 1099-MISC
     correct:
       docs: >-
         Files a new corrected 1099-MISC and relates it to the original document.
@@ -618,7 +617,6 @@ service:
         status. Automatically handles both one-transaction and two-transaction
         corrections.
       method: POST
-      display-name: Correct a 1099-MISC
       path: /documents/1099-misc/{documentId}/correct
       path-parameters:
         documentId: common.DocumentId
@@ -642,12 +640,12 @@ service:
           request: $Form1099MiscCorrectRequestSchema.CorrectRequestExample
           response:
             body: $Form1099MiscSchema.CorrectResponseExample
+      display-name: Correct a 1099-MISC
     void:
       docs: >-
         Files a new voided 1099-MISC and relates it to the original document. A
         1099-MISC can be voided only after it has reached the `FILED` status.
       method: POST
-      display-name: Void a 1099-MISC
       path: /documents/1099-misc/{documentId}/void
       path-parameters:
         documentId: common.DocumentId
@@ -670,10 +668,10 @@ service:
             documentId: documentId_sampleGNPOKNmIgF
           response:
             body: $Form1099MiscSchema.VoidResponseExample
+      display-name: Void a 1099-MISC
     retrieve:
       docs: Retrieves the details of an existing 1099-MISC document.
       method: GET
-      display-name: Retrieve a 1099-MISC
       path: /documents/1099-misc/{documentId}
       path-parameters:
         documentId: common.DocumentId
@@ -692,12 +690,12 @@ service:
             documentId: documentId_sampleGNPOKNmIgF
           response:
             body: $Form1099MiscSchema.CreateResponseExample
+      display-name: Retrieve a 1099-MISC
     delete:
       docs: >-
         Deletes a 1099-MISC document. Once an action (`/file`, `/correct`,
         `/void`) has been executed on a 1099-MISC, it cannot be deleted.
       method: DELETE
-      display-name: Delete a 1099-MISC
       path: /documents/1099-misc/{documentId}
       path-parameters:
         documentId: common.DocumentId
@@ -716,3 +714,5 @@ service:
             documentId: documentId_sampleGNPOKNmIgF
           response:
             body: {}
+      display-name: Delete a 1099-MISC
+  display-name: 1099-MISC

@@ -1,5 +1,4 @@
 name: api
-display-name: Abound API - v4
 error-discrimination:
   strategy: status-code
 base-path: /v4
@@ -13,3 +12,4 @@ auth-schemes:
     scheme: bearer
     token:
       name: apiKey
+display-name: Abound API - v4

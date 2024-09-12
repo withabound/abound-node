@@ -17,10 +17,10 @@ import * as Abound from "../../../../index";
  *                 postalCode: "94043",
  *                 state: "CA",
  *                 tin: "000000000",
- *                 tinType: Abound.types.TinTypeEnum.Individual
+ *                 tinType: "INDIVIDUAL"
  *             },
  *             formFields: {
- *                 taxClassification: Abound.W9TaxClassificationSchema.Individual,
+ *                 taxClassification: "INDIVIDUAL",
  *                 isSubjectToBackupWithholding: false,
  *                 electronicSignature: {
  *                     signature: "Ada Lovelace",

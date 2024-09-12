@@ -26,8 +26,8 @@ import * as Abound from "../../../../index";
  *                 merchantCategoryCode: "4582",
  *                 numberOfPaymentTransactions: 767,
  *                 pseName: "Payment Entity",
- *                 payerClassification: Abound.Form1099KPayerClassificationEnum.Pse,
- *                 transactionsReportedClassification: Abound.Form1099KTransactionsReportedClassificationSchema.PaymentCard,
+ *                 payerClassification: "PSE",
+ *                 transactionsReportedClassification: "PAYMENT_CARD",
  *                 psePhoneNumber: "5555555555",
  *                 grossAmountsByMonth: {
  *                     april: 2332323,
@@ -44,7 +44,7 @@ import * as Abound from "../../../../index";
  *                     september: 2332323
  *                 },
  *                 stateTaxInfo: [{
- *                         filingState: Abound.types.Form1099FilingStateEnum.Ca
+ *                         filingState: "CA"
  *                     }]
  *             }
  *         }

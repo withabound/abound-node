@@ -31,13 +31,11 @@ types:
         docs: The TIN fingerprint for this electronic delivery consent.
 service:
   auth: false
-  display-name: Electronic Delivery Consents
   base-path: ''
   endpoints:
     list:
       docs: Returns a list of Electronic Delivery Consents.
       method: GET
-      display-name: List all Electronic Delivery Consents
       path: /electronic-delivery-consents
       auth: true
       request:
@@ -69,3 +67,5 @@ service:
                 status: ASSENTED
                 email: your-users-email@domain.com
                 tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+      display-name: List all Electronic Delivery Consents
+  display-name: Electronic Delivery Consents

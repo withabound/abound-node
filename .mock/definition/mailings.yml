@@ -105,13 +105,11 @@ types:
         docs: The `documentId` of the mailed document.
 service:
   auth: false
-  display-name: Mailings
   base-path: ''
   endpoints:
     list:
       docs: Returns a list of mailings. Up to 100 mailings are returned per request.
       method: GET
-      display-name: List all mailings
       path: /mailings
       auth: true
       request:
@@ -135,10 +133,10 @@ service:
           response:
             body:
               - $MailingSchema.ResponseExample
+      display-name: List all mailings
     retrieve:
       docs: Retrieves the details of an existing mailing.
       method: GET
-      display-name: Retrieve a mailing
       path: /mailings/{mailingId}
       path-parameters:
         mailingId: common.MailingId
@@ -157,13 +155,13 @@ service:
             mailingId: mailingId_sampleFV9b73IvAD
           response:
             body: $MailingSchema.ResponseExample
+      display-name: Retrieve a mailing
     update:
       docs: >-
         Updates an existing mailing. Once a mailing has reached the
         `PROCESSING_FOR_DELIVERY` status, it cannot be updated. Any body
         parameters not provided will be removed.
       method: PUT
-      display-name: Update a mailing
       path: /mailings/{mailingId}
       path-parameters:
         mailingId: common.MailingId
@@ -188,12 +186,12 @@ service:
           request: $MailingRequestSchema.RequestExample
           response:
             body: $MailingSchema.ResponseExample
+      display-name: Update a mailing
     delete:
       docs: >-
         Deletes a mailing. Once a mailing has reached the
         `PROCESSING_FOR_DELIVERY` status, it cannot be deleted.
       method: DELETE
-      display-name: Delete a mailing
       path: /mailings/{mailingId}
       path-parameters:
         mailingId: common.MailingId
@@ -212,3 +210,5 @@ service:
             mailingId: mailingId_sampleFV9b73IvAD
           response:
             body: {}
+      display-name: Delete a mailing
+  display-name: Mailings

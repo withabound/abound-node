@@ -43,13 +43,11 @@ types:
         docs: The creation date and time of the user in `ISO 8601` format.
 service:
   auth: false
-  display-name: Users
   base-path: ''
   endpoints:
     list:
       docs: Returns a list of users. Up to 100 users are returned per request.
       method: GET
-      display-name: List all users
       path: /users
       auth: true
       request:
@@ -75,10 +73,10 @@ service:
           response:
             body:
               - $UserSchema.ResponseExample
+      display-name: List all users
     create:
       docs: Creates a user for a single end-user of your application.
       method: POST
-      display-name: Create a user
       path: /users
       auth: true
       request:
@@ -100,10 +98,10 @@ service:
           request: $UserRequestSchema.RequestExample
           response:
             body: $UserSchema.ResponseExample
+      display-name: Create a user
     retrieve:
       docs: Retrieves the details of an existing user.
       method: GET
-      display-name: Retrieve a user
       path: /users/{userId}
       path-parameters:
         userId: common.UserId
@@ -122,12 +120,12 @@ service:
             userId: userId_sampleXGMFnhOpeR
           response:
             body: $UserSchema.ResponseExample
+      display-name: Retrieve a user
     update:
       docs: >-
         Updates an existing user. Any body parameters not provided will be
         removed.
       method: PUT
-      display-name: Update a user
       path: /users/{userId}
       path-parameters:
         userId: common.UserId
@@ -149,3 +147,5 @@ service:
           request: $UserRequestSchema.RequestExample
           response:
             body: $UserSchema.ResponseExample
+      display-name: Update a user
+  display-name: Users

@@ -268,7 +268,7 @@ await client.form1099Int.create({
             accountNumber: "A006SVmcrieFAbm3gsaV",
             stateTaxInfo: [
                 {
-                    filingState: Abound.Form1099FilingStateEnum.Ca,
+                    filingState: "CA",
                     stateTaxWithheld: 0,
                 },
             ],
@@ -531,7 +531,7 @@ await client.form1099Int.correct("documentId_samplepWpJ9Snlzb", {
             accountNumber: "A006SVmcrieFAbm3gsaV",
             stateTaxInfo: [
                 {
-                    filingState: Abound.Form1099FilingStateEnum.Ca,
+                    filingState: "CA",
                 },
             ],
         },
@@ -901,8 +901,8 @@ await client.form1099K.create({
             merchantCategoryCode: "4582",
             numberOfPaymentTransactions: 767,
             pseName: "Payment Entity",
-            payerClassification: Abound.Form1099KPayerClassificationEnum.Pse,
-            transactionsReportedClassification: Abound.Form1099KTransactionsReportedClassificationSchema.PaymentCard,
+            payerClassification: "PSE",
+            transactionsReportedClassification: "PAYMENT_CARD",
             psePhoneNumber: "5555555555",
             grossAmountsByMonth: {
                 april: 2332323,
@@ -920,7 +920,7 @@ await client.form1099K.create({
             },
             stateTaxInfo: [
                 {
-                    filingState: Abound.Form1099FilingStateEnum.Ca,
+                    filingState: "CA",
                     stateTaxWithheld: 0,
                 },
             ],
@@ -1172,8 +1172,8 @@ await client.form1099K.correct("documentId_sampletTtqNfulW8", {
             merchantCategoryCode: "4582",
             numberOfPaymentTransactions: 767,
             pseName: "Payment Entity",
-            payerClassification: Abound.Form1099KPayerClassificationEnum.Pse,
-            transactionsReportedClassification: Abound.Form1099KTransactionsReportedClassificationSchema.PaymentCard,
+            payerClassification: "PSE",
+            transactionsReportedClassification: "PAYMENT_CARD",
             psePhoneNumber: "5555555555",
             grossAmountsByMonth: {
                 april: 2332323,
@@ -1191,7 +1191,7 @@ await client.form1099K.correct("documentId_sampletTtqNfulW8", {
             },
             stateTaxInfo: [
                 {
-                    filingState: Abound.Form1099FilingStateEnum.Ca,
+                    filingState: "CA",
                 },
             ],
         },
@@ -1572,7 +1572,7 @@ await client.form1099Misc.create({
             accountNumber: "A00AskD1ZTO4YB8oBHav",
             stateTaxInfo: [
                 {
-                    filingState: Abound.Form1099FilingStateEnum.Ca,
+                    filingState: "CA",
                     stateIncome: 345543,
                     stateTaxWithheld: 0,
                 },
@@ -1836,7 +1836,7 @@ await client.form1099Misc.correct("documentId_sampleGNPOKNmIgF", {
             accountNumber: "A00AskD1ZTO4YB8oBHav",
             stateTaxInfo: [
                 {
-                    filingState: Abound.Form1099FilingStateEnum.Ca,
+                    filingState: "CA",
                     stateIncome: 258434,
                 },
             ],
@@ -2206,7 +2206,7 @@ await client.form1099Nec.create({
             accountNumber: "A0NEqtav7n0sBGoq88w0",
             stateTaxInfo: [
                 {
-                    filingState: Abound.Form1099FilingStateEnum.Ca,
+                    filingState: "CA",
                     stateIncome: 23423,
                     stateTaxWithheld: 0,
                 },
@@ -2456,7 +2456,7 @@ await client.form1099Nec.correct("documentId_samplegU0eR8oc8a", {
             accountNumber: "A0NEqtav7n0sBGoq88w0",
             stateTaxInfo: [
                 {
-                    filingState: Abound.Form1099FilingStateEnum.Ca,
+                    filingState: "CA",
                     stateIncome: 10000,
                 },
             ],
@@ -2819,9 +2819,9 @@ await client.formW8BenE.create({
         },
     },
     formFields: {
-        taxClassification: Abound.W8BenETaxClassificationEnum.Corporation,
+        taxClassification: "CORPORATION",
         isForeignTinNotRequired: false,
-        taxTreatyCode: Abound.TaxTreatyAboundCodeEnum.Gb17IndependentPersonalServices,
+        taxTreatyCode: "GB_17_INDEPENDENT_PERSONAL_SERVICES",
         referenceNumbers: ["123456789"],
         isCertified: true,
         electronicSignature: {
@@ -3048,7 +3048,7 @@ await client.formW8Ben.create({
     },
     formFields: {
         isForeignTinNotRequired: false,
-        taxTreatyCode: Abound.TaxTreatyAboundCodeEnum.Gb17IndependentPersonalServices,
+        taxTreatyCode: "GB_17_INDEPENDENT_PERSONAL_SERVICES",
         referenceNumbers: ["123456789"],
         isCertified: true,
         electronicSignature: {
@@ -3260,10 +3260,10 @@ await client.formW9.create({
             postalCode: "94043",
             state: "CA",
             tin: "000000000",
-            tinType: Abound.TinTypeEnum.Individual,
+            tinType: "INDIVIDUAL",
         },
         formFields: {
-            taxClassification: Abound.W9TaxClassificationSchema.Individual,
+            taxClassification: "INDIVIDUAL",
             isSubjectToBackupWithholding: false,
             electronicSignature: {
                 signature: "Ada Lovelace",

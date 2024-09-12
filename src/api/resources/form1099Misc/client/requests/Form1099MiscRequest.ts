@@ -48,7 +48,7 @@ import * as Abound from "../../../../index";
  *                 section409ADeferrals: 97109,
  *                 accountNumber: "A00AskD1ZTO4YB8oBHav",
  *                 stateTaxInfo: [{
- *                         filingState: Abound.types.Form1099FilingStateEnum.Ca,
+ *                         filingState: "CA",
  *                         stateIncome: 345543,
  *                         stateTaxWithheld: 0
  *                     }]

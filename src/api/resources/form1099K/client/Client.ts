@@ -82,8 +82,8 @@ export class Form1099K {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.6",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.6",
+                "X-Fern-SDK-Version": "6.0.0-alpha.7",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -181,8 +181,8 @@ export class Form1099K {
      *                 merchantCategoryCode: "4582",
      *                 numberOfPaymentTransactions: 767,
      *                 pseName: "Payment Entity",
-     *                 payerClassification: Abound.Form1099KPayerClassificationEnum.Pse,
-     *                 transactionsReportedClassification: Abound.Form1099KTransactionsReportedClassificationSchema.PaymentCard,
+     *                 payerClassification: "PSE",
+     *                 transactionsReportedClassification: "PAYMENT_CARD",
      *                 psePhoneNumber: "5555555555",
      *                 grossAmountsByMonth: {
      *                     april: 2332323,
@@ -199,7 +199,7 @@ export class Form1099K {
      *                     september: 2332323
      *                 },
      *                 stateTaxInfo: [{
-     *                         filingState: Abound.types.Form1099FilingStateEnum.Ca,
+     *                         filingState: "CA",
      *                         stateTaxWithheld: 0
      *                     }]
      *             }
@@ -221,8 +221,8 @@ export class Form1099K {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.6",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.6",
+                "X-Fern-SDK-Version": "6.0.0-alpha.7",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
@@ -329,8 +329,8 @@ export class Form1099K {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.6",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.6",
+                "X-Fern-SDK-Version": "6.0.0-alpha.7",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
@@ -416,8 +416,8 @@ export class Form1099K {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.6",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.6",
+                "X-Fern-SDK-Version": "6.0.0-alpha.7",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
@@ -504,8 +504,8 @@ export class Form1099K {
      *                 merchantCategoryCode: "4582",
      *                 numberOfPaymentTransactions: 767,
      *                 pseName: "Payment Entity",
-     *                 payerClassification: Abound.Form1099KPayerClassificationEnum.Pse,
-     *                 transactionsReportedClassification: Abound.Form1099KTransactionsReportedClassificationSchema.PaymentCard,
+     *                 payerClassification: "PSE",
+     *                 transactionsReportedClassification: "PAYMENT_CARD",
      *                 psePhoneNumber: "5555555555",
      *                 grossAmountsByMonth: {
      *                     april: 2332323,
@@ -522,7 +522,7 @@ export class Form1099K {
      *                     september: 2332323
      *                 },
      *                 stateTaxInfo: [{
-     *                         filingState: Abound.types.Form1099FilingStateEnum.Ca
+     *                         filingState: "CA"
      *                     }]
      *             }
      *         }
@@ -544,8 +544,8 @@ export class Form1099K {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.6",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.6",
+                "X-Fern-SDK-Version": "6.0.0-alpha.7",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
@@ -631,8 +631,8 @@ export class Form1099K {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.6",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.6",
+                "X-Fern-SDK-Version": "6.0.0-alpha.7",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
@@ -714,8 +714,8 @@ export class Form1099K {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.6",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.6",
+                "X-Fern-SDK-Version": "6.0.0-alpha.7",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -796,8 +796,8 @@ export class Form1099K {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.0-alpha.6",
-                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.6",
+                "X-Fern-SDK-Version": "6.0.0-alpha.7",
+                "User-Agent": "@withabound/node-sdk/6.0.0-alpha.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

@@ -36,7 +36,7 @@ import * as Abound from "../../../../index";
  *                 federalIncomeTaxWithheld: 0,
  *                 accountNumber: "A0NEqtav7n0sBGoq88w0",
  *                 stateTaxInfo: [{
- *                         filingState: Abound.types.Form1099FilingStateEnum.Ca,
+ *                         filingState: "CA",
  *                         stateIncome: 23423,
  *                         stateTaxWithheld: 0
  *                     }]

@@ -214,13 +214,11 @@ types:
       userId: optional<common.UserId>
 service:
   auth: false
-  display-name: W-8BEN
   base-path: ''
   endpoints:
     list:
       docs: Returns a list of W-8BEN documents.
       method: GET
-      display-name: List all W-8BEN documents
       path: /documents/w-8ben
       auth: true
       request:
@@ -243,13 +241,13 @@ service:
           response:
             body:
               - $W8BenSchema.ResponseExample
+      display-name: List all W-8BEN documents
     create:
       docs: >-
         Creates a W-8BEN document and, if present, subsequently kicks off a TIN
         Verification. A TIN Verification will only kickoff if the name and TIN
         combo has not been seen before.
       method: POST
-      display-name: Create a W-8BEN
       path: /documents/w-8ben
       auth: true
       request:
@@ -267,10 +265,10 @@ service:
           request: $W8BenRequestSchema.ResponseExample
           response:
             body: $W8BenSchema.ResponseExample
+      display-name: Create a W-8BEN
     retrieve:
       docs: Retrieves the details of an existing W-8BEN document.
       method: GET
-      display-name: Retrieve a W-8BEN
       path: /documents/w-8ben/{documentId}
       path-parameters:
         documentId: common.DocumentId
@@ -289,3 +287,5 @@ service:
             documentId: documentId_samplexEM8PRV7sh
           response:
             body: $W8BenSchema.ResponseExample
+      display-name: Retrieve a W-8BEN
+  display-name: W-8BEN

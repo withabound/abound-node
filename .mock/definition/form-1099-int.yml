@@ -485,13 +485,11 @@ types:
       formFields: Form1099IntFormFieldsSchema
 service:
   auth: false
-  display-name: 1099-INT
   base-path: ''
   endpoints:
     list:
       docs: Returns a list of 1099-INT documents.
       method: GET
-      display-name: List all 1099-INT documents
       path: /documents/1099-int
       auth: true
       request:
@@ -516,12 +514,12 @@ service:
           response:
             body:
               - $Form1099IntSchema.CreateResponseExample
+      display-name: List all 1099-INT documents
     create:
       docs: >-
         Creates a 1099-INT document and subsequently kicks off a TIN
         Verification, if the name and TIN combo has not been used before.
       method: POST
-      display-name: Create a 1099-INT
       path: /documents/1099-int
       auth: true
       request:
@@ -542,10 +540,10 @@ service:
           request: $Form1099IntRequestSchema.RequestCreateExample
           response:
             body: $Form1099IntSchema.CreateResponseExample
+      display-name: Create a 1099-INT
     mail:
       docs: Mails a 1099-INT document.
       method: POST
-      display-name: Mail a 1099-INT
       path: /documents/1099-int/{documentId}/mail
       path-parameters:
         documentId: common.DocumentId
@@ -608,10 +606,10 @@ service:
                 postalCode: '94306'
                 country: US
                 name: Hooli
+      display-name: Mail a 1099-INT
     file:
       docs: Files a 1099-INT document.
       method: POST
-      display-name: File a 1099-INT
       path: /documents/1099-int/{documentId}/file
       path-parameters:
         documentId: common.DocumentId
@@ -633,6 +631,7 @@ service:
             documentId: documentId_samplepWpJ9Snlzb
           response:
             body: $Form1099IntSchema.FileResponseExample
+      display-name: File a 1099-INT
     correct:
       docs: >-
         Files a new corrected 1099-INT and relates it to the original document.
@@ -640,7 +639,6 @@ service:
         status. Automatically handles both one-transaction and two-transaction
         corrections.
       method: POST
-      display-name: Correct a 1099-INT
       path: /documents/1099-int/{documentId}/correct
       path-parameters:
         documentId: common.DocumentId
@@ -664,12 +662,12 @@ service:
           request: $Form1099IntCorrectRequestSchema.CorrectRequestExample
           response:
             body: $Form1099IntSchema.CorrectResponseExample
+      display-name: Correct a 1099-INT
     void:
       docs: >-
         Files a new voided 1099-INT and relates it to the original document. A
         1099-INT can be voided only after it has reached the `FILED` status.
       method: POST
-      display-name: Void a 1099-INT
       path: /documents/1099-int/{documentId}/void
       path-parameters:
         documentId: common.DocumentId
@@ -692,10 +690,10 @@ service:
             documentId: documentId_samplepWpJ9Snlzb
           response:
             body: $Form1099IntSchema.VoidResponseExample
+      display-name: Void a 1099-INT
     retrieve:
       docs: Retrieves the details of an existing 1099-INT document.
       method: GET
-      display-name: Retrieve a 1099-INT
       path: /documents/1099-int/{documentId}
       path-parameters:
         documentId: common.DocumentId
@@ -714,12 +712,12 @@ service:
             documentId: documentId_samplepWpJ9Snlzb
           response:
             body: $Form1099IntSchema.CreateResponseExample
+      display-name: Retrieve a 1099-INT
     delete:
       docs: >-
         Deletes a 1099-INT document. Once an action (`/file`, `/correct`,
         `/void`) has been executed on a 1099-INT, it cannot be deleted.
       method: DELETE
-      display-name: Delete a 1099-INT
       path: /documents/1099-int/{documentId}
       path-parameters:
         documentId: common.DocumentId
@@ -738,3 +736,5 @@ service:
             documentId: documentId_samplepWpJ9Snlzb
           response:
             body: {}
+      display-name: Delete a 1099-INT
+  display-name: 1099-INT

@@ -189,13 +189,11 @@ types:
         type: optional<common.UserId>
 service:
   auth: false
-  display-name: W-9
   base-path: ''
   endpoints:
     list:
       docs: Returns a list of W-9 documents.
       method: GET
-      display-name: List all W-9 documents
       path: /documents/w-9
       auth: true
       request:
@@ -218,12 +216,12 @@ service:
           response:
             body:
               - $W9Schema.ResponseExample
+      display-name: List all W-9 documents
     create:
       docs: >-
         Creates a W-9 document and subsequently kicks off a TIN verification, if
         the name and TIN combo has not been used before.
       method: POST
-      display-name: Create a W-9
       path: /documents/w-9
       auth: true
       request:
@@ -244,10 +242,10 @@ service:
           request: $W9RequestSchema.RequestExample
           response:
             body: $W9Schema.ResponseExample
+      display-name: Create a W-9
     retrieve:
       docs: Retrieves the details of an existing W-9 document.
       method: GET
-      display-name: Retrieve a W-9
       path: /documents/w-9/{documentId}
       path-parameters:
         documentId: common.DocumentId
@@ -266,3 +264,5 @@ service:
             documentId: documentId_sampleVppNzzIbQT
           response:
             body: $W9Schema.ResponseExample
+      display-name: Retrieve a W-9
+  display-name: W-9

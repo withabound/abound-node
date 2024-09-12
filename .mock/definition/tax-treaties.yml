@@ -31,13 +31,11 @@ types:
         docs: The income description associated with the tax treaty.
 service:
   auth: false
-  display-name: Tax Treaties
   base-path: ''
   endpoints:
     list:
       docs: Returns a list of tax treaties.
       method: GET
-      display-name: List all tax treaties
       path: /tax-treaties
       auth: true
       request:
@@ -57,3 +55,5 @@ service:
           response:
             body:
               - $TaxTreatySchema.ResponseExample
+      display-name: List all tax treaties
+  display-name: Tax Treaties

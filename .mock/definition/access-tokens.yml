@@ -23,13 +23,11 @@ types:
         docs: The expiration date and time of the access token in `ISO 8601` format.
 service:
   auth: false
-  display-name: Access Tokens
   base-path: ''
   endpoints:
     create:
       docs: Creates an access token for authenticating Drop-In UI Components.
       method: POST
-      display-name: Create an access token
       path: /access-tokens
       auth: true
       request:
@@ -60,3 +58,5 @@ service:
             expiresIn: 900
           response:
             body: $AccessTokenSchema.ResponseExample
+      display-name: Create an access token
+  display-name: Access Tokens

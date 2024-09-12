@@ -309,13 +309,11 @@ types:
       formFields: Form1099NecFormFieldsSchema
 service:
   auth: false
-  display-name: 1099-NEC
   base-path: ''
   endpoints:
     list:
       docs: Returns a list of 1099-NEC documents.
       method: GET
-      display-name: List all 1099-NEC documents
       path: /documents/1099-nec
       auth: true
       request:
@@ -340,12 +338,12 @@ service:
           response:
             body:
               - $Form1099NecSchema.CreateResponseExample
+      display-name: List all 1099-NEC documents
     create:
       docs: >-
         Creates a 1099-NEC document and subsequently kicks off a TIN
         Verification, if the name and TIN combo has not been used before.
       method: POST
-      display-name: Create a 1099-NEC
       path: /documents/1099-nec
       auth: true
       request:
@@ -366,10 +364,10 @@ service:
           request: $Form1099NecRequestSchema.RequestCreateExample
           response:
             body: $Form1099NecSchema.CreateResponseExample
+      display-name: Create a 1099-NEC
     mail:
       docs: Mails a 1099-NEC document.
       method: POST
-      display-name: Mail a 1099-NEC
       path: /documents/1099-nec/{documentId}/mail
       path-parameters:
         documentId: common.DocumentId
@@ -432,10 +430,10 @@ service:
                 postalCode: '94306'
                 country: US
                 name: Hooli
+      display-name: Mail a 1099-NEC
     file:
       docs: Files a 1099-NEC document.
       method: POST
-      display-name: File a 1099-NEC
       path: /documents/1099-nec/{documentId}/file
       path-parameters:
         documentId: common.DocumentId
@@ -457,6 +455,7 @@ service:
             documentId: documentId_samplegU0eR8oc8a
           response:
             body: $Form1099NecSchema.FileResponseExample
+      display-name: File a 1099-NEC
     correct:
       docs: >-
         Files a new corrected 1099-NEC and relates it to the original document.
@@ -464,7 +463,6 @@ service:
         status. Automatically handles both one-transaction and two-transaction
         corrections.
       method: POST
-      display-name: Correct a 1099-NEC
       path: /documents/1099-nec/{documentId}/correct
       path-parameters:
         documentId: common.DocumentId
@@ -488,12 +486,12 @@ service:
           request: $Form1099NecCorrectRequestSchema.CorrectRequestExample
           response:
             body: $Form1099NecSchema.CorrectResponseExample
+      display-name: Correct a 1099-NEC
     void:
       docs: >-
         Files a new voided 1099-NEC and relates it to the original document. A
         1099-NEC can be voided only after it has reached the `FILED` status.
       method: POST
-      display-name: Void a 1099-NEC
       path: /documents/1099-nec/{documentId}/void
       path-parameters:
         documentId: common.DocumentId
@@ -516,10 +514,10 @@ service:
             documentId: documentId_samplegU0eR8oc8a
           response:
             body: $Form1099NecSchema.VoidResponseExample
+      display-name: Void a 1099-NEC
     retrieve:
       docs: Retrieves the details of an existing 1099-NEC document.
       method: GET
-      display-name: Retrieve a 1099-NEC
       path: /documents/1099-nec/{documentId}
       path-parameters:
         documentId: common.DocumentId
@@ -538,12 +536,12 @@ service:
             documentId: documentId_samplegU0eR8oc8a
           response:
             body: $Form1099NecSchema.CreateResponseExample
+      display-name: Retrieve a 1099-NEC
     delete:
       docs: >-
         Deletes a 1099-NEC document. Once an action (`/file`, `/correct`,
         `/void`) has been executed on a 1099-NEC, it cannot be deleted.
       method: DELETE
-      display-name: Delete a 1099-NEC
       path: /documents/1099-nec/{documentId}
       path-parameters:
         documentId: common.DocumentId
@@ -562,3 +560,5 @@ service:
             documentId: documentId_samplegU0eR8oc8a
           response:
             body: {}
+      display-name: Delete a 1099-NEC
+  display-name: 1099-NEC
