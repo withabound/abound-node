@@ -14,6 +14,7 @@ export interface AccessTokenRequestSchema {
     "Idempotency-Key"?: Abound.types.IdempotencyKey | undefined;
     /** The number of seconds until the access token expires. */
     expiresIn: number;
+    customizations?: Abound.CustomizationsSchema;
     /** The unique identifier of the user associated with this access token. */
     userId?: string;
 }

@@ -2,6 +2,7 @@ imports:
   errors: types/errors.yml
   headers: types/headers.yml
   common: types/common.yml
+  payer: types/payer.yml
 types:
   AccessTokenSchema:
     examples:
@@ -21,6 +22,101 @@ types:
       expiresAt:
         type: datetime
         docs: The expiration date and time of the access token in `ISO 8601` format.
+      customizations: optional<CustomizationsSchema>
+      userId:
+        type: optional<string>
+        docs: The unique identifier of the user associated with this access token.
+  CustomizationsSchema:
+    docs: The component customizations for this access token.
+    properties:
+      payeeTaxProfile:
+        type: optional<PayeeTaxProfileSchema>
+        docs: The Payee Tax Profile component customizations.
+  PayeeTaxProfileSchema:
+    properties:
+      shouldPreloadFromUserId:
+        type: optional<boolean>
+        docs: >-
+          Determines if Abound should preload the Payee Tax Profile by `userId`
+          lookup. Default is `true`.
+      shouldCollectElectronicDeliveryConsent:
+        type: optional<boolean>
+        docs: >-
+          Determines if the electronic delivery consent question should be asked
+          in the Payee Tax Profile component. Default is `true`.
+      supportedTaxForms:
+        type: optional<list<SupportedTaxFormsEnum>>
+        docs: >-
+          A list of the forms your organizaton intends to support and collect
+          during a Payee Tax Profile submission. Default is all forms:
+          `["FORM_W_9", "FORM_W_8BEN", "FORM_W_8BEN_E"]`.
+      defaults:
+        type: optional<DefaultsSchema>
+        docs: >-
+          Used to preload the Payee Tax Profile with default values. These
+          defaults will be ignored if data is preloaded by `userId`.
+      requestingPayer:
+        type: optional<payer.PayerRequestSchema>
+        docs: >-
+          If supplied, a Payee Tax Profile submission that creates a Form W-9
+          will attach this information as the `Payer`.
+  DefaultsSchema:
+    properties:
+      firstName:
+        type: optional<string>
+        docs: The payee's legal first name.
+      lastName:
+        type: optional<string>
+        docs: The payee's legal last name.
+      businessName:
+        type: optional<string>
+        docs: The payee's business name.
+      dateOfBirth:
+        type: optional<date>
+        docs: The date, in `YYYY-MM-DD` format, the payee was born on.
+      address:
+        type: optional<string>
+        docs: The legal address.
+      address2:
+        type: optional<string>
+        docs: >-
+          The second part of the legal address, such as an apartment or suite
+          number.
+      city:
+        type: optional<string>
+        docs: >-
+          The city associated with the street address. Required if `country` is
+          `US`.
+      state:
+        type: optional<string>
+        docs: >-
+          The two-letter character code for this state (`CA` for California,
+          `ME` for Maine). Required if `country` is `US`. If foreign, use the
+          province.
+      postalCode:
+        type: optional<string>
+        docs: >-
+          The postal code associated with the street address. Required to be a
+          5-digit numerical value if `country` is `US`. If foreign, use the
+          foreign postal code.
+      country:
+        type: optional<string>
+        validation:
+          minLength: 2
+          maxLength: 2
+        docs: The country adhering to `ISO 3166-2` standards.
+      email:
+        type: optional<string>
+        validation:
+          format: email
+        docs: >-
+          The payee's email address. Abound assume's you have taken the proper
+          steps to verify the ownership of this email address.
+  SupportedTaxFormsEnum:
+    enum:
+      - FORM_W_9
+      - FORM_W_8BEN
+      - FORM_W_8BEN_E
 service:
   auth: false
   base-path: ''
@@ -39,6 +135,7 @@ service:
             expiresIn:
               type: integer
               docs: The number of seconds until the access token expires.
+            customizations: optional<CustomizationsSchema>
             userId:
               type: optional<string>
               docs: >-
