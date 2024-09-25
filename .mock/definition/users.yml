@@ -13,10 +13,10 @@ types:
         type: optional<string>
         validation:
           format: email
+        availability: deprecated
         docs: >-
           The user's email address. Abound assume's you have taken the proper
           steps to verify the ownership of this email address.
-        availability: deprecated
       foreignId:
         type: optional<string>
         docs: The customer-specific unique identifier associated with this user.

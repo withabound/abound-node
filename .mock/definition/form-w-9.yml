@@ -97,10 +97,10 @@ types:
         docs: If the payee is subject to backup withholding, pass `true`.
       certifiedAt:
         type: optional<datetime>
+        availability: deprecated
         docs: >-
           The certification date and time in `ISO 8601` format. This field is
           deprecated. Please use `electronicSignature` instead.
-        availability: deprecated
       electronicSignature:
         type: optional<electronicSignature.ElectronicSignatureOfPayeeSchema>
         docs: The electronic signature of the payee.
