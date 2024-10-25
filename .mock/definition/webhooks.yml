@@ -520,6 +520,30 @@ webhooks:
         event:
           type: literal<"TEN99_MISC_VOIDED">
     display-name: TEN99_MISC_VOIDED
+  W_8BEN_CREATED:
+    docs: Receive a notification when a Form W-8BEN is created
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: FormW8BenCreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"W_8BEN_CREATED">
+    display-name: W_8BEN_CREATED
+  W_8BEN_E_CREATED:
+    docs: Receive a notification when a Form W-8BEN-E is created
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: FormW8BenECreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"W_8BEN_E_CREATED">
+    display-name: W_8BEN_E_CREATED
   W_9_CREATED:
     docs: Receive a notification when a Form W-9 is created
     method: POST
