@@ -18,9 +18,9 @@ export interface Form1099KFormFieldsRequestSchema {
     /** Aggregate gross amount of payment card/third party network transactions made to you through the PSE during the calendar year. Value must be in cents. */
     aggregateGrossAmount: number;
     /** The aggregate gross amount of all reportable payment transactions made to you through the PSE during the calendar year where the card was not present at the time of the transaction or the card number was keyed into the terminal. Typically, this relates to online sales, phone sales, or catalogue sales. If `transactionsReportedClassification` is `thirdPartyNetwork`, or if these are third party network transactions, card not present transactions will not be reported. Value must be in cents. */
-    aggregateGrossAmountCardNotPresent: number;
+    aggregateGrossAmountCardNotPresent?: number;
     /** Payment brands use merchant category codes (MCCs) to classify merchants and businesses by the type of goods or services provided. It is a four (4) digit code. This may be left blank. */
-    merchantCategoryCode: string;
+    merchantCategoryCode?: string;
     /** The number of payment transactions (not including refund transactions) processed through the payment card/third party network. */
     numberOfPaymentTransactions: number;
     /** The federal income tax withheld. Generally, a payer must backup withhold if you did not furnish your TIN or you did not furnish the correct TIN to the payer. Value must be in cents. Abound does not currently support `federalIncomeTaxWithheld` reporting on the 1099-K, please contact us for more information. */
