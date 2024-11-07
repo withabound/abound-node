@@ -12,7 +12,7 @@ export interface PayerRequestSchema extends Abound.types.AddressSchema {
     name: string;
     /** The payer's trade name, DBA name, or disregarded entity name, if different from `name`. */
     name2?: string;
-    /** The payee's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`. */
+    /** The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`. */
     tin: string;
     /** The payer's phone number. */
     phoneNumber: string;
