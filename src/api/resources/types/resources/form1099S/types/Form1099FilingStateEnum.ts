@@ -6,13 +6,9 @@
  * The filing state code. The abbreviation of the state (`CA` for California).
  */
 export type Form1099FilingStateEnum =
-    | "AA"
-    | "AE"
     | "AK"
     | "AL"
-    | "AP"
     | "AR"
-    | "AS"
     | "AZ"
     | "CA"
     | "CO"
@@ -21,7 +17,6 @@ export type Form1099FilingStateEnum =
     | "DE"
     | "FL"
     | "GA"
-    | "GU"
     | "HI"
     | "IA"
     | "ID"
@@ -36,7 +31,6 @@ export type Form1099FilingStateEnum =
     | "MI"
     | "MN"
     | "MO"
-    | "MP"
     | "MS"
     | "MT"
     | "N/A"
@@ -52,7 +46,6 @@ export type Form1099FilingStateEnum =
     | "OK"
     | "OR"
     | "PA"
-    | "PR"
     | "RI"
     | "SC"
     | "SD"
@@ -60,7 +53,6 @@ export type Form1099FilingStateEnum =
     | "TX"
     | "UT"
     | "VA"
-    | "VI"
     | "VT"
     | "WA"
     | "WI"
@@ -68,13 +60,9 @@ export type Form1099FilingStateEnum =
     | "WY";
 
 export const Form1099FilingStateEnum = {
-    Aa: "AA",
-    Ae: "AE",
     Ak: "AK",
     Al: "AL",
-    Ap: "AP",
     Ar: "AR",
-    As: "AS",
     Az: "AZ",
     Ca: "CA",
     Co: "CO",
@@ -83,7 +71,6 @@ export const Form1099FilingStateEnum = {
     De: "DE",
     Fl: "FL",
     Ga: "GA",
-    Gu: "GU",
     Hi: "HI",
     Ia: "IA",
     Id: "ID",
@@ -98,7 +85,6 @@ export const Form1099FilingStateEnum = {
     Mi: "MI",
     Mn: "MN",
     Mo: "MO",
-    Mp: "MP",
     Ms: "MS",
     Mt: "MT",
     NotApplicable: "N/A",
@@ -114,7 +100,6 @@ export const Form1099FilingStateEnum = {
     Ok: "OK",
     Or: "OR",
     Pa: "PA",
-    Pr: "PR",
     Ri: "RI",
     Sc: "SC",
     Sd: "SD",
@@ -122,7 +107,6 @@ export const Form1099FilingStateEnum = {
     Tx: "TX",
     Ut: "UT",
     Va: "VA",
-    Vi: "VI",
     Vt: "VT",
     Wa: "WA",
     Wi: "WI",

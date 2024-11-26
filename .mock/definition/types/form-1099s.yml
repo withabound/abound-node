@@ -21,13 +21,9 @@ types:
       The filing state code. The abbreviation of the state (`CA` for
       California).
     enum:
-      - AA
-      - AE
       - AK
       - AL
-      - AP
       - AR
-      - AS
       - AZ
       - CA
       - CO
@@ -36,7 +32,6 @@ types:
       - DE
       - FL
       - GA
-      - GU
       - HI
       - IA
       - ID
@@ -51,7 +46,6 @@ types:
       - MI
       - MN
       - MO
-      - MP
       - MS
       - MT
       - name: NOT_APPLICABLE
@@ -68,7 +62,6 @@ types:
       - OK
       - OR
       - PA
-      - PR
       - RI
       - SC
       - SD
@@ -76,7 +69,6 @@ types:
       - TX
       - UT
       - VA
-      - VI
       - VT
       - WA
       - WI
