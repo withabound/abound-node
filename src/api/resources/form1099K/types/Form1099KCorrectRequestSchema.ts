@@ -27,7 +27,7 @@ import * as Abound from "../../../index";
  *             pseName: "Payment Entity",
  *             payerClassification: Abound.Form1099KPayerClassificationEnum.Pse,
  *             transactionsReportedClassification: Abound.Form1099KTransactionsReportedClassificationSchema.PaymentCard,
- *             psePhoneNumber: "5555555555",
+ *             psePhoneNumber: "+15555555555",
  *             grossAmountsByMonth: {
  *                 april: 2332323,
  *                 august: 2332323,

@@ -237,7 +237,7 @@ await client.form1099Int.create({
             state: "CA",
             postalCode: "94306",
             country: "US",
-            phoneNumber: "6501014096",
+            phoneNumber: "+16501014096",
         },
         payee: {
             name: "Ada Lovelace",
@@ -881,7 +881,7 @@ await client.form1099K.create({
             state: "CA",
             postalCode: "94306",
             country: "US",
-            phoneNumber: "6501014096",
+            phoneNumber: "+16501014096",
         },
         payee: {
             name: "Ada Lovelace",
@@ -903,7 +903,7 @@ await client.form1099K.create({
             pseName: "Payment Entity",
             payerClassification: "PSE",
             transactionsReportedClassification: "PAYMENT_CARD",
-            psePhoneNumber: "5555555555",
+            psePhoneNumber: "+15555555555",
             grossAmountsByMonth: {
                 april: 2332323,
                 august: 2332323,
@@ -1174,7 +1174,7 @@ await client.form1099K.correct("documentId_sampletTtqNfulW8", {
             pseName: "Payment Entity",
             payerClassification: "PSE",
             transactionsReportedClassification: "PAYMENT_CARD",
-            psePhoneNumber: "5555555555",
+            psePhoneNumber: "+15555555555",
             grossAmountsByMonth: {
                 april: 2332323,
                 august: 2332323,
@@ -1541,7 +1541,7 @@ await client.form1099Misc.create({
             state: "CA",
             postalCode: "94306",
             country: "US",
-            phoneNumber: "6501014096",
+            phoneNumber: "+16501014096",
         },
         payee: {
             name: "Ada Lovelace",
@@ -2187,7 +2187,7 @@ await client.form1099Nec.create({
             state: "CA",
             postalCode: "94306",
             country: "US",
-            phoneNumber: "6501014096",
+            phoneNumber: "+16501014096",
         },
         payee: {
             name: "Ada Lovelace",

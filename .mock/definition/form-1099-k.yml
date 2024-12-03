@@ -120,6 +120,8 @@ types:
           is `PSE`.
       psePhoneNumber:
         type: optional<string>
+        validation:
+          pattern: ^\+?\d{10,15}$
         docs: >-
           The payment settlement entity phone number. Required if
           `payerClassification` is `PSE`.
@@ -196,7 +198,7 @@ types:
             state: CA
             postalCode: '94306'
             country: US
-            phoneNumber: '6501014096'
+            phoneNumber: '+16501014096'
           payee:
             name: Ada Lovelace
             tin: '000000000'
@@ -216,7 +218,7 @@ types:
             pseName: Payment Entity
             payerClassification: PSE
             transactionsReportedClassification: PAYMENT_CARD
-            psePhoneNumber: '5555555555'
+            psePhoneNumber: '+15555555555'
             grossAmountsByMonth:
               april: 2332323
               august: 2332323
@@ -259,7 +261,7 @@ types:
             pseName: Payment Entity
             payerClassification: PSE
             transactionsReportedClassification: PAYMENT_CARD
-            psePhoneNumber: '5555555555'
+            psePhoneNumber: '+15555555555'
             grossAmountsByMonth:
               april: 2332323
               august: 2332323
@@ -299,7 +301,7 @@ types:
             pseName: Payment Entity
             payerClassification: PSE
             transactionsReportedClassification: PAYMENT_CARD
-            psePhoneNumber: '5555555555'
+            psePhoneNumber: '+15555555555'
             grossAmountsByMonth:
               april: 2332323
               august: 2332323
@@ -327,7 +329,7 @@ types:
             state: CA
             postalCode: '94306'
             country: US
-            phoneNumber: '6501014096'
+            phoneNumber: '+16501014096'
             tin: '*******11'
             tinType: BUSINESS
             tinFingerprint: tinFingerprint_sample847jI1LwxF
@@ -365,7 +367,7 @@ types:
             pseName: Payment Entity
             payerClassification: PSE
             transactionsReportedClassification: PAYMENT_CARD
-            psePhoneNumber: '5555555555'
+            psePhoneNumber: '+15555555555'
             grossAmountsByMonth:
               april: 2332323
               august: 2332323
@@ -393,7 +395,7 @@ types:
             state: CA
             postalCode: '94306'
             country: US
-            phoneNumber: '6501014096'
+            phoneNumber: '+16501014096'
             tin: '*******11'
             tinType: BUSINESS
             tinFingerprint: tinFingerprint_sample847jI1LwxF
@@ -432,7 +434,7 @@ types:
             pseName: Payment Entity
             payerClassification: PSE
             transactionsReportedClassification: PAYMENT_CARD
-            psePhoneNumber: '5555555555'
+            psePhoneNumber: '+15555555555'
             grossAmountsByMonth:
               april: 2332323
               august: 2332323
@@ -460,7 +462,7 @@ types:
             state: CA
             postalCode: '94306'
             country: US
-            phoneNumber: '6501014096'
+            phoneNumber: '+16501014096'
             tin: '*******11'
             tinType: BUSINESS
             tinFingerprint: tinFingerprint_sample847jI1LwxF
@@ -499,7 +501,7 @@ types:
             pseName: Payment Entity
             payerClassification: PSE
             transactionsReportedClassification: PAYMENT_CARD
-            psePhoneNumber: '5555555555'
+            psePhoneNumber: '+15555555555'
             grossAmountsByMonth:
               april: 2332323
               august: 2332323
@@ -527,7 +529,7 @@ types:
             state: CA
             postalCode: '94306'
             country: US
-            phoneNumber: '6501014096'
+            phoneNumber: '+16501014096'
             tin: '*******11'
             tinType: BUSINESS
             tinFingerprint: tinFingerprint_sample847jI1LwxF

@@ -54,7 +54,7 @@ await client.form1099Nec.create({
             state: "CA",
             postalCode: "94306",
             country: "US",
-            phoneNumber: "6501014096",
+            phoneNumber: "+16501014096",
         },
         payee: {
             name: "Ada Lovelace",

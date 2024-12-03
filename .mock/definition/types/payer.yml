@@ -26,6 +26,8 @@ types:
           corresponding `tinFingerprint`.
       phoneNumber:
         type: string
+        validation:
+          pattern: ^\+?\d{10,15}$
         docs: The payer's phone number.
   PayerSchema:
     docs: The payer of the document.
