@@ -39,7 +39,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { AboundClient } from "@withabound/node-sdk";
+import { AboundClient, Abound } from "@withabound/node-sdk";
 
 const client = new AboundClient({ apiKey: "YOUR_API_KEY" });
 await client.form1099Nec.create({
