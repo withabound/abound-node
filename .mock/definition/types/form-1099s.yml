@@ -19,7 +19,7 @@ types:
   Form1099FilingStateEnum:
     docs: >-
       The filing state code. The abbreviation of the state (`CA` for
-      California).
+      California). If a state filing is not desired, use `N/A`.
     enum:
       - AK
       - AL

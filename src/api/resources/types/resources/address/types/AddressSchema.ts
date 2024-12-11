@@ -9,7 +9,7 @@ export interface AddressSchema {
     address2?: string;
     /** The city associated with the street address. Required if `country` is `US`. */
     city?: string;
-    /** The two-letter character code for this state (`CA` for California, `ME` for Maine). Required if `country` is `US`. If foreign, use the province. */
+    /** The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province. */
     state?: string;
     /** The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code. */
     postalCode?: string;

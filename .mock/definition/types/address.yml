@@ -17,9 +17,9 @@ types:
       state:
         type: optional<string>
         docs: >-
-          The two-letter character code for this state (`CA` for California,
-          `ME` for Maine). Required if `country` is `US`. If foreign, use the
-          province.
+          The two-letter character code for this state or US territory (`CA` for
+          California, `ME` for Maine, `PR` for Puerto Rico). Required if
+          `country` is `US`. If foreign, use the province.
       postalCode:
         type: optional<string>
         docs: >-

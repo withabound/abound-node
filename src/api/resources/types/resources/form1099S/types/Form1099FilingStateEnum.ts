@@ -3,7 +3,7 @@
  */
 
 /**
- * The filing state code. The abbreviation of the state (`CA` for California).
+ * The filing state code. The abbreviation of the state (`CA` for California). If a state filing is not desired, use `N/A`.
  */
 export type Form1099FilingStateEnum =
     | "AK"
