@@ -44,7 +44,7 @@ describe("Form1099K", () => {
                     },
                     stateTaxInfo: [{ filingState: "CA", stateTaxWithheld: 0 }],
                 },
-                filingYear: 2023,
+                filingYear: 2024,
                 createdAt: "2024-01-01T00:00:00.000Z",
                 status: "CREATED",
                 payer: {
@@ -76,8 +76,8 @@ describe("Form1099K", () => {
                     tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                     tinVerificationStatus: "MATCH",
                 },
-                payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-C.pdf",
-                payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-B.pdf",
+                payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-C.pdf",
+                payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-B.pdf",
             },
         ]);
     });
@@ -85,7 +85,7 @@ describe("Form1099K", () => {
     test("create", async () => {
         const response = await client.form1099K.create({
             body: {
-                filingYear: 2023,
+                filingYear: 2024,
                 payer: {
                     name: "Hooli",
                     tin: "111111111",
@@ -172,7 +172,7 @@ describe("Form1099K", () => {
                 },
                 stateTaxInfo: [{ filingState: "CA", stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "CREATED",
             payer: {
@@ -204,8 +204,8 @@ describe("Form1099K", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-B.pdf",
         });
     });
 
@@ -292,7 +292,7 @@ describe("Form1099K", () => {
                 },
                 stateTaxInfo: [{ filingState: "CA", stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "FILED",
             payer: {
@@ -324,8 +324,8 @@ describe("Form1099K", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-B.pdf",
         });
     });
 
@@ -407,7 +407,7 @@ describe("Form1099K", () => {
                 },
                 stateTaxInfo: [{ filingState: "CA", stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "FILED",
             payer: {
@@ -439,8 +439,8 @@ describe("Form1099K", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-CORRECTED-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-CORRECTED-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-CORRECTED-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-CORRECTED-COPY-B.pdf",
         });
     });
 
@@ -478,7 +478,7 @@ describe("Form1099K", () => {
                 },
                 stateTaxInfo: [{ filingState: "CA", stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "FILED",
             payer: {
@@ -510,8 +510,8 @@ describe("Form1099K", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-VOID-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-VOID-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-VOID-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-VOID-COPY-B.pdf",
         });
     });
 
@@ -548,7 +548,7 @@ describe("Form1099K", () => {
                 },
                 stateTaxInfo: [{ filingState: "CA", stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "CREATED",
             payer: {
@@ -580,8 +580,8 @@ describe("Form1099K", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-B.pdf",
         });
     });
 

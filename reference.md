@@ -227,7 +227,7 @@ Creates a 1099-INT document and subsequently kicks off a TIN Verification, if th
 ```typescript
 await client.form1099Int.create({
     body: {
-        filingYear: 2023,
+        filingYear: 2024,
         payer: {
             name: "Hooli",
             tin: "111111111",
@@ -871,7 +871,7 @@ Creates a 1099-K document and subsequently kicks off a TIN Verification, if the 
 ```typescript
 await client.form1099K.create({
     body: {
-        filingYear: 2023,
+        filingYear: 2024,
         payer: {
             name: "Hooli",
             tin: "111111111",
@@ -1531,7 +1531,7 @@ Creates a 1099-MISC document and subsequently kicks off a TIN Verification, if t
 ```typescript
 await client.form1099Misc.create({
     body: {
-        filingYear: 2023,
+        filingYear: 2024,
         payer: {
             name: "Hooli",
             tin: "111111111",
@@ -2177,7 +2177,7 @@ Creates a 1099-NEC document and subsequently kicks off a TIN Verification, if th
 ```typescript
 await client.form1099Nec.create({
     body: {
-        filingYear: 2023,
+        filingYear: 2024,
         payer: {
             name: "Hooli",
             tin: "111111111",

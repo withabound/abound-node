@@ -130,7 +130,7 @@ types:
     examples:
       - name: RequestCreateExample
         value:
-          filingYear: 2023
+          filingYear: 2024
           payer:
             name: Hooli
             tin: '111111111'
@@ -242,7 +242,7 @@ types:
               - filingState: CA
                 stateIncome: 345543
                 stateTaxWithheld: 0
-          filingYear: 2023
+          filingYear: 2024
           createdAt: '2024-01-01T00:00:00.000Z'
           status: CREATED
           payer:
@@ -273,9 +273,9 @@ types:
             tinVerificationId: tinVerificationId_sample41SD71AV8f
             tinVerificationStatus: MATCH
           payerUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-C.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-C.pdf
           payeeUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-B.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-B.pdf
       - name: FileResponseExample
         value:
           id: documentId_sampleGNPOKNmIgF
@@ -302,7 +302,7 @@ types:
               - filingState: CA
                 stateIncome: 345543
                 stateTaxWithheld: 0
-          filingYear: 2023
+          filingYear: 2024
           createdAt: '2024-01-01T00:00:00.000Z'
           status: FILED
           payer:
@@ -333,9 +333,9 @@ types:
             tinVerificationId: tinVerificationId_sample41SD71AV8f
             tinVerificationStatus: MATCH
           payerUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-C.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-C.pdf
           payeeUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-B.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-B.pdf
       - name: CorrectResponseExample
         value:
           id: documentId_sampleaTA4jltVVx
@@ -363,7 +363,7 @@ types:
               - filingState: CA
                 stateIncome: 258434
                 stateTaxWithheld: 0
-          filingYear: 2023
+          filingYear: 2024
           createdAt: '2024-01-01T00:00:00.000Z'
           status: FILED
           payer:
@@ -394,9 +394,9 @@ types:
             tinVerificationId: tinVerificationId_sample41SD71AV8f
             tinVerificationStatus: MATCH
           payerUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-CORRECTED-COPY-C.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-CORRECTED-COPY-C.pdf
           payeeUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-CORRECTED-COPY-B.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-CORRECTED-COPY-B.pdf
       - name: VoidResponseExample
         value:
           id: documentId_sampleStGnVcbd57
@@ -424,7 +424,7 @@ types:
               - filingState: CA
                 stateIncome: 345543
                 stateTaxWithheld: 0
-          filingYear: 2023
+          filingYear: 2024
           createdAt: '2024-01-01T00:00:00.000Z'
           status: FILED
           payer:
@@ -455,9 +455,9 @@ types:
             tinVerificationId: tinVerificationId_sample41SD71AV8f
             tinVerificationStatus: MATCH
           payerUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-VOID-COPY-C.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-VOID-COPY-C.pdf
           payeeUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-VOID-COPY-B.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-VOID-COPY-B.pdf
     extends: form1099s.Form1099BaseSchema
     properties:
       formFields: Form1099MiscFormFieldsSchema

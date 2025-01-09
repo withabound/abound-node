@@ -44,7 +44,7 @@ import { AboundClient, Abound } from "@withabound/node-sdk";
 const client = new AboundClient({ apiKey: "YOUR_API_KEY" });
 await client.form1099Nec.create({
     body: {
-        filingYear: 2023,
+        filingYear: 2024,
         payer: {
             name: "Hooli",
             tin: "111111111",

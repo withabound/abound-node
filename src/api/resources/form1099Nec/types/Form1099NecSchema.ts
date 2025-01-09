@@ -21,7 +21,7 @@ import * as Abound from "../../../index";
  *                     stateTaxWithheld: 0
  *                 }]
  *         },
- *         filingYear: 2023,
+ *         filingYear: 2024,
  *         createdAt: "2024-01-01T00:00:00.000Z",
  *         status: Abound.types.Form1099StatusEnum.Created,
  *         payer: {
@@ -53,8 +53,8 @@ import * as Abound from "../../../index";
  *             tinVerificationId: "tinVerificationId_sample41SD71AV8f",
  *             tinVerificationStatus: Abound.types.TinVerificationStatusEnum.Match
  *         },
- *         payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-C.pdf",
- *         payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-B.pdf"
+ *         payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-C.pdf",
+ *         payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-B.pdf"
  *     }
  *
  * @example
@@ -73,7 +73,7 @@ import * as Abound from "../../../index";
  *                     stateTaxWithheld: 0
  *                 }]
  *         },
- *         filingYear: 2023,
+ *         filingYear: 2024,
  *         createdAt: "2024-01-01T00:00:00.000Z",
  *         status: Abound.types.Form1099StatusEnum.Filed,
  *         payer: {
@@ -105,8 +105,8 @@ import * as Abound from "../../../index";
  *             tinVerificationId: "tinVerificationId_sample41SD71AV8f",
  *             tinVerificationStatus: Abound.types.TinVerificationStatusEnum.Match
  *         },
- *         payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-C.pdf",
- *         payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-B.pdf"
+ *         payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-C.pdf",
+ *         payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-B.pdf"
  *     }
  *
  * @example
@@ -126,7 +126,7 @@ import * as Abound from "../../../index";
  *                     stateTaxWithheld: 0
  *                 }]
  *         },
- *         filingYear: 2023,
+ *         filingYear: 2024,
  *         createdAt: "2024-01-01T00:00:00.000Z",
  *         status: Abound.types.Form1099StatusEnum.Filed,
  *         payer: {
@@ -158,8 +158,8 @@ import * as Abound from "../../../index";
  *             tinVerificationId: "tinVerificationId_sample41SD71AV8f",
  *             tinVerificationStatus: Abound.types.TinVerificationStatusEnum.Match
  *         },
- *         payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-CORRECTED-COPY-C.pdf",
- *         payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-CORRECTED-COPY-B.pdf"
+ *         payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-CORRECTED-COPY-C.pdf",
+ *         payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-CORRECTED-COPY-B.pdf"
  *     }
  *
  * @example
@@ -179,7 +179,7 @@ import * as Abound from "../../../index";
  *                     stateTaxWithheld: 0
  *                 }]
  *         },
- *         filingYear: 2023,
+ *         filingYear: 2024,
  *         createdAt: "2024-01-01T00:00:00.000Z",
  *         status: Abound.types.Form1099StatusEnum.Filed,
  *         payer: {
@@ -211,8 +211,8 @@ import * as Abound from "../../../index";
  *             tinVerificationId: "tinVerificationId_sample41SD71AV8f",
  *             tinVerificationStatus: Abound.types.TinVerificationStatusEnum.Match
  *         },
- *         payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-VOID-COPY-C.pdf",
- *         payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-VOID-COPY-B.pdf"
+ *         payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-VOID-COPY-C.pdf",
+ *         payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-VOID-COPY-B.pdf"
  *     }
  */
 export interface Form1099NecSchema extends Abound.types.Form1099BaseSchema {

@@ -188,7 +188,7 @@ types:
     examples:
       - name: RequestCreateExample
         value:
-          filingYear: 2023
+          filingYear: 2024
           payer:
             name: Hooli
             tin: '111111111'
@@ -318,7 +318,7 @@ types:
             stateTaxInfo:
               - filingState: CA
                 stateTaxWithheld: 0
-          filingYear: 2023
+          filingYear: 2024
           createdAt: '2024-01-01T00:00:00.000Z'
           status: CREATED
           payer:
@@ -349,9 +349,9 @@ types:
             tinVerificationId: tinVerificationId_sample41SD71AV8f
             tinVerificationStatus: MATCH
           payerUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-C.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-C.pdf
           payeeUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-B.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-B.pdf
       - name: FileResponseExample
         value:
           id: documentId_sampletTtqNfulW8
@@ -384,7 +384,7 @@ types:
             stateTaxInfo:
               - filingState: CA
                 stateTaxWithheld: 0
-          filingYear: 2023
+          filingYear: 2024
           createdAt: '2024-01-01T00:00:00.000Z'
           status: FILED
           payer:
@@ -415,9 +415,9 @@ types:
             tinVerificationId: tinVerificationId_sample41SD71AV8f
             tinVerificationStatus: MATCH
           payerUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-C.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-C.pdf
           payeeUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-COPY-B.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-B.pdf
       - name: CorrectResponseExample
         value:
           id: documentId_samplenOHhUUVnh6
@@ -451,7 +451,7 @@ types:
             stateTaxInfo:
               - filingState: CA
                 stateTaxWithheld: 0
-          filingYear: 2023
+          filingYear: 2024
           createdAt: '2024-01-01T00:00:00.000Z'
           status: FILED
           payer:
@@ -482,9 +482,9 @@ types:
             tinVerificationId: tinVerificationId_sample41SD71AV8f
             tinVerificationStatus: MATCH
           payerUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-CORRECTED-COPY-C.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-CORRECTED-COPY-C.pdf
           payeeUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-CORRECTED-COPY-B.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-CORRECTED-COPY-B.pdf
       - name: VoidResponseExample
         value:
           id: documentId_sampleb6HQLsVuM9
@@ -518,7 +518,7 @@ types:
             stateTaxInfo:
               - filingState: CA
                 stateTaxWithheld: 0
-          filingYear: 2023
+          filingYear: 2024
           createdAt: '2024-01-01T00:00:00.000Z'
           status: FILED
           payer:
@@ -549,9 +549,9 @@ types:
             tinVerificationId: tinVerificationId_sample41SD71AV8f
             tinVerificationStatus: MATCH
           payerUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-VOID-COPY-C.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-VOID-COPY-C.pdf
           payeeUrl: >-
-            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-K-VOID-COPY-B.pdf
+            https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-VOID-COPY-B.pdf
     extends: form1099s.Form1099BaseSchema
     properties:
       formFields: Form1099KFormFieldsSchema

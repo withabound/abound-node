@@ -36,7 +36,7 @@ describe("Form1099Misc", () => {
                     accountNumber: "A00AskD1ZTO4YB8oBHav",
                     stateTaxInfo: [{ filingState: "CA", stateIncome: 345543, stateTaxWithheld: 0 }],
                 },
-                filingYear: 2023,
+                filingYear: 2024,
                 createdAt: "2024-01-01T00:00:00.000Z",
                 status: "CREATED",
                 payer: {
@@ -68,8 +68,8 @@ describe("Form1099Misc", () => {
                     tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                     tinVerificationStatus: "MATCH",
                 },
-                payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-C.pdf",
-                payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-B.pdf",
+                payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-C.pdf",
+                payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-B.pdf",
             },
         ]);
     });
@@ -77,7 +77,7 @@ describe("Form1099Misc", () => {
     test("create", async () => {
         const response = await client.form1099Misc.create({
             body: {
-                filingYear: 2023,
+                filingYear: 2024,
                 payer: {
                     name: "Hooli",
                     tin: "111111111",
@@ -149,7 +149,7 @@ describe("Form1099Misc", () => {
                 accountNumber: "A00AskD1ZTO4YB8oBHav",
                 stateTaxInfo: [{ filingState: "CA", stateIncome: 345543, stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "CREATED",
             payer: {
@@ -181,8 +181,8 @@ describe("Form1099Misc", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-B.pdf",
         });
     });
 
@@ -261,7 +261,7 @@ describe("Form1099Misc", () => {
                 accountNumber: "A00AskD1ZTO4YB8oBHav",
                 stateTaxInfo: [{ filingState: "CA", stateIncome: 345543, stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "FILED",
             payer: {
@@ -293,8 +293,8 @@ describe("Form1099Misc", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-B.pdf",
         });
     });
 
@@ -361,7 +361,7 @@ describe("Form1099Misc", () => {
                 accountNumber: "A00AskD1ZTO4YB8oBHav",
                 stateTaxInfo: [{ filingState: "CA", stateIncome: 258434, stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "FILED",
             payer: {
@@ -393,10 +393,8 @@ describe("Form1099Misc", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl:
-                "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-CORRECTED-COPY-C.pdf",
-            payeeUrl:
-                "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-CORRECTED-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-CORRECTED-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-CORRECTED-COPY-B.pdf",
         });
     });
 
@@ -426,7 +424,7 @@ describe("Form1099Misc", () => {
                 accountNumber: "A00AskD1ZTO4YB8oBHav",
                 stateTaxInfo: [{ filingState: "CA", stateIncome: 345543, stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "FILED",
             payer: {
@@ -458,8 +456,8 @@ describe("Form1099Misc", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-VOID-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-VOID-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-VOID-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-VOID-COPY-B.pdf",
         });
     });
 
@@ -488,7 +486,7 @@ describe("Form1099Misc", () => {
                 accountNumber: "A00AskD1ZTO4YB8oBHav",
                 stateTaxInfo: [{ filingState: "CA", stateIncome: 345543, stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "CREATED",
             payer: {
@@ -520,8 +518,8 @@ describe("Form1099Misc", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-MISC-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-B.pdf",
         });
     });
 

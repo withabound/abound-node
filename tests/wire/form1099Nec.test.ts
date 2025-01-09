@@ -24,7 +24,7 @@ describe("Form1099Nec", () => {
                     accountNumber: "A0NEqtav7n0sBGoq88w0",
                     stateTaxInfo: [{ filingState: "CA", stateIncome: 23423, stateTaxWithheld: 0 }],
                 },
-                filingYear: 2023,
+                filingYear: 2024,
                 createdAt: "2024-01-01T00:00:00.000Z",
                 status: "CREATED",
                 payer: {
@@ -56,8 +56,8 @@ describe("Form1099Nec", () => {
                     tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                     tinVerificationStatus: "MATCH",
                 },
-                payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-C.pdf",
-                payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-B.pdf",
+                payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-C.pdf",
+                payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-B.pdf",
             },
         ]);
     });
@@ -65,7 +65,7 @@ describe("Form1099Nec", () => {
     test("create", async () => {
         const response = await client.form1099Nec.create({
             body: {
-                filingYear: 2023,
+                filingYear: 2024,
                 payer: {
                     name: "Hooli",
                     tin: "111111111",
@@ -113,7 +113,7 @@ describe("Form1099Nec", () => {
                 accountNumber: "A0NEqtav7n0sBGoq88w0",
                 stateTaxInfo: [{ filingState: "CA", stateIncome: 23423, stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "CREATED",
             payer: {
@@ -145,8 +145,8 @@ describe("Form1099Nec", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-B.pdf",
         });
     });
 
@@ -213,7 +213,7 @@ describe("Form1099Nec", () => {
                 accountNumber: "A0NEqtav7n0sBGoq88w0",
                 stateTaxInfo: [{ filingState: "CA", stateIncome: 23423, stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "FILED",
             payer: {
@@ -245,8 +245,8 @@ describe("Form1099Nec", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-B.pdf",
         });
     });
 
@@ -287,7 +287,7 @@ describe("Form1099Nec", () => {
                 accountNumber: "A0NEqtav7n0sBGoq88w0",
                 stateTaxInfo: [{ filingState: "CA", stateIncome: 10000, stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "FILED",
             payer: {
@@ -319,10 +319,8 @@ describe("Form1099Nec", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl:
-                "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-CORRECTED-COPY-C.pdf",
-            payeeUrl:
-                "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-CORRECTED-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-CORRECTED-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-CORRECTED-COPY-B.pdf",
         });
     });
 
@@ -340,7 +338,7 @@ describe("Form1099Nec", () => {
                 accountNumber: "A0NEqtav7n0sBGoq88w0",
                 stateTaxInfo: [{ filingState: "CA", stateIncome: 23423, stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "FILED",
             payer: {
@@ -372,8 +370,8 @@ describe("Form1099Nec", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-VOID-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-VOID-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-VOID-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-VOID-COPY-B.pdf",
         });
     });
 
@@ -390,7 +388,7 @@ describe("Form1099Nec", () => {
                 accountNumber: "A0NEqtav7n0sBGoq88w0",
                 stateTaxInfo: [{ filingState: "CA", stateIncome: 23423, stateTaxWithheld: 0 }],
             },
-            filingYear: 2023,
+            filingYear: 2024,
             createdAt: "2024-01-01T00:00:00.000Z",
             status: "CREATED",
             payer: {
@@ -422,8 +420,8 @@ describe("Form1099Nec", () => {
                 tinVerificationId: "tinVerificationId_sample41SD71AV8f",
                 tinVerificationStatus: "MATCH",
             },
-            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-C.pdf",
-            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/2023-FORM-1099-NEC-COPY-B.pdf",
+            payerUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-C.pdf",
+            payeeUrl: "https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-NEC-COPY-B.pdf",
         });
     });
 
