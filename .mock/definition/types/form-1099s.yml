@@ -79,9 +79,11 @@ types:
       filingState: Form1099FilingStateEnum
       payeeStateId:
         type: optional<string>
+        availability: deprecated
         docs: The payee's state identification number.
       payerStateId:
         type: optional<string>
+        availability: deprecated
         docs: The payer's state identification number.
       stateTaxWithheld:
         type: optional<integer>
