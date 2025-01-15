@@ -1,6 +1,6 @@
 {
     "name": "@withabound/node-sdk",
-    "version": "6.0.40",
+    "version": "6.0.41",
     "private": false,
     "repository": "https://github.com/withabound/abound-node",
     "license": "MIT",
