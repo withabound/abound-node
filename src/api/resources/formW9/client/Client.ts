@@ -9,19 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace FormW9 {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.AboundEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -44,10 +48,10 @@ export class FormW9 {
      */
     public async list(
         request: Abound.FormW9ListRequest = {},
-        requestOptions?: FormW9.RequestOptions
+        requestOptions?: FormW9.RequestOptions,
     ): Promise<Abound.W9Schema[]> {
         const { page, payeeTinFingerprint, payerTinFingerprint, userId } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
         }
@@ -66,18 +70,21 @@ export class FormW9 {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                "/v4/documents/w-9"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                "/v4/documents/w-9",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -94,17 +101,17 @@ export class FormW9 {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -121,7 +128,7 @@ export class FormW9 {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError("Timeout exceeded when calling GET /v4/documents/w-9.");
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -169,24 +176,27 @@ export class FormW9 {
      */
     public async create(
         request: Abound.FormW9RequestSchema,
-        requestOptions?: FormW9.RequestOptions
+        requestOptions?: FormW9.RequestOptions,
     ): Promise<Abound.W9Schema> {
         const { "Idempotency-Key": idempotencyKey, body: _body } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                "/v4/documents/w-9"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                "/v4/documents/w-9",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -203,17 +213,17 @@ export class FormW9 {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -230,7 +240,7 @@ export class FormW9 {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError("Timeout exceeded when calling POST /v4/documents/w-9.");
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -254,22 +264,25 @@ export class FormW9 {
      */
     public async retrieve(
         documentId: Abound.types.DocumentId,
-        requestOptions?: FormW9.RequestOptions
+        requestOptions?: FormW9.RequestOptions,
     ): Promise<Abound.W9Schema> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                `/v4/documents/w-9/${encodeURIComponent(documentId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                `/v4/documents/w-9/${encodeURIComponent(documentId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -285,17 +298,17 @@ export class FormW9 {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -312,7 +325,9 @@ export class FormW9 {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError(
+                    "Timeout exceeded when calling GET /v4/documents/w-9/{documentId}.",
+                );
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,

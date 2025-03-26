@@ -17,7 +17,6 @@ export type W9TaxClassificationSchema =
     | "LLC_C_CORPORATION"
     | "LLC_S_CORPORATION"
     | "OTHER";
-
 export const W9TaxClassificationSchema = {
     Individual: "INDIVIDUAL",
     SoleProprietor: "SOLE_PROPRIETOR",

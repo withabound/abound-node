@@ -20,7 +20,6 @@ export type W9ExemptFatcaCodeSchema =
     | "L"
     | "M"
     | "NOT_APPLICABLE";
-
 export const W9ExemptFatcaCodeSchema = {
     A: "A",
     B: "B",

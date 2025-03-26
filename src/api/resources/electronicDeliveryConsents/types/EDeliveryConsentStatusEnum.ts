@@ -3,7 +3,6 @@
  */
 
 export type EDeliveryConsentStatusEnum = "ASSENTED" | "WITHDRAWN";
-
 export const EDeliveryConsentStatusEnum = {
     Assented: "ASSENTED",
     Withdrawn: "WITHDRAWN",

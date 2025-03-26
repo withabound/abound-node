@@ -6,7 +6,6 @@
  * The status of the TIN Verification.
  */
 export type TinVerificationStatusEnum = "MATCH" | "MISMATCH" | "PENDING";
-
 export const TinVerificationStatusEnum = {
     Match: "MATCH",
     Mismatch: "MISMATCH",

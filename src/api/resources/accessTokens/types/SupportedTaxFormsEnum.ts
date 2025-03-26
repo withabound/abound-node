@@ -3,7 +3,6 @@
  */
 
 export type SupportedTaxFormsEnum = "FORM_W_9" | "FORM_W_8BEN" | "FORM_W_8BEN_E";
-
 export const SupportedTaxFormsEnum = {
     FormW9: "FORM_W_9",
     FormW8Ben: "FORM_W_8BEN",

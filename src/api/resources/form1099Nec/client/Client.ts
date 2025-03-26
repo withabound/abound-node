@@ -9,19 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Form1099Nec {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.AboundEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -44,10 +48,10 @@ export class Form1099Nec {
      */
     public async list(
         request: Abound.Form1099NecListRequest = {},
-        requestOptions?: Form1099Nec.RequestOptions
+        requestOptions?: Form1099Nec.RequestOptions,
     ): Promise<Abound.Form1099NecSchema[]> {
         const { page, filingYear, payeeTinFingerprint, payerTinFingerprint, status, userId } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
         }
@@ -74,18 +78,21 @@ export class Form1099Nec {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                "/v4/documents/1099-nec"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                "/v4/documents/1099-nec",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -102,17 +109,17 @@ export class Form1099Nec {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -129,7 +136,7 @@ export class Form1099Nec {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError("Timeout exceeded when calling GET /v4/documents/1099-nec.");
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -189,24 +196,27 @@ export class Form1099Nec {
      */
     public async create(
         request: Abound.Form1099NecRequest,
-        requestOptions?: Form1099Nec.RequestOptions
+        requestOptions?: Form1099Nec.RequestOptions,
     ): Promise<Abound.Form1099NecSchema> {
         const { "Idempotency-Key": idempotencyKey, body: _body } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                "/v4/documents/1099-nec"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                "/v4/documents/1099-nec",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -223,17 +233,17 @@ export class Form1099Nec {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -250,7 +260,7 @@ export class Form1099Nec {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError("Timeout exceeded when calling POST /v4/documents/1099-nec.");
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -297,24 +307,27 @@ export class Form1099Nec {
     public async mail(
         documentId: Abound.types.DocumentId,
         request: Abound.Form1099NecMailingRequest,
-        requestOptions?: Form1099Nec.RequestOptions
+        requestOptions?: Form1099Nec.RequestOptions,
     ): Promise<Abound.MailingSchema> {
         const { "Idempotency-Key": idempotencyKey, body: _body } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/mail`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/mail`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -331,17 +344,17 @@ export class Form1099Nec {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -358,7 +371,9 @@ export class Form1099Nec {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError(
+                    "Timeout exceeded when calling POST /v4/documents/1099-nec/{documentId}/mail.",
+                );
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -384,24 +399,27 @@ export class Form1099Nec {
     public async file(
         documentId: Abound.types.DocumentId,
         request: Abound.Form1099NecFileRequest = {},
-        requestOptions?: Form1099Nec.RequestOptions
+        requestOptions?: Form1099Nec.RequestOptions,
     ): Promise<Abound.Form1099NecSchema> {
         const { "Idempotency-Key": idempotencyKey } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/file`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/file`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -417,17 +435,17 @@ export class Form1099Nec {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -444,7 +462,9 @@ export class Form1099Nec {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError(
+                    "Timeout exceeded when calling POST /v4/documents/1099-nec/{documentId}/file.",
+                );
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -491,24 +511,27 @@ export class Form1099Nec {
     public async correct(
         documentId: Abound.types.DocumentId,
         request: Abound.Form1099NecCorrectRequest,
-        requestOptions?: Form1099Nec.RequestOptions
+        requestOptions?: Form1099Nec.RequestOptions,
     ): Promise<Abound.Form1099NecSchema> {
         const { "Idempotency-Key": idempotencyKey, body: _body } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/correct`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/correct`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -525,17 +548,17 @@ export class Form1099Nec {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -552,7 +575,9 @@ export class Form1099Nec {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError(
+                    "Timeout exceeded when calling POST /v4/documents/1099-nec/{documentId}/correct.",
+                );
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -578,24 +603,27 @@ export class Form1099Nec {
     public async void(
         documentId: Abound.types.DocumentId,
         request: Abound.Form1099NecVoidRequest = {},
-        requestOptions?: Form1099Nec.RequestOptions
+        requestOptions?: Form1099Nec.RequestOptions,
     ): Promise<Abound.Form1099NecSchema> {
         const { "Idempotency-Key": idempotencyKey } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/void`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}/void`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -611,17 +639,17 @@ export class Form1099Nec {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -638,7 +666,9 @@ export class Form1099Nec {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError(
+                    "Timeout exceeded when calling POST /v4/documents/1099-nec/{documentId}/void.",
+                );
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -662,22 +692,25 @@ export class Form1099Nec {
      */
     public async retrieve(
         documentId: Abound.types.DocumentId,
-        requestOptions?: Form1099Nec.RequestOptions
+        requestOptions?: Form1099Nec.RequestOptions,
     ): Promise<Abound.Form1099NecSchema> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -693,17 +726,17 @@ export class Form1099Nec {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -720,7 +753,9 @@ export class Form1099Nec {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError(
+                    "Timeout exceeded when calling GET /v4/documents/1099-nec/{documentId}.",
+                );
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -744,22 +779,25 @@ export class Form1099Nec {
      */
     public async delete(
         documentId: Abound.types.DocumentId,
-        requestOptions?: Form1099Nec.RequestOptions
+        requestOptions?: Form1099Nec.RequestOptions,
     ): Promise<Abound.types.OkSchema> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                `/v4/documents/1099-nec/${encodeURIComponent(documentId)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -775,17 +813,17 @@ export class Form1099Nec {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -802,7 +840,9 @@ export class Form1099Nec {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError(
+                    "Timeout exceeded when calling DELETE /v4/documents/1099-nec/{documentId}.",
+                );
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,

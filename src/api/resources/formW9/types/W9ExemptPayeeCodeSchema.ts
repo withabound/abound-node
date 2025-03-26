@@ -6,7 +6,6 @@
  * The code to identify a payee that is exempt from backup withholding.
  */
 export type W9ExemptPayeeCodeSchema = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12" | "13";
-
 export const W9ExemptPayeeCodeSchema = {
     One: "1",
     Two: "2",

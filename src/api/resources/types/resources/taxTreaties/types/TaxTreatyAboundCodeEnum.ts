@@ -28,7 +28,6 @@ export type TaxTreatyAboundCodeEnum =
     | "MX_17_INDEPENDENT_PERSONAL_SERVICES"
     | "MX_18_DEPENDENT_PERSONAL_SERVICES"
     | "MX_42_PUBLIC_ENTERTAINMENT";
-
 export const TaxTreatyAboundCodeEnum = {
     Au17IndependentPersonalServices: "AU_17_INDEPENDENT_PERSONAL_SERVICES",
     Au18DependentPersonalServices: "AU_18_DEPENDENT_PERSONAL_SERVICES",

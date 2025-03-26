@@ -19,98 +19,90 @@ import { TinVerifications } from "./api/resources/tinVerifications/client/Client
 import { Users } from "./api/resources/users/client/Client";
 
 export declare namespace AboundClient {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.AboundEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class AboundClient {
-    constructor(protected readonly _options: AboundClient.Options) {}
-
     protected _accessTokens: AccessTokens | undefined;
+    protected _electronicDeliveryConsents: ElectronicDeliveryConsents | undefined;
+    protected _form1099Int: Form1099Int | undefined;
+    protected _form1099K: Form1099K | undefined;
+    protected _form1099Misc: Form1099Misc | undefined;
+    protected _form1099Nec: Form1099Nec | undefined;
+    protected _formW8BenE: FormW8BenE | undefined;
+    protected _formW8Ben: FormW8Ben | undefined;
+    protected _formW9: FormW9 | undefined;
+    protected _mailings: Mailings | undefined;
+    protected _taxTreaties: TaxTreaties | undefined;
+    protected _tinVerifications: TinVerifications | undefined;
+    protected _users: Users | undefined;
+
+    constructor(protected readonly _options: AboundClient.Options) {}
 
     public get accessTokens(): AccessTokens {
         return (this._accessTokens ??= new AccessTokens(this._options));
     }
 
-    protected _electronicDeliveryConsents: ElectronicDeliveryConsents | undefined;
-
     public get electronicDeliveryConsents(): ElectronicDeliveryConsents {
         return (this._electronicDeliveryConsents ??= new ElectronicDeliveryConsents(this._options));
     }
-
-    protected _form1099Int: Form1099Int | undefined;
 
     public get form1099Int(): Form1099Int {
         return (this._form1099Int ??= new Form1099Int(this._options));
     }
 
-    protected _form1099K: Form1099K | undefined;
-
     public get form1099K(): Form1099K {
         return (this._form1099K ??= new Form1099K(this._options));
     }
-
-    protected _form1099Misc: Form1099Misc | undefined;
 
     public get form1099Misc(): Form1099Misc {
         return (this._form1099Misc ??= new Form1099Misc(this._options));
     }
 
-    protected _form1099Nec: Form1099Nec | undefined;
-
     public get form1099Nec(): Form1099Nec {
         return (this._form1099Nec ??= new Form1099Nec(this._options));
     }
-
-    protected _formW8BenE: FormW8BenE | undefined;
 
     public get formW8BenE(): FormW8BenE {
         return (this._formW8BenE ??= new FormW8BenE(this._options));
     }
 
-    protected _formW8Ben: FormW8Ben | undefined;
-
     public get formW8Ben(): FormW8Ben {
         return (this._formW8Ben ??= new FormW8Ben(this._options));
     }
-
-    protected _formW9: FormW9 | undefined;
 
     public get formW9(): FormW9 {
         return (this._formW9 ??= new FormW9(this._options));
     }
 
-    protected _mailings: Mailings | undefined;
-
     public get mailings(): Mailings {
         return (this._mailings ??= new Mailings(this._options));
     }
-
-    protected _taxTreaties: TaxTreaties | undefined;
 
     public get taxTreaties(): TaxTreaties {
         return (this._taxTreaties ??= new TaxTreaties(this._options));
     }
 
-    protected _tinVerifications: TinVerifications | undefined;
-
     public get tinVerifications(): TinVerifications {
         return (this._tinVerifications ??= new TinVerifications(this._options));
     }
-
-    protected _users: Users | undefined;
 
     public get users(): Users {
         return (this._users ??= new Users(this._options));

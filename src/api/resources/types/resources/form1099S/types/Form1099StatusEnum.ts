@@ -3,7 +3,6 @@
  */
 
 export type Form1099StatusEnum = "CREATED" | "FILED" | "ACCEPTED" | "REJECTED";
-
 export const Form1099StatusEnum = {
     Created: "CREATED",
     Filed: "FILED",

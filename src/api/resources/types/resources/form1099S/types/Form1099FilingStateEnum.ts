@@ -58,7 +58,6 @@ export type Form1099FilingStateEnum =
     | "WI"
     | "WV"
     | "WY";
-
 export const Form1099FilingStateEnum = {
     Ak: "AK",
     Al: "AL",

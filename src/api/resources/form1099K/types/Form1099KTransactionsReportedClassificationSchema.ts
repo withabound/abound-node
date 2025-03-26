@@ -6,7 +6,6 @@
  * The type of transactions reported.
  */
 export type Form1099KTransactionsReportedClassificationSchema = "PAYMENT_CARD" | "THIRD_PARTY_NETWORK";
-
 export const Form1099KTransactionsReportedClassificationSchema = {
     PaymentCard: "PAYMENT_CARD",
     ThirdPartyNetwork: "THIRD_PARTY_NETWORK",

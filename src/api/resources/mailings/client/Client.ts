@@ -9,19 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Mailings {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.AboundEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -44,10 +48,10 @@ export class Mailings {
      */
     public async list(
         request: Abound.MailingsListRequest = {},
-        requestOptions?: Mailings.RequestOptions
+        requestOptions?: Mailings.RequestOptions,
     ): Promise<Abound.MailingSchema[]> {
         const { page, status, userId } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
         }
@@ -62,18 +66,21 @@ export class Mailings {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                "/v4/mailings"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                "/v4/mailings",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -90,17 +97,17 @@ export class Mailings {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -117,7 +124,7 @@ export class Mailings {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError("Timeout exceeded when calling GET /v4/mailings.");
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -141,22 +148,25 @@ export class Mailings {
      */
     public async retrieve(
         mailingId: Abound.types.MailingId,
-        requestOptions?: Mailings.RequestOptions
+        requestOptions?: Mailings.RequestOptions,
     ): Promise<Abound.MailingSchema> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                `/v4/mailings/${encodeURIComponent(mailingId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                `/v4/mailings/${encodeURIComponent(mailingId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -172,17 +182,17 @@ export class Mailings {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -199,7 +209,7 @@ export class Mailings {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError("Timeout exceeded when calling GET /v4/mailings/{mailingId}.");
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -246,24 +256,27 @@ export class Mailings {
     public async update(
         mailingId: Abound.types.MailingId,
         request: Abound.MailingRequest,
-        requestOptions?: Mailings.RequestOptions
+        requestOptions?: Mailings.RequestOptions,
     ): Promise<Abound.MailingSchema> {
         const { "Idempotency-Key": idempotencyKey, body: _body } = request;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                `/v4/mailings/${encodeURIComponent(mailingId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                `/v4/mailings/${encodeURIComponent(mailingId)}`,
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": idempotencyKey != null ? idempotencyKey : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -280,17 +293,17 @@ export class Mailings {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -307,7 +320,7 @@ export class Mailings {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError("Timeout exceeded when calling PUT /v4/mailings/{mailingId}.");
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,
@@ -331,22 +344,25 @@ export class Mailings {
      */
     public async delete(
         mailingId: Abound.types.MailingId,
-        requestOptions?: Mailings.RequestOptions
+        requestOptions?: Mailings.RequestOptions,
     ): Promise<Abound.types.OkSchema> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AboundEnvironment.Sandbox,
-                `/v4/mailings/${encodeURIComponent(mailingId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AboundEnvironment.Sandbox,
+                `/v4/mailings/${encodeURIComponent(mailingId)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@withabound/node-sdk",
-                "X-Fern-SDK-Version": "6.0.61",
-                "User-Agent": "@withabound/node-sdk/6.0.61",
+                "X-Fern-SDK-Version": "6.0.62",
+                "User-Agent": "@withabound/node-sdk/6.0.62",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -362,17 +378,17 @@ export class Mailings {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Abound.types.BadRequestErrorSchema(
-                        _response.error.body as Abound.types.ErrorBadRequestSchema
+                        _response.error.body as Abound.types.ErrorBadRequestSchema,
                     );
                 case 401:
                     throw new Abound.types.UnauthorizedErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 case 404:
                     throw new Abound.types.NotFoundErrorSchema(_response.error.body as Abound.types.DefaultErrorSchema);
                 case 500:
                     throw new Abound.types.InternalServerErrorSchema(
-                        _response.error.body as Abound.types.DefaultErrorSchema
+                        _response.error.body as Abound.types.DefaultErrorSchema,
                     );
                 default:
                     throw new errors.AboundError({
@@ -389,7 +405,7 @@ export class Mailings {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AboundTimeoutError();
+                throw new errors.AboundTimeoutError("Timeout exceeded when calling DELETE /v4/mailings/{mailingId}.");
             case "unknown":
                 throw new errors.AboundError({
                     message: _response.error.errorMessage,

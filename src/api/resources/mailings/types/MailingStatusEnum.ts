@@ -8,7 +8,6 @@ export type MailingStatusEnum =
     | "IN_TRANSIT"
     | "DELIVERED"
     | "RETURNED_TO_SENDER";
-
 export const MailingStatusEnum = {
     Created: "CREATED",
     ProcessingForDelivery: "PROCESSING_FOR_DELIVERY",

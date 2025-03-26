@@ -3,7 +3,6 @@
  */
 
 export type TaxTreatyIncomeCodeEnum = "16" | "17" | "18" | "42";
-
 export const TaxTreatyIncomeCodeEnum = {
     Sixteen: "16",
     Seventeen: "17",

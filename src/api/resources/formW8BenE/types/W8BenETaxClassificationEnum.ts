@@ -19,7 +19,6 @@ export type W8BenETaxClassificationEnum =
     | "PRIVATE_FOUNDATION"
     | "SIMPLE_TRUST"
     | "TAX_EXEMPT_ORGANIZATION";
-
 export const W8BenETaxClassificationEnum = {
     CentralBankOfIssue: "CENTRAL_BANK_OF_ISSUE",
     ComplexTrust: "COMPLEX_TRUST",
