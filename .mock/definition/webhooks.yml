@@ -1,7 +1,542 @@
+webhooks:
+  USER_CREATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: UserCreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"USER_CREATED">
+    docs: Receive a notification when a User is created
+    display-name: USER_CREATED
+  USER_UPDATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: UserUpdatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"USER_UPDATED">
+    docs: Receive a notification when a User is updated
+    display-name: USER_UPDATED
+  TIN_VERIFICATION_CREATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: TINVerificationCreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TIN_VERIFICATION_CREATED">
+    docs: Receive a notification when a TIN Verification is created
+    display-name: TIN_VERIFICATION_CREATED
+  TIN_VERIFICATION_MATCH:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: TINVerificationMatchWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TIN_VERIFICATION_MATCH">
+    docs: Receive a notification when a TIN Verification status changes to `MATCH`
+    display-name: TIN_VERIFICATION_MATCH
+  TIN_VERIFICATION_MISMATCH:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: TINVerificationMismatchWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TIN_VERIFICATION_MISMATCH">
+    docs: >-
+      Receive a notification when a TIN Verification status changes to
+      `MISMATCH`
+    display-name: TIN_VERIFICATION_MISMATCH
+  TIN_VERIFICATION_PENDING:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: TINVerificationPendingWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TIN_VERIFICATION_PENDING">
+    docs: Receive a notification when a TIN Verification status changes to `PENDING`
+    display-name: TIN_VERIFICATION_PENDING
+  MAILING_CREATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: MailingCreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"MAILING_CREATED">
+    docs: Receive a notification when a Mailing is created
+    display-name: MAILING_CREATED
+  MAILING_DELETED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: MailingDeletedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"MAILING_DELETED">
+    docs: Receive a notification when a Mailing is deleted
+    display-name: MAILING_DELETED
+  MAILING_DELIVERED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: MailingDeliveredWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"MAILING_DELIVERED">
+    docs: Receive a notification when a Mailing status changes to `DELIVERED`
+    display-name: MAILING_DELIVERED
+  MAILING_IN_TRANSIT:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: MailingInTransitWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"MAILING_IN_TRANSIT">
+    docs: Receive a notification when a Mailing status changes to `IN_TRANSIT`
+    display-name: MAILING_IN_TRANSIT
+  MAILING_PROCESSING_FOR_DELIVERY:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: MailingProcessingForDeliveryWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"MAILING_PROCESSING_FOR_DELIVERY">
+    docs: >-
+      Receive a notification when a Mailing status changes to
+      `PROCESSING_FOR_DELIVERY`
+    display-name: MAILING_PROCESSING_FOR_DELIVERY
+  MAILING_RETURNED_TO_SENDER:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: MailingReturnedToSenderWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"MAILING_RETURNED_TO_SENDER">
+    docs: >-
+      Receive a notification when a Mailing status changes to
+      `RETURNED_TO_SENDER`
+    display-name: MAILING_RETURNED_TO_SENDER
+  MAILING_UPDATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: MailingUpdatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"MAILING_UPDATED">
+    docs: Receive a notification when a Mailing is updated
+    display-name: MAILING_UPDATED
+  TEN99_INT_ACCEPTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099IntAcceptedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_INT_ACCEPTED">
+    docs: Receive a notification when a Form 1099-INT status changes to `ACCEPTED`
+    display-name: TEN99_INT_ACCEPTED
+  TEN99_INT_CORRECTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099IntCorrectedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_INT_CORRECTED">
+    docs: Receive a notification when a Form 1099-INT is corrected.
+    display-name: TEN99_INT_CORRECTED
+  TEN99_INT_CREATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099IntCreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_INT_CREATED">
+    docs: Receive a notification when a Form 1099-INT is created
+    display-name: TEN99_INT_CREATED
+  TEN99_INT_DELETED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099IntDeletedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_INT_DELETED">
+    docs: Receive a notification when a Form 1099-INT is deleted
+    display-name: TEN99_INT_DELETED
+  TEN99_INT_FILED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099IntFiledWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_INT_FILED">
+    docs: Receive a notification when a Form 1099-INT is filed
+    display-name: TEN99_INT_FILED
+  TEN99_INT_REJECTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099IntRejectedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_INT_REJECTED">
+    docs: Receive a notification when a Form 1099-INT is rejected
+    display-name: TEN99_INT_REJECTED
+  TEN99_INT_VOIDED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099IntVoidedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_INT_VOIDED">
+    docs: Receive a notification when a Form 1099-INT is voided
+    display-name: TEN99_INT_VOIDED
+  TEN99_K_ACCEPTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099KAcceptedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_K_ACCEPTED">
+    docs: Receive a notification when a Form 1099-K status changes to `ACCEPTED`
+    display-name: TEN99_K_ACCEPTED
+  TEN99_K_CORRECTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099KCorrectedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_K_CORRECTED">
+    docs: Receive a notification when a Form 1099-K is corrected.
+    display-name: TEN99_K_CORRECTED
+  TEN99_K_CREATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099KCreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_K_CREATED">
+    docs: Receive a notification when a Form 1099-K is created
+    display-name: TEN99_K_CREATED
+  TEN99_K_DELETED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099KDeletedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_K_DELETED">
+    docs: Receive a notification when a Form 1099-K is deleted
+    display-name: TEN99_K_DELETED
+  TEN99_K_FILED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099KFiledWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_K_FILED">
+    docs: Receive a notification when a Form 1099-K is filed
+    display-name: TEN99_K_FILED
+  TEN99_K_REJECTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099KRejectedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_K_REJECTED">
+    docs: Receive a notification when a Form 1099-K is rejected
+    display-name: TEN99_K_REJECTED
+  TEN99_K_VOIDED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099KVoidedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_K_VOIDED">
+    docs: Receive a notification when a Form 1099-K is voided
+    display-name: TEN99_K_VOIDED
+  TEN99_NEC_ACCEPTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099NecAcceptedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_NEC_ACCEPTED">
+    docs: Receive a notification when a Form 1099-NEC status changes to `ACCEPTED`
+    display-name: TEN99_NEC_ACCEPTED
+  TEN99_NEC_CORRECTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099NecCorrectedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_NEC_CORRECTED">
+    docs: Receive a notification when a Form 1099-NEC is corrected.
+    display-name: TEN99_NEC_CORRECTED
+  TEN99_NEC_CREATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099NecCreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_NEC_CREATED">
+    docs: Receive a notification when a Form 1099-NEC is created
+    display-name: TEN99_NEC_CREATED
+  TEN99_NEC_DELETED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099NecDeletedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_NEC_DELETED">
+    docs: Receive a notification when a Form 1099-NEC is deleted
+    display-name: TEN99_NEC_DELETED
+  TEN99_NEC_FILED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099NecFiledWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_NEC_FILED">
+    docs: Receive a notification when a Form 1099-NEC is filed
+    display-name: TEN99_NEC_FILED
+  TEN99_NEC_REJECTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099NecRejectedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_NEC_REJECTED">
+    docs: Receive a notification when a Form 1099-NEC is rejected
+    display-name: TEN99_NEC_REJECTED
+  TEN99_NEC_VOIDED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099NecVoidedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_NEC_VOIDED">
+    docs: Receive a notification when a Form 1099-NEC is voided
+    display-name: TEN99_NEC_VOIDED
+  TEN99_MISC_ACCEPTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099MiscAcceptedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_MISC_ACCEPTED">
+    docs: Receive a notification when a Form 1099-MISC status changes to `ACCEPTED`
+    display-name: TEN99_MISC_ACCEPTED
+  TEN99_MISC_CORRECTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099MiscCorrectedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_MISC_CORRECTED">
+    docs: Receive a notification when a Form 1099-MISC is corrected.
+    display-name: TEN99_MISC_CORRECTED
+  TEN99_MISC_CREATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099MiscCreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_MISC_CREATED">
+    docs: Receive a notification when a Form 1099-MISC is created
+    display-name: TEN99_MISC_CREATED
+  TEN99_MISC_DELETED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099MiscDeletedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_MISC_DELETED">
+    docs: Receive a notification when a Form 1099-MISC is deleted
+    display-name: TEN99_MISC_DELETED
+  TEN99_MISC_FILED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099MiscFiledWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_MISC_FILED">
+    docs: Receive a notification when a Form 1099-MISC is filed
+    display-name: TEN99_MISC_FILED
+  TEN99_MISC_REJECTED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099MiscRejectedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_MISC_REJECTED">
+    docs: Receive a notification when a Form 1099-MISC is rejected
+    display-name: TEN99_MISC_REJECTED
+  TEN99_MISC_VOIDED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: Form1099MiscVoidedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"TEN99_MISC_VOIDED">
+    docs: Receive a notification when a Form 1099-MISC is voided
+    display-name: TEN99_MISC_VOIDED
+  W_8BEN_CREATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: FormW8BenCreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"W_8BEN_CREATED">
+    docs: Receive a notification when a Form W-8BEN is created
+    display-name: W_8BEN_CREATED
+  W_8BEN_E_CREATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: FormW8BenECreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"W_8BEN_E_CREATED">
+    docs: Receive a notification when a Form W-8BEN-E is created
+    display-name: W_8BEN_E_CREATED
+  W_9_CREATED:
+    method: POST
+    headers:
+      Abound-Signature: AboundSignatureHeader
+    payload:
+      name: FormW9CreatedWebhookPayload
+      extends: WebhookPayloadBaseSchema
+      properties:
+        event:
+          type: literal<"W_9_CREATED">
+    docs: Receive a notification when a Form W-9 is created
+    display-name: W_9_CREATED
 types:
   AboundSignatureHeader:
-    docs: An HMAC signature of the payload
     type: string
+    docs: An HMAC signature of the payload
   WebhookPayloadBaseSchema:
     properties:
       id:
@@ -21,538 +556,3 @@ types:
       resourceUrl:
         type: string
         docs: The URL of the resource that triggered the webhook
-webhooks:
-  USER_CREATED:
-    docs: Receive a notification when a User is created
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: UserCreatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"USER_CREATED">
-    display-name: USER_CREATED
-  USER_UPDATED:
-    docs: Receive a notification when a User is updated
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: UserUpdatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"USER_UPDATED">
-    display-name: USER_UPDATED
-  TIN_VERIFICATION_CREATED:
-    docs: Receive a notification when a TIN Verification is created
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: TINVerificationCreatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TIN_VERIFICATION_CREATED">
-    display-name: TIN_VERIFICATION_CREATED
-  TIN_VERIFICATION_MATCH:
-    docs: Receive a notification when a TIN Verification status changes to `MATCH`
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: TINVerificationMatchWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TIN_VERIFICATION_MATCH">
-    display-name: TIN_VERIFICATION_MATCH
-  TIN_VERIFICATION_MISMATCH:
-    docs: >-
-      Receive a notification when a TIN Verification status changes to
-      `MISMATCH`
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: TINVerificationMismatchWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TIN_VERIFICATION_MISMATCH">
-    display-name: TIN_VERIFICATION_MISMATCH
-  TIN_VERIFICATION_PENDING:
-    docs: Receive a notification when a TIN Verification status changes to `PENDING`
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: TINVerificationPendingWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TIN_VERIFICATION_PENDING">
-    display-name: TIN_VERIFICATION_PENDING
-  MAILING_CREATED:
-    docs: Receive a notification when a Mailing is created
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: MailingCreatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"MAILING_CREATED">
-    display-name: MAILING_CREATED
-  MAILING_DELETED:
-    docs: Receive a notification when a Mailing is deleted
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: MailingDeletedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"MAILING_DELETED">
-    display-name: MAILING_DELETED
-  MAILING_DELIVERED:
-    docs: Receive a notification when a Mailing status changes to `DELIVERED`
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: MailingDeliveredWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"MAILING_DELIVERED">
-    display-name: MAILING_DELIVERED
-  MAILING_IN_TRANSIT:
-    docs: Receive a notification when a Mailing status changes to `IN_TRANSIT`
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: MailingInTransitWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"MAILING_IN_TRANSIT">
-    display-name: MAILING_IN_TRANSIT
-  MAILING_PROCESSING_FOR_DELIVERY:
-    docs: >-
-      Receive a notification when a Mailing status changes to
-      `PROCESSING_FOR_DELIVERY`
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: MailingProcessingForDeliveryWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"MAILING_PROCESSING_FOR_DELIVERY">
-    display-name: MAILING_PROCESSING_FOR_DELIVERY
-  MAILING_RETURNED_TO_SENDER:
-    docs: >-
-      Receive a notification when a Mailing status changes to
-      `RETURNED_TO_SENDER`
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: MailingReturnedToSenderWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"MAILING_RETURNED_TO_SENDER">
-    display-name: MAILING_RETURNED_TO_SENDER
-  MAILING_UPDATED:
-    docs: Receive a notification when a Mailing is updated
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: MailingUpdatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"MAILING_UPDATED">
-    display-name: MAILING_UPDATED
-  TEN99_INT_ACCEPTED:
-    docs: Receive a notification when a Form 1099-INT status changes to `ACCEPTED`
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099IntAcceptedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_INT_ACCEPTED">
-    display-name: TEN99_INT_ACCEPTED
-  TEN99_INT_CORRECTED:
-    docs: Receive a notification when a Form 1099-INT is corrected.
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099IntCorrectedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_INT_CORRECTED">
-    display-name: TEN99_INT_CORRECTED
-  TEN99_INT_CREATED:
-    docs: Receive a notification when a Form 1099-INT is created
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099IntCreatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_INT_CREATED">
-    display-name: TEN99_INT_CREATED
-  TEN99_INT_DELETED:
-    docs: Receive a notification when a Form 1099-INT is deleted
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099IntDeletedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_INT_DELETED">
-    display-name: TEN99_INT_DELETED
-  TEN99_INT_FILED:
-    docs: Receive a notification when a Form 1099-INT is filed
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099IntFiledWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_INT_FILED">
-    display-name: TEN99_INT_FILED
-  TEN99_INT_REJECTED:
-    docs: Receive a notification when a Form 1099-INT is rejected
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099IntRejectedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_INT_REJECTED">
-    display-name: TEN99_INT_REJECTED
-  TEN99_INT_VOIDED:
-    docs: Receive a notification when a Form 1099-INT is voided
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099IntVoidedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_INT_VOIDED">
-    display-name: TEN99_INT_VOIDED
-  TEN99_K_ACCEPTED:
-    docs: Receive a notification when a Form 1099-K status changes to `ACCEPTED`
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099KAcceptedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_K_ACCEPTED">
-    display-name: TEN99_K_ACCEPTED
-  TEN99_K_CORRECTED:
-    docs: Receive a notification when a Form 1099-K is corrected.
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099KCorrectedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_K_CORRECTED">
-    display-name: TEN99_K_CORRECTED
-  TEN99_K_CREATED:
-    docs: Receive a notification when a Form 1099-K is created
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099KCreatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_K_CREATED">
-    display-name: TEN99_K_CREATED
-  TEN99_K_DELETED:
-    docs: Receive a notification when a Form 1099-K is deleted
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099KDeletedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_K_DELETED">
-    display-name: TEN99_K_DELETED
-  TEN99_K_FILED:
-    docs: Receive a notification when a Form 1099-K is filed
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099KFiledWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_K_FILED">
-    display-name: TEN99_K_FILED
-  TEN99_K_REJECTED:
-    docs: Receive a notification when a Form 1099-K is rejected
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099KRejectedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_K_REJECTED">
-    display-name: TEN99_K_REJECTED
-  TEN99_K_VOIDED:
-    docs: Receive a notification when a Form 1099-K is voided
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099KVoidedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_K_VOIDED">
-    display-name: TEN99_K_VOIDED
-  TEN99_NEC_ACCEPTED:
-    docs: Receive a notification when a Form 1099-NEC status changes to `ACCEPTED`
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099NecAcceptedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_NEC_ACCEPTED">
-    display-name: TEN99_NEC_ACCEPTED
-  TEN99_NEC_CORRECTED:
-    docs: Receive a notification when a Form 1099-NEC is corrected.
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099NecCorrectedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_NEC_CORRECTED">
-    display-name: TEN99_NEC_CORRECTED
-  TEN99_NEC_CREATED:
-    docs: Receive a notification when a Form 1099-NEC is created
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099NecCreatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_NEC_CREATED">
-    display-name: TEN99_NEC_CREATED
-  TEN99_NEC_DELETED:
-    docs: Receive a notification when a Form 1099-NEC is deleted
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099NecDeletedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_NEC_DELETED">
-    display-name: TEN99_NEC_DELETED
-  TEN99_NEC_FILED:
-    docs: Receive a notification when a Form 1099-NEC is filed
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099NecFiledWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_NEC_FILED">
-    display-name: TEN99_NEC_FILED
-  TEN99_NEC_REJECTED:
-    docs: Receive a notification when a Form 1099-NEC is rejected
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099NecRejectedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_NEC_REJECTED">
-    display-name: TEN99_NEC_REJECTED
-  TEN99_NEC_VOIDED:
-    docs: Receive a notification when a Form 1099-NEC is voided
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099NecVoidedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_NEC_VOIDED">
-    display-name: TEN99_NEC_VOIDED
-  TEN99_MISC_ACCEPTED:
-    docs: Receive a notification when a Form 1099-MISC status changes to `ACCEPTED`
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099MiscAcceptedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_MISC_ACCEPTED">
-    display-name: TEN99_MISC_ACCEPTED
-  TEN99_MISC_CORRECTED:
-    docs: Receive a notification when a Form 1099-MISC is corrected.
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099MiscCorrectedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_MISC_CORRECTED">
-    display-name: TEN99_MISC_CORRECTED
-  TEN99_MISC_CREATED:
-    docs: Receive a notification when a Form 1099-MISC is created
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099MiscCreatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_MISC_CREATED">
-    display-name: TEN99_MISC_CREATED
-  TEN99_MISC_DELETED:
-    docs: Receive a notification when a Form 1099-MISC is deleted
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099MiscDeletedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_MISC_DELETED">
-    display-name: TEN99_MISC_DELETED
-  TEN99_MISC_FILED:
-    docs: Receive a notification when a Form 1099-MISC is filed
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099MiscFiledWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_MISC_FILED">
-    display-name: TEN99_MISC_FILED
-  TEN99_MISC_REJECTED:
-    docs: Receive a notification when a Form 1099-MISC is rejected
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099MiscRejectedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_MISC_REJECTED">
-    display-name: TEN99_MISC_REJECTED
-  TEN99_MISC_VOIDED:
-    docs: Receive a notification when a Form 1099-MISC is voided
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: Form1099MiscVoidedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"TEN99_MISC_VOIDED">
-    display-name: TEN99_MISC_VOIDED
-  W_8BEN_CREATED:
-    docs: Receive a notification when a Form W-8BEN is created
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: FormW8BenCreatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"W_8BEN_CREATED">
-    display-name: W_8BEN_CREATED
-  W_8BEN_E_CREATED:
-    docs: Receive a notification when a Form W-8BEN-E is created
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: FormW8BenECreatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"W_8BEN_E_CREATED">
-    display-name: W_8BEN_E_CREATED
-  W_9_CREATED:
-    docs: Receive a notification when a Form W-9 is created
-    method: POST
-    headers:
-      Abound-Signature: AboundSignatureHeader
-    payload:
-      name: FormW9CreatedWebhookPayload
-      extends: WebhookPayloadBaseSchema
-      properties:
-        event:
-          type: literal<"W_9_CREATED">
-    display-name: W_9_CREATED

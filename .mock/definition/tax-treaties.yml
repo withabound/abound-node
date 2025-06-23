@@ -3,15 +3,36 @@ imports:
   headers: types/headers.yml
   taxTreaties: types/tax-treaties.yml
   common: types/common.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /tax-treaties
+      method: GET
+      auth: true
+      request:
+        query-parameters:
+          country: optional<common.TaxTreatyCountry>
+        name: TaxTreatiesListRequest
+      response:
+        type: list<TaxTreatySchema>
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - response:
+            body:
+              - $TaxTreatySchema.ResponseExample
+          name: default
+      display-name: List all tax treaties
+      docs: Returns a list of tax treaties.
+  display-name: Tax Treaties
 types:
   TaxTreatySchema:
-    examples:
-      - name: ResponseExample
-        value:
-          taxTreatyCode: GB_17_INDEPENDENT_PERSONAL_SERVICES
-          residentCountry: GB
-          rateOfWithholding: 0
-          description: Independent personal services performed in the US
     properties:
       taxTreatyCode:
         type: taxTreaties.TaxTreatyAboundCodeEnum
@@ -29,31 +50,10 @@ types:
       description:
         type: string
         docs: The income description associated with the tax treaty.
-service:
-  auth: false
-  base-path: ''
-  endpoints:
-    list:
-      docs: Returns a list of tax treaties.
-      method: GET
-      path: /tax-treaties
-      auth: true
-      request:
-        name: TaxTreatiesListRequest
-        query-parameters:
-          country: optional<common.TaxTreatyCountry>
-      response:
-        docs: OK
-        type: list<TaxTreatySchema>
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          response:
-            body:
-              - $TaxTreatySchema.ResponseExample
-      display-name: List all tax treaties
-  display-name: Tax Treaties
+    examples:
+      - value:
+          taxTreatyCode: GB_17_INDEPENDENT_PERSONAL_SERVICES
+          residentCountry: GB
+          rateOfWithholding: 0
+          description: Independent personal services performed in the US
+        name: ResponseExample

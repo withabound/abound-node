@@ -4,23 +4,275 @@ imports:
   common: types/common.yml
   form1099s: types/form-1099s.yml
   mailings: mailings.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /documents/1099-k
+      method: GET
+      auth: true
+      request:
+        query-parameters:
+          page: optional<common.Page>
+          filingYear: optional<common.FilingYear>
+          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
+          payerTinFingerprint: optional<common.PayerTinFingerprint>
+          status: optional<form1099s.Form1099StatusEnum>
+          userId: optional<common.UserId>
+        name: Form1099KListRequest
+      response:
+        type: list<Form1099KSchema>
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - response:
+            body:
+              - $Form1099KSchema.CreateResponseExample
+          name: default
+      display-name: List all 1099-K documents
+      docs: Returns a list of 1099-K documents.
+    create:
+      path: /documents/1099-k
+      method: POST
+      auth: true
+      request:
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: Form1099KRequestSchema
+        name: Form1099KRequest
+      response:
+        type: Form1099KSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - request: $Form1099KRequestSchema.RequestCreateExample
+          response:
+            body: $Form1099KSchema.CreateResponseExample
+          name: default
+      display-name: Create a 1099-K
+      docs: >-
+        Creates a 1099-K document and subsequently kicks off a TIN Verification,
+        if the name and TIN combo has not been used before.
+    mail:
+      path: /documents/1099-k/{documentId}/mail
+      method: POST
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      request:
+        body: mailings.MailingRequestSchema
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        name: Form1099KMailingRequest
+      response:
+        type: mailings.MailingSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          request:
+            to:
+              address: 1401 N Shoreline Blvd
+              address2: Suite 1
+              city: Mountain View
+              state: CA
+              postalCode: '94043'
+              country: US
+              name: Ada Lovelace
+            from:
+              address: 256 Byron Street
+              address2: Suite 32
+              city: Palo Alto
+              state: CA
+              postalCode: '94306'
+              country: US
+              name: Hooli
+          response:
+            body:
+              id: mailingId_sampleFV9b73IvAD
+              createdAt: '2024-01-01T00:00:00.000Z'
+              status: CREATED
+              url: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
+              mailedFromId: documentId_sampletTtqNfulW8
+              to:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Ada Lovelace
+              from:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Hooli
+          name: default
+      display-name: Mail a 1099-K
+      docs: Mails a 1099-K document.
+    file:
+      path: /documents/1099-k/{documentId}/file
+      method: POST
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      request:
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        name: Form1099KFileRequest
+      response:
+        type: Form1099KSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          response:
+            body: $Form1099KSchema.FileResponseExample
+          name: default
+      display-name: File a 1099-K
+      docs: Files a 1099-K document.
+    correct:
+      path: /documents/1099-k/{documentId}/correct
+      method: POST
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      request:
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: Form1099KCorrectRequestSchema
+        name: Form1099KCorrectRequest
+      response:
+        type: Form1099KSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          request: $Form1099KCorrectRequestSchema.CorrectRequestExample
+          response:
+            body: $Form1099KSchema.CorrectResponseExample
+          name: default
+      display-name: Correct a 1099-K
+      docs: >-
+        Files a new corrected 1099-K and relates it to the original document. A
+        1099-K can be corrected only after it has reached the `FILED` status.
+        Automatically handles both one-transaction and two-transaction
+        corrections.
+    void:
+      path: /documents/1099-k/{documentId}/void
+      method: POST
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      request:
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        name: Form1099KVoidRequest
+      response:
+        type: Form1099KSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          response:
+            body: $Form1099KSchema.VoidResponseExample
+          name: default
+      display-name: Void a 1099-K
+      docs: >-
+        Files a new voided 1099-K and relates it to the original document. A
+        1099-K can be voided only after it has reached the `FILED` status.
+    retrieve:
+      path: /documents/1099-k/{documentId}
+      method: GET
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      response:
+        type: Form1099KSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          response:
+            body: $Form1099KSchema.CreateResponseExample
+          name: default
+      display-name: Retrieve a 1099-K
+      docs: Retrieves the details of an existing 1099-K document.
+    delete:
+      path: /documents/1099-k/{documentId}
+      method: DELETE
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      response:
+        type: common.OkSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampletTtqNfulW8
+          response:
+            body: {}
+          name: default
+      display-name: Delete a 1099-K
+      docs: >-
+        Deletes a 1099-K document. Once an action (`/file`, `/correct`, `/void`)
+        has been executed on a 1099-K, it cannot be deleted.
+  display-name: 1099-K
 types:
   Form1099KPayerClassificationEnum:
-    docs: >-
-      The type of payer. Payment settlement entity (PSE) or Electronic Payment
-      Facilitator (EPF)/Other third party.
     enum:
       - PSE
       - EPF_OTHER
+    docs: >-
+      The type of payer. Payment settlement entity (PSE) or Electronic Payment
+      Facilitator (EPF)/Other third party.
   Form1099KTransactionsReportedClassificationSchema:
-    docs: The type of transactions reported.
     enum:
       - PAYMENT_CARD
       - THIRD_PARTY_NETWORK
+    docs: The type of transactions reported.
   Form1099KGrossAmountsByMonthSchema:
-    docs: >-
-      An object that contains the gross amount of transactions for each month.
-      At least one month must have a value above zero. Values must be in cents.
     properties:
       january:
         type: optional<integer>
@@ -106,8 +358,10 @@ types:
         docs: >-
           The gross amount of payment card/third party network transactions made
           to you in December. Value must be in cents.
+    docs: >-
+      An object that contains the gross amount of transactions for each month.
+      At least one month must have a value above zero. Values must be in cents.
   Form1099KFormFieldsRequestSchema:
-    docs: The 1099-K form fields.
     properties:
       payerClassification:
         type: Form1099KPayerClassificationEnum
@@ -150,9 +404,9 @@ types:
       merchantCategoryCode:
         type: optional<string>
         validation:
+          pattern: ^\d{4}$
           minLength: 4
           maxLength: 4
-          pattern: ^\d{4}$
         docs: >-
           Payment brands use merchant category codes (MCCs) to classify
           merchants and businesses by the type of goods or services provided. It
@@ -184,10 +438,13 @@ types:
           currently only supports one state tax information object in this
           array. Abound does not currently support state-level tax withholding
           reporting on the 1099-K, please contact us for more information.
+    docs: The 1099-K form fields.
   Form1099KRequestSchema:
+    extends: form1099s.Form1099BaseRequestSchema
+    properties:
+      formFields: Form1099KFormFieldsRequestSchema
     examples:
-      - name: RequestCreateExample
-        value:
+      - value:
           filingYear: 2024
           payer:
             name: Hooli
@@ -235,13 +492,13 @@ types:
             stateTaxInfo:
               - filingState: CA
                 stateTaxWithheld: 0
-    extends: form1099s.Form1099BaseRequestSchema
+        name: RequestCreateExample
+  Form1099KCorrectRequestSchema:
+    extends: form1099s.Form1099BaseCorrectRequestSchema
     properties:
       formFields: Form1099KFormFieldsRequestSchema
-  Form1099KCorrectRequestSchema:
     examples:
-      - name: CorrectRequestExample
-        value:
+      - value:
           payee:
             name: Ada Lovelace
             tin: '000000000'
@@ -277,17 +534,17 @@ types:
               september: 2332323
             stateTaxInfo:
               - filingState: CA
-    extends: form1099s.Form1099BaseCorrectRequestSchema
-    properties:
-      formFields: Form1099KFormFieldsRequestSchema
+        name: CorrectRequestExample
   Form1099KFormFieldsSchema:
     extends:
       - form1099s.Form1099FormFieldsBaseSchema
       - Form1099KFormFieldsRequestSchema
   Form1099KSchema:
+    extends: form1099s.Form1099BaseSchema
+    properties:
+      formFields: Form1099KFormFieldsSchema
     examples:
-      - name: CreateResponseExample
-        value:
+      - value:
           id: documentId_sampletTtqNfulW8
           formFields:
             isCorrected: false
@@ -352,8 +609,8 @@ types:
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-C.pdf
           payeeUrl: >-
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-B.pdf
-      - name: FileResponseExample
-        value:
+        name: CreateResponseExample
+      - value:
           id: documentId_sampletTtqNfulW8
           formFields:
             isCorrected: false
@@ -418,8 +675,8 @@ types:
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-C.pdf
           payeeUrl: >-
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-COPY-B.pdf
-      - name: CorrectResponseExample
-        value:
+        name: FileResponseExample
+      - value:
           id: documentId_samplenOHhUUVnh6
           correctedFromId: documentId_sampletTtqNfulW8
           formFields:
@@ -485,8 +742,8 @@ types:
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-CORRECTED-COPY-C.pdf
           payeeUrl: >-
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-CORRECTED-COPY-B.pdf
-      - name: VoidResponseExample
-        value:
+        name: CorrectResponseExample
+      - value:
           id: documentId_sampleb6HQLsVuM9
           voidedFromId: documentId_sampletTtqNfulW8
           formFields:
@@ -552,261 +809,4 @@ types:
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-VOID-COPY-C.pdf
           payeeUrl: >-
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-VOID-COPY-B.pdf
-    extends: form1099s.Form1099BaseSchema
-    properties:
-      formFields: Form1099KFormFieldsSchema
-service:
-  auth: false
-  base-path: ''
-  endpoints:
-    list:
-      docs: Returns a list of 1099-K documents.
-      method: GET
-      path: /documents/1099-k
-      auth: true
-      request:
-        name: Form1099KListRequest
-        query-parameters:
-          page: optional<common.Page>
-          filingYear: optional<common.FilingYear>
-          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
-          payerTinFingerprint: optional<common.PayerTinFingerprint>
-          status: optional<form1099s.Form1099StatusEnum>
-          userId: optional<common.UserId>
-      response:
-        docs: OK
-        type: list<Form1099KSchema>
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          response:
-            body:
-              - $Form1099KSchema.CreateResponseExample
-      display-name: List all 1099-K documents
-    create:
-      docs: >-
-        Creates a 1099-K document and subsequently kicks off a TIN Verification,
-        if the name and TIN combo has not been used before.
-      method: POST
-      path: /documents/1099-k
-      auth: true
-      request:
-        name: Form1099KRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-        body: Form1099KRequestSchema
-      response:
-        docs: OK
-        type: Form1099KSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          request: $Form1099KRequestSchema.RequestCreateExample
-          response:
-            body: $Form1099KSchema.CreateResponseExample
-      display-name: Create a 1099-K
-    mail:
-      docs: Mails a 1099-K document.
-      method: POST
-      path: /documents/1099-k/{documentId}/mail
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      request:
-        name: Form1099KMailingRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-        body: mailings.MailingRequestSchema
-      response:
-        docs: OK
-        type: mailings.MailingSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampletTtqNfulW8
-          request:
-            to:
-              address: 1401 N Shoreline Blvd
-              address2: Suite 1
-              city: Mountain View
-              state: CA
-              postalCode: '94043'
-              country: US
-              name: Ada Lovelace
-            from:
-              address: 256 Byron Street
-              address2: Suite 32
-              city: Palo Alto
-              state: CA
-              postalCode: '94306'
-              country: US
-              name: Hooli
-          response:
-            body:
-              id: mailingId_sampleFV9b73IvAD
-              createdAt: '2024-01-01T00:00:00.000Z'
-              status: CREATED
-              url: >-
-                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
-              mailedFromId: documentId_sampletTtqNfulW8
-              to:
-                address: 1401 N Shoreline Blvd
-                address2: Suite 1
-                city: Mountain View
-                state: CA
-                postalCode: '94043'
-                country: US
-                name: Ada Lovelace
-              from:
-                address: 256 Byron Street
-                address2: Suite 32
-                city: Palo Alto
-                state: CA
-                postalCode: '94306'
-                country: US
-                name: Hooli
-      display-name: Mail a 1099-K
-    file:
-      docs: Files a 1099-K document.
-      method: POST
-      path: /documents/1099-k/{documentId}/file
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      request:
-        name: Form1099KFileRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-      response:
-        type: Form1099KSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampletTtqNfulW8
-          response:
-            body: $Form1099KSchema.FileResponseExample
-      display-name: File a 1099-K
-    correct:
-      docs: >-
-        Files a new corrected 1099-K and relates it to the original document. A
-        1099-K can be corrected only after it has reached the `FILED` status.
-        Automatically handles both one-transaction and two-transaction
-        corrections.
-      method: POST
-      path: /documents/1099-k/{documentId}/correct
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      request:
-        name: Form1099KCorrectRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-        body: Form1099KCorrectRequestSchema
-      response:
-        type: Form1099KSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampletTtqNfulW8
-          request: $Form1099KCorrectRequestSchema.CorrectRequestExample
-          response:
-            body: $Form1099KSchema.CorrectResponseExample
-      display-name: Correct a 1099-K
-    void:
-      docs: >-
-        Files a new voided 1099-K and relates it to the original document. A
-        1099-K can be voided only after it has reached the `FILED` status.
-      method: POST
-      path: /documents/1099-k/{documentId}/void
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      request:
-        name: Form1099KVoidRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-      response:
-        docs: OK
-        type: Form1099KSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampletTtqNfulW8
-          response:
-            body: $Form1099KSchema.VoidResponseExample
-      display-name: Void a 1099-K
-    retrieve:
-      docs: Retrieves the details of an existing 1099-K document.
-      method: GET
-      path: /documents/1099-k/{documentId}
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      response:
-        docs: OK
-        type: Form1099KSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampletTtqNfulW8
-          response:
-            body: $Form1099KSchema.CreateResponseExample
-      display-name: Retrieve a 1099-K
-    delete:
-      docs: >-
-        Deletes a 1099-K document. Once an action (`/file`, `/correct`, `/void`)
-        has been executed on a 1099-K, it cannot be deleted.
-      method: DELETE
-      path: /documents/1099-k/{documentId}
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      response:
-        docs: OK
-        type: common.OkSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampletTtqNfulW8
-          response:
-            body: {}
-      display-name: Delete a 1099-K
-  display-name: 1099-K
+        name: VoidResponseExample

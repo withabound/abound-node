@@ -1,6 +1,5 @@
 types:
   ElectronicSignatureOfPayeeSchema:
-    docs: The electronic signature of the payee.
     properties:
       signature:
         type: string
@@ -16,3 +15,4 @@ types:
         validation:
           format: ipv4
         docs: The IP address of the payee when signing this document.
+    docs: The electronic signature of the payee.

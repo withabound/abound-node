@@ -4,12 +4,12 @@ imports:
   payee: payee.yml
 types:
   Form1099AccountNumber:
-    docs: >-
-      The account number or other unique number assigned to distinguish an
-      account. Abound will auto-generate this for you if left omitted.
     type: string
     validation:
       maxLength: 20
+    docs: >-
+      The account number or other unique number assigned to distinguish an
+      account. Abound will auto-generate this for you if left omitted.
   Form1099StatusEnum:
     enum:
       - CREATED
@@ -17,9 +17,6 @@ types:
       - ACCEPTED
       - REJECTED
   Form1099FilingStateEnum:
-    docs: >-
-      The filing state code. The abbreviation of the state (`CA` for
-      California). If a state filing is not desired, use `N/A`.
     enum:
       - AK
       - AL
@@ -48,8 +45,8 @@ types:
       - MO
       - MS
       - MT
-      - name: NOT_APPLICABLE
-        value: N/A
+      - value: N/A
+        name: NOT_APPLICABLE
       - NC
       - ND
       - NE
@@ -74,17 +71,20 @@ types:
       - WI
       - WV
       - WY
+    docs: >-
+      The filing state code. The abbreviation of the state (`CA` for
+      California). If a state filing is not desired, use `N/A`.
   Form1099StateTaxInfoSchema:
     properties:
       filingState: Form1099FilingStateEnum
       payeeStateId:
         type: optional<string>
-        availability: deprecated
         docs: The payee's state identification number.
+        availability: deprecated
       payerStateId:
         type: optional<string>
-        availability: deprecated
         docs: The payer's state identification number.
+        availability: deprecated
       stateTaxWithheld:
         type: optional<integer>
         validation:

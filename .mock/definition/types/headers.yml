@@ -1,4 +1,4 @@
 types:
   IdempotencyKey:
-    docs: The unique key used to identify a request that has already been processed.
     type: optional<string>
+    docs: The unique key used to identify a request that has already been processed.

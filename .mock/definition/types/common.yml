@@ -1,72 +1,72 @@
 types:
   OkSchema: map<string, unknown>
   Page:
+    type: integer
     docs: >-
       The specific page of results you're requesting. Responses are limited to a
       maximum of 100 records.
-    type: integer
   Email:
-    docs: Filters the list of users based on the `email` field.
     type: string
+    docs: Filters the list of users based on the `email` field.
   ForeignId:
+    type: string
     docs: >-
       The customer-specific unique identifier associated to an Abound record.
       Allows developers to forego making their own tables every time they
       integrate and/or add an application.
-    type: string
   TinFingerprintQueryParam:
+    type: string
     docs: Filters the list of TIN Verifications based on the `tinFingerprint` field.
-    type: string
   TinFingerprint:
+    type: string
     docs: Your unique token that points to a TIN.
-    type: string
   PayeeTinFingerprint:
-    docs: Filters the list of documents based on the `payee.tinFingerprint` field.
     type: string
+    docs: Filters the list of documents based on the `payee.tinFingerprint` field.
   PayeeForeignTinFingerprint:
+    type: string
     docs: >-
       Filters the list of documents based on the `payee.foreignTinFingerprint`
       field.
-    type: string
   PayerTinFingerprint:
+    type: string
     docs: Filters the list of documents based on the `payer.tinFingerprint` field.
-    type: string
   TinVerificationStatusQueryParam:
+    type: string
     docs: Filters the list of TIN Verifications based on the `status` field.
-    type: string
   DocumentId:
+    type: string
     docs: The unique identifier for an existing document.
-    type: string
   MailingId:
+    type: string
     docs: The unique identifier for an existing mailing.
-    type: string
   UserId:
-    docs: The unique identifier for a single end-user of your application.
     type: string
+    docs: The unique identifier for a single end-user of your application.
   FilingYear:
-    docs: The filing year associated with this document.
     type: integer
+    docs: The filing year associated with this document.
   TinTypeEnum:
-    docs: >-
-      The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While
-      `BUSINESS` refers to EINs.
     enum:
       - INDIVIDUAL
       - BUSINESS
+    docs: >-
+      The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While
+      `BUSINESS` refers to EINs.
   TinVerificationStatusEnum:
-    docs: The status of the TIN Verification.
     enum:
       - MATCH
       - MISMATCH
       - PENDING
+    docs: The status of the TIN Verification.
   TinVerificationId:
-    docs: The unique identifier for the TIN Verification.
     type: string
+    docs: The unique identifier for the TIN Verification.
   TaxTreatyCountry:
+    type: string
     docs: >-
       Filters the list of tax treaties based on the specified foreign `country`,
       adhering to `ISO 3166-2` standards.
-    type: string
   ForeignTinFingerprint:
-    docs: The unique token that points to a foreign TIN.
     type: string
+    docs: The unique token that points to a foreign TIN.

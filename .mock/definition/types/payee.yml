@@ -3,7 +3,6 @@ imports:
   address: address.yml
 types:
   PayeeRequestSchema:
-    docs: The payee of the document.
     extends:
       - address.AddressSchema
     properties:
@@ -24,8 +23,8 @@ types:
           The payee's tax identification number, commonly referred to as a TIN.
           No hyphens. Numerical digits only. Alternatively, you may pass the
           corresponding `tinFingerprint`.
-  PayeeSchema:
     docs: The payee of the document.
+  PayeeSchema:
     extends:
       - PayeeRequestSchema
     properties:
@@ -33,9 +32,10 @@ types:
       tinType: optional<common.TinTypeEnum>
       tinVerificationId: common.TinVerificationId
       tinVerificationStatus: common.TinVerificationStatusEnum
-  PayeeWithOptionalTinTypeRequestSchema:
     docs: The payee of the document.
+  PayeeWithOptionalTinTypeRequestSchema:
     extends:
       - PayeeRequestSchema
     properties:
       tinType: optional<common.TinTypeEnum>
+    docs: The payee of the document.

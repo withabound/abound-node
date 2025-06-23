@@ -2,6 +2,46 @@ imports:
   errors: types/errors.yml
   headers: types/headers.yml
   common: types/common.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /electronic-delivery-consents
+      method: GET
+      auth: true
+      request:
+        query-parameters:
+          page: optional<common.Page>
+          status: optional<EDeliveryConsentStatusEnum>
+          email:
+            type: optional<string>
+            docs: >-
+              Filters the list of Electronic Delivery Consents based on the
+              `email` field.
+          tinFingerprint: optional<common.TinFingerprint>
+          userId: optional<common.UserId>
+        name: eDeliveryConsentListRequest
+      response:
+        type: list<EDeliveryConsentSchema>
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - response:
+            body:
+              - id: eDeliveryConsentId_sample7zmM4xCWxe
+                createdAt: '2024-01-01T00:00:00.000Z'
+                status: ASSENTED
+                email: your-users-email@domain.com
+                tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+          name: default
+      display-name: List all Electronic Delivery Consents
+      docs: Returns a list of Electronic Delivery Consents.
+  display-name: Electronic Delivery Consents
 types:
   EDeliveryConsentStatusEnum:
     enum:
@@ -29,43 +69,3 @@ types:
       tinFingerprint:
         type: common.TinFingerprint
         docs: The TIN fingerprint for this electronic delivery consent.
-service:
-  auth: false
-  base-path: ''
-  endpoints:
-    list:
-      docs: Returns a list of Electronic Delivery Consents.
-      method: GET
-      path: /electronic-delivery-consents
-      auth: true
-      request:
-        name: eDeliveryConsentListRequest
-        query-parameters:
-          page: optional<common.Page>
-          status: optional<EDeliveryConsentStatusEnum>
-          email:
-            type: optional<string>
-            docs: >-
-              Filters the list of Electronic Delivery Consents based on the
-              `email` field.
-          tinFingerprint: optional<common.TinFingerprint>
-          userId: optional<common.UserId>
-      response:
-        docs: OK
-        type: list<EDeliveryConsentSchema>
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          response:
-            body:
-              - id: eDeliveryConsentId_sample7zmM4xCWxe
-                createdAt: '2024-01-01T00:00:00.000Z'
-                status: ASSENTED
-                email: your-users-email@domain.com
-                tinFingerprint: tinFingerprint_samplehy2BWO6JJG
-      display-name: List all Electronic Delivery Consents
-  display-name: Electronic Delivery Consents

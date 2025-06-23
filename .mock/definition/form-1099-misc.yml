@@ -4,9 +4,263 @@ imports:
   common: types/common.yml
   form1099s: types/form-1099s.yml
   mailings: mailings.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /documents/1099-misc
+      method: GET
+      auth: true
+      request:
+        query-parameters:
+          page: optional<common.Page>
+          filingYear: optional<common.FilingYear>
+          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
+          payerTinFingerprint: optional<common.PayerTinFingerprint>
+          status: optional<form1099s.Form1099StatusEnum>
+          userId: optional<common.UserId>
+        name: Form1099MiscListRequest
+      response:
+        type: list<Form1099MiscSchema>
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - response:
+            body:
+              - $Form1099MiscSchema.CreateResponseExample
+          name: default
+      display-name: List all 1099-MISC documents
+      docs: Returns a list of 1099-MISC documents.
+    create:
+      path: /documents/1099-misc
+      method: POST
+      auth: true
+      request:
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: Form1099MiscRequestSchema
+        name: Form1099MiscRequest
+      response:
+        type: Form1099MiscSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - request: $Form1099MiscRequestSchema.RequestCreateExample
+          response:
+            body: $Form1099MiscSchema.CreateResponseExample
+          name: default
+      display-name: Create a 1099-MISC
+      docs: >-
+        Creates a 1099-MISC document and subsequently kicks off a TIN
+        Verification, if the name and TIN combo has not been used before.
+    mail:
+      path: /documents/1099-misc/{documentId}/mail
+      method: POST
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      request:
+        body: mailings.MailingRequestSchema
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        name: Form1099MiscMailingRequest
+      response:
+        type: mailings.MailingSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          request:
+            to:
+              address: 1401 N Shoreline Blvd
+              address2: Suite 1
+              city: Mountain View
+              state: CA
+              postalCode: '94043'
+              country: US
+              name: Ada Lovelace
+            from:
+              address: 256 Byron Street
+              address2: Suite 32
+              city: Palo Alto
+              state: CA
+              postalCode: '94306'
+              country: US
+              name: Hooli
+          response:
+            body:
+              id: mailingId_sampleFV9b73IvAD
+              createdAt: '2024-01-01T00:00:00.000Z'
+              status: CREATED
+              url: >-
+                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
+              mailedFromId: documentId_sampletTtqNfulW8
+              to:
+                address: 1401 N Shoreline Blvd
+                address2: Suite 1
+                city: Mountain View
+                state: CA
+                postalCode: '94043'
+                country: US
+                name: Ada Lovelace
+              from:
+                address: 256 Byron Street
+                address2: Suite 32
+                city: Palo Alto
+                state: CA
+                postalCode: '94306'
+                country: US
+                name: Hooli
+          name: default
+      display-name: Mail a 1099-MISC
+      docs: Mails a 1099-MISC document.
+    file:
+      path: /documents/1099-misc/{documentId}/file
+      method: POST
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      request:
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        name: Form1099MiscFileRequest
+      response:
+        type: Form1099MiscSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          response:
+            body: $Form1099MiscSchema.FileResponseExample
+          name: default
+      display-name: File a 1099-MISC
+      docs: Files a 1099-MISC document.
+    correct:
+      path: /documents/1099-misc/{documentId}/correct
+      method: POST
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      request:
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body: Form1099MiscCorrectRequestSchema
+        name: Form1099MiscCorrectRequest
+      response:
+        type: Form1099MiscSchema
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          request: $Form1099MiscCorrectRequestSchema.CorrectRequestExample
+          response:
+            body: $Form1099MiscSchema.CorrectResponseExample
+          name: default
+      display-name: Correct a 1099-MISC
+      docs: >-
+        Files a new corrected 1099-MISC and relates it to the original document.
+        A 1099-MISC can be corrected only after it has reached the `FILED`
+        status. Automatically handles both one-transaction and two-transaction
+        corrections.
+    void:
+      path: /documents/1099-misc/{documentId}/void
+      method: POST
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      request:
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        name: Form1099MiscVoidRequest
+      response:
+        type: Form1099MiscSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          response:
+            body: $Form1099MiscSchema.VoidResponseExample
+          name: default
+      display-name: Void a 1099-MISC
+      docs: >-
+        Files a new voided 1099-MISC and relates it to the original document. A
+        1099-MISC can be voided only after it has reached the `FILED` status.
+    retrieve:
+      path: /documents/1099-misc/{documentId}
+      method: GET
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      response:
+        type: Form1099MiscSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          response:
+            body: $Form1099MiscSchema.CreateResponseExample
+          name: default
+      display-name: Retrieve a 1099-MISC
+      docs: Retrieves the details of an existing 1099-MISC document.
+    delete:
+      path: /documents/1099-misc/{documentId}
+      method: DELETE
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      response:
+        type: common.OkSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampleGNPOKNmIgF
+          response:
+            body: {}
+          name: default
+      display-name: Delete a 1099-MISC
+      docs: >-
+        Deletes a 1099-MISC document. Once an action (`/file`, `/correct`,
+        `/void`) has been executed on a 1099-MISC, it cannot be deleted.
+  display-name: 1099-MISC
 types:
   Form1099MiscFormFieldsRequestSchema:
-    docs: The 1099-MISC form fields.
     properties:
       hasFatcaFilingRequirement:
         type: optional<boolean>
@@ -126,10 +380,13 @@ types:
           currently only supports one state tax information object in this
           array. Abound does not currently support state-level tax withholding
           reporting on the 1099-MISC, please contact us for more information.
+    docs: The 1099-MISC form fields.
   Form1099MiscRequestSchema:
+    extends: form1099s.Form1099BaseRequestSchema
+    properties:
+      formFields: Form1099MiscFormFieldsRequestSchema
     examples:
-      - name: RequestCreateExample
-        value:
+      - value:
           filingYear: 2024
           payer:
             name: Hooli
@@ -171,13 +428,13 @@ types:
               - filingState: CA
                 stateIncome: 345543
                 stateTaxWithheld: 0
-    extends: form1099s.Form1099BaseRequestSchema
+        name: RequestCreateExample
+  Form1099MiscCorrectRequestSchema:
+    extends: form1099s.Form1099BaseCorrectRequestSchema
     properties:
       formFields: Form1099MiscFormFieldsRequestSchema
-  Form1099MiscCorrectRequestSchema:
     examples:
-      - name: CorrectRequestExample
-        value:
+      - value:
           payee:
             name: Ada Lovelace
             tin: '000000000'
@@ -207,17 +464,17 @@ types:
             stateTaxInfo:
               - filingState: CA
                 stateIncome: 258434
-    extends: form1099s.Form1099BaseCorrectRequestSchema
-    properties:
-      formFields: Form1099MiscFormFieldsRequestSchema
+        name: CorrectRequestExample
   Form1099MiscFormFieldsSchema:
     extends:
       - form1099s.Form1099FormFieldsBaseSchema
       - Form1099MiscFormFieldsRequestSchema
   Form1099MiscSchema:
+    extends: form1099s.Form1099BaseSchema
+    properties:
+      formFields: Form1099MiscFormFieldsSchema
     examples:
-      - name: CreateResponseExample
-        value:
+      - value:
           id: documentId_sampleGNPOKNmIgF
           formFields:
             isCorrected: false
@@ -276,8 +533,8 @@ types:
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-C.pdf
           payeeUrl: >-
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-B.pdf
-      - name: FileResponseExample
-        value:
+        name: CreateResponseExample
+      - value:
           id: documentId_sampleGNPOKNmIgF
           formFields:
             isCorrected: false
@@ -336,8 +593,8 @@ types:
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-C.pdf
           payeeUrl: >-
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-B.pdf
-      - name: CorrectResponseExample
-        value:
+        name: FileResponseExample
+      - value:
           id: documentId_sampleaTA4jltVVx
           correctedFromId: documentId_sampleGNPOKNmIgF
           formFields:
@@ -397,8 +654,8 @@ types:
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-CORRECTED-COPY-C.pdf
           payeeUrl: >-
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-CORRECTED-COPY-B.pdf
-      - name: VoidResponseExample
-        value:
+        name: CorrectResponseExample
+      - value:
           id: documentId_sampleStGnVcbd57
           voidedFromId: documentId_sampleGNPOKNmIgF
           formFields:
@@ -458,261 +715,4 @@ types:
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-VOID-COPY-C.pdf
           payeeUrl: >-
             https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-VOID-COPY-B.pdf
-    extends: form1099s.Form1099BaseSchema
-    properties:
-      formFields: Form1099MiscFormFieldsSchema
-service:
-  auth: false
-  base-path: ''
-  endpoints:
-    list:
-      docs: Returns a list of 1099-MISC documents.
-      method: GET
-      path: /documents/1099-misc
-      auth: true
-      request:
-        name: Form1099MiscListRequest
-        query-parameters:
-          page: optional<common.Page>
-          filingYear: optional<common.FilingYear>
-          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
-          payerTinFingerprint: optional<common.PayerTinFingerprint>
-          status: optional<form1099s.Form1099StatusEnum>
-          userId: optional<common.UserId>
-      response:
-        docs: OK
-        type: list<Form1099MiscSchema>
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          response:
-            body:
-              - $Form1099MiscSchema.CreateResponseExample
-      display-name: List all 1099-MISC documents
-    create:
-      docs: >-
-        Creates a 1099-MISC document and subsequently kicks off a TIN
-        Verification, if the name and TIN combo has not been used before.
-      method: POST
-      path: /documents/1099-misc
-      auth: true
-      request:
-        name: Form1099MiscRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-        body: Form1099MiscRequestSchema
-      response:
-        docs: OK
-        type: Form1099MiscSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          request: $Form1099MiscRequestSchema.RequestCreateExample
-          response:
-            body: $Form1099MiscSchema.CreateResponseExample
-      display-name: Create a 1099-MISC
-    mail:
-      docs: Mails a 1099-MISC document.
-      method: POST
-      path: /documents/1099-misc/{documentId}/mail
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      request:
-        name: Form1099MiscMailingRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-        body: mailings.MailingRequestSchema
-      response:
-        docs: OK
-        type: mailings.MailingSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampleGNPOKNmIgF
-          request:
-            to:
-              address: 1401 N Shoreline Blvd
-              address2: Suite 1
-              city: Mountain View
-              state: CA
-              postalCode: '94043'
-              country: US
-              name: Ada Lovelace
-            from:
-              address: 256 Byron Street
-              address2: Suite 32
-              city: Palo Alto
-              state: CA
-              postalCode: '94306'
-              country: US
-              name: Hooli
-          response:
-            body:
-              id: mailingId_sampleFV9b73IvAD
-              createdAt: '2024-01-01T00:00:00.000Z'
-              status: CREATED
-              url: >-
-                https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
-              mailedFromId: documentId_sampletTtqNfulW8
-              to:
-                address: 1401 N Shoreline Blvd
-                address2: Suite 1
-                city: Mountain View
-                state: CA
-                postalCode: '94043'
-                country: US
-                name: Ada Lovelace
-              from:
-                address: 256 Byron Street
-                address2: Suite 32
-                city: Palo Alto
-                state: CA
-                postalCode: '94306'
-                country: US
-                name: Hooli
-      display-name: Mail a 1099-MISC
-    file:
-      docs: Files a 1099-MISC document.
-      method: POST
-      path: /documents/1099-misc/{documentId}/file
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      request:
-        name: Form1099MiscFileRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-      response:
-        type: Form1099MiscSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampleGNPOKNmIgF
-          response:
-            body: $Form1099MiscSchema.FileResponseExample
-      display-name: File a 1099-MISC
-    correct:
-      docs: >-
-        Files a new corrected 1099-MISC and relates it to the original document.
-        A 1099-MISC can be corrected only after it has reached the `FILED`
-        status. Automatically handles both one-transaction and two-transaction
-        corrections.
-      method: POST
-      path: /documents/1099-misc/{documentId}/correct
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      request:
-        name: Form1099MiscCorrectRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-        body: Form1099MiscCorrectRequestSchema
-      response:
-        type: Form1099MiscSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampleGNPOKNmIgF
-          request: $Form1099MiscCorrectRequestSchema.CorrectRequestExample
-          response:
-            body: $Form1099MiscSchema.CorrectResponseExample
-      display-name: Correct a 1099-MISC
-    void:
-      docs: >-
-        Files a new voided 1099-MISC and relates it to the original document. A
-        1099-MISC can be voided only after it has reached the `FILED` status.
-      method: POST
-      path: /documents/1099-misc/{documentId}/void
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      request:
-        name: Form1099MiscVoidRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-      response:
-        docs: OK
-        type: Form1099MiscSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampleGNPOKNmIgF
-          response:
-            body: $Form1099MiscSchema.VoidResponseExample
-      display-name: Void a 1099-MISC
-    retrieve:
-      docs: Retrieves the details of an existing 1099-MISC document.
-      method: GET
-      path: /documents/1099-misc/{documentId}
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      response:
-        docs: OK
-        type: Form1099MiscSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampleGNPOKNmIgF
-          response:
-            body: $Form1099MiscSchema.CreateResponseExample
-      display-name: Retrieve a 1099-MISC
-    delete:
-      docs: >-
-        Deletes a 1099-MISC document. Once an action (`/file`, `/correct`,
-        `/void`) has been executed on a 1099-MISC, it cannot be deleted.
-      method: DELETE
-      path: /documents/1099-misc/{documentId}
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      response:
-        docs: OK
-        type: common.OkSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampleGNPOKNmIgF
-          response:
-            body: {}
-      display-name: Delete a 1099-MISC
-  display-name: 1099-MISC
+        name: VoidResponseExample

@@ -7,9 +7,85 @@ imports:
   payer: types/payer.yml
   common: types/common.yml
   taxTreaties: types/tax-treaties.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /documents/w-8ben-e
+      method: GET
+      auth: true
+      request:
+        query-parameters:
+          page: optional<common.Page>
+          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
+          payeeForeignTinFingerprint: optional<common.PayeeForeignTinFingerprint>
+          userId: optional<common.UserId>
+        name: FormW8BenEListRequest
+      response:
+        type: list<W8BenESchema>
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - response:
+            body:
+              - $W8BenESchema.ResponseExample
+          name: default
+      display-name: List all W-8BEN-E documents
+      docs: Returns a list of W-8BEN-E documents.
+    create:
+      path: /documents/w-8ben-e
+      method: POST
+      auth: true
+      request:
+        body: W8BenERequestSchema
+      response:
+        type: W8BenESchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - request: $W8BenERequestSchema.ResponseExample
+          response:
+            body: $W8BenESchema.ResponseExample
+          name: default
+      display-name: Create a W-8BEN-E
+      docs: >-
+        Creates a W-8BEN-E document and, if present, subsequently kicks off a
+        TIN Verification. A TIN Verification will only kickoff if the name and
+        TIN combo has not been seen before.
+    retrieve:
+      path: /documents/w-8ben-e/{documentId}
+      method: GET
+      auth: true
+      path-parameters:
+        documentId: common.DocumentId
+      response:
+        type: W8BenESchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            documentId: documentId_sampleGyuBXlfAwo
+          response:
+            body: $W8BenESchema.ResponseExample
+          name: default
+      display-name: Retrieve a W-8BEN-E
+      docs: Retrieves the details of an existing W-8BEN-E document.
+  display-name: W-8BEN-E
 types:
   W8BenETaxClassificationEnum:
-    docs: The tax classification of the payee.
     enum:
       - CENTRAL_BANK_OF_ISSUE
       - COMPLEX_TRUST
@@ -24,8 +100,8 @@ types:
       - PRIVATE_FOUNDATION
       - SIMPLE_TRUST
       - TAX_EXEMPT_ORGANIZATION
+    docs: The tax classification of the payee.
   W8BenEBeneficialOwnerRequestSchema:
-    docs: The payee (beneficial owner) completing the document.
     properties:
       name:
         type: string
@@ -63,6 +139,7 @@ types:
         docs: >-
           The mailing address. Only include if different from the permanent
           residence address.
+    docs: The payee (beneficial owner) completing the document.
   W8BenEFormFieldsRequestSchema:
     properties:
       taxClassification:
@@ -87,9 +164,12 @@ types:
         type: optional<electronicSignature.ElectronicSignatureOfPayeeSchema>
         docs: The electronic signature of the payee.
   W8BenERequestSchema:
+    properties:
+      payee: W8BenEBeneficialOwnerRequestSchema
+      formFields: W8BenEFormFieldsRequestSchema
+      userId: optional<common.UserId>
     examples:
-      - name: ResponseExample
-        value:
+      - value:
           payee:
             name: Hooli
             incorporationCountry: GB
@@ -121,10 +201,7 @@ types:
               printedName: Hooli Representative
               signedAt: '2024-01-01T00:00:00.000Z'
               ipAddress: 127.0.0.1
-    properties:
-      payee: W8BenEBeneficialOwnerRequestSchema
-      formFields: W8BenEFormFieldsRequestSchema
-      userId: optional<common.UserId>
+        name: ResponseExample
   W8BenEBeneficialOwnerSchema:
     extends: W8BenEBeneficialOwnerRequestSchema
     properties:
@@ -155,9 +232,28 @@ types:
         type: optional<electronicSignature.ElectronicSignatureOfPayeeSchema>
         docs: The electronic signature of the payee.
   W8BenESchema:
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for the W-8BEN-E document.
+      createdAt:
+        type: datetime
+        docs: >-
+          The date and time in `ISO 8601` format when the W-8BEN-E document was
+          created.
+      expiresAt:
+        type: datetime
+        docs: >-
+          The date and time in `ISO 8601` format when the W-8BEN-E is expired
+          and requires re-collection.
+      url:
+        type: string
+        docs: The URL to the W-8BEN-E document.
+      payee: W8BenEBeneficialOwnerSchema
+      formFields: W8BenEFormFieldsSchema
+      userId: optional<common.UserId>
     examples:
-      - name: ResponseExample
-        value:
+      - value:
           id: documentId_sampleGyuBXlfAwo
           createdAt: '2024-01-01T00:00:00.000Z'
           expiresAt: '2029-01-01T00:00:00.000Z'
@@ -205,100 +301,4 @@ types:
               printedName: Hooli Representative
               signedAt: '2024-01-01T00:00:00.000Z'
               ipAddress: 127.0.0.1
-    properties:
-      id:
-        type: string
-        docs: The unique identifier for the W-8BEN-E document.
-      createdAt:
-        type: datetime
-        docs: >-
-          The date and time in `ISO 8601` format when the W-8BEN-E document was
-          created.
-      expiresAt:
-        type: datetime
-        docs: >-
-          The date and time in `ISO 8601` format when the W-8BEN-E is expired
-          and requires re-collection.
-      url:
-        type: string
-        docs: The URL to the W-8BEN-E document.
-      payee: W8BenEBeneficialOwnerSchema
-      formFields: W8BenEFormFieldsSchema
-      userId: optional<common.UserId>
-service:
-  auth: false
-  base-path: ''
-  endpoints:
-    list:
-      docs: Returns a list of W-8BEN-E documents.
-      method: GET
-      path: /documents/w-8ben-e
-      auth: true
-      request:
-        name: FormW8BenEListRequest
-        query-parameters:
-          page: optional<common.Page>
-          payeeTinFingerprint: optional<common.PayeeTinFingerprint>
-          payeeForeignTinFingerprint: optional<common.PayeeForeignTinFingerprint>
-          userId: optional<common.UserId>
-      response:
-        docs: OK
-        type: list<W8BenESchema>
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          response:
-            body:
-              - $W8BenESchema.ResponseExample
-      display-name: List all W-8BEN-E documents
-    create:
-      docs: >-
-        Creates a W-8BEN-E document and, if present, subsequently kicks off a
-        TIN Verification. A TIN Verification will only kickoff if the name and
-        TIN combo has not been seen before.
-      method: POST
-      path: /documents/w-8ben-e
-      auth: true
-      request:
-        body: W8BenERequestSchema
-      response:
-        docs: OK
-        type: W8BenESchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          request: $W8BenERequestSchema.ResponseExample
-          response:
-            body: $W8BenESchema.ResponseExample
-      display-name: Create a W-8BEN-E
-    retrieve:
-      docs: Retrieves the details of an existing W-8BEN-E document.
-      method: GET
-      path: /documents/w-8ben-e/{documentId}
-      path-parameters:
-        documentId: common.DocumentId
-      auth: true
-      response:
-        docs: OK
-        type: W8BenESchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            documentId: documentId_sampleGyuBXlfAwo
-          response:
-            body: $W8BenESchema.ResponseExample
-      display-name: Retrieve a W-8BEN-E
-  display-name: W-8BEN-E
+        name: ResponseExample

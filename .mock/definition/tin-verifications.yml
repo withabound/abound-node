@@ -2,13 +2,87 @@ imports:
   errors: types/errors.yml
   headers: types/headers.yml
   common: types/common.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /tin-verifications
+      method: GET
+      auth: true
+      request:
+        query-parameters:
+          page: optional<common.Page>
+          tinFingerprint: optional<common.TinFingerprintQueryParam>
+          status: optional<common.TinVerificationStatusQueryParam>
+          userId: optional<common.UserId>
+        name: TinVerificationsListRequest
+      response:
+        type: list<TinVerificationSchema>
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - response:
+            body:
+              - $TinVerificationSchema.ResponseExample
+          name: default
+      display-name: List all TIN Verifications
+      docs: >-
+        Returns a list of TIN Verifications. Up to 100 TIN Verifications are
+        returned per request.
+    create:
+      path: /tin-verifications
+      method: POST
+      auth: true
+      request:
+        body: TinVerificationRequestSchema
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        name: TinVerificationRequest
+      response:
+        type: TinVerificationSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - request: $TinVerificationRequestSchema.RequestExample
+          response:
+            body: $TinVerificationSchema.ResponseExample
+          name: default
+      display-name: Create a TIN Verification
+      docs: Creates an asynchronous TIN Verification.
+    retrieve:
+      path: /tin-verifications/{tinVerificationId}
+      method: GET
+      auth: true
+      path-parameters:
+        tinVerificationId: common.TinVerificationId
+      response:
+        type: TinVerificationSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            tinVerificationId: tinVerificationId_sample41SD71AV8f
+          response:
+            body: $TinVerificationSchema.ResponseExample
+          name: default
+      display-name: Retrieve a TIN Verification
+      docs: Retrieves the details of an existing TIN Verification.
+  display-name: TIN Verifications
 types:
   TinVerificationRequestSchema:
-    examples:
-      - name: RequestExample
-        value:
-          name: Ada Lovelace
-          tin: '000000000'
     properties:
       name:
         type: string
@@ -22,17 +96,12 @@ types:
           The tax identification number, commonly referred to as a TIN. No
           hyphens. Numerical digits only.
       userId: optional<common.UserId>
-  TinVerificationSchema:
     examples:
-      - name: ResponseExample
-        value:
+      - value:
           name: Ada Lovelace
-          id: tinVerificationId_sample41SD71AV8f
-          createdAt: '2024-01-01T00:00:00.000Z'
-          status: MATCH
-          tin: '*******00'
-          tinFingerprint: tinFingerprint_samplehy2BWO6JJG
-          tinType: INDIVIDUAL
+          tin: '000000000'
+        name: RequestExample
+  TinVerificationSchema:
     extends:
       - TinVerificationRequestSchema
     properties:
@@ -50,82 +119,13 @@ types:
       tinFingerprint:
         type: string
         docs: The fingerprint for this TIN Verification.
-service:
-  auth: false
-  base-path: ''
-  endpoints:
-    list:
-      docs: >-
-        Returns a list of TIN Verifications. Up to 100 TIN Verifications are
-        returned per request.
-      method: GET
-      path: /tin-verifications
-      auth: true
-      request:
-        name: TinVerificationsListRequest
-        query-parameters:
-          page: optional<common.Page>
-          tinFingerprint: optional<common.TinFingerprintQueryParam>
-          status: optional<common.TinVerificationStatusQueryParam>
-          userId: optional<common.UserId>
-      response:
-        docs: OK
-        type: list<TinVerificationSchema>
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          response:
-            body:
-              - $TinVerificationSchema.ResponseExample
-      display-name: List all TIN Verifications
-    create:
-      docs: Creates an asynchronous TIN Verification.
-      method: POST
-      path: /tin-verifications
-      auth: true
-      request:
-        name: TinVerificationRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-        body: TinVerificationRequestSchema
-      response:
-        docs: OK
-        type: TinVerificationSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          request: $TinVerificationRequestSchema.RequestExample
-          response:
-            body: $TinVerificationSchema.ResponseExample
-      display-name: Create a TIN Verification
-    retrieve:
-      docs: Retrieves the details of an existing TIN Verification.
-      method: GET
-      path: /tin-verifications/{tinVerificationId}
-      path-parameters:
-        tinVerificationId: common.TinVerificationId
-      auth: true
-      response:
-        docs: OK
-        type: TinVerificationSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            tinVerificationId: tinVerificationId_sample41SD71AV8f
-          response:
-            body: $TinVerificationSchema.ResponseExample
-      display-name: Retrieve a TIN Verification
-  display-name: TIN Verifications
+    examples:
+      - value:
+          name: Ada Lovelace
+          id: tinVerificationId_sample41SD71AV8f
+          createdAt: '2024-01-01T00:00:00.000Z'
+          status: MATCH
+          tin: '*******00'
+          tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+          tinType: INDIVIDUAL
+        name: ResponseExample

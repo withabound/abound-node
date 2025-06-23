@@ -3,7 +3,6 @@ imports:
   address: address.yml
 types:
   PayerRequestSchema:
-    docs: The payer of the document.
     extends:
       - address.AddressSchema
     properties:
@@ -29,8 +28,8 @@ types:
         validation:
           pattern: ^\+?\d{10,15}$
         docs: The payer's phone number.
-  PayerSchema:
     docs: The payer of the document.
+  PayerSchema:
     extends:
       - PayerRequestSchema
     properties:
@@ -38,3 +37,4 @@ types:
       tinType: optional<common.TinTypeEnum>
       tinVerificationId: common.TinVerificationId
       tinVerificationStatus: common.TinVerificationStatusEnum
+    docs: The payer of the document.

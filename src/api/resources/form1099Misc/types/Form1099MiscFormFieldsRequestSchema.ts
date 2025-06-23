@@ -34,7 +34,7 @@ export interface Form1099MiscFormFieldsRequestSchema {
     grossProceedsPaidToAnAttorney?: number;
     /** Shows the amount of cash you received for the sale of fish if you are in the trade or business of catching fish. Value must be in cents. */
     fishPurchasedForResale?: number;
-    /** May show current year deferrals as a nonemployee under a nonqualified deferred compensation (NQDC) plan that is subject to the requirements of section 409A plus any earnings on current and prior year deferrals. Value must be in cents. */
+    /** May show current year deferrals as a nonemployee under a nonqualified deferred compensation (NQDC) plan that is subject to the requirements of section 409A plus any earnings on current and prior year deferrals.  Value must be in cents. */
     section409ADeferrals?: number;
     /** Shows your total compensation of excess golden parachute payments subject to a 20% excise tax. See your tax return instructions for where to report. Value must be in cents. */
     excessGoldenParachutePayments?: number;

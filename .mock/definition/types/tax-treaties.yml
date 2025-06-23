@@ -1,6 +1,5 @@
 types:
   TaxTreatyAboundCodeEnum:
-    docs: The tax treaty code the payee is claiming.
     enum:
       - AU_17_INDEPENDENT_PERSONAL_SERVICES
       - AU_18_DEPENDENT_PERSONAL_SERVICES
@@ -24,18 +23,18 @@ types:
       - MX_17_INDEPENDENT_PERSONAL_SERVICES
       - MX_18_DEPENDENT_PERSONAL_SERVICES
       - MX_42_PUBLIC_ENTERTAINMENT
+    docs: The tax treaty code the payee is claiming.
   TaxTreatyIncomeCodeEnum:
     enum:
-      - name: Sixteen
-        value: '16'
-      - name: Seventeen
-        value: '17'
-      - name: Eighteen
-        value: '18'
-      - name: FortyTwo
-        value: '42'
+      - value: '16'
+        name: Sixteen
+      - value: '17'
+        name: Seventeen
+      - value: '18'
+        name: Eighteen
+      - value: '42'
+        name: FortyTwo
   TaxTreatyBenefitsSchema:
-    docs: The tax treaty benefits the payee is claiming.
     properties:
       residentCountry:
         type: string
@@ -72,3 +71,4 @@ types:
         docs: >-
           The additional conditions the payee is claiming under the cited tax
           treaty.
+    docs: The tax treaty benefits the payee is claiming.

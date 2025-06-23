@@ -3,15 +3,48 @@ imports:
   headers: types/headers.yml
   common: types/common.yml
   payer: types/payer.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      path: /access-tokens
+      method: POST
+      auth: true
+      request:
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        body:
+          properties:
+            expiresIn:
+              type: integer
+              docs: The number of seconds until the access token expires.
+            customizations: optional<CustomizationsSchema>
+            userId:
+              type: optional<string>
+              docs: >-
+                The unique identifier of the user associated with this access
+                token.
+        name: AccessTokenRequestSchema
+      response:
+        type: AccessTokenSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - request:
+            expiresIn: 900
+          response:
+            body: $AccessTokenSchema.ResponseExample
+          name: default
+      display-name: Create an access token
+      docs: Creates an access token for authenticating Drop-In UI Components.
+  display-name: Access Tokens
 types:
   AccessTokenSchema:
-    examples:
-      - name: ResponseExample
-        value:
-          accessToken: >-
-            accessToken_sampleeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5ODczNTcsImV4cCI6MTY5Njk4NzY1NywiYXVkIjoiYXBwSWRfc2FtcGxlcU5oVmNkWVFZVSIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hcGkud2l0aGFib3VuZC5jb20vdjQiLCJzdWIiOiJ1c2VySWRfc2FtcGxlWEdNRm5oT3BlUiJ9.-NrPVQvsnM8vJouyuP5yeFGlYb1xGgR-gS3v87p5BQk
-          createdAt: '2024-01-01T00:00:00.000Z'
-          expiresAt: '2024-01-01T00:15:00.000Z'
     properties:
       accessToken:
         type: string
@@ -26,12 +59,19 @@ types:
       userId:
         type: optional<string>
         docs: The unique identifier of the user associated with this access token.
+    examples:
+      - value:
+          accessToken: >-
+            accessToken_sampleeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5ODczNTcsImV4cCI6MTY5Njk4NzY1NywiYXVkIjoiYXBwSWRfc2FtcGxlcU5oVmNkWVFZVSIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hcGkud2l0aGFib3VuZC5jb20vdjQiLCJzdWIiOiJ1c2VySWRfc2FtcGxlWEdNRm5oT3BlUiJ9.-NrPVQvsnM8vJouyuP5yeFGlYb1xGgR-gS3v87p5BQk
+          createdAt: '2024-01-01T00:00:00.000Z'
+          expiresAt: '2024-01-01T00:15:00.000Z'
+        name: ResponseExample
   CustomizationsSchema:
-    docs: The component customizations for this access token.
     properties:
       payeeTaxProfile:
         type: optional<PayeeTaxProfileSchema>
         docs: The Payee Tax Profile component customizations.
+    docs: The component customizations for this access token.
   PayeeTaxProfileSchema:
     properties:
       shouldPreloadFromUserId:
@@ -117,43 +157,3 @@ types:
       - FORM_W_9
       - FORM_W_8BEN
       - FORM_W_8BEN_E
-service:
-  auth: false
-  base-path: ''
-  endpoints:
-    create:
-      docs: Creates an access token for authenticating Drop-In UI Components.
-      method: POST
-      path: /access-tokens
-      auth: true
-      request:
-        name: AccessTokenRequestSchema
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-        body:
-          properties:
-            expiresIn:
-              type: integer
-              docs: The number of seconds until the access token expires.
-            customizations: optional<CustomizationsSchema>
-            userId:
-              type: optional<string>
-              docs: >-
-                The unique identifier of the user associated with this access
-                token.
-      response:
-        docs: OK
-        type: AccessTokenSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          request:
-            expiresIn: 900
-          response:
-            body: $AccessTokenSchema.ResponseExample
-      display-name: Create an access token
-  display-name: Access Tokens

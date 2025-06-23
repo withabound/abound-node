@@ -1,3 +1,46 @@
+errors:
+  BadRequestErrorSchema:
+    status-code: 400
+    type: ErrorBadRequestSchema
+    examples:
+      - value:
+          errors:
+            - field: metadata.key
+              message: Expected metadata.key to be of type string, but received number
+        name: default
+    docs: Bad Request
+  UnauthorizedErrorSchema:
+    status-code: 401
+    type: DefaultErrorSchema
+    examples:
+      - value:
+          message: Unauthorized
+        name: default
+    docs: Unauthorized
+  NotFoundErrorSchema:
+    status-code: 404
+    type: DefaultErrorSchema
+    examples:
+      - value:
+          message: Not Found
+        name: default
+    docs: Not Found
+  InternalServerErrorSchema:
+    status-code: 500
+    type: DefaultErrorSchema
+    examples:
+      - value:
+          message: Internal Server Error
+        name: default
+    docs: Internal Server Error
+  ConflictErrorSchema:
+    status-code: 409
+    type: DefaultErrorSchema
+    examples:
+      - value:
+          message: Conflict
+        name: default
+    docs: Conflict
 types:
   ErrorBadRequestSchemaErrorsItem:
     properties:
@@ -17,46 +60,3 @@ types:
       message:
         type: string
         docs: The error message associated with the response status code.
-errors:
-  BadRequestErrorSchema:
-    docs: Bad Request
-    status-code: 400
-    type: ErrorBadRequestSchema
-    examples:
-      - name: default
-        value:
-          errors:
-            - field: metadata.key
-              message: Expected metadata.key to be of type string, but received number
-  UnauthorizedErrorSchema:
-    docs: Unauthorized
-    status-code: 401
-    type: DefaultErrorSchema
-    examples:
-      - name: default
-        value:
-          message: Unauthorized
-  NotFoundErrorSchema:
-    docs: Not Found
-    status-code: 404
-    type: DefaultErrorSchema
-    examples:
-      - name: default
-        value:
-          message: Not Found
-  InternalServerErrorSchema:
-    docs: Internal Server Error
-    status-code: 500
-    type: DefaultErrorSchema
-    examples:
-      - name: default
-        value:
-          message: Internal Server Error
-  ConflictErrorSchema:
-    docs: Conflict
-    status-code: 409
-    type: DefaultErrorSchema
-    examples:
-      - name: default
-        value:
-          message: Conflict

@@ -22,7 +22,7 @@ export interface Form1099IntFormFieldsRequestSchema {
     usSavingsBondsInterest?: number;
     /** The federal income tax withheld. A payer must backup withhold on certain payments if recipient did not provide a TIN to the payer. Value must be in cents. Abound does not currently support `federalIncomeTaxWithheld` reporting on the 1099-INT, please contact us for more information. */
     federalIncomeTaxWithheld?: number;
-    /** Any amount is your share of investment expenses of a singleclass REMIC. This amount is included in `interestIncome`. _Note: This amount is not deductible._ Value must be in cents. */
+    /** Any amount is your share of investment expenses of a singleclass REMIC. This amount is included in `interestIncome`. *Note: This amount is not deductible.* Value must be in cents. */
     investmentExpenses?: number;
     /** The foreign tax paid. Value must be in cents. */
     foreignTaxPaid?: number;

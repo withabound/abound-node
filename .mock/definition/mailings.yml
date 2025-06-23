@@ -3,6 +3,115 @@ imports:
   address: types/address.yml
   headers: types/headers.yml
   common: types/common.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /mailings
+      method: GET
+      auth: true
+      request:
+        query-parameters:
+          page: optional<common.Page>
+          status:
+            type: optional<MailingStatusEnum>
+            docs: Filters the list of mailings based on the `status` field.
+          userId: optional<common.UserId>
+        name: MailingsListRequest
+      response:
+        type: list<MailingSchema>
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - response:
+            body:
+              - $MailingSchema.ResponseExample
+          name: default
+      display-name: List all mailings
+      docs: Returns a list of mailings. Up to 100 mailings are returned per request.
+    retrieve:
+      path: /mailings/{mailingId}
+      method: GET
+      auth: true
+      path-parameters:
+        mailingId: common.MailingId
+      response:
+        type: MailingSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            mailingId: mailingId_sampleFV9b73IvAD
+          response:
+            body: $MailingSchema.ResponseExample
+          name: default
+      display-name: Retrieve a mailing
+      docs: Retrieves the details of an existing mailing.
+    update:
+      path: /mailings/{mailingId}
+      method: PUT
+      auth: true
+      path-parameters:
+        mailingId: common.MailingId
+      request:
+        body: MailingRequestSchema
+        headers:
+          Idempotency-Key: optional<headers.IdempotencyKey>
+        name: MailingRequest
+      response:
+        type: MailingSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            mailingId: mailingId_sampleFV9b73IvAD
+          request: $MailingRequestSchema.RequestExample
+          response:
+            body: $MailingSchema.ResponseExample
+          name: default
+      display-name: Update a mailing
+      docs: >-
+        Updates an existing mailing. Once a mailing has reached the
+        `PROCESSING_FOR_DELIVERY` status, it cannot be updated. Any body
+        parameters not provided will be removed.
+    delete:
+      path: /mailings/{mailingId}
+      method: DELETE
+      auth: true
+      path-parameters:
+        mailingId: common.MailingId
+      response:
+        type: common.OkSchema
+        docs: OK
+      errors:
+        - errors.BadRequestErrorSchema
+        - errors.UnauthorizedErrorSchema
+        - errors.NotFoundErrorSchema
+        - errors.InternalServerErrorSchema
+      examples:
+        - path-parameters:
+            mailingId: mailingId_sampleFV9b73IvAD
+          response:
+            body: {}
+          name: default
+      display-name: Delete a mailing
+      docs: >-
+        Deletes a mailing. Once a mailing has reached the
+        `PROCESSING_FOR_DELIVERY` status, it cannot be deleted.
+  display-name: Mailings
 types:
   MailingStatusEnum:
     enum:
@@ -22,21 +131,25 @@ types:
           The business name, trade name, DBA name, or disregarded entity name,
           if different from `name`.
   MailingRequestToSchema:
+    properties: {}
+    extends:
+      - MailingNameSchema
+      - address.AddressSchema
     docs: The mailing address of the recipient.
-    extends:
-      - MailingNameSchema
-      - address.AddressSchema
-    properties: {}
   MailingRequestFromSchema:
-    docs: The mailing address of the sender.
+    properties: {}
     extends:
       - MailingNameSchema
       - address.AddressSchema
-    properties: {}
+    docs: The mailing address of the sender.
   MailingRequestSchema:
+    properties:
+      to:
+        type: MailingRequestToSchema
+      from:
+        type: MailingRequestFromSchema
     examples:
-      - name: RequestExample
-        value:
+      - value:
           to:
             address: 1401 N Shoreline Blvd
             address2: Suite 1
@@ -53,15 +166,29 @@ types:
             postalCode: '94306'
             country: US
             name: Hooli
-    properties:
-      to:
-        type: MailingRequestToSchema
-      from:
-        type: MailingRequestFromSchema
+        name: RequestExample
   MailingSchema:
+    extends:
+      - MailingRequestSchema
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this mailing.
+      createdAt:
+        type: datetime
+        docs: The creation date and time of the mailing in `ISO 8601` format.
+      url:
+        type: string
+        docs: The URL to the mailed document.
+      status:
+        type: MailingStatusEnum
+        docs: The status of the mailing.
+      userId: optional<common.UserId>
+      mailedFromId:
+        type: string
+        docs: The `documentId` of the mailed document.
     examples:
-      - name: ResponseExample
-        value:
+      - value:
           id: mailingId_sampleFV9b73IvAD
           createdAt: '2024-01-01T00:00:00.000Z'
           url: >-
@@ -84,131 +211,4 @@ types:
             country: US
             name: Hooli
           mailedFromId: documentId_sampletTtqNfulW8
-    extends:
-      - MailingRequestSchema
-    properties:
-      id:
-        type: string
-        docs: The unique identifier for this mailing.
-      createdAt:
-        type: datetime
-        docs: The creation date and time of the mailing in `ISO 8601` format.
-      url:
-        type: string
-        docs: The URL to the mailed document.
-      status:
-        type: MailingStatusEnum
-        docs: The status of the mailing.
-      userId: optional<common.UserId>
-      mailedFromId:
-        type: string
-        docs: The `documentId` of the mailed document.
-service:
-  auth: false
-  base-path: ''
-  endpoints:
-    list:
-      docs: Returns a list of mailings. Up to 100 mailings are returned per request.
-      method: GET
-      path: /mailings
-      auth: true
-      request:
-        name: MailingsListRequest
-        query-parameters:
-          page: optional<common.Page>
-          status:
-            type: optional<MailingStatusEnum>
-            docs: Filters the list of mailings based on the `status` field.
-          userId: optional<common.UserId>
-      response:
-        docs: OK
-        type: list<MailingSchema>
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          response:
-            body:
-              - $MailingSchema.ResponseExample
-      display-name: List all mailings
-    retrieve:
-      docs: Retrieves the details of an existing mailing.
-      method: GET
-      path: /mailings/{mailingId}
-      path-parameters:
-        mailingId: common.MailingId
-      auth: true
-      response:
-        docs: OK
-        type: MailingSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            mailingId: mailingId_sampleFV9b73IvAD
-          response:
-            body: $MailingSchema.ResponseExample
-      display-name: Retrieve a mailing
-    update:
-      docs: >-
-        Updates an existing mailing. Once a mailing has reached the
-        `PROCESSING_FOR_DELIVERY` status, it cannot be updated. Any body
-        parameters not provided will be removed.
-      method: PUT
-      path: /mailings/{mailingId}
-      path-parameters:
-        mailingId: common.MailingId
-      auth: true
-      request:
-        name: MailingRequest
-        headers:
-          Idempotency-Key: optional<headers.IdempotencyKey>
-        body: MailingRequestSchema
-      response:
-        docs: OK
-        type: MailingSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            mailingId: mailingId_sampleFV9b73IvAD
-          request: $MailingRequestSchema.RequestExample
-          response:
-            body: $MailingSchema.ResponseExample
-      display-name: Update a mailing
-    delete:
-      docs: >-
-        Deletes a mailing. Once a mailing has reached the
-        `PROCESSING_FOR_DELIVERY` status, it cannot be deleted.
-      method: DELETE
-      path: /mailings/{mailingId}
-      path-parameters:
-        mailingId: common.MailingId
-      auth: true
-      response:
-        docs: OK
-        type: common.OkSchema
-      errors:
-        - errors.BadRequestErrorSchema
-        - errors.UnauthorizedErrorSchema
-        - errors.NotFoundErrorSchema
-        - errors.InternalServerErrorSchema
-      examples:
-        - name: default
-          path-parameters:
-            mailingId: mailingId_sampleFV9b73IvAD
-          response:
-            body: {}
-      display-name: Delete a mailing
-  display-name: Mailings
+        name: ResponseExample
